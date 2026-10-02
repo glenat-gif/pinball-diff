@@ -22,15 +22,18 @@ point, which is Pinball Map doing the diff for us.
    request per area, eleven a day.
 2. Merge the rows into `data/events.jsonl`, deduplicated by Pinball Map id,
    with dates converted to Melbourne time.
-3. Build a digest per area from the events inside its circle, with a few
-   rules: a new venue and its first machines are one line; a removal and an
+3. Put every event in exactly one digest zone. Victoria is sliced into
+   Greater Melbourne, Geelong and the Surf Coast, Gippsland, the north and
+   the west, because Melbourne is Greater Melbourne, not Morwell. Other
+   states are one zone each until someone there wants them sliced.
+4. Build a digest per zone with a few rules: a new venue and its first machines are one line; a removal and an
    addition of the same title at one venue is a swap; additions group per
    venue and credit the contributor; condition notes become amber or green;
    bare confirmations are counted, not listed.
-4. Write `data/digests/<area>/<date>.md` and `.json`. The Markdown is the
+5. Write `data/digests/<zone>/<date>.md` and `.json`. The Markdown is the
    email body. The JSON is for whatever comes next.
 
-The areas are in `pbmdiff/areas.py`. The rules are in `pbmdiff/digest.py`.
+The fetch circles and zones are in `pbmdiff/areas.py`. The rules are in `pbmdiff/digest.py`.
 No dependencies beyond Python 3.11.
 
 ## Try it without a token
@@ -46,9 +49,11 @@ Runs the rules over a real week of Melbourne submissions kept as a fixture.
 1. `export PINBALLMAP_API_TOKEN=...` (request at https://pinballmap.com/api_token).
 2. `python -m pbmdiff.run fetch` pulls the last fortnight for every area on
    the first run, and from then on reaches back two days past the last fetch.
-3. `python -m pbmdiff.run digest --area melbourne --days 7` writes last
-   week's digest for one area from the store, no network needed.
-4. `python -m pbmdiff.run sync` does both, for every area.
+3. `python -m pbmdiff.run digest --zone gippsland --days 7` writes last
+   week's digest for one zone from the store, no network needed.
+4. `python -m pbmdiff.run sync` does both, for every zone.
+5. `python -m pbmdiff.run zones` shows how the store splits across zones
+   and lists anything that landed in none.
 
 `.github/workflows/daily.yml` runs the sync once a day and commits the
 events and digests back, so the history lives in git. It needs the token as
