@@ -1,0 +1,190 @@
+{
+ "items": [
+  {
+   "location_id": 30488,
+   "location_name": "Flip Out Elizabeth",
+   "city": "Elizabeth South",
+   "link": "https://pinballmap.com/map?by_location_id=30488",
+   "kind": "new_venue",
+   "rank": 0,
+   "date": "2026-09-22",
+   "machines": [
+    "Toy Story 4 (LE) (Jersey Jack, 2022)",
+    "Hot Wheels (American, 2020)"
+   ]
+  },
+  {
+   "location_id": 30513,
+   "location_name": "My Dead Grandpa",
+   "city": "Adelaide",
+   "link": "https://pinballmap.com/map?by_location_id=30513",
+   "kind": "new_venue",
+   "rank": 0,
+   "date": "2026-09-25",
+   "machines": [
+    "Dirty Harry (Williams, 1995)"
+   ]
+  },
+  {
+   "location_id": 30463,
+   "location_name": "Sporties Tavern",
+   "city": "Solomontown",
+   "link": "https://pinballmap.com/map?by_location_id=30463",
+   "kind": "new_venue",
+   "rank": 0,
+   "date": "2026-09-20",
+   "machines": [
+    "Shrek (Stern, 2008)"
+   ]
+  },
+  {
+   "location_id": 21512,
+   "location_name": "The Suburban Brew - Brewery & Taproom",
+   "city": "Glynde",
+   "link": "https://pinballmap.com/map?by_location_id=21512",
+   "kind": "rotation",
+   "rank": 2.7,
+   "date": "2026-09-28",
+   "machines": [
+    "Dialed In! (LE) (Jersey Jack, 2017)",
+    "Ultraman: Kaiju Rumble (Blood Sucker Edition) (Spooky, 2021)",
+    "AC/DC (Premium Vault Edition) (Stern, 2017)"
+   ],
+   "out": [
+    "Terminator 3: Rise of the Machines (Stern, 2003)",
+    "World Cup Soccer (Bally, 1994)",
+    "Batman: The Dark Knight (Stern, 2008)"
+   ],
+   "by": [
+    "GJREEVES",
+    "imczr"
+   ]
+  },
+  {
+   "location_id": 30241,
+   "location_name": "Crystal Brook Hotel",
+   "city": "Crystal Brook",
+   "link": "https://pinballmap.com/map?by_location_id=30241",
+   "kind": "rotation",
+   "rank": 2.9,
+   "date": "2026-09-22",
+   "machines": [
+    "Alien (Remake) (Pinball Brothers, 2021)"
+   ],
+   "out": [
+    "Rick and Morty (SE) (Spooky, 2019)",
+    "White Water (Williams, 1993)",
+    "Space Station (Williams, 1987)"
+   ],
+   "by": [
+    "brodersau"
+   ]
+  },
+  {
+   "location_id": 24847,
+   "location_name": "Finsbury Hotel",
+   "city": "Woodville North",
+   "link": "https://pinballmap.com/map?by_location_id=24847",
+   "kind": "rotation",
+   "rank": 2.9,
+   "date": "2026-09-21",
+   "machines": [
+    "Terminator 3: Rise of the Machines (Stern, 2003)"
+   ],
+   "out": [
+    "Stranger Things (Pro) (Stern, 2019)"
+   ],
+   "by": [
+    "imczr"
+   ]
+  },
+  {
+   "location_id": 26318,
+   "location_name": "Hendon Hotel",
+   "city": "Hendon",
+   "link": "https://pinballmap.com/map?by_location_id=26318",
+   "kind": "rotation",
+   "rank": 2.9,
+   "date": "2026-09-28",
+   "machines": [
+    "Guardians of the Galaxy (Pro) (Stern, 2017)"
+   ],
+   "out": [
+    "AC/DC (Premium Vault Edition) (Stern, 2017)"
+   ],
+   "by": [
+    "imczr"
+   ]
+  },
+  {
+   "location_id": 26316,
+   "location_name": "One Sneaky Cheetah",
+   "city": "Melrose Park",
+   "link": "https://pinballmap.com/map?by_location_id=26316",
+   "kind": "rotation",
+   "rank": 2.9,
+   "date": "2026-09-26",
+   "machines": [
+    "Iron Maiden: Legacy of the Beast (Premium) (Stern, 2018)"
+   ],
+   "out": [
+    "NBA (Stern, 2009)"
+   ],
+   "by": [
+    "imczr"
+   ]
+  },
+  {
+   "location_id": 24848,
+   "location_name": "Shapeshifter Brewing Co",
+   "city": "Findon",
+   "link": "https://pinballmap.com/map?by_location_id=24848",
+   "kind": "added",
+   "rank": 2.9,
+   "date": "2026-09-21",
+   "machines": [
+    "Stranger Things (Pro) (Stern, 2019)"
+   ],
+   "by": [
+    "imczr"
+   ]
+  },
+  {
+   "location_id": 25979,
+   "location_name": "Slug and Lettuce",
+   "city": "Parafield Gardens",
+   "link": "https://pinballmap.com/map?by_location_id=25979",
+   "kind": "rotation",
+   "rank": 2.9,
+   "date": "2026-09-22",
+   "machines": [
+    "Dungeons & Dragons: The Tyrant's Eye (Pro) (Stern, 2025)"
+   ],
+   "out": [
+    "Iron Maiden: Legacy of the Beast (Premium) (Stern, 2018)"
+   ],
+   "by": [
+    "imczr"
+   ]
+  },
+  {
+   "location_id": 28621,
+   "location_name": "The Castle Tavern",
+   "city": "Edwardstown",
+   "link": "https://pinballmap.com/map?by_location_id=28621",
+   "kind": "rotation",
+   "rank": 2.9,
+   "date": "2026-09-21",
+   "machines": [
+    "Godzilla (Pro) (Stern, 2021)"
+   ],
+   "out": [
+    "Foo Fighters (Premium) (Stern, 2023)"
+   ],
+   "by": [
+    "imczr"
+   ]
+  }
+ ],
+ "confirmations": 1
+}

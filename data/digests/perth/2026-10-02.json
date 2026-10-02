@@ -1,0 +1,44 @@
+{
+ "items": [
+  {
+   "location_id": 30526,
+   "location_name": "Varsity Innaloo",
+   "city": "Woodlands",
+   "link": "https://pinballmap.com/map?by_location_id=30526",
+   "kind": "new_venue",
+   "rank": 0,
+   "date": "2026-09-26",
+   "machines": [
+    "Beatles (Gold) (Stern, 2018)"
+   ]
+  },
+  {
+   "location_id": 27790,
+   "location_name": "Chuck E. Cheese Joondalup",
+   "city": "Joondalup",
+   "link": "https://pinballmap.com/map?by_location_id=27790",
+   "kind": "added",
+   "rank": 2.9,
+   "date": "2026-09-19",
+   "machines": [
+    "Led Zeppelin (LE) (Stern, 2020)"
+   ],
+   "by": [
+    "voidstash"
+   ]
+  },
+  {
+   "location_id": 20438,
+   "location_name": "PowerPlay Joondalup",
+   "city": "Joondalup",
+   "link": "https://pinballmap.com/map?by_location_id=20438",
+   "kind": "removed",
+   "rank": 4,
+   "date": "2026-09-25",
+   "machines": [
+    "The Munsters (LE) (Stern, 2019)"
+   ]
+  }
+ ],
+ "confirmations": 2
+}

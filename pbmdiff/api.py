@@ -1,9 +1,10 @@
 """Thin client for the Pinball Map API.
 
-Follows https://pinballmap.com/llms.txt: every request carries the API token in
-a header, the token never leaves the server, bulk endpoints only, and the
-caller stores what it fetches instead of asking again. Three requests a day is
-the whole budget this project needs.
+Follows https://pinballmap.com/llms.txt and the advice Pinball Map gave when
+approving the token: the token goes in a header and never leaves the server,
+the only read is the submissions feed within a radius of a point, and the
+caller stores what it fetches instead of asking again. One request per area
+per day is the whole budget.
 """
 import json
 import os
@@ -13,9 +14,10 @@ import urllib.parse
 import urllib.request
 
 BASE = "https://pinballmap.com/api/v1/"
-USER_AGENT = "pinball-diff/0.1 (daily change digest for Victoria; see README)"
+USER_AGENT = "pinball-diff/0.2 (change digest for Australia; github.com/glenat-gif/pinball-diff)"
 TOKEN_HELP = ("Set PINBALLMAP_API_TOKEN. Request a token at https://pinballmap.com/api_token "
               "(needs a Pinball Map login; approval is manual).")
+MAX_MILES = 250                      # the endpoint's own ceiling
 
 
 class PinballMap:
@@ -39,21 +41,13 @@ class PinballMap:
                 if err.code == 401:
                     raise SystemExit("Pinball Map rejected the API token. " + TOKEN_HELP)
                 if err.code in (429, 500, 502, 503, 504) and attempt < 2:
-                    self.sleep(30 * (attempt + 1))     # be a polite client; the limit is shared
+                    self.sleep(30 * (attempt + 1))     # the limit is shared; back off properly
                     continue
                 raise
         raise RuntimeError("unreachable")
 
-    # The three bulk reads a daily sync needs.
-    def region_machines(self, region):
-        return self.get(f"region/{region}/location_machine_xrefs.json").get("location_machine_xrefs", [])
-
-    def region_locations(self, region):
-        return self.get(f"region/{region}/locations.json").get("locations", [])
-
-    def region_submissions(self, region, limit=500):
-        data = self.get(f"region/{region}/user_submissions.json", limit=limit)
-        return data.get("user_submissions", data if isinstance(data, list) else [])
-
-    def regions(self):
-        return self.get("regions.json").get("regions", [])
+    def submissions_within(self, lat, lon, miles, since):
+        """Everything submitted within `miles` of a point since a YYYY-MM-DD date."""
+        data = self.get("user_submissions/list_within_range.json", lat=lat, lon=lon,
+                        max_distance=min(miles, MAX_MILES), min_date_of_submission=since)
+        return data.get("user_submissions", [])

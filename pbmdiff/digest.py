@@ -2,21 +2,20 @@
 
 Rules, in the order they run:
   1. A new venue and its first machines are one item.
-  2. A venue that vanished is one item, with what it had.
-  3. A removal and an addition of the same title at one venue is a swap.
-  4. What is left is grouped per venue: "added A, B and C".
-  5. Condition notes become a status: amber for trouble, green for good news.
-  6. Bare confirmations are not news; they are counted in the footer.
+  2. A removal and an addition of the same title at one venue is a swap.
+  3. What is left is grouped per venue: "added A, B and C", or a rotation
+     when a venue both added and removed in the same period.
+  4. Condition notes become a status: amber for trouble, green for good news.
+  5. Bare confirmations are not news; they are counted in the footer.
 Items are ranked so the biggest change at the quietest venue comes first.
 """
 import re
 import json
-import pathlib
 from collections import defaultdict
 
-from . import snapshot
+from . import store
 
-DIGESTS = snapshot.DATA / "digests"
+DIGESTS = store.DATA / "digests"
 ATTRIB = "https://pinballmap.com/map?by_location_id={id}"
 
 EDITIONS = {"pro", "premium", "prem", "le", "limited", "edition", "remake", "special", "classic",
@@ -24,7 +23,8 @@ EDITIONS = {"pro", "premium", "prem", "le", "limited", "edition", "remake", "spe
 TROUBLE = ["turned off", "switched off", "not working", "isn't working", "broken", "stuck", "dead",
            "out of order", "weak", "doesn't", "does not", "won't", "wont", "issue", "problem", "fault",
            "sticky", "unplayable", "no sound", "no display", "reset", "tilt", "missing", "off ", " off",
-           "credit dot", "ball search", "needs", "cracked", "flaky", "intermittent"]
+           "credit dot", "ball search", "needs", "cracked", "flaky", "intermittent", "not playable",
+           "display only", "unplugged", "coin mech", "coinmech", "eating"]
 GOOD = ["fixed", "repaired", "working", "plays great", "plays well", "playing great", "great condition",
         "good condition", "excellent", "back on", "all good", "no issues", "no problems", "fine now",
         "mint", "waxed", "cleaned", "new rubbers", "fully", "perfect"]
@@ -47,19 +47,14 @@ def status_of(comment):
 
 
 def _label(e):
-    extra = ", ".join(str(x) for x in (e.get("manufacturer"), e.get("year")) if x)
-    return f"{e['machine']} ({extra})" if extra else e["machine"]
+    return e["machine"]
 
 
-def build(events, old=None, new=None):
+def build(events):
     by_venue = defaultdict(list)
-    for e in events:
+    for e in sorted(events, key=lambda e: e["id"]):
         by_venue[str(e["location_id"])].append(e)
     items, confirmations = [], 0
-    quiet_since = {}
-    if old:
-        for lid, v in old["venues"].items():
-            quiet_since[lid] = v.get("last_confirmed") or ""
 
     for lid, evs in by_venue.items():
         venue = {"location_id": evs[0]["location_id"], "location_name": evs[0]["location_name"],
@@ -73,31 +68,30 @@ def build(events, old=None, new=None):
             items.append({**venue, "kind": "new_venue", "rank": 0, "date": kinds["venue_added"][0]["date"],
                           "machines": [_label(e) for e in kinds["machine_added"]]})
             kinds["machine_added"] = []
-        if kinds["venue_removed"]:
-            items.append({**venue, "kind": "venue_gone", "rank": 1, "date": kinds["venue_removed"][0]["date"],
-                          "machines": kinds["venue_removed"][0]["machines"]})
-            kinds["machine_removed"] = []       # the venue line already says what it had
-
         added, removed = list(kinds["machine_added"]), list(kinds["machine_removed"])
         for r in list(removed):
             for a in list(added):
-                same_group = r.get("group_id") and r.get("group_id") == a.get("group_id")
-                if same_group or base_title(r["machine"]) == base_title(a["machine"]):
+                if base_title(r["machine"]) == base_title(a["machine"]):
                     items.append({**venue, "kind": "swap", "rank": 2, "date": a["date"],
                                   "out": _label(r), "in": _label(a)})
                     removed.remove(r)
                     added.remove(a)
                     break
-        if added:
+        by = sorted({e["user"] for e in added if e["user"]})
+        if added and removed:                  # a rotation: one line, in and out together
+            items.append({**venue, "kind": "rotation", "rank": 3 - min(len(added), 3) * 0.1,
+                          "date": max(e["date"] for e in added + removed),
+                          "machines": [_label(e) for e in added], "out": [_label(e) for e in removed], "by": by})
+        elif added:
             items.append({**venue, "kind": "added", "rank": 3 - min(len(added), 3) * 0.1, "date": max(e["date"] for e in added),
-                          "machines": [_label(e) for e in added], "fresh": not quiet_since.get(lid)})
-        if removed:
+                          "machines": [_label(e) for e in added], "by": by})
+        elif removed:
             items.append({**venue, "kind": "removed", "rank": 4, "date": max(e["date"] for e in removed),
                           "machines": [_label(e) for e in removed]})
 
         latest = {}
-        for c in sorted(kinds["condition"], key=lambda e: e["date"] or ""):
-            latest[c["lmx_id"]] = c            # keep the newest note per machine
+        for c in sorted(kinds["condition"], key=lambda e: e["id"]):
+            latest[c["machine_id"]] = c         # keep the newest note per machine
         for c in latest.values():
             s = status_of(c["comment"])
             items.append({**venue, "kind": "condition", "status": s, "rank": 5 if s == "amber" else 6,
@@ -119,9 +113,8 @@ def _join(names):
     return ", ".join(names[:-1]) + " and " + names[-1]
 
 
-def to_markdown(digest, region, day, period=None):
-    title = f"Pinball changes, {region.title()}, {day}" if not period else f"Pinball changes, {region.title()}, {period}"
-    lines = [f"# {title}", ""]
+def to_markdown(digest, label, period):
+    lines = [f"# Pinball changes: {label}, {period}", ""]
     if not digest["items"]:
         lines.append("Nothing changed on the map.")
     for i in digest["items"]:
@@ -129,15 +122,16 @@ def to_markdown(digest, region, day, period=None):
         if i["kind"] == "new_venue":
             what = f" with {_join(i['machines'])}" if i["machines"] else ""
             lines.append(f"- **New venue:** {v}{what}.")
-        elif i["kind"] == "venue_gone":
-            had = f" It had {_join(i['machines'])}." if i["machines"] else ""
-            lines.append(f"- **Venue gone from the map:** {v}.{had}")
         elif i["kind"] == "swap":
             lines.append(f"- **Swap:** {v} replaced {i['out']} with {i['in']}.")
         elif i["kind"] == "added":
             n = len(i["machines"])
             head = "**New machine:**" if n == 1 else f"**{n} new machines:**"
-            lines.append(f"- {head} {v} added {_join(i['machines'])}.")
+            who = f" (thanks {_join(i['by'])})" if i.get("by") else ""
+            lines.append(f"- {head} {v} added {_join(i['machines'])}.{who}")
+        elif i["kind"] == "rotation":
+            who = f" (thanks {_join(i['by'])})" if i.get("by") else ""
+            lines.append(f"- **Rotation:** {v} brought in {_join(i['machines'])} and moved out {_join(i['out'])}.{who}")
         elif i["kind"] == "removed":
             n = len(i["machines"])
             head = "**Gone:**" if n == 1 else f"**{n} gone:**"
@@ -152,8 +146,8 @@ def to_markdown(digest, region, day, period=None):
     return "\n".join(lines) + "\n"
 
 
-def save(region, day, digest, markdown):
-    folder = DIGESTS / region
+def save(area, day, digest, markdown):
+    folder = DIGESTS / area
     folder.mkdir(parents=True, exist_ok=True)
     (folder / f"{day}.md").write_text(markdown, encoding="utf-8")
     (folder / f"{day}.json").write_text(json.dumps(digest, indent=1), encoding="utf-8")

@@ -1,0 +1,121 @@
+{
+ "items": [
+  {
+   "location_id": 30464,
+   "location_name": "Lucky 13 Mini Golf & Arcade",
+   "city": "Inverloch",
+   "link": "https://pinballmap.com/map?by_location_id=30464",
+   "kind": "new_venue",
+   "rank": 0,
+   "date": "2026-09-20",
+   "machines": [
+    "The Simpsons Pinball Party (Stern, 2003)",
+    "Kiss (Stern, 2015)",
+    "Lord of the Rings (Stern, 2003)"
+   ]
+  },
+  {
+   "location_id": 30582,
+   "location_name": "Morwell Hotel",
+   "city": "Morwell",
+   "link": "https://pinballmap.com/map?by_location_id=30582",
+   "kind": "new_venue",
+   "rank": 0,
+   "date": "2026-10-02",
+   "machines": [
+    "Ghostbusters (Pro) (Stern, 2016)"
+   ]
+  },
+  {
+   "location_id": 20289,
+   "location_name": "Railway Hotel South Melbourne",
+   "city": "South Melbourne",
+   "link": "https://pinballmap.com/map?by_location_id=20289",
+   "kind": "swap",
+   "rank": 2,
+   "date": "2026-09-29",
+   "out": "Cactus Canyon (Bally, 1998)",
+   "in": "Cactus Canyon (Remake Special) (Chicago Gaming, 2021)"
+  },
+  {
+   "location_id": 18887,
+   "location_name": "The Pinball Parlour",
+   "city": "Campbellfield",
+   "link": "https://pinballmap.com/map?by_location_id=18887",
+   "kind": "added",
+   "rank": 2.9,
+   "date": "2026-09-22",
+   "machines": [
+    "The Adventures of Rocky and Bullwinkle and Friends (Data East, 1993)"
+   ],
+   "by": [
+    "dellabrett"
+   ]
+  },
+  {
+   "location_id": 23655,
+   "location_name": "Desert Highways",
+   "city": "Reservoir",
+   "link": "https://pinballmap.com/map?by_location_id=23655",
+   "kind": "removed",
+   "rank": 4,
+   "date": "2026-09-20",
+   "machines": [
+    "The Getaway: High Speed II (Williams, 1992)"
+   ]
+  },
+  {
+   "location_id": 30070,
+   "location_name": "Black Jacks Cafe De Wheels",
+   "city": "Albury",
+   "link": "https://pinballmap.com/map?by_location_id=30070",
+   "kind": "condition",
+   "status": "amber",
+   "rank": 5,
+   "date": "2026-09-26",
+   "machine": "Devil Riders (Zaccaria, 1984)",
+   "comment": "Note, machine not playable - for display only",
+   "user": "CotClownfish"
+  },
+  {
+   "location_id": 15980,
+   "location_name": "Fortress Melbourne",
+   "city": "Melbourne",
+   "link": "https://pinballmap.com/map?by_location_id=15980",
+   "kind": "condition",
+   "status": "amber",
+   "rank": 5,
+   "date": "2026-09-29",
+   "machine": "The Uncanny X-Men (Premium) (Stern, 2024)",
+   "comment": "Ball was stuck. Shooting out extra balls with no reason.",
+   "user": "dolphin61"
+  },
+  {
+   "location_id": 15980,
+   "location_name": "Fortress Melbourne",
+   "city": "Melbourne",
+   "link": "https://pinballmap.com/map?by_location_id=15980",
+   "kind": "condition",
+   "status": "amber",
+   "rank": 5,
+   "date": "2026-09-29",
+   "machine": "Venom (LE) (Stern, 2023)",
+   "comment": "Machine was turned off",
+   "user": "dolphin61"
+  },
+  {
+   "location_id": 15980,
+   "location_name": "Fortress Melbourne",
+   "city": "Melbourne",
+   "link": "https://pinballmap.com/map?by_location_id=15980",
+   "kind": "condition",
+   "status": "green",
+   "rank": 6,
+   "date": "2026-09-19",
+   "machine": "Deadpool (Premium) (Stern, 2018)",
+   "comment": "All previous issues seem to have been resolved. Plays well, although could be a little steeper to play at the speed I'm used to at other locations.",
+   "user": "Busta_Chopz"
+  }
+ ],
+ "confirmations": 5
+}

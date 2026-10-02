@@ -1,7 +1,7 @@
 name: Daily pinball digest
 
-# Runs once a day, fetches the region from Pinball Map, diffs against the
-# previous snapshot, and commits the snapshot and digest back.
+# Runs once a day, fetches every area's feed from Pinball Map, merges it into the
+# event store, and commits the store and digests back.
 
 on:
   schedule:
@@ -20,7 +20,7 @@ jobs:
         with:
           python-version: "3.12"
       - name: Fetch, diff and write the digest
-        run: python -m pbmdiff.run sync --region melbourne
+        run: python -m pbmdiff.run sync
         env:
           PINBALLMAP_API_TOKEN: ${{ secrets.PINBALLMAP_API_TOKEN }}
       - name: Keep the snapshot and digest
@@ -28,5 +28,5 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add data
-          git diff --cached --quiet || git commit -m "Snapshot and digest for $(date -u +%F)"
+          git diff --cached --quiet || git commit -m "Events and digests for $(date -u +%F)"
           git push
