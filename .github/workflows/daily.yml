@@ -1,6 +1,5 @@
 name: Daily pinball digest
 
-# Copy to .github/workflows/ in this project's own repository.
 # Runs once a day, fetches the region from Pinball Map, diffs against the
 # previous snapshot, and commits the snapshot and digest back.
 
