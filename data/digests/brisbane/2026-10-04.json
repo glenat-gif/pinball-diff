@@ -1,0 +1,53 @@
+{
+ "items": [
+  {
+   "location_id": 19757,
+   "location_name": "Working Title Brew Co.",
+   "city": "Newstead",
+   "link": "https://pinballmap.com/map?by_location_id=19757",
+   "kind": "rotation",
+   "rank": 2.8,
+   "date": "2026-09-28",
+   "machines": [
+    "Godzilla (Premium) (Stern, 2021)",
+    "Monster Bash (Remake) (Chicago Gaming, 2018)"
+   ],
+   "out": [
+    "Elvira's House of Horrors (Premium) (Stern, 2019)",
+    "Star Trek: The Next Generation (Williams, 1993)"
+   ],
+   "by": [
+    "Consilium"
+   ]
+  },
+  {
+   "location_id": 21899,
+   "location_name": "Aspley 10 Pin Bowl",
+   "city": "Aspley",
+   "link": "https://pinballmap.com/map?by_location_id=21899",
+   "kind": "added",
+   "rank": 2.9,
+   "date": "2026-09-29",
+   "machines": [
+    "Iron Maiden: Legacy of the Beast (Pro) (Stern, 2018)"
+   ],
+   "by": [
+    "bt"
+   ]
+  },
+  {
+   "location_id": 19397,
+   "location_name": "Timezone Orion Springfield",
+   "city": "Springfield Central",
+   "link": "https://pinballmap.com/map?by_location_id=19397",
+   "kind": "condition",
+   "status": "amber",
+   "rank": 5,
+   "date": "2026-09-29",
+   "machine": "AC/DC (Pro) (Stern, 2012)",
+   "comment": "Machine is still there but was out of order today.",
+   "user": "bt"
+  }
+ ],
+ "confirmations": 2
+}
