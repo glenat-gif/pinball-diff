@@ -59,6 +59,22 @@ Runs the rules over a real week of Melbourne submissions kept as a fixture.
 events and digests back, so the history lives in git. It needs the token as
 a repository secret named `PINBALLMAP_API_TOKEN`.
 
+## The website and the email
+
+`python -m pbmdiff.run build` writes the website into `dist/`: this week for
+every zone with Victoria first, a page per zone with four weeks of history,
+the archive of emails, an about page and an Atom feed. GitHub Pages serves it.
+
+`python -m pbmdiff.run issue` makes the email when it is due. An issue is
+dated Thursday, covers the seven days before it, and is frozen in
+`data/issues/` the first time it is made, with a readable copy of the email
+beside it. With a `BUTTONDOWN_API_KEY` it is created in Buttondown, as a
+draft for a person to read and send, or sent straight away once
+`site.json` says `"email_mode": "send"`. Quiet weeks send nothing, and an
+issue is never sent twice or late.
+
+The name, web address, sign-up account and email zones live in `site.json`.
+
 ## Tests
 
 ```
@@ -75,5 +91,5 @@ their work visible. Pinball Map data is CC BY-SA 4.0.
 ## Not here yet
 
 Venues deleted from the map (a separate feed endpoint); the IFPA comp
-calendar; dealer "landing soon" intake by email; and any sending of the
-digest. The digest has to be right first.
+calendar; dealer "landing soon" intake by email; and per-zone emails, which
+the sign-up form already collects preferences for.

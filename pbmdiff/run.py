@@ -6,6 +6,8 @@
                                                     write a digest from the store, no network
   python -m pbmdiff.run sync [--days 7]             fetch, then write a digest for every zone
   python -m pbmdiff.run zones                       list the zones and what the store holds for each
+  python -m pbmdiff.run issue [--date YYYY-MM-DD]   make this week's email issue if due, and deliver it
+  python -m pbmdiff.run build                       build the website into dist/
 """
 import argparse
 import datetime as dt
@@ -13,7 +15,7 @@ import json
 import pathlib
 import sys
 
-from . import api, areas, digest, store
+from . import api, areas, digest, issue, mail, site, store
 
 FIXTURES = pathlib.Path(__file__).resolve().parent.parent / "tests" / "fixtures"
 
@@ -83,6 +85,25 @@ def cmd_zones(args):
         print(f"   {e['location_name']} in {e['city']} ({e['lat']}, {e['lon']})")
 
 
+def cmd_issue(args):
+    events = store.load()
+    if args.date:
+        d = dt.date.fromisoformat(args.date)
+        iss = issue.load(d.isoformat()) if issue.path(d.isoformat()).exists() else issue.make(events, d)
+        issue.save(iss)
+    else:
+        iss = issue.ensure_latest(events)
+        if iss is None:
+            iss = issue.load(issue.latest_issue_date().isoformat())
+    print(f"issue {iss['date']}: {mail.subject(iss)}")
+    print(f"copy at {mail.keep_copy(iss)}")
+    print(mail.deliver(iss))
+
+
+def cmd_build(args):
+    print(f"built {site.build()}")
+
+
 def main(argv=None):
     p = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     sub = p.add_subparsers(dest="cmd", required=True)
@@ -94,6 +115,8 @@ def main(argv=None):
     s = sub.add_parser("sync"); s.add_argument("--since"); s.add_argument("--backfill", type=int, default=14)
     s.add_argument("--days", type=int, default=7); s.set_defaults(fn=cmd_sync)
     sub.add_parser("zones").set_defaults(fn=cmd_zones)
+    i = sub.add_parser("issue"); i.add_argument("--date"); i.set_defaults(fn=cmd_issue)
+    sub.add_parser("build").set_defaults(fn=cmd_build)
     args = p.parse_args(argv)
     args.fn(args)
 

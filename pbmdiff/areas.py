@@ -89,6 +89,11 @@ ZONES = [
     ("alice", "Central Australia", within(-23.6980, 133.8807, 400)),
 ]
 LABELS = {key: label for key, label, _ in ZONES}
+SHORT = {"melbourne": "Greater Melbourne", "geelong": "Geelong", "gippsland": "Gippsland",
+         "northern-victoria": "Northern Vic", "western-victoria": "Western Vic", "sydney": "NSW and ACT",
+         "brisbane": "South east Qld", "perth": "WA", "adelaide": "SA", "hobart": "Tasmania",
+         "darwin": "Top End", "cairns": "Far North Qld", "townsville": "North Qld",
+         "rockhampton": "Central Qld", "alice": "Central Australia"}
 
 
 def zone_of(lat, lon):

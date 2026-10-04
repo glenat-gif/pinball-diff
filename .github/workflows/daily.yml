@@ -1,15 +1,23 @@
 name: Daily pinball digest
 
-# Runs once a day, fetches every area's feed from Pinball Map, merges it into the
-# event store, and commits the store and digests back.
+# Every morning: fetch what changed on Pinball Map, write the zone digests,
+# make Thursday's email issue when it is due, keep it all in git, then
+# rebuild the website. The email waits as a Buttondown draft unless site.json
+# says "email_mode": "send".
 
 on:
   schedule:
-    - cron: "17 20 * * *"      # about 6 or 7 am in Melbourne
+    - cron: "17 20 * * *"      # about 6 or 7 am in Melbourne; GitHub often runs it later
   workflow_dispatch:
 
 permissions:
   contents: write
+  pages: write
+  id-token: write
+
+concurrency:
+  group: daily
+  cancel-in-progress: false
 
 jobs:
   sync:
@@ -19,14 +27,35 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
-      - name: Fetch, diff and write the digest
+      - name: Test
+        run: python -m unittest discover tests
+      - name: Fetch and write the digests
         run: python -m pbmdiff.run sync
         env:
           PINBALLMAP_API_TOKEN: ${{ secrets.PINBALLMAP_API_TOKEN }}
-      - name: Keep the snapshot and digest
+      - name: Make and deliver this week's email if due
+        run: python -m pbmdiff.run issue
+        env:
+          BUTTONDOWN_API_KEY: ${{ secrets.BUTTONDOWN_API_KEY }}
+      - name: Keep the events, digests and issues
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add data
-          git diff --cached --quiet || git commit -m "Events and digests for $(date -u +%F)"
+          git diff --cached --quiet || git commit -m "Events and digests for $(TZ=Australia/Melbourne date +%F)"
           git push
+      - name: Build the website
+        run: python -m pbmdiff.run build
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
+
+  publish:
+    needs: sync
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

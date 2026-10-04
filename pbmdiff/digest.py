@@ -66,14 +66,15 @@ def build(events):
 
         if kinds["venue_added"]:
             items.append({**venue, "kind": "new_venue", "rank": 0, "date": kinds["venue_added"][0]["date"],
-                          "machines": [_label(e) for e in kinds["machine_added"]]})
+                          "machines": [_label(e) for e in kinds["machine_added"]],
+                          "by": sorted({e["user"] for e in kinds["venue_added"] + kinds["machine_added"] if e["user"]})})
             kinds["machine_added"] = []
         added, removed = list(kinds["machine_added"]), list(kinds["machine_removed"])
         for r in list(removed):
             for a in list(added):
                 if base_title(r["machine"]) == base_title(a["machine"]):
                     items.append({**venue, "kind": "swap", "rank": 2, "date": a["date"],
-                                  "out": _label(r), "in": _label(a)})
+                                  "out": _label(r), "in": _label(a), "by": sorted({x for x in (a["user"], r["user"]) if x})})
                     removed.remove(r)
                     added.remove(a)
                     break
@@ -87,7 +88,7 @@ def build(events):
                           "machines": [_label(e) for e in added], "by": by})
         elif removed:
             items.append({**venue, "kind": "removed", "rank": 4, "date": max(e["date"] for e in removed),
-                          "machines": [_label(e) for e in removed]})
+                          "machines": [_label(e) for e in removed], "by": sorted({e["user"] for e in removed if e["user"]})})
 
         latest = {}
         for c in sorted(kinds["condition"], key=lambda e: e["id"]):
@@ -95,7 +96,8 @@ def build(events):
         for c in latest.values():
             s = status_of(c["comment"])
             items.append({**venue, "kind": "condition", "status": s, "rank": 5 if s == "amber" else 6,
-                          "date": c["date"], "machine": _label(c), "comment": c["comment"], "user": c["user"]})
+                          "date": c["date"], "machine": _label(c), "comment": c["comment"], "user": c["user"],
+                          "by": [c["user"]] if c["user"] else []})
 
     items.sort(key=lambda i: (i["rank"], i["location_name"]))
     return {"items": items, "confirmations": confirmations}
