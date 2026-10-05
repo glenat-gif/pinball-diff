@@ -7,6 +7,7 @@
   python -m pbmdiff.run sync [--days 7]             fetch, then write a digest for every zone
   python -m pbmdiff.run zones                       list the zones and what the store holds for each
   python -m pbmdiff.run issue [--date YYYY-MM-DD]   make this week's email issue if due, and deliver it
+  python -m pbmdiff.run comps                       fetch the next 60 days of IFPA events (needs IFPA_API_KEY)
   python -m pbmdiff.run build                       build the website into dist/
 """
 import argparse
@@ -15,7 +16,7 @@ import json
 import pathlib
 import sys
 
-from . import api, areas, digest, issue, mail, site, store
+from . import api, areas, digest, ifpa, issue, mail, site, store
 
 FIXTURES = pathlib.Path(__file__).resolve().parent.parent / "tests" / "fixtures"
 
@@ -70,8 +71,24 @@ def _digest(zone, days, until=None):
     return d
 
 
+def cmd_comps(args):
+    comps = ifpa.fetch()
+    if comps is None:
+        print("comps skipped: no IFPA_API_KEY")
+        return
+    by_zone = {}
+    for c in comps:
+        by_zone[c["zone"]] = by_zone.get(c["zone"], 0) + 1
+    print(f"{len(comps)} upcoming IFPA events in the next {ifpa.DAYS_AHEAD} days: "
+          + ", ".join(f"{z or 'no zone'} {n}" for z, n in sorted(by_zone.items(), key=lambda kv: -kv[1])))
+
+
 def cmd_sync(args):
     cmd_fetch(args)
+    try:
+        cmd_comps(args)
+    except Exception as err:                # comps are a bonus; never let them stop the digest
+        print(f"comps fetch failed: {err}")
     for key in areas.LABELS:
         _digest(key, args.days)
 
@@ -123,6 +140,7 @@ def main(argv=None):
     s.add_argument("--machines", action="store_true")
     s.add_argument("--days", type=int, default=7); s.set_defaults(fn=cmd_sync)
     sub.add_parser("zones").set_defaults(fn=cmd_zones)
+    sub.add_parser("comps").set_defaults(fn=cmd_comps)
     i = sub.add_parser("issue"); i.add_argument("--date"); i.set_defaults(fn=cmd_issue)
     sub.add_parser("build").set_defaults(fn=cmd_build)
     args = p.parse_args(argv)

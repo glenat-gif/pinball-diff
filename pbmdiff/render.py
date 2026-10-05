@@ -80,3 +80,22 @@ def count_changes(zones):
 def short_span(since, until):
     a, b = dt.date.fromisoformat(since), dt.date.fromisoformat(until)
     return f"{a.day} {a:%b} to {b.day} {b:%b}"
+
+
+def comp_when(c, today=None):
+    if c["end"] and c["end"] != c["start"]:
+        a, b = dt.date.fromisoformat(c["start"]), dt.date.fromisoformat(c["end"])
+        if c["type"] == "League":
+            return f"From {day(c['start'], today)}"
+        return f"{day(c['start'], today)} to {day(c['end'], today)}" if a.month != b.month else \
+            f"{a:%a} {a.day} to {b:%a} {b.day} {b:%b}"
+    return day(c["start"], today)
+
+
+def comp_kind(c):
+    bits = []
+    if c["type"] == "League":
+        bits.append("League")
+    if c.get("women"):
+        bits.append("Women's")
+    return " · ".join(bits)

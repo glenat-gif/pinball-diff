@@ -17,7 +17,7 @@ import json
 import pathlib
 import shutil
 
-from . import areas, digest, issue, render, store
+from . import areas, digest, ifpa, issue, render, store
 from .config import ROOT, SITE
 
 DIST = ROOT / "dist"
@@ -94,6 +94,50 @@ def zone_block(z, heading_link=True, when=True, more=False):
             f"{body}{conf}{more_html}</section>")
 
 
+def comp_row(c, show_zone=True):
+    kind = render.comp_kind(c)
+    kind_html = f' <span class="pill">{e(kind)}</span>' if kind else ""
+    sub = f' <span class="city">{e(c["event"])}</span>' if c["event"] else ""
+    where = ", ".join(x for x in (c["venue"], c["city"]) if x)
+    zone = f' <span class="city">· {e(short(c["zone"]))}</span>' if show_zone and c["zone"] else ""
+    more = f' · <a href="{e(c["website"])}">Event page</a>' if c["website"] else ""
+    fmt = f'<span class="d">{e(c["format"])}</span>' if c["format"] else ""
+    return (f'<li class="comp"><span class="when">{e(render.comp_when(c))}</span><div>'
+            f'<a class="cname" href="{e(c["link"])}">{e(c["name"])}</a>{kind_html}{sub}'
+            f'<div class="cwhere">{e(where)}{zone}{more}</div>{fmt}</div></li>')
+
+
+def comps_block(comps, since, until, title, empty, link=True):
+    rows = "".join(comp_row(c) for c in comps)
+    body = f'<ul class="comps">{rows}</ul>' if comps else f'<p class="quiet">{e(empty)}</p>'
+    more = f'<p class="more"><a href="{u("/comps/")}">Every comp in Australia, next two months</a></p>' if link else ""
+    return (f'<section class="zone comps-zone"><header><h2>{e(title)}</h2>'
+            f'<span class="when">{e(render.short_span(since, until))}</span></header>{body}{more}</section>')
+
+
+def comps_page(comps, on):
+    by_zone = {}
+    for c in comps:
+        by_zone.setdefault(c["zone"], []).append(c)
+    order = [z for z in issue.zone_order() if z in by_zone] + ([None] if None in by_zone else [])
+    nav = "".join(f'<a href="#comps-{e(z or "other")}">{e(short(z) if z else "Elsewhere")}'
+                  f'<span class="n">{len(by_zone[z])}</span></a>' for z in order)
+    sections = "".join(
+        f'<section class="zone" id="comps-{e(z or "other")}"><header><h2>{e(areas.LABELS.get(z, "Elsewhere"))}</h2></header>'
+        f'<ul class="comps">{"".join(comp_row(c, show_zone=False) for c in by_zone[z])}</ul></section>' for z in order)
+    if not comps:
+        sections = ('<p class="quiet">No upcoming IFPA events are listed yet. '
+                    'They appear here as directors add them to the IFPA calendar.</p>')
+    until = (on + dt.timedelta(days=ifpa.DAYS_AHEAD)).isoformat()
+    box = ('<p class="wordmark" style="font-size:clamp(1.6rem,6vw,2.6rem)">Comps</p>'
+           f'<p class="lede">Every IFPA-sanctioned tournament and league in Australia from now to {e(render.day(until))}.'
+           '<small>From the IFPA calendar, updated every morning. Running a comp that is not here? Submit it to IFPA, '
+           'or tell us and we will add a way to list it.</small></p>')
+    nav_html = f'<nav class="chips" aria-label="Areas">{nav}</nav>' if comps else ""
+    return page("Comps", sections, path="/comps/", description="Upcoming pinball tournaments and leagues across Australia.",
+                box_extra=box, nav=nav_html, current="comps")
+
+
 def signup():
     user = SITE.get("buttondown_username")
     vic = [(z, areas.LABELS[z]) for z in SITE["email_zones"]]
@@ -162,7 +206,7 @@ def page(title, body, *, path, description, box_extra="", nav="", current=None):
 <body>
 <header class="box"><div class="wrap">
 <nav class="topnav" aria-label="Site"><a class="home" href="{u('/')}">{e(SITE['name'])}</a>
-<a href="{u('/machines/')}"{cur('machines')}>Machines</a><a href="{u('/issues/')}"{cur('issues')}>Past emails</a><a href="{u('/about/')}"{cur('about')}>About</a></nav>
+<a href="{u('/comps/')}"{cur('comps')}>Comps</a><a href="{u('/machines/')}"{cur('machines')}>Machines</a><a href="{u('/issues/')}"{cur('issues')}>Past emails</a><a href="{u('/about/')}"{cur('about')}>About</a></nav>
 {box_extra}
 </div></header>
 <main><div class="wrap">
@@ -180,7 +224,7 @@ def page(title, body, *, path, description, box_extra="", nav="", current=None):
 
 # ---------- pages ----------
 
-def home(weeks, counts, built_on):
+def home(weeks, counts, built_on, comps=()):
     total = render.count_changes(weeks)
     active = [z for z in weeks if z["items"]]
     quiet = [z for z in weeks if not z["items"]]
@@ -191,7 +235,11 @@ def home(weeks, counts, built_on):
            f'Updated every morning from <a href="https://pinballmap.com">Pinball Map</a>.</small></p>'
            f'<p class="score"><b>{total}</b> change{"s" if total != 1 else ""} · {e(short_span)}</p>'
            f"{signup()}")
-    blocks = "".join(zone_block(z, when=False, more=True) for z in active)
+    soon_until = (built_on + dt.timedelta(days=7)).isoformat()
+    soon = ifpa.between(list(comps), built_on.isoformat(), soon_until, set(SITE["email_zones"]))
+    blocks = comps_block(soon, built_on.isoformat(), soon_until, "Comps in Victoria this week",
+                         "No IFPA comps listed in Victoria in the next seven days.") if comps else ""
+    blocks += "".join(zone_block(z, when=False, more=True) for z in active)
     if quiet:
         names = render.join(f'<a href="{u("/zone/" + z["zone"] + "/")}">{e(short(z["label"]))}</a>' for z in quiet)
         blocks += f'<p class="allquiet"><strong>Quiet on the map this week:</strong> {names}.</p>'
@@ -220,7 +268,10 @@ def issue_page(iss):
            f'{n} change{"s" if n != 1 else ""} across Victoria.</p>')
     active = [z for z in zones if z["items"]]
     quiet = [z for z in zones if not z["items"]]
-    body = "".join(zone_block(z, when=False) for z in active)
+    ic = issue.email_comps(iss)
+    body = comps_block(ic, iss["date"], iss.get("comps_until", iss["date"]), "Comps coming up",
+                       "No IFPA comps listed in Victoria.", link=False) if ic else ""
+    body += "".join(zone_block(z, when=False) for z in active)
     if quiet:
         body += (f'<p class="allquiet"><strong>Quiet on the map:</strong> '
                  f'{render.join(e(short(z["label"])) for z in quiet)}.</p>')
@@ -468,7 +519,9 @@ def build(on=None):
         shutil.rmtree(DIST)
     DIST.mkdir()
     shutil.copy(ROOT / "static" / "style.css", DIST / "style.css")
-    write("/", home(weeks, counts, on))
+    comps = ifpa.load()
+    write("/", home(weeks, counts, on, comps))
+    write("/comps/", comps_page(ifpa.between(comps, on.isoformat(), "9999-12-31"), on))
     for z in issue.zone_order():
         write(f"/zone/{z}/", zone_page(z, events, until, counts))
     dates = issue.published_dates()

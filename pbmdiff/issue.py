@@ -11,10 +11,11 @@ arrive late show up on the website, never in an issue that has gone out.
 import datetime as dt
 import json
 
-from . import areas, digest, store
+from . import areas, digest, ifpa, store
 from .config import SITE
 
 ISSUES = store.DATA / "issues"
+COMPS_AHEAD = 10          # Thursday to the Sunday after next
 
 
 def today():
@@ -46,7 +47,10 @@ def make(events, issue_date):
     until = (issue_date - dt.timedelta(days=1)).isoformat()
     zones = [week(events, z, until) for z in zone_order()]
     since = zones[0]["since"]
-    return {"date": issue_date.isoformat(), "since": since, "until": until, "zones": zones, "email": None}
+    ahead = (issue_date + dt.timedelta(days=COMPS_AHEAD)).isoformat()
+    comps = ifpa.between(ifpa.load(), issue_date.isoformat(), ahead)
+    return {"date": issue_date.isoformat(), "since": since, "until": until, "zones": zones,
+            "comps": comps, "comps_until": ahead, "email": None}
 
 
 def path(date):
@@ -82,6 +86,10 @@ def ensure_latest(events, on=None):
     issue = make(events, date)
     save(issue)
     return issue
+
+
+def email_comps(issue):
+    return [c for c in issue.get("comps", []) if c["zone"] in SITE["email_zones"]]
 
 
 def email_zones(issue):

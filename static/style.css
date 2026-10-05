@@ -158,6 +158,16 @@ blockquote.said { margin: 0.35rem 0 0; padding-left: 0.75rem; border-left: 3px s
 .allquiet { margin-top: 2.4rem; color: var(--muted); }
 .allquiet strong { color: var(--ink); }
 
+/* Comps */
+.comps { list-style: none; margin: 0; padding: 0; }
+.comp { display: grid; grid-template-columns: 6.6rem 1fr; gap: 0.2rem 1rem; padding: 0.85rem 0; border-bottom: 1px solid var(--line); }
+.comp .when { font-weight: 700; font-size: 0.9rem; color: var(--plasma-text); }
+.comp .cname { font-weight: 650; }
+.cwhere { color: var(--muted); font-size: 0.95rem; }
+.comp .d { display: block; color: var(--muted); font-size: 0.86rem; }
+.comps-zone > header { border-bottom-color: var(--plasma); }
+@media (max-width: 560px) { .comp { grid-template-columns: 1fr; } }
+
 /* Machines */
 .finder { margin-top: 1.8rem; }
 .finder label { display: block; font-weight: 650; margin-bottom: 0.35rem; }

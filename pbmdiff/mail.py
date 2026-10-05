@@ -37,6 +37,9 @@ def subject(iss):
     if items and items[0]["kind"] in LEAD:
         top = items[0]
         lead = ": " + LEAD[top["kind"]].format(where=render.where(top) or top["location_name"], venue=top["location_name"])
+    if n == 0:
+        k = len(issue.email_comps(iss))
+        return f"{k} comp{'s' if k != 1 else ''} coming up in Victoria"
     return f"{n} change{'s' if n != 1 else ''} in Victoria{lead}"
 
 
@@ -70,6 +73,14 @@ def line(item):
     return f"- **{render.label(item)}.** {venue}. {what} _{meta}_"
 
 
+def comp_line(c):
+    kind = render.comp_kind(c)
+    where = ", ".join(x for x in (c["venue"], c["city"]) if x)
+    extra = f" {kind}." if kind else ""
+    page = f" [Event page]({c['website']})." if c["website"] else ""
+    return f"- **{render.comp_when(c)}.** [{c['name']}]({c['link']}), {where}.{extra}{page}"
+
+
 def markdown(iss):
     zones = issue.email_zones(iss)
     active = [z for z in zones if z["items"]]
@@ -77,6 +88,9 @@ def markdown(iss):
     out = ["<!-- buttondown-editor-mode: plaintext -->",
            f"What changed on Pinball Map in Victoria, {render.span(iss['since'], iss['until'])}. "
            f"Every state is on [the website]({site_url('/')}).", ""]
+    comps = issue.email_comps(iss)
+    if comps:
+        out += ["## Comps coming up", ""] + [comp_line(c) for c in comps] + [""]
     for z in active:
         out += [f"## {z['label']}", ""] + [line(i) for i in z["items"]] + [""]
     if quiet:
@@ -112,7 +126,7 @@ def deliver(iss, key=None, opener=urllib.request.urlopen):
         iss["email"] = {"status": "skipped", "reason": f"found {age} days after its date; too late to send"}
         issue.save(iss)
         return "skipped: too old to send"
-    if render.count_changes(issue.email_zones(iss)) == 0:
+    if render.count_changes(issue.email_zones(iss)) == 0 and not issue.email_comps(iss):
         iss["email"] = {"status": "skipped", "reason": "nothing changed in the email zones"}
         issue.save(iss)
         return "skipped: a quiet week"
