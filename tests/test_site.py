@@ -116,6 +116,12 @@ class MachineTests(Built):
         self.assertEqual(stern["editions"], {"Pro", "LE"})
         self.assertEqual(sorted(g["slug"] for g in groups), ["godzilla-sega-1998", "godzilla-stern-2021"])
 
+    def test_machine_names_in_the_week_link_to_their_pages(self):
+        home = (site.build(on=dt.date(2026, 10, 3)) / "index.html").read_text()
+        self.assertIn('<a class="m" href="/pinball-diff/machines/cactus-canyon/">Cactus Canyon</a>', home)
+        self.assertIn('<a class="m" href="/pinball-diff/machines/ghostbusters/">Ghostbusters (Pro)</a>', home)
+        self.assertIn('<span class="m">Venom (LE)</span>', home)     # only condition notes, so no page
+
     def test_slugs_drop_accents(self):
         self.assertEqual(site.slug("Pokémon"), "pokemon")
         self.assertEqual(site.slug("Elvira's House of Horrors"), "elvira-s-house-of-horrors")

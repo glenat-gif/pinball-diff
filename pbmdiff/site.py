@@ -40,12 +40,25 @@ def absolute(path):
 
 # ---------- pieces ----------
 
+# machine id and full name -> the machine's page slug; filled in by build() before any page is written
+MACHINE_PAGES = {"ids": {}, "names": {}}
+
+
+def machine_page_for(name, item=None):
+    mid = ((item or {}).get("ids") or {}).get(name)
+    slug = MACHINE_PAGES["ids"].get(mid) if mid else None
+    return slug or MACHINE_PAGES["names"].get(name)
+
+
 def machine(name, item=None):
     title, maker = render.split_machine(name)
     tail = f' <span class="mk">({e(maker)})</span>' if maker else ""
     flags = (item or {}).get("flags", {}).get(name, [])
     pills = "".join(f' <span class="pill">{e(f)}</span>' for f in flags)
-    return f'<span class="m">{e(title)}</span>{tail}{pills}'
+    slug = machine_page_for(name, item)
+    label = (f'<a class="m" href="{u("/machines/" + slug + "/")}">{e(title)}</a>' if slug
+             else f'<span class="m">{e(title)}</span>')
+    return f'{label}{tail}{pills}'
 
 
 def machines(names, item=None):
@@ -57,15 +70,15 @@ def what(item):
     if k == "new_venue":
         return f"New to the map with {machines(item['machines'], item)}." if item["machines"] else "New to the map."
     if k == "swap":
-        return f"Swapped {machine(item['out'])} for {machine(item['in'], item)}."
+        return f"Swapped {machine(item['out'], item)} for {machine(item['in'], item)}."
     if k == "rotation":
         return (f'<span class="io"><b>In</b>{machines(item["machines"], item)}</span>'
-                f'<span class="io"><b>Out</b>{machines(item["out"])}</span>')
+                f'<span class="io"><b>Out</b>{machines(item["out"], item)}</span>')
     if k == "added":
         return f"Added {machines(item['machines'], item)}."
     if k == "removed":
-        return f"Removed {machines(item['machines'])}."
-    return f'{machine(item["machine"])}<blockquote class="said">{e(item["comment"])}</blockquote>'
+        return f"Removed {machines(item['machines'], item)}."
+    return f'{machine(item["machine"], item)}<blockquote class="said">{e(item["comment"])}</blockquote>'
 
 
 def change(item):
@@ -623,6 +636,14 @@ def build(on=None):
     on = on or issue.today()
     until = (on - dt.timedelta(days=1)).isoformat()
     events = store.load()
+    catalogue = store.load_machines()
+    groups = machine_groups(events, until, catalogue)
+    MACHINE_PAGES["ids"].clear(); MACHINE_PAGES["names"].clear()
+    for g in groups:
+        for ev in g["events"]:
+            if ev.get("machine_id"):
+                MACHINE_PAGES["ids"][ev["machine_id"]] = g["slug"]
+            MACHINE_PAGES["names"].setdefault(ev["machine"], g["slug"])
     weeks = [issue.week(events, z, until) for z in issue.zone_order()]
     counts = {w["zone"]: len(w["items"]) for w in weeks}
     if DIST.exists():
@@ -644,8 +665,6 @@ def build(on=None):
     for d in dates:
         write(f"/issues/{d}/", issue_page(issue.load(d)))
     write("/issues/", issues_page(dates))
-    catalogue = store.load_machines()
-    groups = machine_groups(events, until, catalogue)
     write("/machines/", machines_page(groups, catalogue))
     for g in groups:
         write(f"/machines/{g['slug']}/", title_page(g, catalogue))

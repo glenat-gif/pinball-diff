@@ -145,6 +145,7 @@ main { padding-bottom: 3rem; }
 .city { color: var(--muted); }
 .what { margin: 0.15rem 0 0; }
 .what .m { font-weight: 600; }
+.what a.m { text-decoration-color: color-mix(in srgb, currentColor 30%, transparent); }
 .what .mk { color: var(--muted); }
 .what .io { display: block; }
 .pill {
