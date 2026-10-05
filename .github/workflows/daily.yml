@@ -8,6 +8,7 @@ name: Daily pinball digest
 on:
   schedule:
     - cron: "17 20 * * *"      # about 6 or 7 am in Melbourne; GitHub often runs it later
+    - cron: "17 23 * * *"      # a second go mid-morning, in case GitHub cancelled the first in its queue
   workflow_dispatch:
 
 permissions:

@@ -523,9 +523,16 @@ def home(weeks, counts, built_on, comps=()):
         blocks += f'<p class="allquiet"><strong>Quiet on the map this week:</strong> {names}.</p>'
     blocks += f'<script>var NEAR_URL={json.dumps(u("/near.json"))};</script>' + NEAR_SCRIPT
     lines = []
+    for c in soon[:6]:
+        when = render.day(c["start"]).upper()
+        where = (c["venue"] or c["city"]).upper()
+        lines.append(f"COMP  {when}  {c['name'].upper()}" + (f"  AT  {where}" if where else ""))
     for z in active:
         for i in z["items"]:
             lines.append(attract_line(i, z["zone"]))
+    for ep in fresh[:4]:
+        show = {sh["key"]: sh for sh in pods.get("shows", [])}.get(ep["show"], {}).get("name", "")
+        lines.append(f"NEW EPISODE  {show.upper()}  {ep['title'].upper()}")
     attract = f'<script>var ATTRACT={json.dumps(lines[:40], ensure_ascii=False)};</script>' + ATTRACT_SCRIPT
     return page("", blocks, path="/", description=SITE["tagline"], box_extra=box + attract,
                 nav=chips("home", counts), current="home")
