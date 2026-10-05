@@ -122,6 +122,10 @@ class MachineTests(Built):
         self.assertIn('<a class="m" href="/pinball-diff/machines/ghostbusters/">Ghostbusters (Pro)</a>', home)
         self.assertIn('<span class="m">Venom (LE)</span>', home)     # only condition notes, so no page
 
+    def test_title_rows_carry_edition_and_state(self):
+        page = (site.build(on=dt.date(2026, 10, 3)) / "machines" / "cactus-canyon" / "index.html").read_text()
+        self.assertIn('data-ed="Remake Special" data-state="vic"', page)
+
     def test_slugs_drop_accents(self):
         self.assertEqual(site.slug("Pokémon"), "pokemon")
         self.assertEqual(site.slug("Elvira's House of Horrors"), "elvira-s-house-of-horrors")

@@ -482,7 +482,8 @@ def _move_row(ev):
     zone = areas.zone_of(ev["lat"], ev["lon"])
     where = f' <span class="city">{e(ev["city"])}{", " + e(short(zone)) if zone else ""}</span>'
     link = f"https://pinballmap.com/map?by_location_id={ev['location_id']}"
-    return (f'<li data-ed="{e(_edition(ev["machine"]))}"><span class="tag {tone}">{"In" if tone == "new" else "Out"}</span><div>'
+    return (f'<li data-ed="{e(_edition(ev["machine"]))}" data-state="{e(zone or "other")}">'
+            f'<span class="tag {tone}">{"In" if tone == "new" else "Out"}</span><div>'
             f'<span class="ed{rare}">{e(_edition(ev["machine"]))}</span>{pills} '
             f'{"at" if tone == "new" else "from"} '
             f'<a href="{e(link)}" title="See or update this listing at Pinball Map">{e(ev["location_name"])}</a>{where}'
@@ -570,19 +571,40 @@ def title_page(g, catalogue=None):
                        f'width="{w}" height="{h}" loading="lazy" decoding="async"><span class="cap">{e(ed)}</span></button>'
                        for ed, src, w, h in art)
         gallery = f'<div class="art">{figs}</div>'
+    st_counts = {}
+    for ev in g["events"]:
+        z = areas.zone_of(ev["lat"], ev["lon"]) or "other"
+        st_counts[z] = st_counts.get(z, 0) + 1
+    states = [z for z in STATE_ORDER if st_counts.get(z)]
     picker = ""
     if len(eds) > 1:
-        picker = ('<div class="ed-pick" role="group" aria-label="Show moves for"><span class="lbl">Show</span>'
-                  f'<button type="button" data-ed="" aria-pressed="true">All <span class="n">{len(g["events"])}</span></button>'
-                  + "".join(f'<button type="button" data-ed="{e(ed)}" aria-pressed="false">{e(ed)} '
-                            f'<span class="n">{counts[ed]}</span></button>' for ed in eds) + "</div>")
-    script = ('<script>(function(){var b=[].slice.call(document.querySelectorAll("[data-ed]")).filter(function(x){'
-              'return x.tagName=="BUTTON"});function pick(ed){b.forEach(function(x){x.setAttribute("aria-pressed",'
-              'String(x.dataset.ed===ed))});document.querySelectorAll(".moves li").forEach(function(li){'
-              'li.hidden=!!ed&&li.dataset.ed!==ed});document.querySelectorAll(".year").forEach(function(y){'
-              'y.hidden=!y.querySelector("li:not([hidden])")})}b.forEach(function(x){x.addEventListener("click",'
-              'function(){var on=x.getAttribute("aria-pressed")=="true"&&x.dataset.ed;pick(on?"":x.dataset.ed)})})})();</script>'
-              if len(eds) > 1 else "")
+        picker += ('<div class="ed-pick" role="group" aria-label="Edition"><span class="lbl">Edition</span>'
+                   f'<button type="button" data-ed="" aria-pressed="true">All <span class="n">{len(g["events"])}</span></button>'
+                   + "".join(f'<button type="button" data-ed="{e(ed)}" aria-pressed="false">{e(ed)} '
+                             f'<span class="n">{counts[ed]}</span></button>' for ed in eds) + "</div>")
+    if len(states) > 1:
+        picker += ('<div class="ed-pick" role="group" aria-label="State"><span class="lbl">State</span>'
+                   f'<button type="button" data-st="" aria-pressed="true">All</button>'
+                   + "".join(f'<button type="button" data-st="{z}" aria-pressed="false"><i class="sw st-{z}"></i>'
+                             f'{e(short(z))} <span class="n">{st_counts[z]}</span></button>' for z in states) + "</div>")
+    script = ""
+    if picker:
+        script = ('<p class="quiet" id="none-here" hidden>No moves for that combination.</p>'
+                  '<script>(function(){var ed="",st="";var eb=[].slice.call(document.querySelectorAll("button[data-ed]")),'
+                  'sb=[].slice.call(document.querySelectorAll("button[data-st]"));'
+                  'function show(){eb.forEach(function(x){x.setAttribute("aria-pressed",String(x.dataset.ed===ed))});'
+                  'sb.forEach(function(x){x.setAttribute("aria-pressed",String(x.dataset.st===st))});'
+                  'var any=false;document.querySelectorAll(".moves li").forEach(function(li){'
+                  'li.hidden=(!!ed&&li.dataset.ed!==ed)||(!!st&&li.dataset.state!==st);any=any||!li.hidden});'
+                  'document.querySelectorAll(".year").forEach(function(y){y.hidden=!y.querySelector("li:not([hidden])")});'
+                  'document.getElementById("none-here").hidden=any}'
+                  'eb.forEach(function(x){x.addEventListener("click",function(){'
+                  'ed=(x.getAttribute("aria-pressed")=="true"&&x.dataset.ed)?"":x.dataset.ed;show()})});'
+                  'sb.forEach(function(x){x.addEventListener("click",function(){'
+                  'st=(x.getAttribute("aria-pressed")=="true"&&x.dataset.st)?"":x.dataset.st;'
+                  'try{localStorage.setItem("comps-state",st)}catch(e){}show()})});'
+                  'var s0="";try{s0=localStorage.getItem("comps-state")||""}catch(e){}'
+                  'if(s0&&sb.some(function(x){return x.dataset.st===s0})){st=s0;show()}})();</script>')
     body = f'<p class="more"><a href="{u("/machines/")}">All machines</a></p>{gallery}{picker}{years}{script}'
     return page(g["title"], body, path=f"/machines/{g['slug']}/",
                 description=f"Where {g['title']} has landed and left in Australia, edition by edition.",
