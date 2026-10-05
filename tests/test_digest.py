@@ -57,45 +57,28 @@ class ZoneTests(unittest.TestCase):
     def zone(self, lat, lon):
         return areas.zone_of(lat, lon)
 
-    def test_real_week_lands_where_a_local_would_put_it(self):
+    def test_real_week_lands_in_victoria(self):
         by_city = {s["city_name"]: self.zone(s["lat"], s["lon"]) for s in SUBS}
-        self.assertEqual(by_city["Melbourne"], "melbourne")
-        self.assertEqual(by_city["South Melbourne"], "melbourne")
-        self.assertEqual(by_city["Morwell"], "gippsland")
-        self.assertEqual(by_city["Albury"], "northern-victoria")
+        for city in ("Melbourne", "South Melbourne", "Morwell", "Albury"):   # Albury plays with Wodonga
+            self.assertEqual(by_city[city], "vic", city)
 
-    def test_greater_melbourne_edges(self):
-        for name, lat, lon in [("Werribee", -37.90, 144.66), ("Melton", -37.68, 144.58), ("Sunbury", -37.58, 144.73),
-                               ("Healesville", -37.65, 145.52), ("Pakenham", -38.07, 145.48), ("Frankston", -38.14, 145.12),
-                               ("Rosebud", -38.35, 144.90), ("Sorrento", -38.34, 144.74), ("Rowville", -37.93, 145.23)]:
-            self.assertEqual(self.zone(lat, lon), "melbourne", name)
-        self.assertEqual(self.zone(-38.15, 144.36), "geelong")            # Geelong is not Melbourne
-        self.assertEqual(self.zone(-38.34, 144.32), "geelong")            # Torquay
-        self.assertEqual(self.zone(-38.63, 145.72), "gippsland")          # Inverloch
-        self.assertEqual(self.zone(-38.45, 145.24), "gippsland")          # Cowes
-        self.assertEqual(self.zone(-37.56, 143.85), "western-victoria")   # Ballarat
-        self.assertEqual(self.zone(-38.38, 142.48), "western-victoria")   # Warrnambool
-        self.assertEqual(self.zone(-36.33, 141.65), "northern-victoria")  # Nhill
-        self.assertEqual(self.zone(-36.76, 144.28), "northern-victoria")  # Bendigo
-        self.assertEqual(self.zone(-34.19, 142.16), "northern-victoria")  # Mildura
+    def test_victorian_towns(self):
+        for name, lat, lon in [("Werribee", -37.90, 144.66), ("Rowville", -37.93, 145.23), ("Geelong", -38.15, 144.36),
+                               ("Inverloch", -38.63, 145.72), ("Ballarat", -37.56, 143.85), ("Warrnambool", -38.38, 142.48),
+                               ("Nhill", -36.33, 141.65), ("Bendigo", -36.76, 144.28), ("Mildura", -34.19, 142.16),
+                               ("Wilsons Prom", -39.13, 146.37), ("Sorrento", -38.34, 144.74)]:
+            self.assertEqual(self.zone(lat, lon), "vic", name)
 
-    def test_border_towns_go_to_the_right_state(self):
-        self.assertEqual(self.zone(-35.28, 149.13), "sydney")             # Canberra
-        self.assertEqual(self.zone(-34.93, 138.60), "adelaide")
-        self.assertEqual(self.zone(-34.17, 140.75), "adelaide")           # Renmark
-        self.assertEqual(self.zone(-35.12, 147.37), "sydney")             # Wagga Wagga
-        self.assertEqual(self.zone(-37.07, 149.90), "sydney")             # Eden, NSW far south coast
-        self.assertEqual(self.zone(-28.00, 153.43), "brisbane")           # Gold Coast
-        self.assertEqual(self.zone(-42.88, 147.33), "hobart")
-        self.assertEqual(self.zone(-41.43, 147.14), "hobart")             # Launceston
-        self.assertEqual(self.zone(-39.13, 146.37), "gippsland")          # Wilsons Prom
-        self.assertEqual(self.zone(-19.26, 146.82), "townsville")         # not Cairns
-        self.assertEqual(self.zone(-16.92, 145.78), "cairns")
-        self.assertEqual(self.zone(-21.14, 149.19), "rockhampton")        # Mackay is nearer Rockhampton
-        self.assertEqual(self.zone(-26.65, 153.09), "brisbane")           # Sunshine Coast
-        self.assertEqual(self.zone(-32.93, 151.78), "sydney")             # Newcastle
-        self.assertEqual(self.zone(-33.86, 121.89), "perth")              # Esperance
-        self.assertEqual(self.zone(-12.46, 130.84), "darwin")
+    def test_other_states(self):
+        for name, lat, lon, state in [("Canberra", -35.28, 149.13, "nsw"), ("Wagga Wagga", -35.12, 147.37, "nsw"),
+                                      ("Eden", -37.07, 149.90, "nsw"), ("Newcastle", -32.93, 151.78, "nsw"),
+                                      ("Adelaide", -34.93, 138.60, "sa"), ("Renmark", -34.17, 140.75, "sa"),
+                                      ("Gold Coast", -28.00, 153.43, "qld"), ("Townsville", -19.26, 146.82, "qld"),
+                                      ("Cairns", -16.92, 145.78, "qld"), ("Mackay", -21.14, 149.19, "qld"),
+                                      ("Hobart", -42.88, 147.33, "tas"), ("Launceston", -41.43, 147.14, "tas"),
+                                      ("Esperance", -33.86, 121.89, "wa"), ("Darwin", -12.46, 130.84, "nt"),
+                                      ("Alice Springs", -23.70, 133.88, "nt")]:
+            self.assertEqual(self.zone(lat, lon), state, name)
         self.assertIsNone(self.zone(None, None))
 
     def test_distance_matches_pinball_maps_own(self):

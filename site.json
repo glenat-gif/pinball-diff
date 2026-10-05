@@ -5,11 +5,7 @@
   "base_path": "/pinball-diff",
   "buttondown_username": "pinballthisweek",
   "email_zones": [
-    "melbourne",
-    "geelong",
-    "gippsland",
-    "northern-victoria",
-    "western-victoria"
+    "vic"
   ],
   "email_mode": "draft",
   "issue_weekday": 3,

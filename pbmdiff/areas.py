@@ -5,15 +5,10 @@ nsw, brisbane and west-oz, so the submissions feed is asked for everything
 within 250 miles of each of eleven points. Overlaps are fine; events are
 deduplicated by id.
 
-ZONES is how the digests are cut. Every event lands in exactly one zone, the
-first in the list whose test it passes. Victoria is sliced because
-Melbourne is Greater Melbourne, not Morwell: a Rowville player and a
-Gippsland player want different lists. Other states are one zone each for
-now and can be sliced the same way when someone there asks.
-
-Greater Melbourne is approximated as 60 km around the CBD plus the
-Mornington Peninsula. That takes in Werribee, Melton, Sunbury, Whittlesea,
-Healesville, Pakenham and Frankston, and leaves out Geelong.
+ZONES is how the digests are cut: one per state. The scene is small enough
+that a Victorian week is four or five lines, and every line names its town,
+so a Gippsland player still sees Morwell. Victoria is drawn from the Murray,
+so Albury, which plays as one town with Wodonga, counts as Victoria.
 """
 import math
 
@@ -64,47 +59,36 @@ def in_victoria(lat, lon):
     return lat <= -36.5 - (lon - 147.0) * 0.33      # the straight line to Cape Howe
 
 
-GREATER_MELBOURNE = within(-37.8136, 144.9631, 60)
-MORNINGTON = within(-38.33, 144.95, 25)
-GEELONG = within(-38.1499, 144.3617, 45)
-
 ZONES = [
     # key, label, test(lat, lon). Order matters: first match wins.
-    ("melbourne", "Greater Melbourne", lambda lat, lon: GREATER_MELBOURNE(lat, lon) or MORNINGTON(lat, lon)),
-    ("geelong", "Geelong, the Bellarine and the Surf Coast", GEELONG),
-    ("gippsland", "Gippsland", lambda lat, lon: in_victoria(lat, lon) and lon >= 145.2 and lat <= -37.2),
-    ("northern-victoria", "Northern Victoria: Bendigo, Shepparton, the north east and the Mallee",
-     lambda lat, lon: in_victoria(lat, lon) and lat > -37.2),
-    ("western-victoria", "Western Victoria: Ballarat, the south west and the Wimmera",
-     lambda lat, lon: in_victoria(lat, lon)),
+    ("vic", "Victoria", in_victoria),
 ]
-# Outside Victoria each venue goes to the nearest of these centres, so
-# Townsville is not swallowed by Cairns just because Cairns is listed first.
+# Outside Victoria each venue goes to the state of the nearest centre, so
+# Townsville is not swallowed by Cairns, and Darwin and Alice are both NT.
 OTHER = [
-    ("sydney", "Sydney, Canberra and the Hunter", -33.8688, 151.2093),
-    ("brisbane", "Brisbane, Gold Coast and Sunshine Coast", -27.4698, 153.0251),
-    ("perth", "Perth and the south west", -31.9523, 115.8613),
-    ("adelaide", "Adelaide and South Australia", -34.9285, 138.6007),
-    ("hobart", "Tasmania", -42.8821, 147.3272),
-    ("darwin", "Darwin and the Top End", -12.4634, 130.8456),
-    ("cairns", "Far North Queensland", -16.9186, 145.7781),
-    ("townsville", "Townsville and the north", -19.2590, 146.8169),
-    ("rockhampton", "Mackay and Central Queensland", -23.3791, 150.5100),
-    ("alice", "Central Australia", -23.6980, 133.8807),
+    ("nsw", -33.8688, 151.2093),       # Sydney
+    ("qld", -27.4698, 153.0251),       # Brisbane
+    ("qld", -16.9186, 145.7781),       # Cairns
+    ("qld", -19.2590, 146.8169),       # Townsville
+    ("qld", -23.3791, 150.5100),       # Rockhampton
+    ("wa", -31.9523, 115.8613),        # Perth
+    ("sa", -34.9285, 138.6007),        # Adelaide
+    ("tas", -42.8821, 147.3272),       # Hobart
+    ("nt", -12.4634, 130.8456),        # Darwin
+    ("nt", -23.6980, 133.8807),        # Alice Springs
 ]
 OTHER_KM = 900
-ZONES += [(key, label, (lambda k: lambda lat, lon: _nearest_other(lat, lon) == k)(key)) for key, label, _, _ in OTHER]
+STATES = [("nsw", "New South Wales and the ACT"), ("qld", "Queensland"), ("sa", "South Australia"),
+          ("wa", "Western Australia"), ("tas", "Tasmania"), ("nt", "Northern Territory")]
+ZONES += [(key, label, (lambda k: lambda lat, lon: _nearest_other(lat, lon) == k)(key)) for key, label in STATES]
 LABELS = {key: label for key, label, _ in ZONES}
-SHORT = {"melbourne": "Greater Melbourne", "geelong": "Geelong", "gippsland": "Gippsland",
-         "northern-victoria": "Northern Vic", "western-victoria": "Western Vic", "sydney": "NSW and ACT",
-         "brisbane": "South east Qld", "perth": "WA", "adelaide": "SA", "hobart": "Tasmania",
-         "darwin": "Top End", "cairns": "Far North Qld", "townsville": "North Qld",
-         "rockhampton": "Central Qld", "alice": "Central Australia"}
+SHORT = {"vic": "Victoria", "nsw": "NSW and ACT", "qld": "Queensland", "sa": "SA", "wa": "WA",
+         "tas": "Tasmania", "nt": "NT"}
 
 
 def _nearest_other(lat, lon):
-    best = min(OTHER, key=lambda z: km_between(z[2], z[3], lat, lon))
-    return best[0] if km_between(best[2], best[3], lat, lon) <= OTHER_KM else None
+    best = min(OTHER, key=lambda z: km_between(z[1], z[2], lat, lon))
+    return best[0] if km_between(best[1], best[2], lat, lon) <= OTHER_KM else None
 
 
 def zone_of(lat, lon):

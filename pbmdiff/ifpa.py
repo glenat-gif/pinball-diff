@@ -61,35 +61,53 @@ def normalise(t):
     }
 
 
+QUERIES = [  # three ways to say "Australia"; results are merged by tournament id
+    {"country": "Australia"},
+    {"country": "AU"},
+    {"latitude": "-27.0", "longitude": "134.0", "radius": "2600", "distance_unit": "k"},
+]
+
+
 def fetch(key=None, today=None, sleep=time.sleep, get=_get):
     key = key or os.environ.get("IFPA_API_KEY")
     if not key:
         return None
     today = today or dt.datetime.now(store.LOCAL).date()
     end = today + dt.timedelta(days=DAYS_AHEAD)
-    found = {}
-    for event_type in ("Tournament", "League"):
-        pos = 1
-        while True:
-            data = get("tournament/search", key, country="Australia", event_type=event_type,
-                       start_date=today.isoformat(), end_date=end.isoformat(), total=PAGE, start_pos=pos)
-            rows = data.get("tournaments") or []
-            if isinstance(rows, dict):
-                rows = [rows]
-            for t in rows:
-                if t.get("private_flag") or (t.get("country_code") or "AU").upper() != "AU":
-                    continue
-                c = normalise(t)
-                if c["id"] and c["start"]:
-                    found[c["id"]] = c
-            total = int(data.get("total_results") or 0)
-            pos += PAGE
-            if len(rows) < PAGE or pos > total:
-                break
-            sleep(1)
+    found, report = {}, []
+    for query in QUERIES:
+        for event_type in ("Tournament", "League"):
+            pos, seen = 1, 0
+            while True:
+                try:
+                    data = get("tournament/search", key, event_type=event_type, start_date=today.isoformat(),
+                               end_date=end.isoformat(), total=PAGE, start_pos=pos, **query)
+                except urllib.error.HTTPError as err:
+                    report.append({"query": query, "type": event_type, "http": err.code,
+                                   "body": err.read()[:300].decode("utf-8", "replace")})
+                    break
+                rows = data.get("tournaments") or []
+                if isinstance(rows, dict):
+                    rows = [rows]
+                seen += len(rows)
+                for t in rows:
+                    if t.get("private_flag") or (t.get("country_code") or "AU").upper() != "AU":
+                        continue
+                    c = normalise(t)
+                    if c["id"] and c["start"]:
+                        found[c["id"]] = c
+                total = int(data.get("total_results") or 0)
+                pos += PAGE
+                if len(rows) < PAGE or pos > total:
+                    report.append({"query": query, "type": event_type, "total_results": total, "rows": seen,
+                                   "keys": sorted(data.keys())[:8],
+                                   "error": data.get("error") or data.get("message")})
+                    break
+                sleep(1)
+            sleep(0.5)
     comps = sorted(found.values(), key=lambda c: (c["start"], c["name"]))
-    COMPS.write_text(json.dumps({"fetched": today.isoformat(), "comps": comps}, indent=1, ensure_ascii=False),
-                     encoding="utf-8")
+    COMPS.write_text(json.dumps({"fetched": today.isoformat(), "report": report, "comps": comps},
+                                indent=1, ensure_ascii=False), encoding="utf-8")
     return comps
 
 

@@ -134,7 +134,7 @@ def main(argv=None):
     f = sub.add_parser("fetch"); f.add_argument("--since"); f.add_argument("--backfill", type=int, default=14)
     f.add_argument("--machines", action="store_true", help="refresh the machine catalogue now")
     f.set_defaults(fn=cmd_fetch)
-    d = sub.add_parser("digest"); d.add_argument("--zone", default="melbourne", choices=list(areas.LABELS))
+    d = sub.add_parser("digest"); d.add_argument("--zone", default="vic", choices=list(areas.LABELS))
     d.add_argument("--days", type=int, default=7); d.add_argument("--until"); d.set_defaults(fn=cmd_digest)
     s = sub.add_parser("sync"); s.add_argument("--since"); s.add_argument("--backfill", type=int, default=14)
     s.add_argument("--machines", action="store_true")

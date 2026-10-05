@@ -46,14 +46,14 @@ class SiteTests(Built):
         for s in SUBS:
             if s["submission_type"] != "confirm_location":
                 self.assertIn(f"https://pinballmap.com/map?by_location_id={s['location_id']}", home)
-        for page in ["about/index.html", "issues/index.html", "zone/melbourne/index.html",
-                     "zone/gippsland/index.html", "feed.xml", "style.css", ".nojekyll"]:
+        for page in ["about/index.html", "issues/index.html", "zone/vic/index.html",
+                     "zone/nsw/index.html", "feed.xml", "style.css", ".nojekyll"]:
             self.assertTrue((dist / page).exists(), page)
 
     def test_links_carry_the_pages_base_path(self):
         home = (site.build(on=dt.date(2026, 10, 3)) / "index.html").read_text()
         self.assertIn('href="/pinball-diff/style.css"', home)
-        self.assertIn('href="/pinball-diff/zone/melbourne/"', home)
+        self.assertIn('href="/pinball-diff/zone/vic/"', home)
         self.assertNotIn('href="/zone/', home)
 
     def test_text_from_players_is_escaped(self):
@@ -70,7 +70,7 @@ class SiteTests(Built):
         with mock.patch.dict(site.SITE, {"buttondown_username": "pinballthisweek"}):
             home = (site.build(on=dt.date(2026, 10, 3)) / "index.html").read_text()
         self.assertIn('action="https://buttondown.com/api/emails/embed-subscribe/pinballthisweek"', home)
-        self.assertIn('name="tag" value="melbourne"', home)
+        self.assertIn('name="tag" value="vic" checked', home)
 
 
 class MachineTests(Built):
@@ -83,7 +83,7 @@ class MachineTests(Built):
         self.assertIn("Remake Special", page)
         self.assertIn('class="tag new">In<', page)
         self.assertIn('class="tag gone">Out<', page)
-        self.assertIn("https://pinballmap.com/map?by_machine_id=", page)
+        self.assertRegex(page, r"https://pinballmap\.com/map\?by_machine_(group_)?id=\d+&amp;by_country=AU")
         self.assertIn("<h2>2026</h2>", page)
 
     def test_machine_art_only_when_switched_on(self):
@@ -151,7 +151,7 @@ class IssueTests(Built):
     def test_email_covers_victoria_only_and_reads_cleanly(self):
         iss = issue.ensure_latest(self.events, on=ON)
         md = mail.markdown(iss)
-        self.assertIn("## Greater Melbourne", md)
+        self.assertIn("## Victoria", md)
         self.assertIn("Railway Hotel South Melbourne", md)
         self.assertIn("Albury", md)                          # Northern Victoria
         self.assertNotIn("Morwell", md)                      # added after the issue week closed

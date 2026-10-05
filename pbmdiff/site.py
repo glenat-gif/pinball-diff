@@ -140,14 +140,13 @@ def comps_page(comps, on):
 
 def signup():
     user = SITE.get("buttondown_username")
-    vic = [(z, areas.LABELS[z]) for z in SITE["email_zones"]]
     if not user:
         return ('<div class="signup"><h2>The weekly email</h2>'
                 '<p class="soon">Sign-ups open soon. Every Thursday, the week\'s changes for Victoria, '
                 'in time to plan the weekend.</p></div>')
-    picks = "".join(f'<label><input type="checkbox" name="tag" value="{e(k)}" checked> {e(short(k))}</label>'
-                    for k, l in vic)
-    picks += '<label><input type="checkbox" name="tag" value="other-states"> Other states, when they start</label>'
+    picks = ('<label><input type="checkbox" name="tag" value="vic" checked> Victoria</label>'
+             + "".join(f'<label><input type="checkbox" name="tag" value="{k}"> {e(areas.SHORT[k])}, when it starts</label>'
+                       for k, _ in areas.STATES))
     return (f'<form class="signup" action="https://buttondown.com/api/emails/embed-subscribe/{e(user)}" method="post">'
             '<h2>The weekly email</h2>'
             '<p>Every Thursday, the week\'s changes for Victoria, in time to plan the weekend. '
@@ -155,7 +154,7 @@ def signup():
             '<div class="row"><label class="sr" for="em" hidden>Email address</label>'
             '<input id="em" type="email" name="email" required placeholder="you@example.com" autocomplete="email">'
             '<button type="submit">Subscribe</button></div>'
-            f'<fieldset><legend>Which parts do you care about?</legend><div class="zones-pick">{picks}</div></fieldset>'
+            f'<fieldset><legend>Which states?</legend><div class="zones-pick">{picks}</div></fieldset>'
             '<input type="hidden" name="embed" value="1"></form>')
 
 
@@ -331,7 +330,8 @@ def machine_groups(events, until, catalogue=None):
             continue
         info = catalogue.get(str(ev.get("machine_id"))) or {}
         key = f"g{info['group']}" if info.get("group") else (f"m{ev['machine_id']}" if info else f"t{base}")
-        g = groups.setdefault(key, {"titles": {}, "events": [], "editions": set(), "makers": set()})
+        g = groups.setdefault(key, {"titles": {}, "events": [], "editions": set(), "makers": set(),
+                                    "group_id": info.get("group")})
         plain = _plain_title(ev["machine"])
         g["titles"][plain] = g["titles"].get(plain, 0) + 1
         g["editions"].add(_edition(ev["machine"]))
@@ -404,7 +404,12 @@ def _art(g, catalogue):
 
 
 def _now_link(g):
-    return f"https://pinballmap.com/map?by_machine_id={g['machine_id']}" if g["machine_id"] else "https://pinballmap.com"
+    """Pinball Map filtered to Australia: every edition when the machine has a group."""
+    if g.get("group_id"):
+        return f"https://pinballmap.com/map?by_machine_group_id={g['group_id']}&by_country=AU"
+    if g["machine_id"]:
+        return f"https://pinballmap.com/map?by_machine_id={g['machine_id']}&by_country=AU"
+    return "https://pinballmap.com/map?by_country=AU"
 
 
 def machines_page(groups, catalogue=None):
@@ -475,8 +480,8 @@ def about_page():
 <h2>Where it comes from</h2>
 <p>Every change here was submitted to Pinball Map by a player. Once a day this site asks Pinball Map what changed around Australia, sorts it by area, and tidies it: a machine removed and a new edition of the same game added becomes a swap, and a new venue and its first machines become one line. Nothing is added by hand.</p>
 <p>That means it is only as good as what people submit. If you played somewhere and the lineup was different, or a machine was off, update the listing on Pinball Map. It will be here the next morning and in Thursday's email.</p>
-<h2>The areas</h2>
-<p>Victoria is split five ways: Greater Melbourne, Geelong and the Surf Coast, Gippsland, Northern Victoria, and Western Victoria. Each other state is one area for now. If you want yours split, say so.</p>
+<h2>The states</h2>
+<p>Changes are grouped by state, and every line names its suburb or town. The email covers Victoria for now; the other states are on the website, and the email will follow as each one gets busy enough to fill a week.</p>
 <h2>Who</h2>
 <p class="muted">Made by a Melbourne player. Contact: <a href="mailto:{e(SITE['contact'])}">{e(SITE['contact'])}</a>. The code is open on <a href="https://github.com/glenat-gif/pinball-diff">GitHub</a>. Data from Pinball Map under CC BY-SA 4.0.</p>
 </div>"""

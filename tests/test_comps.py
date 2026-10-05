@@ -65,16 +65,16 @@ class CompTests(unittest.TestCase):
         comps = ifpa.fetch(key="k", today=TODAY, get=fake_get, sleep=lambda s: None)
         self.assertEqual([c["id"] for c in comps], [5, 1, 4, 3])        # by start date; the private one is gone
         by_id = {c["id"]: c for c in ifpa.load()}
-        self.assertEqual(by_id[1]["zone"], "melbourne")
-        self.assertEqual(by_id[5]["zone"], "geelong")
-        self.assertEqual(by_id[3]["zone"], "sydney")
+        self.assertEqual(by_id[1]["zone"], "vic")
+        self.assertEqual(by_id[5]["zone"], "vic")
+        self.assertEqual(by_id[3]["zone"], "nsw")
         self.assertTrue(by_id[4]["women"])
         self.assertEqual(by_id[1]["link"], "https://www.ifpapinball.com/tournaments/view.php?t=1")
         self.assertEqual(by_id[1]["format"], "Match Play / Strike Knockout")
 
     def test_between_includes_leagues_already_running(self):
         comps = ifpa.fetch(key="k", today=TODAY, get=fake_get, sleep=lambda s: None)
-        week = ifpa.between(comps, "2026-10-08", "2026-10-15", {"melbourne", "geelong"})
+        week = ifpa.between(comps, "2026-10-08", "2026-10-15", {"vic"})
         self.assertEqual(sorted(c["id"] for c in week), [1, 4, 5])
 
     def test_site_and_email_show_comps(self):
