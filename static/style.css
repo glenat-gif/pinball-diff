@@ -184,6 +184,14 @@ blockquote.said { margin: 0.35rem 0 0; padding-left: 0.75rem; border-left: 3px s
 .title-row .t { font-weight: 650; font-size: 1.05rem; text-decoration: underline; text-decoration-color: color-mix(in srgb, currentColor 35%, transparent); text-underline-offset: 0.18em; }
 .title-row .mk { color: var(--muted); margin-left: 0.45rem; font-size: 0.92rem; }
 .title-row .sub { display: block; color: var(--muted); font-size: 0.88rem; }
+.title-row.has-art { display: grid; grid-template-columns: 96px 1fr; gap: 0 0.85rem; align-items: start; }
+.title-row.has-art > :not(.thumb) { grid-column: 2; }
+.title-row .thumb { grid-row: 1 / span 3; width: 96px; height: auto; border-radius: 4px; background: var(--line); }
+.art { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 0.8rem; margin-top: 1.4rem; }
+.art figure { margin: 0; }
+.art img { width: 100%; height: auto; display: block; border-radius: 6px; background: var(--line); }
+.art figcaption { font-weight: 650; font-size: 0.9rem; margin-top: 0.3rem; }
+.credit { color: var(--muted); font-size: 0.85rem; margin: 0.4rem 0 0; }
 .year h2 { font: 900 1.4rem/1 var(--display); color: var(--plasma-text); margin: 2rem 0 0.4rem; letter-spacing: 0.04em; }
 .cta {
   display: inline-block; font-weight: 650; text-decoration: none; padding: 0.55rem 0.95rem; border-radius: 6px;

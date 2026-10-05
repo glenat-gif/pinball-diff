@@ -262,32 +262,58 @@ def slug(text):
     return _re.sub(r"[^a-z0-9]+", "-", t).strip("-") or "machine"
 
 
-def machine_groups(events, until):
-    """Every title that has ever landed or left, editions together, newest first."""
+def machine_groups(events, until, catalogue=None):
+    """Every title that has ever landed or left, editions together, newest first.
+
+    Editions are tied together by Pinball Map's own machine groups, so Stern's
+    Godzilla Pro, Premium and LE share a page while Sega's 1998 Godzilla gets
+    its own. Machines with no group stand alone; without a catalogue, the
+    name is the fallback.
+    """
+    catalogue = catalogue or {}
     groups = {}
     for ev in events.values():
         if ev["type"] not in ("machine_added", "machine_removed") or not ev["machine"] or ev["date"] > until:
             continue
-        key = digest.base_title(ev["machine"])
-        if not key:
+        base = digest.base_title(ev["machine"])
+        if not base:
             continue
-        g = groups.setdefault(key, {"title": _plain_title(ev["machine"]), "events": [], "editions": set(),
-                                    "makers": set()})
+        info = catalogue.get(str(ev.get("machine_id"))) or {}
+        key = f"g{info['group']}" if info.get("group") else (f"m{ev['machine_id']}" if info else f"t{base}")
+        g = groups.setdefault(key, {"titles": {}, "events": [], "editions": set(), "makers": set()})
+        plain = _plain_title(ev["machine"])
+        g["titles"][plain] = g["titles"].get(plain, 0) + 1
         g["editions"].add(_edition(ev["machine"]))
+        if ev.get("machine_id"):
+            g.setdefault("edition_ids", {}).setdefault(_edition(ev["machine"]), ev["machine_id"])
         maker = render.split_machine(ev["machine"])[1]
         if maker:
             g["makers"].add(maker)
         g["events"].append(ev)
-    used = {}
     for g in groups.values():
+        # the shortest common name: "Cactus Canyon", not "Cactus Canyon Continued"
+        g["title"] = min(g["titles"], key=lambda t: (len(t), -g["titles"][t]))
         g["events"].sort(key=lambda ev: (ev["date"], ev["id"]), reverse=True)
         g["machine_id"] = next((ev["machine_id"] for ev in g["events"] if ev["machine_id"]), None)
         g["latest"], g["first"] = g["events"][0]["date"], g["events"][-1]["date"]
         g["ins"] = sum(1 for ev in g["events"] if ev["type"] == "machine_added")
-        base = slug(g["title"])
-        used[base] = used.get(base, 0) + 1
-        g["slug"] = base if used[base] == 1 else f"{base}-{used[base]}"
-    return sorted(groups.values(), key=lambda g: (g["latest"], len(g["events"])), reverse=True)
+    ordered = sorted(groups.values(), key=lambda g: (g["latest"], len(g["events"])), reverse=True)
+    names = {}
+    for g in ordered:
+        names.setdefault(slug(g["title"]), []).append(g)
+    for base, gs in names.items():
+        for g in gs:
+            if len(gs) == 1:
+                g["slug"] = base
+            else:                                  # same name, different machines: say whose and when
+                maker = sorted(g["makers"])[0] if g["makers"] else ""
+                g["slug"] = slug(f"{g['title']} {maker}")
+        seen = {}
+        for g in gs:
+            seen[g["slug"]] = seen.get(g["slug"], 0) + 1
+            if seen[g["slug"]] > 1:
+                g["slug"] = f"{g['slug']}-{seen[g['slug']]}"
+    return ordered
 
 
 def _editions_text(g):
@@ -313,15 +339,31 @@ def _move_row(ev):
             f'<span class="d">{e(render.day(ev["date"]))}</span></div></li>')
 
 
+def _art(g, catalogue):
+    """(edition, image url, width, height) for each edition we have art for, Pro and Standard first."""
+    if not SITE.get("machine_art") or not catalogue:
+        return []
+    order = {"Standard": 0, "Pro": 1, "Premium": 2, "LE": 3}
+    out = []
+    for ed, mid in sorted((g.get("edition_ids") or {}).items(), key=lambda kv: (order.get(kv[0], 4), kv[0])):
+        m = catalogue.get(str(mid)) or {}
+        if m.get("img"):
+            out.append((ed, m["img"], m.get("w") or 640, m.get("h") or 400))
+    return out
+
+
 def _now_link(g):
     return f"https://pinballmap.com/map?by_machine_id={g['machine_id']}" if g["machine_id"] else "https://pinballmap.com"
 
 
-def machines_page(groups):
+def machines_page(groups, catalogue=None):
     rows = []
     for g in groups:
         n = len(g["events"])
-        rows.append(f'<li class="title-row" data-name="{e(g["title"].lower())} {e(_makers_text(g).lower())}">'
+        art = _art(g, catalogue)
+        thumb = (f'<img class="thumb" src="{e(art[0][1])}" alt="" width="96" height="{round(96 * art[0][3] / art[0][2])}" '
+                 f'loading="lazy" decoding="async">' if art else "")
+        rows.append(f'<li class="title-row{" has-art" if art else ""}" data-name="{e(g["title"].lower())} {e(_makers_text(g).lower())}">{thumb}'
                     f'<a href="{u("/machines/" + g["slug"] + "/")}"><span class="t">{e(g["title"])}</span></a>'
                     f'<span class="mk">{e(_makers_text(g))}</span>'
                     f'<span class="sub">{e(_editions_text(g))} · {n} move{"s" if n != 1 else ""} · '
@@ -348,7 +390,7 @@ def machines_page(groups):
                 box_extra=box, current="machines")
 
 
-def title_page(g):
+def title_page(g, catalogue=None):
     by_year = {}
     for ev in g["events"]:
         by_year.setdefault(ev["date"][:4], []).append(ev)
@@ -360,7 +402,14 @@ def title_page(g):
            f'<small>{n} move{"s" if n != 1 else ""} in Australia on Pinball Map, '
            f'{g["ins"]} in and {n - g["ins"]} out, from {e(render.month(g["first"]))} to {e(render.month(g["latest"]))}.</small></p>'
            f'<p><a class="cta" href="{e(_now_link(g))}">Where it is now, on Pinball Map</a></p>')
-    body = f'<p class="more"><a href="{u("/machines/")}">All machines</a></p>{years}'
+    art = _art(g, catalogue)
+    gallery = ""
+    if art:
+        figs = "".join(f'<figure><img src="{e(src)}" alt="{e(g["title"])} {e(ed)} artwork" width="{w}" height="{h}" '
+                       f'loading="lazy" decoding="async"><figcaption>{e(ed)}</figcaption></figure>' for ed, src, w, h in art)
+        gallery = (f'<div class="art">{figs}</div>'
+                   '<p class="credit">Artwork via the <a href="https://opdb.org">Open Pinball Database</a>.</p>')
+    body = f'<p class="more"><a href="{u("/machines/")}">All machines</a></p>{gallery}{years}'
     return page(g["title"], body, path=f"/machines/{g['slug']}/",
                 description=f"Where {g['title']} has landed and left in Australia, edition by edition.",
                 box_extra=box, current="machines")
@@ -426,10 +475,11 @@ def build(on=None):
     for d in dates:
         write(f"/issues/{d}/", issue_page(issue.load(d)))
     write("/issues/", issues_page(dates))
-    groups = machine_groups(events, until)
-    write("/machines/", machines_page(groups))
+    catalogue = store.load_machines()
+    groups = machine_groups(events, until, catalogue)
+    write("/machines/", machines_page(groups, catalogue))
     for g in groups:
-        write(f"/machines/{g['slug']}/", title_page(g))
+        write(f"/machines/{g['slug']}/", title_page(g, catalogue))
     write("/about/", about_page())
     write("/feed.xml", feed(dates))
     (DIST / ".nojekyll").write_text("", encoding="utf-8")

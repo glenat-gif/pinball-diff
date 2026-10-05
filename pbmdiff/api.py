@@ -66,3 +66,9 @@ class PinballMap:
                 return out
             page = nxt
             self.sleep(PAUSE)
+
+
+    def machines(self):
+        """The whole machine catalogue: names, editions and OPDB image links. One request."""
+        data = self.get("machines.json")
+        return data.get("machines", data if isinstance(data, list) else [])

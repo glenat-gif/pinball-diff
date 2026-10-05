@@ -49,6 +49,8 @@ def cmd_fetch(args):
         fresh += n
         print(f"{name:<12} {len(subs):>4} since {since}, {n} new")
     store.mark_fetched(today().isoformat())
+    if args.machines or store.machines_age_days() is None or store.machines_age_days() > 6:
+        print(f"machine catalogue refreshed: {store.save_machines(client.machines())} machines")
     print(f"{total} fetched, {fresh} new; store holds {len(store.load())} events")
 
 
@@ -113,10 +115,12 @@ def main(argv=None):
     sub = p.add_subparsers(dest="cmd", required=True)
     sub.add_parser("demo").set_defaults(fn=cmd_demo)
     f = sub.add_parser("fetch"); f.add_argument("--since"); f.add_argument("--backfill", type=int, default=14)
+    f.add_argument("--machines", action="store_true", help="refresh the machine catalogue now")
     f.set_defaults(fn=cmd_fetch)
     d = sub.add_parser("digest"); d.add_argument("--zone", default="melbourne", choices=list(areas.LABELS))
     d.add_argument("--days", type=int, default=7); d.add_argument("--until"); d.set_defaults(fn=cmd_digest)
     s = sub.add_parser("sync"); s.add_argument("--since"); s.add_argument("--backfill", type=int, default=14)
+    s.add_argument("--machines", action="store_true")
     s.add_argument("--days", type=int, default=7); s.set_defaults(fn=cmd_sync)
     sub.add_parser("zones").set_defaults(fn=cmd_zones)
     i = sub.add_parser("issue"); i.add_argument("--date"); i.set_defaults(fn=cmd_issue)

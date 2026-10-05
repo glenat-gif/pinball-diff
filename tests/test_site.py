@@ -86,6 +86,34 @@ class MachineTests(Built):
         self.assertIn("https://pinballmap.com/map?by_machine_id=", page)
         self.assertIn("<h2>2026</h2>", page)
 
+    def test_machine_art_only_when_switched_on(self):
+        from pbmdiff import digest
+        cat = {str(s["machine_id"]): {"img": "https://img.opdb.org/x-medium.jpg", "w": 640, "h": 400,
+                                      "group": digest.base_title(s["machine_name"])}
+               for s in SUBS if s.get("machine_id")}
+        with mock.patch.object(store, "load_machines", lambda: cat):
+            page = (site.build(on=dt.date(2026, 10, 3)) / "machines" / "cactus-canyon" / "index.html").read_text()
+            self.assertNotIn("img.opdb.org", page)
+            with mock.patch.dict(site.SITE, {"machine_art": True}):
+                dist = site.build(on=dt.date(2026, 10, 3))
+            page = (dist / "machines" / "cactus-canyon" / "index.html").read_text()
+            self.assertIn('src="https://img.opdb.org/x-medium.jpg"', page)
+            self.assertIn("Open Pinball Database", page)
+            self.assertIn('class="thumb"', (dist / "machines" / "index.html").read_text())
+
+    def test_same_name_different_machines_get_separate_pages(self):
+        evs = {}
+        for i, (mid, name) in enumerate([(774, "Godzilla (Sega, 1998)"), (3415, "Godzilla (Pro) (Stern, 2021)"),
+                                         (3417, "Godzilla (LE) (Stern, 2021)")]):
+            evs[i] = {"id": i, "type": "machine_added", "date": "2026-01-0" + str(i + 1), "machine": name,
+                      "machine_id": mid, "location_id": 1, "location_name": "X", "city": "", "lat": -37.8, "lon": 145.0}
+        cat = {"774": {"group": None}, "3415": {"group": 88}, "3417": {"group": 88}}
+        groups = site.machine_groups(evs, "2026-12-31", cat)
+        self.assertEqual(len(groups), 2)
+        stern = next(g for g in groups if "LE" in g["editions"])
+        self.assertEqual(stern["editions"], {"Pro", "LE"})
+        self.assertEqual(sorted(g["slug"] for g in groups), ["godzilla-sega-1998", "godzilla-stern-2021"])
+
     def test_slugs_drop_accents(self):
         self.assertEqual(site.slug("Pokémon"), "pokemon")
         self.assertEqual(site.slug("Elvira's House of Horrors"), "elvira-s-house-of-horrors")

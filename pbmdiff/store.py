@@ -77,3 +77,28 @@ def last_fetch():
 def mark_fetched(day):
     STATE.parent.mkdir(parents=True, exist_ok=True)
     STATE.write_text(json.dumps({"last_fetch": day}, indent=1), encoding="utf-8")
+
+
+MACHINES = DATA / "machines.json"
+
+
+def save_machines(machines):
+    """Keep only what the site uses: id, name, group and the OPDB image."""
+    slim = {str(m["id"]): {"name": m.get("name"), "group": m.get("machine_group_id"),
+                           "img": m.get("opdb_img"), "w": m.get("opdb_img_width"), "h": m.get("opdb_img_height")}
+            for m in machines}
+    MACHINES.write_text(json.dumps(slim, indent=0, sort_keys=True, ensure_ascii=False), encoding="utf-8")
+    return len(slim)
+
+
+def load_machines():
+    if not MACHINES.exists():
+        return {}
+    return json.loads(MACHINES.read_text(encoding="utf-8"))
+
+
+def machines_age_days():
+    if not MACHINES.exists():
+        return None
+    import time
+    return (time.time() - MACHINES.stat().st_mtime) / 86400
