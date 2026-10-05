@@ -236,6 +236,14 @@ blockquote.said { margin: 0.35rem 0 0; padding-left: 0.75rem; border-left: 3px s
 .comp[data-state="wa"] { --st: var(--s-wa); } .comp[data-state="tas"] { --st: var(--s-tas); }
 .comp[data-state="nt"] { --st: var(--s-nt); } .comp[data-state="other"] { --st: var(--s-other); }
 
+.landed { margin-top: 0.55rem; }
+.landed .lbl { display: block; font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.07em; color: var(--muted); margin-bottom: 0.3rem; }
+.landed .tiles { display: flex; gap: 0.4rem; flex-wrap: wrap; }
+.landed img { width: 64px; height: 40px; object-fit: cover; border-radius: 4px; display: block; background: var(--line); transition: transform 0.15s; }
+.landed a:hover img { transform: translateY(-2px); }
+.comp.has-photo > div { display: block; }
+.cphoto { width: 72px; height: 72px; border-radius: 8px; object-fit: cover; float: right; margin: 0 0 0.5rem 0.8rem; }
+
 /* Calendar feeds */
 .feeds { margin-top: 2.6rem; padding: 1.2rem 1.2rem 1rem; border-radius: 10px; background: var(--box); color: var(--box-ink); }
 .feeds h2 { font-size: 1.15rem; margin: 0 0 0.3rem; }

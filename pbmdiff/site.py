@@ -42,6 +42,25 @@ def absolute(path):
 
 # machine id and full name -> the machine's page slug; filled in by build() before any page is written
 MACHINE_PAGES = {"ids": {}, "names": {}}
+# Pinball Map venue id -> [(machine name, image, slug)] for machines that landed there in the last year
+# and have not left since; filled in by build()
+VENUE_ARRIVALS = {}
+
+
+def venue_arrivals(events, catalogue, until, days=365):
+    since = (dt.date.fromisoformat(until) - dt.timedelta(days=days)).isoformat()
+    last = {}
+    for ev in sorted(events.values(), key=lambda ev: (ev["date"], ev["id"])):
+        if ev["type"] in ("machine_added", "machine_removed") and ev.get("machine_id") and ev.get("location_id"):
+            last[(ev["location_id"], ev["machine_id"])] = ev
+    out = {}
+    for (vid, mid), ev in last.items():
+        if ev["type"] != "machine_added" or ev["date"] < since:
+            continue
+        img = (catalogue.get(str(mid)) or {}).get("img")
+        if img:
+            out.setdefault(vid, []).append((ev["date"], ev["machine"], img, MACHINE_PAGES["ids"].get(mid)))
+    return {vid: [x[1:] for x in sorted(v, reverse=True)[:4]] for vid, v in out.items()}
 
 
 def machine_page_for(name, item=None):
@@ -121,9 +140,20 @@ def comp_row(c, show_zone=True):
     zone = f' <span class="st st-{e(st)}">{e(short(c["zone"]) if c["zone"] else "Elsewhere")}</span>' if show_zone else ""
     more = f' · <a href="{e(c["website"])}">Event page</a>' if c["website"] else ""
     fmt = f'<span class="d">{e(c["format"])}</span>' if c["format"] else ""
-    return (f'<li class="comp" data-state="{e(st)}"><span class="when">{e(render.comp_when(c))}</span><div>'
+    strip = ""
+    landed = VENUE_ARRIVALS.get(c.get("pbm_id")) if SITE.get("machine_art") else None
+    if landed:
+        tiles = "".join(
+            (f'<a href="{u("/machines/" + slug + "/")}" title="{e(name)}">' if slug else f'<span title="{e(name)}">')
+            + f'<img src="{e(img)}" alt="{e(name)}" width="64" height="40" loading="lazy" decoding="async">'
+            + ("</a>" if slug else "</span>") for name, img, slug in landed)
+        strip = f'<div class="landed"><span class="lbl">Landed here lately</span><div class="tiles">{tiles}</div></div>'
+    photo = (f'<img class="cphoto" src="{e(c["photo"])}" alt="" width="72" height="72" loading="lazy">'
+             if c.get("photo") else "")
+    return (f'<li class="comp{" has-photo" if photo else ""}" data-state="{e(st)}">'
+            f'<span class="when">{e(render.comp_when(c))}</span>{photo}<div>'
             f'<a class="cname" href="{e(c["link"])}">{e(c["name"])}</a>{kind_html}{sub}'
-            f'<div class="cwhere">{where}{zone}{more}</div>{fmt}</div></li>')
+            f'<div class="cwhere">{where}{zone}{more}</div>{fmt}{strip}</div></li>')
 
 
 def comps_block(comps, since, until, title, empty, link=True):
@@ -728,6 +758,8 @@ def build(on=None):
             if ev.get("machine_id"):
                 MACHINE_PAGES["ids"][ev["machine_id"]] = g["slug"]
             MACHINE_PAGES["names"].setdefault(ev["machine"], g["slug"])
+    VENUE_ARRIVALS.clear()
+    VENUE_ARRIVALS.update(venue_arrivals(events, catalogue, until))
     weeks = [issue.week(events, z, until) for z in issue.zone_order()]
     counts = {w["zone"]: len(w["items"]) for w in weeks}
     if DIST.exists():

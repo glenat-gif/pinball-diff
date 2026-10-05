@@ -90,6 +90,7 @@ def normalise(t):
         "format": _format(t),
         "ranking": t.get("ranking_system") or "MAIN", "women": (t.get("ranking_system") or "") == "WOMEN",
         "link": EVENT_URL.format(id=t.get("tournament_id")),
+        "photo": "" if "ifpa_gray" in (t.get("profile_photo") or "") else (t.get("profile_photo") or ""),
     }
 
 
