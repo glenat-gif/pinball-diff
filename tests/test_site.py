@@ -99,6 +99,20 @@ class IssueTests(Built):
         self.assertIsNone(issue.ensure_latest(self.events, on=ON + dt.timedelta(days=2)))
         self.assertEqual(issue.latest_issue_date(ON + dt.timedelta(days=6)), ON)
 
+    def test_no_stale_issue_is_made(self):
+        self.assertIsNone(issue.ensure_latest(self.events, on=ON + dt.timedelta(days=4)))
+        self.assertEqual(issue.all_dates(), [])
+
+    def test_archive_lists_only_issues_that_reached_buttondown(self):
+        iss = issue.ensure_latest(self.events, on=ON)
+        self.assertEqual(issue.published_dates(), [])
+        iss["email"] = {"status": "skipped"}
+        issue.save(iss)
+        self.assertEqual(issue.published_dates(), [])
+        iss["email"] = {"status": "draft", "id": "em_1"}
+        issue.save(iss)
+        self.assertEqual(issue.published_dates(), ["2026-10-01"])
+
     def test_email_covers_victoria_only_and_reads_cleanly(self):
         iss = issue.ensure_latest(self.events, on=ON)
         md = mail.markdown(iss)

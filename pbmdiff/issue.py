@@ -68,11 +68,17 @@ def all_dates():
     return sorted((p.stem for p in ISSUES.glob("????-??-??.json")), reverse=True)
 
 
+def published_dates():
+    """Issues that reached Buttondown. Skipped ones never appear in the archive or feed."""
+    return [d for d in all_dates() if (load(d).get("email") or {}).get("status") in ("draft", "about_to_send")]
+
+
 def ensure_latest(events, on=None):
     """Make this week's issue if it is due and not made yet. Returns it, or None."""
+    on = on or today()
     date = latest_issue_date(on)
-    if path(date.isoformat()).exists():
-        return None
+    if path(date.isoformat()).exists() or (on - date).days > 2:
+        return None                      # already made, or too late to be worth sending
     issue = make(events, date)
     save(issue)
     return issue

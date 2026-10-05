@@ -373,7 +373,7 @@ def build(on=None):
     write("/", home(weeks, counts, on))
     for z in issue.zone_order():
         write(f"/zone/{z}/", zone_page(z, events, until, counts))
-    dates = issue.all_dates()
+    dates = issue.published_dates()
     for d in dates:
         write(f"/issues/{d}/", issue_page(issue.load(d)))
     write("/issues/", issues_page(dates))

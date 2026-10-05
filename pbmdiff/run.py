@@ -94,7 +94,11 @@ def cmd_issue(args):
     else:
         iss = issue.ensure_latest(events)
         if iss is None:
-            iss = issue.load(issue.latest_issue_date().isoformat())
+            latest = issue.latest_issue_date().isoformat()
+            if not issue.path(latest).exists():
+                print(f"no issue due: the last issue day, {latest}, has passed")
+                return
+            iss = issue.load(latest)
     print(f"issue {iss['date']}: {mail.subject(iss)}")
     print(f"copy at {mail.keep_copy(iss)}")
     print(mail.deliver(iss))
