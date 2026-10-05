@@ -92,7 +92,8 @@ class MachineTests(Built):
                                       "group": digest.base_title(s["machine_name"])}
                for s in SUBS if s.get("machine_id")}
         with mock.patch.object(store, "load_machines", lambda: cat):
-            page = (site.build(on=dt.date(2026, 10, 3)) / "machines" / "cactus-canyon" / "index.html").read_text()
+            with mock.patch.dict(site.SITE, {"machine_art": False}):
+                page = (site.build(on=dt.date(2026, 10, 3)) / "machines" / "cactus-canyon" / "index.html").read_text()
             self.assertNotIn("img.opdb.org", page)
             with mock.patch.dict(site.SITE, {"machine_art": True}):
                 dist = site.build(on=dt.date(2026, 10, 3))
