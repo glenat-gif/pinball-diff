@@ -1,0 +1,48 @@
+{
+ "items": [
+  {
+   "location_id": 21899,
+   "location_name": "Aspley 10 Pin Bowl",
+   "city": "Aspley",
+   "link": "https://pinballmap.com/map?by_location_id=21899",
+   "lat": -27.3605892,
+   "lon": 153.0074915,
+   "ids": {
+    "Iron Maiden: Legacy of the Beast (Pro) (Stern, 2018)": 2923
+   },
+   "kind": "added",
+   "rank": 2.9,
+   "date": "2026-09-29",
+   "machines": [
+    "Iron Maiden: Legacy of the Beast (Pro) (Stern, 2018)"
+   ],
+   "by": [
+    "bt"
+   ],
+   "flags": {}
+  },
+  {
+   "location_id": 19397,
+   "location_name": "Timezone Orion Springfield",
+   "city": "Springfield Central",
+   "link": "https://pinballmap.com/map?by_location_id=19397",
+   "lat": -27.6776243,
+   "lon": 152.9051007,
+   "ids": {
+    "AC/DC (Pro) (Stern, 2012)": 1219
+   },
+   "kind": "condition",
+   "status": "amber",
+   "rank": 5,
+   "date": "2026-09-29",
+   "machine": "AC/DC (Pro) (Stern, 2012)",
+   "comment": "Machine is still there but was out of order today.",
+   "user": "bt",
+   "by": [
+    "bt"
+   ],
+   "flags": {}
+  }
+ ],
+ "confirmations": 2
+}

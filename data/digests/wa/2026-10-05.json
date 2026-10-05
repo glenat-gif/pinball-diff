@@ -1,0 +1,35 @@
+{
+ "items": [
+  {
+   "location_id": 15908,
+   "location_name": "Barcadia",
+   "city": "Northbridge",
+   "link": "https://pinballmap.com/map?by_location_id=15908",
+   "lat": -31.948399,
+   "lon": 115.8567085,
+   "ids": {
+    "Transformers: More Than Meets the Eye (LE) (Stern, 2026)": 4627,
+    "Iron Maiden: Legacy of the Beast (Premium) (Stern, 2018)": 2924
+   },
+   "kind": "rotation",
+   "rank": 2.85,
+   "date": "2026-10-03",
+   "machines": [
+    "Transformers: More Than Meets the Eye (LE) (Stern, 2026)"
+   ],
+   "out": [
+    "Iron Maiden: Legacy of the Beast (Premium) (Stern, 2018)"
+   ],
+   "by": [
+    "damo"
+   ],
+   "flags": {
+    "Transformers: More Than Meets the Eye (LE) (Stern, 2026)": [
+     "Limited Edition",
+     "New release"
+    ]
+   }
+  }
+ ],
+ "confirmations": 0
+}

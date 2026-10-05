@@ -1,13 +1,13 @@
 {
- "fetched": "2026-10-05",
+ "fetched": "2026-10-06",
  "report": [
   {
    "query": {
     "country": "Australia"
    },
    "type": "Tournament",
-   "total_results": 157,
-   "rows": 157,
+   "total_results": 163,
+   "rows": 163,
    "keys": [
     "search_filter",
     "total_results",
@@ -22,34 +22,34 @@
   }
  ],
  "sample": {
-  "tournament_id": "117918",
-  "tournament_name": "Pinberra '26 Target Matchplay",
+  "tournament_id": "117769",
+  "tournament_name": "Brisbane Pinball Club",
   "event_name": "Main Tournament",
   "event_type": "Tournament",
   "location_name": null,
-  "address1": " Beetaloo Street",
+  "address1": "186 Brunswick St",
   "address2": "",
-  "city": "Hawker",
-  "stateprov": "ACT",
-  "postal_code": "2614",
+  "city": "Brisbane",
+  "stateprov": "QLD",
+  "postal_code": "4006",
   "country_code": "AU",
   "country_name": "Australia",
-  "event_start_date": "2026-10-05",
-  "event_end_date": "2026-10-05",
-  "latitude": "-35.2440",
-  "longitude": "149.0404",
-  "raw_address": "Belconnen Bowling Club, Beetaloo St, Hawker, ACT, Australia",
+  "event_start_date": "2026-10-06",
+  "event_end_date": "2026-10-06",
+  "latitude": "-27.4558",
+  "longitude": "153.0321",
+  "raw_address": "186 Brunswick St  Fortitude Valley, Qld 4006",
   "private_flag": "false",
   "ranking_system": "MAIN",
   "preregistration_date": "0000-00-00",
   "player_count": "0",
-  "qualifying_format": "Target Matchplay",
-  "finals_format": "Match Play",
-  "director_name": "James Todd",
-  "website": "https://www.pinberra2026.com/tournament-rules-formats",
-  "details": "A Group Matchplay competition over a number of rounds where a target of 30 points is set to qualify for the finals.\r\n\r\nOnce 16 players make the target points, the finals begin. Finals will be the standard Group Knockout format of 3 rounds: going from the 16 qualifiers to 8 to 4, before finding the ultimate winner.",
+  "qualifying_format": "Best Game",
+  "finals_format": "Ladder Format",
+  "director_name": "Jason Lambert",
+  "website": "https://www.aussiearcade.com/topic/80701-brisbane-pinball-club/",
+  "details": "Qualifying:\r\n*All players will play 12 games in a Best Game style format with 10 machines available. Any game can be played a maximum of twice only, with all 12 games to count towards a player's total.\r\n*Qualifying begins from 3pm, with no more games to commence after 8.30pm (unless extended by a TD).\r\n*Top 24 players will advance to finals, with a tie breaker game to be played for 24th place if required.\r\n\r\nMain Finals:\r\n*Players will be split into 4 groups of 6 and contest a ladder elimination in each group.\r\n*Matchplay will allocate machines for each game, while player order is determined from top seed down.\r\n*Play will continue until there is 1 player left in each group. These 4 players will contest a final 4-game Group Matchplay match.\r\n*Each player in the final four will get a choice of machine to play, starting with the highest seeded player.\r\n\r\nConsolation Finals:\r\n*The first player eliminated from each ladder group will be invited to contest a Consolation final.\r\n*Each player will play each other in a head-to-head match once, with the winner having the most wins overall.\r\n\r\nEntry fee:\r\nNormal - $20 entry\r\nEarly bird - $15 entry (if paid & started before 4pm)\r\nNew players - $6 entry (first time ever tournament players only)",
   "profile_photo": "https://www.ifpapinball.com/images/ifpa_gray.jpg",
-  "director_id": "1429",
+  "director_id": "1431",
   "winner": {
    "player_id": null,
    "player_name": " ",
@@ -61,26 +61,6 @@
   "certified_flag": false
  },
  "comps": [
-  {
-   "id": "117918",
-   "name": "Pinberra '26 Target Matchplay",
-   "event": "",
-   "type": "Tournament",
-   "start": "2026-10-05",
-   "end": "2026-10-05",
-   "venue": "Belconnen Bowling Club",
-   "city": "Hawker",
-   "state": "ACT",
-   "lat": -35.244,
-   "lon": 149.0404,
-   "zone": "nsw",
-   "website": "https://www.pinberra2026.com/tournament-rules-formats",
-   "director": "James Todd",
-   "format": "Target Matchplay / Match Play",
-   "ranking": "MAIN",
-   "women": false,
-   "link": "https://www.ifpapinball.com/tournaments/view.php?t=117918"
-  },
   {
    "id": "117769",
    "name": "Brisbane Pinball Club",
@@ -99,7 +79,8 @@
    "format": "Best Game / Ladder Format",
    "ranking": "MAIN",
    "women": false,
-   "link": "https://www.ifpapinball.com/tournaments/view.php?t=117769"
+   "link": "https://www.ifpapinball.com/tournaments/view.php?t=117769",
+   "photo": ""
   },
   {
    "id": "120184",
@@ -119,7 +100,8 @@
    "format": "Matchplay Qualifying / Fair Strike Knockout",
    "ranking": "MAIN",
    "women": false,
-   "link": "https://www.ifpapinball.com/tournaments/view.php?t=120184"
+   "link": "https://www.ifpapinball.com/tournaments/view.php?t=120184",
+   "photo": ""
   },
   {
    "id": "119703",
@@ -139,7 +121,8 @@
    "format": "Matchplay Qualifying / Match Play",
    "ranking": "MAIN",
    "women": false,
-   "link": "https://www.ifpapinball.com/tournaments/view.php?t=119703"
+   "link": "https://www.ifpapinball.com/tournaments/view.php?t=119703",
+   "photo": ""
   },
   {
    "id": "106136",
@@ -159,7 +142,8 @@
    "format": "Matchplay Qualifying / Match Play",
    "ranking": "MAIN",
    "women": false,
-   "link": "https://www.ifpapinball.com/tournaments/view.php?t=106136"
+   "link": "https://www.ifpapinball.com/tournaments/view.php?t=106136",
+   "photo": ""
   },
   {
    "id": "109700",
@@ -179,7 +163,8 @@
    "format": "Best Game / Ladder Format",
    "ranking": "MAIN",
    "women": false,
-   "link": "https://www.ifpapinball.com/tournaments/view.php?t=109700"
+   "link": "https://www.ifpapinball.com/tournaments/view.php?t=109700",
+   "photo": ""
   },
   {
    "id": "117955",
@@ -199,7 +184,8 @@
    "format": "Flip Frenzy / Match Play",
    "ranking": "MAIN",
    "women": false,
-   "link": "https://www.ifpapinball.com/tournaments/view.php?t=117955"
+   "link": "https://www.ifpapinball.com/tournaments/view.php?t=117955",
+   "photo": ""
   },
   {
    "id": "112135",
@@ -219,7 +205,8 @@
    "format": "Max Matchplay Qualifying / Match Play",
    "ranking": "MAIN",
    "women": false,
-   "link": "https://www.ifpapinball.com/tournaments/view.php?t=112135"
+   "link": "https://www.ifpapinball.com/tournaments/view.php?t=112135",
+   "photo": ""
   },
   {
    "id": "120051",
@@ -239,7 +226,8 @@
    "format": "Flip Frenzy / Match Play",
    "ranking": "MAIN",
    "women": false,
-   "link": "https://www.ifpapinball.com/tournaments/view.php?t=120051"
+   "link": "https://www.ifpapinball.com/tournaments/view.php?t=120051",
+   "photo": ""
   },
   {
    "id": "117711",
@@ -259,7 +247,8 @@
    "format": "Card Format / Match Play",
    "ranking": "MAIN",
    "women": false,
-   "link": "https://www.ifpapinball.com/tournaments/view.php?t=117711"
+   "link": "https://www.ifpapinball.com/tournaments/view.php?t=117711",
+   "photo": ""
   },
   {
    "id": "117714",
@@ -279,7 +268,8 @@
    "format": "Card Format / Match Play",
    "ranking": "MAIN",
    "women": false,
-   "link": "https://www.ifpapinball.com/tournaments/view.php?t=117714"
+   "link": "https://www.ifpapinball.com/tournaments/view.php?t=117714",
+   "photo": ""
   },
   {
    "id": "115788",
@@ -299,7 +289,8 @@
    "format": "Flip Frenzy / Single Elimination",
    "ranking": "MAIN",
    "women": false,
-   "link": "https://www.ifpapinball.com/tournaments/view.php?t=115788"
+   "link": "https://www.ifpapinball.com/tournaments/view.php?t=115788",
+   "photo": ""
   },
   {
    "id": "120142",
@@ -319,7 +310,8 @@
    "format": "Fair Strike Knockout",
    "ranking": "MAIN",
    "women": false,
-   "link": "https://www.ifpapinball.com/tournaments/view.php?t=120142"
+   "link": "https://www.ifpapinball.com/tournaments/view.php?t=120142",
+   "photo": ""
   },
   {
    "id": "119001",
@@ -339,7 +331,8 @@
    "format": "Match Play",
    "ranking": "MAIN",
    "women": false,
-   "link": "https://www.ifpapinball.com/tournaments/view.php?t=119001"
+   "link": "https://www.ifpapinball.com/tournaments/view.php?t=119001",
+   "photo": ""
   },
   {
    "id": "119908",
@@ -359,7 +352,8 @@
    "format": "Match Play",
    "ranking": "MAIN",
    "women": false,
-   "link": "https://www.ifpapinball.com/tournaments/view.php?t=119908"
+   "link": "https://www.ifpapinball.com/tournaments/view.php?t=119908",
+   "photo": ""
   },
   {
    "id": "110791",
@@ -379,7 +373,8 @@
    "format": "Match Play",
    "ranking": "MAIN",
    "women": false,
-   "link": "https://www.ifpapinball.com/tournaments/view.php?t=110791"
+   "link": "https://www.ifpapinball.com/tournaments/view.php?t=110791",
+   "photo": ""
   },
   {
    "id": "116557",
@@ -399,7 +394,8 @@
    "format": "Match Play",
    "ranking": "MAIN",
    "women": false,
-   "link": "https://www.ifpapinball.com/tournaments/view.php?t=116557"
+   "link": "https://www.ifpapinball.com/tournaments/view.php?t=116557",
+   "photo": ""
   },
   {
    "id": "108886",
@@ -419,7 +415,8 @@
    "format": "Flip Frenzy / Double Elimination",
    "ranking": "WOMEN",
    "women": true,
-   "link": "https://www.ifpapinball.com/tournaments/view.php?t=108886"
+   "link": "https://www.ifpapinball.com/tournaments/view.php?t=108886",
+   "photo": ""
   },
   {
    "id": "120130",
@@ -439,7 +436,8 @@
    "format": "Matchplay Qualifying / Ladder Format",
    "ranking": "MAIN",
    "women": false,
-   "link": "https://www.ifpapinball.com/tournaments/view.php?t=120130"
+   "link": "https://www.ifpapinball.com/tournaments/view.php?t=120130",
+   "photo": ""
   },
   {
    "id": "112853",
@@ -459,7 +457,8 @@
    "format": "Matchplay Qualifying / Match Play",
    "ranking": "MAIN",
    "women": false,
-   "link": "https://www.ifpapinball.com/tournaments/view.php?t=112853"
+   "link": "https://www.ifpapinball.com/tournaments/view.php?t=112853",
+   "photo": ""
   },
   {
    "id": "120984",
@@ -479,7 +478,8 @@
    "format": "Matchplay Qualifying / Single Elimination",
    "ranking": "MAIN",
    "women": false,
-   "link": "https://www.ifpapinball.com/tournaments/view.php?t=120984"
+   "link": "https://www.ifpapinball.com/tournaments/view.php?t=120984",
+   "photo": ""
   },
   {
    "id": "116796",
@@ -499,7 +499,8 @@
    "format": "Max Match Play",
    "ranking": "MAIN",
    "women": false,
-   "link": "https://www.ifpapinball.com/tournaments/view.php?t=116796"
+   "link": "https://www.ifpapinball.com/tournaments/view.php?t=116796",
+   "photo": ""
   },
   {
    "id": "118566",
@@ -519,7 +520,8 @@
    "format": "Matchplay Qualifying / Double Elimination",
    "ranking": "MAIN",
    "women": false,
-   "link": "https://www.ifpapinball.com/tournaments/view.php?t=118566"
+   "link": "https://www.ifpapinball.com/tournaments/view.php?t=118566",
+   "photo": ""
   },
   {
    "id": "117496",
@@ -539,7 +541,8 @@
    "format": "Max Match Play",
    "ranking": "MAIN",
    "women": false,
-   "link": "https://www.ifpapinball.com/tournaments/view.php?t=117496"
+   "link": "https://www.ifpapinball.com/tournaments/view.php?t=117496",
+   "photo": ""
   },
   {
    "id": "112945",
@@ -559,7 +562,8 @@
    "format": "Matchplay Qualifying / Match Play",
    "ranking": "MAIN",
    "women": false,
-   "link": "https://www.ifpapinball.com/tournaments/view.php?t=112945"
+   "link": "https://www.ifpapinball.com/tournaments/view.php?t=112945",
+   "photo": ""
   },
   {
    "id": "117580",
@@ -579,7 +583,8 @@
    "format": "Matchplay Qualifying / Match Play",
    "ranking": "MAIN",
    "women": false,
-   "link": "https://www.ifpapinball.com/tournaments/view.php?t=117580"
+   "link": "https://www.ifpapinball.com/tournaments/view.php?t=117580",
+   "photo": ""
   },
   {
    "id": "119704",
@@ -599,7 +604,8 @@
    "format": "Matchplay Qualifying / Match Play",
    "ranking": "MAIN",
    "women": false,
-   "link": "https://www.ifpapinball.com/tournaments/view.php?t=119704"
+   "link": "https://www.ifpapinball.com/tournaments/view.php?t=119704",
+   "photo": ""
   },
   {
    "id": "108897",
@@ -619,7 +625,8 @@
    "format": "Best Game / Match Play",
    "ranking": "MAIN",
    "women": false,
-   "link": "https://www.ifpapinball.com/tournaments/view.php?t=108897"
+   "link": "https://www.ifpapinball.com/tournaments/view.php?t=108897",
+   "photo": ""
   },
   {
    "id": "113310",
@@ -639,7 +646,8 @@
    "format": "Matchplay Qualifying / Match Play",
    "ranking": "MAIN",
    "women": false,
-   "link": "https://www.ifpapinball.com/tournaments/view.php?t=113310"
+   "link": "https://www.ifpapinball.com/tournaments/view.php?t=113310",
+   "photo": ""
   },
   {
    "id": "112242",
@@ -659,7 +667,8 @@
    "format": "Matchplay Qualifying / Double Elimination",
    "ranking": "MAIN",
    "women": false,
-   "link": "https://www.ifpapinball.com/tournaments/view.php?t=112242"
+   "link": "https://www.ifpapinball.com/tournaments/view.php?t=112242",
+   "photo": ""
   },
   {
    "id": "119905",
@@ -679,7 +688,8 @@
    "format": "Match Play",
    "ranking": "MAIN",
    "women": false,
-   "link": "https://www.ifpapinball.com/tournaments/view.php?t=119905"
+   "link": "https://www.ifpapinball.com/tournaments/view.php?t=119905",
+   "photo": ""
   },
   {
    "id": "116584",
@@ -699,7 +709,8 @@
    "format": "Matchplay Qualifying / Match Play",
    "ranking": "WOMEN",
    "women": true,
-   "link": "https://www.ifpapinball.com/tournaments/view.php?t=116584"
+   "link": "https://www.ifpapinball.com/tournaments/view.php?t=116584",
+   "photo": ""
   },
   {
    "id": "98571",
@@ -719,7 +730,8 @@
    "format": "Matchplay Qualifying / Match Play",
    "ranking": "MAIN",
    "women": false,
-   "link": "https://www.ifpapinball.com/tournaments/view.php?t=98571"
+   "link": "https://www.ifpapinball.com/tournaments/view.php?t=98571",
+   "photo": ""
   },
   {
    "id": "120052",
@@ -739,7 +751,8 @@
    "format": "Flip Frenzy / Match Play",
    "ranking": "MAIN",
    "women": false,
-   "link": "https://www.ifpapinball.com/tournaments/view.php?t=120052"
+   "link": "https://www.ifpapinball.com/tournaments/view.php?t=120052",
+   "photo": ""
   },
   {
    "id": "107674",
@@ -759,7 +772,8 @@
    "format": "Fair Strike Knockout",
    "ranking": "MAIN",
    "women": false,
-   "link": "https://www.ifpapinball.com/tournaments/view.php?t=107674"
+   "link": "https://www.ifpapinball.com/tournaments/view.php?t=107674",
+   "photo": ""
   },
   {
    "id": "116736",
@@ -779,7 +793,8 @@
    "format": "Matchplay Qualifying / Match Play",
    "ranking": "MAIN",
    "women": false,
-   "link": "https://www.ifpapinball.com/tournaments/view.php?t=116736"
+   "link": "https://www.ifpapinball.com/tournaments/view.php?t=116736",
+   "photo": ""
   },
   {
    "id": "117764",
@@ -799,7 +814,8 @@
    "format": "Best Game / Match Play",
    "ranking": "MAIN",
    "women": false,
-   "link": "https://www.ifpapinball.com/tournaments/view.php?t=117764"
+   "link": "https://www.ifpapinball.com/tournaments/view.php?t=117764",
+   "photo": ""
   },
   {
    "id": "119705",
@@ -819,7 +835,8 @@
    "format": "Matchplay Qualifying / Match Play",
    "ranking": "MAIN",
    "women": false,
-   "link": "https://www.ifpapinball.com/tournaments/view.php?t=119705"
+   "link": "https://www.ifpapinball.com/tournaments/view.php?t=119705",
+   "photo": ""
   },
   {
    "id": "121343",
@@ -839,7 +856,8 @@
    "format": "Matchplay Qualifying / Fair Strike Knockout",
    "ranking": "MAIN",
    "women": false,
-   "link": "https://www.ifpapinball.com/tournaments/view.php?t=121343"
+   "link": "https://www.ifpapinball.com/tournaments/view.php?t=121343",
+   "photo": ""
   },
   {
    "id": "113192",
@@ -859,7 +877,8 @@
    "format": "Matchplay Qualifying / Match Play",
    "ranking": "MAIN",
    "women": false,
-   "link": "https://www.ifpapinball.com/tournaments/view.php?t=113192"
+   "link": "https://www.ifpapinball.com/tournaments/view.php?t=113192",
+   "photo": ""
   },
   {
    "id": "105020",
@@ -879,7 +898,8 @@
    "format": "Match Play",
    "ranking": "MAIN",
    "women": false,
-   "link": "https://www.ifpapinball.com/tournaments/view.php?t=105020"
+   "link": "https://www.ifpapinball.com/tournaments/view.php?t=105020",
+   "photo": ""
   },
   {
    "id": "112143",
@@ -899,7 +919,8 @@
    "format": "Flip Frenzy / Double Elimination",
    "ranking": "MAIN",
    "women": false,
-   "link": "https://www.ifpapinball.com/tournaments/view.php?t=112143"
+   "link": "https://www.ifpapinball.com/tournaments/view.php?t=112143",
+   "photo": ""
   },
   {
    "id": "120053",
@@ -919,7 +940,8 @@
    "format": "Flip Frenzy / Match Play",
    "ranking": "MAIN",
    "women": false,
-   "link": "https://www.ifpapinball.com/tournaments/view.php?t=120053"
+   "link": "https://www.ifpapinball.com/tournaments/view.php?t=120053",
+   "photo": ""
   },
   {
    "id": "104521",
@@ -939,7 +961,8 @@
    "format": "Flip Frenzy / Amazing Race",
    "ranking": "WOMEN",
    "women": true,
-   "link": "https://www.ifpapinball.com/tournaments/view.php?t=104521"
+   "link": "https://www.ifpapinball.com/tournaments/view.php?t=104521",
+   "photo": ""
   },
   {
    "id": "121299",
@@ -959,7 +982,8 @@
    "format": "Flip Frenzy / Fair Strike Knockout",
    "ranking": "MAIN",
    "women": false,
-   "link": "https://www.ifpapinball.com/tournaments/view.php?t=121299"
+   "link": "https://www.ifpapinball.com/tournaments/view.php?t=121299",
+   "photo": ""
   },
   {
    "id": "105007",
@@ -979,7 +1003,8 @@
    "format": "Match Play",
    "ranking": "MAIN",
    "women": false,
-   "link": "https://www.ifpapinball.com/tournaments/view.php?t=105007"
+   "link": "https://www.ifpapinball.com/tournaments/view.php?t=105007",
+   "photo": ""
   },
   {
    "id": "119907",
@@ -999,7 +1024,8 @@
    "format": "Match Play",
    "ranking": "MAIN",
    "women": false,
-   "link": "https://www.ifpapinball.com/tournaments/view.php?t=119907"
+   "link": "https://www.ifpapinball.com/tournaments/view.php?t=119907",
+   "photo": ""
   },
   {
    "id": "119329",
@@ -1019,7 +1045,8 @@
    "format": "Matchplay Qualifying / Double Elimination",
    "ranking": "MAIN",
    "women": false,
-   "link": "https://www.ifpapinball.com/tournaments/view.php?t=119329"
+   "link": "https://www.ifpapinball.com/tournaments/view.php?t=119329",
+   "photo": ""
   },
   {
    "id": "120050",
@@ -1039,7 +1066,8 @@
    "format": "Flip Frenzy / Match Play",
    "ranking": "MAIN",
    "women": false,
-   "link": "https://www.ifpapinball.com/tournaments/view.php?t=120050"
+   "link": "https://www.ifpapinball.com/tournaments/view.php?t=120050",
+   "photo": ""
   },
   {
    "id": "114926",
@@ -1059,7 +1087,8 @@
    "format": "Max Matchplay Qualifying / Match Play",
    "ranking": "WOMEN",
    "women": true,
-   "link": "https://www.ifpapinball.com/tournaments/view.php?t=114926"
+   "link": "https://www.ifpapinball.com/tournaments/view.php?t=114926",
+   "photo": ""
   },
   {
    "id": "107686",
@@ -1079,7 +1108,8 @@
    "format": "Matchplay Qualifying / Match Play",
    "ranking": "WOMEN",
    "women": true,
-   "link": "https://www.ifpapinball.com/tournaments/view.php?t=107686"
+   "link": "https://www.ifpapinball.com/tournaments/view.php?t=107686",
+   "photo": ""
   },
   {
    "id": "107512",
@@ -1099,7 +1129,8 @@
    "format": "Matchplay Qualifying / Match Play",
    "ranking": "MAIN",
    "women": false,
-   "link": "https://www.ifpapinball.com/tournaments/view.php?t=107512"
+   "link": "https://www.ifpapinball.com/tournaments/view.php?t=107512",
+   "photo": ""
   },
   {
    "id": "117581",
@@ -1119,7 +1150,8 @@
    "format": "Matchplay Qualifying / Match Play",
    "ranking": "MAIN",
    "women": false,
-   "link": "https://www.ifpapinball.com/tournaments/view.php?t=117581"
+   "link": "https://www.ifpapinball.com/tournaments/view.php?t=117581",
+   "photo": ""
   },
   {
    "id": "119706",
@@ -1139,7 +1171,8 @@
    "format": "Matchplay Qualifying / Match Play",
    "ranking": "MAIN",
    "women": false,
-   "link": "https://www.ifpapinball.com/tournaments/view.php?t=119706"
+   "link": "https://www.ifpapinball.com/tournaments/view.php?t=119706",
+   "photo": ""
   },
   {
    "id": "108253",
@@ -1159,7 +1192,8 @@
    "format": "Matchplay Qualifying / Match Play",
    "ranking": "MAIN",
    "women": false,
-   "link": "https://www.ifpapinball.com/tournaments/view.php?t=108253"
+   "link": "https://www.ifpapinball.com/tournaments/view.php?t=108253",
+   "photo": ""
   },
   {
    "id": "121354",
@@ -1179,7 +1213,8 @@
    "format": "Matchplay Qualifying / Fair Strike Knockout",
    "ranking": "MAIN",
    "women": false,
-   "link": "https://www.ifpapinball.com/tournaments/view.php?t=121354"
+   "link": "https://www.ifpapinball.com/tournaments/view.php?t=121354",
+   "photo": ""
   },
   {
    "id": "121355",
@@ -1199,7 +1234,8 @@
    "format": "Matchplay Qualifying / Fair Strike Knockout",
    "ranking": "MAIN",
    "women": false,
-   "link": "https://www.ifpapinball.com/tournaments/view.php?t=121355"
+   "link": "https://www.ifpapinball.com/tournaments/view.php?t=121355",
+   "photo": ""
   },
   {
    "id": "121050",
@@ -1219,7 +1255,8 @@
    "format": "Match Play",
    "ranking": "MAIN",
    "women": false,
-   "link": "https://www.ifpapinball.com/tournaments/view.php?t=121050"
+   "link": "https://www.ifpapinball.com/tournaments/view.php?t=121050",
+   "photo": ""
   },
   {
    "id": "108946",
@@ -1239,7 +1276,8 @@
    "format": "Matchplay Qualifying / Single Elimination",
    "ranking": "MAIN",
    "women": false,
-   "link": "https://www.ifpapinball.com/tournaments/view.php?t=108946"
+   "link": "https://www.ifpapinball.com/tournaments/view.php?t=108946",
+   "photo": ""
   },
   {
    "id": "118959",
@@ -1259,7 +1297,8 @@
    "format": "Match Play",
    "ranking": "MAIN",
    "women": false,
-   "link": "https://www.ifpapinball.com/tournaments/view.php?t=118959"
+   "link": "https://www.ifpapinball.com/tournaments/view.php?t=118959",
+   "photo": ""
   },
   {
    "id": "115253",
@@ -1279,7 +1318,8 @@
    "format": "Matchplay Qualifying / Match Play",
    "ranking": "WOMEN",
    "women": true,
-   "link": "https://www.ifpapinball.com/tournaments/view.php?t=115253"
+   "link": "https://www.ifpapinball.com/tournaments/view.php?t=115253",
+   "photo": ""
   },
   {
    "id": "112244",
@@ -1299,7 +1339,8 @@
    "format": "Matchplay Qualifying / Double Elimination",
    "ranking": "MAIN",
    "women": false,
-   "link": "https://www.ifpapinball.com/tournaments/view.php?t=112244"
+   "link": "https://www.ifpapinball.com/tournaments/view.php?t=112244",
+   "photo": ""
   },
   {
    "id": "116731",
@@ -1319,7 +1360,8 @@
    "format": "Matchplay Qualifying / Match Play",
    "ranking": "MAIN",
    "women": false,
-   "link": "https://www.ifpapinball.com/tournaments/view.php?t=116731"
+   "link": "https://www.ifpapinball.com/tournaments/view.php?t=116731",
+   "photo": ""
   },
   {
    "id": "121179",
@@ -1339,7 +1381,8 @@
    "format": "Flip Frenzy",
    "ranking": "MAIN",
    "women": false,
-   "link": "https://www.ifpapinball.com/tournaments/view.php?t=121179"
+   "link": "https://www.ifpapinball.com/tournaments/view.php?t=121179",
+   "photo": ""
   },
   {
    "id": "121180",
@@ -1359,7 +1402,8 @@
    "format": "Flip Frenzy",
    "ranking": "MAIN",
    "women": false,
-   "link": "https://www.ifpapinball.com/tournaments/view.php?t=121180"
+   "link": "https://www.ifpapinball.com/tournaments/view.php?t=121180",
+   "photo": ""
   },
   {
    "id": "105021",
@@ -1379,7 +1423,8 @@
    "format": "Max Match Play",
    "ranking": "MAIN",
    "women": false,
-   "link": "https://www.ifpapinball.com/tournaments/view.php?t=105021"
+   "link": "https://www.ifpapinball.com/tournaments/view.php?t=105021",
+   "photo": ""
   },
   {
    "id": "119906",
@@ -1399,7 +1444,8 @@
    "format": "Match Play",
    "ranking": "MAIN",
    "women": false,
-   "link": "https://www.ifpapinball.com/tournaments/view.php?t=119906"
+   "link": "https://www.ifpapinball.com/tournaments/view.php?t=119906",
+   "photo": ""
   },
   {
    "id": "121482",
@@ -1419,7 +1465,8 @@
    "format": "Flip Frenzy / Single Elimination",
    "ranking": "YOUTH",
    "women": false,
-   "link": "https://www.ifpapinball.com/tournaments/view.php?t=121482"
+   "link": "https://www.ifpapinball.com/tournaments/view.php?t=121482",
+   "photo": ""
   },
   {
    "id": "121295",
@@ -1439,7 +1486,8 @@
    "format": "Flip Frenzy / Single Elimination",
    "ranking": "YOUTH",
    "women": false,
-   "link": "https://www.ifpapinball.com/tournaments/view.php?t=121295"
+   "link": "https://www.ifpapinball.com/tournaments/view.php?t=121295",
+   "photo": ""
   },
   {
    "id": "121294",
@@ -1459,7 +1507,8 @@
    "format": "Flip Frenzy / Match Play",
    "ranking": "WOMEN",
    "women": true,
-   "link": "https://www.ifpapinball.com/tournaments/view.php?t=121294"
+   "link": "https://www.ifpapinball.com/tournaments/view.php?t=121294",
+   "photo": ""
   },
   {
    "id": "121705",
@@ -1479,7 +1528,8 @@
    "format": "Best Game / Match Play",
    "ranking": "MAIN",
    "women": false,
-   "link": "https://www.ifpapinball.com/tournaments/view.php?t=121705"
+   "link": "https://www.ifpapinball.com/tournaments/view.php?t=121705",
+   "photo": ""
   },
   {
    "id": "121706",
@@ -1499,7 +1549,8 @@
    "format": "Best Game / Match Play",
    "ranking": "MAIN",
    "women": false,
-   "link": "https://www.ifpapinball.com/tournaments/view.php?t=121706"
+   "link": "https://www.ifpapinball.com/tournaments/view.php?t=121706",
+   "photo": ""
   },
   {
    "id": "121708",
@@ -1519,7 +1570,8 @@
    "format": "Best Game / Match Play",
    "ranking": "MAIN",
    "women": false,
-   "link": "https://www.ifpapinball.com/tournaments/view.php?t=121708"
+   "link": "https://www.ifpapinball.com/tournaments/view.php?t=121708",
+   "photo": ""
   },
   {
    "id": "121707",
@@ -1539,7 +1591,8 @@
    "format": "Best Game / Match Play",
    "ranking": "MAIN",
    "women": false,
-   "link": "https://www.ifpapinball.com/tournaments/view.php?t=121707"
+   "link": "https://www.ifpapinball.com/tournaments/view.php?t=121707",
+   "photo": ""
   },
   {
    "id": "121709",
@@ -1559,7 +1612,8 @@
    "format": "Best Game / Match Play",
    "ranking": "MAIN",
    "women": false,
-   "link": "https://www.ifpapinball.com/tournaments/view.php?t=121709"
+   "link": "https://www.ifpapinball.com/tournaments/view.php?t=121709",
+   "photo": ""
   },
   {
    "id": "105023",
@@ -1579,7 +1633,8 @@
    "format": "Max Match Play",
    "ranking": "MAIN",
    "women": false,
-   "link": "https://www.ifpapinball.com/tournaments/view.php?t=105023"
+   "link": "https://www.ifpapinball.com/tournaments/view.php?t=105023",
+   "photo": ""
   },
   {
    "id": "120747",
@@ -1599,7 +1654,8 @@
    "format": "Flip Frenzy / Flip Frenzy",
    "ranking": "MAIN",
    "women": false,
-   "link": "https://www.ifpapinball.com/tournaments/view.php?t=120747"
+   "link": "https://www.ifpapinball.com/tournaments/view.php?t=120747",
+   "photo": ""
   },
   {
    "id": "100093",
@@ -1619,7 +1675,8 @@
    "format": "Match Play",
    "ranking": "MAIN",
    "women": false,
-   "link": "https://www.ifpapinball.com/tournaments/view.php?t=100093"
+   "link": "https://www.ifpapinball.com/tournaments/view.php?t=100093",
+   "photo": ""
   },
   {
    "id": "121710",
@@ -1639,7 +1696,8 @@
    "format": "Matchplay Qualifying / Match Play",
    "ranking": "MAIN",
    "women": false,
-   "link": "https://www.ifpapinball.com/tournaments/view.php?t=121710"
+   "link": "https://www.ifpapinball.com/tournaments/view.php?t=121710",
+   "photo": ""
   },
   {
    "id": "120750",
@@ -1659,7 +1717,8 @@
    "format": "Matchplay Qualifying / Match Play",
    "ranking": "MAIN",
    "women": false,
-   "link": "https://www.ifpapinball.com/tournaments/view.php?t=120750"
+   "link": "https://www.ifpapinball.com/tournaments/view.php?t=120750",
+   "photo": ""
   },
   {
    "id": "120748",
@@ -1679,7 +1738,8 @@
    "format": "Matchplay Qualifying / Single Elimination",
    "ranking": "MAIN",
    "women": false,
-   "link": "https://www.ifpapinball.com/tournaments/view.php?t=120748"
+   "link": "https://www.ifpapinball.com/tournaments/view.php?t=120748",
+   "photo": ""
   },
   {
    "id": "120749",
@@ -1699,7 +1759,8 @@
    "format": "Flip Frenzy / Flip Frenzy",
    "ranking": "YOUTH",
    "women": false,
-   "link": "https://www.ifpapinball.com/tournaments/view.php?t=120749"
+   "link": "https://www.ifpapinball.com/tournaments/view.php?t=120749",
+   "photo": ""
   },
   {
    "id": "120751",
@@ -1719,7 +1780,8 @@
    "format": "Max Matchplay Qualifying / Max Match Play",
    "ranking": "MAIN",
    "women": false,
-   "link": "https://www.ifpapinball.com/tournaments/view.php?t=120751"
+   "link": "https://www.ifpapinball.com/tournaments/view.php?t=120751",
+   "photo": ""
   },
   {
    "id": "120880",
@@ -1739,7 +1801,8 @@
    "format": "Max Match Play",
    "ranking": "WOMEN",
    "women": true,
-   "link": "https://www.ifpapinball.com/tournaments/view.php?t=120880"
+   "link": "https://www.ifpapinball.com/tournaments/view.php?t=120880",
+   "photo": ""
   },
   {
    "id": "120752",
@@ -1759,7 +1822,8 @@
    "format": "Max Matchplay Qualifying / Max Match Play",
    "ranking": "MAIN",
    "women": false,
-   "link": "https://www.ifpapinball.com/tournaments/view.php?t=120752"
+   "link": "https://www.ifpapinball.com/tournaments/view.php?t=120752",
+   "photo": ""
   },
   {
    "id": "120141",
@@ -1779,7 +1843,8 @@
    "format": "Best Game / Single Elimination",
    "ranking": "MAIN",
    "women": false,
-   "link": "https://www.ifpapinball.com/tournaments/view.php?t=120141"
+   "link": "https://www.ifpapinball.com/tournaments/view.php?t=120141",
+   "photo": ""
   },
   {
    "id": "121562",
@@ -1799,7 +1864,8 @@
    "format": "Best Game / Single Elimination",
    "ranking": "MAIN",
    "women": false,
-   "link": "https://www.ifpapinball.com/tournaments/view.php?t=121562"
+   "link": "https://www.ifpapinball.com/tournaments/view.php?t=121562",
+   "photo": ""
   },
   {
    "id": "121835",
@@ -1819,7 +1885,8 @@
    "format": "Fair Strike / Match Play",
    "ranking": "MAIN",
    "women": false,
-   "link": "https://www.ifpapinball.com/tournaments/view.php?t=121835"
+   "link": "https://www.ifpapinball.com/tournaments/view.php?t=121835",
+   "photo": ""
   },
   {
    "id": "120185",
@@ -1839,7 +1906,8 @@
    "format": "Matchplay Qualifying / Fair Strike Knockout",
    "ranking": "MAIN",
    "women": false,
-   "link": "https://www.ifpapinball.com/tournaments/view.php?t=120185"
+   "link": "https://www.ifpapinball.com/tournaments/view.php?t=120185",
+   "photo": ""
   },
   {
    "id": "119707",
@@ -1859,7 +1927,8 @@
    "format": "Matchplay Qualifying / Match Play",
    "ranking": "MAIN",
    "women": false,
-   "link": "https://www.ifpapinball.com/tournaments/view.php?t=119707"
+   "link": "https://www.ifpapinball.com/tournaments/view.php?t=119707",
+   "photo": ""
   },
   {
    "id": "121389",
@@ -1879,7 +1948,8 @@
    "format": "Matchplay Qualifying / Fair Strike Knockout",
    "ranking": "MAIN",
    "women": false,
-   "link": "https://www.ifpapinball.com/tournaments/view.php?t=121389"
+   "link": "https://www.ifpapinball.com/tournaments/view.php?t=121389",
+   "photo": ""
   },
   {
    "id": "106137",
@@ -1899,7 +1969,8 @@
    "format": "Matchplay Qualifying / Match Play",
    "ranking": "MAIN",
    "women": false,
-   "link": "https://www.ifpapinball.com/tournaments/view.php?t=106137"
+   "link": "https://www.ifpapinball.com/tournaments/view.php?t=106137",
+   "photo": ""
   },
   {
    "id": "109701",
@@ -1919,7 +1990,8 @@
    "format": "Best Game / Ladder Format",
    "ranking": "MAIN",
    "women": false,
-   "link": "https://www.ifpapinball.com/tournaments/view.php?t=109701"
+   "link": "https://www.ifpapinball.com/tournaments/view.php?t=109701",
+   "photo": ""
   },
   {
    "id": "117956",
@@ -1939,7 +2011,8 @@
    "format": "Flip Frenzy / Match Play",
    "ranking": "MAIN",
    "women": false,
-   "link": "https://www.ifpapinball.com/tournaments/view.php?t=117956"
+   "link": "https://www.ifpapinball.com/tournaments/view.php?t=117956",
+   "photo": ""
   },
   {
    "id": "112138",
@@ -1959,7 +2032,8 @@
    "format": "Max Matchplay Qualifying / Match Play",
    "ranking": "MAIN",
    "women": false,
-   "link": "https://www.ifpapinball.com/tournaments/view.php?t=112138"
+   "link": "https://www.ifpapinball.com/tournaments/view.php?t=112138",
+   "photo": ""
   },
   {
    "id": "121457",
@@ -1979,7 +2053,8 @@
    "format": "Flip Frenzy",
    "ranking": "MAIN",
    "women": false,
-   "link": "https://www.ifpapinball.com/tournaments/view.php?t=121457"
+   "link": "https://www.ifpapinball.com/tournaments/view.php?t=121457",
+   "photo": ""
   },
   {
    "id": "109453",
@@ -1999,7 +2074,8 @@
    "format": "Best Game / Flip Frenzy",
    "ranking": "MAIN",
    "women": false,
-   "link": "https://www.ifpapinball.com/tournaments/view.php?t=109453"
+   "link": "https://www.ifpapinball.com/tournaments/view.php?t=109453",
+   "photo": ""
   },
   {
    "id": "119909",
@@ -2019,7 +2095,8 @@
    "format": "Match Play",
    "ranking": "MAIN",
    "women": false,
-   "link": "https://www.ifpapinball.com/tournaments/view.php?t=119909"
+   "link": "https://www.ifpapinball.com/tournaments/view.php?t=119909",
+   "photo": ""
   },
   {
    "id": "120131",
@@ -2039,7 +2116,8 @@
    "format": "Flip Frenzy / Match Play",
    "ranking": "MAIN",
    "women": false,
-   "link": "https://www.ifpapinball.com/tournaments/view.php?t=120131"
+   "link": "https://www.ifpapinball.com/tournaments/view.php?t=120131",
+   "photo": ""
   },
   {
    "id": "103862",
@@ -2059,7 +2137,8 @@
    "format": "Flip Frenzy / Max Match Play",
    "ranking": "MAIN",
    "women": false,
-   "link": "https://www.ifpapinball.com/tournaments/view.php?t=103862"
+   "link": "https://www.ifpapinball.com/tournaments/view.php?t=103862",
+   "photo": ""
   },
   {
    "id": "118345",
@@ -2079,7 +2158,8 @@
    "format": "Matchplay Qualifying / Match Play",
    "ranking": "MAIN",
    "women": false,
-   "link": "https://www.ifpapinball.com/tournaments/view.php?t=118345"
+   "link": "https://www.ifpapinball.com/tournaments/view.php?t=118345",
+   "photo": ""
   },
   {
    "id": "107694",
@@ -2099,7 +2179,8 @@
    "format": "Matchplay Qualifying / Match Play",
    "ranking": "MAIN",
    "women": false,
-   "link": "https://www.ifpapinball.com/tournaments/view.php?t=107694"
+   "link": "https://www.ifpapinball.com/tournaments/view.php?t=107694",
+   "photo": ""
   },
   {
    "id": "121466",
@@ -2119,7 +2200,8 @@
    "format": "Flip Frenzy / Match Play",
    "ranking": "MAIN",
    "women": false,
-   "link": "https://www.ifpapinball.com/tournaments/view.php?t=121466"
+   "link": "https://www.ifpapinball.com/tournaments/view.php?t=121466",
+   "photo": ""
   },
   {
    "id": "121456",
@@ -2139,7 +2221,8 @@
    "format": "Flip Frenzy",
    "ranking": "MAIN",
    "women": false,
-   "link": "https://www.ifpapinball.com/tournaments/view.php?t=121456"
+   "link": "https://www.ifpapinball.com/tournaments/view.php?t=121456",
+   "photo": ""
   },
   {
    "id": "116797",
@@ -2159,7 +2242,8 @@
    "format": "Max Match Play",
    "ranking": "MAIN",
    "women": false,
-   "link": "https://www.ifpapinball.com/tournaments/view.php?t=116797"
+   "link": "https://www.ifpapinball.com/tournaments/view.php?t=116797",
+   "photo": ""
   },
   {
    "id": "118567",
@@ -2179,7 +2263,8 @@
    "format": "Matchplay Qualifying / Double Elimination",
    "ranking": "MAIN",
    "women": false,
-   "link": "https://www.ifpapinball.com/tournaments/view.php?t=118567"
+   "link": "https://www.ifpapinball.com/tournaments/view.php?t=118567",
+   "photo": ""
   },
   {
    "id": "112946",
@@ -2199,7 +2284,29 @@
    "format": "Matchplay Qualifying / Match Play",
    "ranking": "MAIN",
    "women": false,
-   "link": "https://www.ifpapinball.com/tournaments/view.php?t=112946"
+   "link": "https://www.ifpapinball.com/tournaments/view.php?t=112946",
+   "photo": ""
+  },
+  {
+   "id": "121941",
+   "name": "Planet Pinball Party",
+   "event": "",
+   "type": "Tournament",
+   "start": "2026-11-10",
+   "end": "2026-11-10",
+   "venue": "",
+   "city": "Perth",
+   "state": "WA",
+   "lat": -31.9484,
+   "lon": 115.8568,
+   "zone": "wa",
+   "website": "https://www.facebook.com/WAPinball/",
+   "director": "Anthony Cirillo",
+   "format": "Max Matchplay Qualifying / Match Play",
+   "ranking": "MAIN",
+   "women": false,
+   "link": "https://www.ifpapinball.com/tournaments/view.php?t=121941",
+   "photo": ""
   },
   {
    "id": "119708",
@@ -2219,7 +2326,8 @@
    "format": "Matchplay Qualifying / Match Play",
    "ranking": "MAIN",
    "women": false,
-   "link": "https://www.ifpapinball.com/tournaments/view.php?t=119708"
+   "link": "https://www.ifpapinball.com/tournaments/view.php?t=119708",
+   "photo": ""
   },
   {
    "id": "108898",
@@ -2239,7 +2347,8 @@
    "format": "Best Game / Match Play",
    "ranking": "MAIN",
    "women": false,
-   "link": "https://www.ifpapinball.com/tournaments/view.php?t=108898"
+   "link": "https://www.ifpapinball.com/tournaments/view.php?t=108898",
+   "photo": ""
   },
   {
    "id": "121390",
@@ -2259,7 +2368,8 @@
    "format": "Matchplay Qualifying / Fair Strike Knockout",
    "ranking": "MAIN",
    "women": false,
-   "link": "https://www.ifpapinball.com/tournaments/view.php?t=121390"
+   "link": "https://www.ifpapinball.com/tournaments/view.php?t=121390",
+   "photo": ""
   },
   {
    "id": "113311",
@@ -2279,7 +2389,8 @@
    "format": "Matchplay Qualifying / Match Play",
    "ranking": "MAIN",
    "women": false,
-   "link": "https://www.ifpapinball.com/tournaments/view.php?t=113311"
+   "link": "https://www.ifpapinball.com/tournaments/view.php?t=113311",
+   "photo": ""
   },
   {
    "id": "105024",
@@ -2299,7 +2410,8 @@
    "format": "Match Play",
    "ranking": "MAIN",
    "women": false,
-   "link": "https://www.ifpapinball.com/tournaments/view.php?t=105024"
+   "link": "https://www.ifpapinball.com/tournaments/view.php?t=105024",
+   "photo": ""
   },
   {
    "id": "112245",
@@ -2319,7 +2431,8 @@
    "format": "Matchplay Qualifying / Double Elimination",
    "ranking": "MAIN",
    "women": false,
-   "link": "https://www.ifpapinball.com/tournaments/view.php?t=112245"
+   "link": "https://www.ifpapinball.com/tournaments/view.php?t=112245",
+   "photo": ""
   },
   {
    "id": "105025",
@@ -2339,7 +2452,29 @@
    "format": "Max Match Play",
    "ranking": "MAIN",
    "women": false,
-   "link": "https://www.ifpapinball.com/tournaments/view.php?t=105025"
+   "link": "https://www.ifpapinball.com/tournaments/view.php?t=105025",
+   "photo": ""
+  },
+  {
+   "id": "121913",
+   "name": "Saloon Barcade Second Thursday Nov Tournament",
+   "event": "",
+   "type": "Tournament",
+   "start": "2026-11-12",
+   "end": "2026-11-12",
+   "venue": "",
+   "city": "Edithvale",
+   "state": "VIC",
+   "lat": -38.039,
+   "lon": 145.1085,
+   "zone": "vic",
+   "website": "https://www.facebook.com/groups/697420119229880/",
+   "director": "Phillip De Bortoli",
+   "format": "Strike Knockout",
+   "ranking": "MAIN",
+   "women": false,
+   "link": "https://www.ifpapinball.com/tournaments/view.php?t=121913",
+   "photo": ""
   },
   {
    "id": "110792",
@@ -2359,7 +2494,8 @@
    "format": "Match Play",
    "ranking": "MAIN",
    "women": false,
-   "link": "https://www.ifpapinball.com/tournaments/view.php?t=110792"
+   "link": "https://www.ifpapinball.com/tournaments/view.php?t=110792",
+   "photo": ""
   },
   {
    "id": "121356",
@@ -2379,7 +2515,29 @@
    "format": "Matchplay Qualifying / Fair Strike Knockout",
    "ranking": "MAIN",
    "women": false,
-   "link": "https://www.ifpapinball.com/tournaments/view.php?t=121356"
+   "link": "https://www.ifpapinball.com/tournaments/view.php?t=121356",
+   "photo": ""
+  },
+  {
+   "id": "121950",
+   "name": "Ghetto Summer of Pinball - Air Hockey edition",
+   "event": "",
+   "type": "Tournament",
+   "start": "2026-11-14",
+   "end": "2026-11-14",
+   "venue": "Monaraay Fun House  12A Humphrey St",
+   "city": "Glenorchy",
+   "state": "TAS",
+   "lat": -42.8279,
+   "lon": 147.2794,
+   "zone": "tas",
+   "website": "https://ghettopinballleague.com/",
+   "director": "Simon Voigt",
+   "format": "Match Play",
+   "ranking": "MAIN",
+   "women": false,
+   "link": "https://www.ifpapinball.com/tournaments/view.php?t=121950",
+   "photo": ""
   },
   {
    "id": "112854",
@@ -2399,7 +2557,8 @@
    "format": "Matchplay Qualifying / Match Play",
    "ranking": "MAIN",
    "women": false,
-   "link": "https://www.ifpapinball.com/tournaments/view.php?t=112854"
+   "link": "https://www.ifpapinball.com/tournaments/view.php?t=112854",
+   "photo": ""
   },
   {
    "id": "107675",
@@ -2419,7 +2578,8 @@
    "format": "Fair Strike Knockout",
    "ranking": "MAIN",
    "women": false,
-   "link": "https://www.ifpapinball.com/tournaments/view.php?t=107675"
+   "link": "https://www.ifpapinball.com/tournaments/view.php?t=107675",
+   "photo": ""
   },
   {
    "id": "116737",
@@ -2439,7 +2599,8 @@
    "format": "Matchplay Qualifying / Match Play",
    "ranking": "MAIN",
    "women": false,
-   "link": "https://www.ifpapinball.com/tournaments/view.php?t=116737"
+   "link": "https://www.ifpapinball.com/tournaments/view.php?t=116737",
+   "photo": ""
   },
   {
    "id": "121563",
@@ -2459,7 +2620,8 @@
    "format": "Best Game / Target Match Play",
    "ranking": "MAIN",
    "women": false,
-   "link": "https://www.ifpapinball.com/tournaments/view.php?t=121563"
+   "link": "https://www.ifpapinball.com/tournaments/view.php?t=121563",
+   "photo": ""
   },
   {
    "id": "119709",
@@ -2479,7 +2641,8 @@
    "format": "Matchplay Qualifying / Match Play",
    "ranking": "MAIN",
    "women": false,
-   "link": "https://www.ifpapinball.com/tournaments/view.php?t=119709"
+   "link": "https://www.ifpapinball.com/tournaments/view.php?t=119709",
+   "photo": ""
   },
   {
    "id": "121391",
@@ -2499,7 +2662,8 @@
    "format": "Matchplay Qualifying / Fair Strike Knockout",
    "ranking": "MAIN",
    "women": false,
-   "link": "https://www.ifpapinball.com/tournaments/view.php?t=121391"
+   "link": "https://www.ifpapinball.com/tournaments/view.php?t=121391",
+   "photo": ""
   },
   {
    "id": "113193",
@@ -2519,7 +2683,8 @@
    "format": "Matchplay Qualifying / Match Play",
    "ranking": "MAIN",
    "women": false,
-   "link": "https://www.ifpapinball.com/tournaments/view.php?t=113193"
+   "link": "https://www.ifpapinball.com/tournaments/view.php?t=113193",
+   "photo": ""
   },
   {
    "id": "121049",
@@ -2539,7 +2704,8 @@
    "format": "Match Play",
    "ranking": "MAIN",
    "women": false,
-   "link": "https://www.ifpapinball.com/tournaments/view.php?t=121049"
+   "link": "https://www.ifpapinball.com/tournaments/view.php?t=121049",
+   "photo": ""
   },
   {
    "id": "112142",
@@ -2559,7 +2725,8 @@
    "format": "Flip Frenzy / Double Elimination",
    "ranking": "MAIN",
    "women": false,
-   "link": "https://www.ifpapinball.com/tournaments/view.php?t=112142"
+   "link": "https://www.ifpapinball.com/tournaments/view.php?t=112142",
+   "photo": ""
   },
   {
    "id": "121740",
@@ -2579,7 +2746,8 @@
    "format": "Matchplay Qualifying / Match Play",
    "ranking": "MAIN",
    "women": false,
-   "link": "https://www.ifpapinball.com/tournaments/view.php?t=121740"
+   "link": "https://www.ifpapinball.com/tournaments/view.php?t=121740",
+   "photo": ""
   },
   {
    "id": "105026",
@@ -2599,7 +2767,8 @@
    "format": "Match Play",
    "ranking": "MAIN",
    "women": false,
-   "link": "https://www.ifpapinball.com/tournaments/view.php?t=105026"
+   "link": "https://www.ifpapinball.com/tournaments/view.php?t=105026",
+   "photo": ""
   },
   {
    "id": "108887",
@@ -2619,7 +2788,8 @@
    "format": "Flip Frenzy / Double Elimination",
    "ranking": "WOMEN",
    "women": true,
-   "link": "https://www.ifpapinball.com/tournaments/view.php?t=108887"
+   "link": "https://www.ifpapinball.com/tournaments/view.php?t=108887",
+   "photo": ""
   },
   {
    "id": "98572",
@@ -2639,7 +2809,8 @@
    "format": "Matchplay Qualifying / Match Play",
    "ranking": "MAIN",
    "women": false,
-   "link": "https://www.ifpapinball.com/tournaments/view.php?t=98572"
+   "link": "https://www.ifpapinball.com/tournaments/view.php?t=98572",
+   "photo": ""
   },
   {
    "id": "121712",
@@ -2659,7 +2830,8 @@
    "format": "Flip Frenzy",
    "ranking": "YOUTH",
    "women": false,
-   "link": "https://www.ifpapinball.com/tournaments/view.php?t=121712"
+   "link": "https://www.ifpapinball.com/tournaments/view.php?t=121712",
+   "photo": ""
   },
   {
    "id": "121711",
@@ -2679,7 +2851,8 @@
    "format": "Flip Frenzy",
    "ranking": "WOMEN",
    "women": true,
-   "link": "https://www.ifpapinball.com/tournaments/view.php?t=121711"
+   "link": "https://www.ifpapinball.com/tournaments/view.php?t=121711",
+   "photo": ""
   },
   {
    "id": "121716",
@@ -2699,7 +2872,29 @@
    "format": "Matchplay Qualifying / Flip Frenzy",
    "ranking": "MAIN",
    "women": false,
-   "link": "https://www.ifpapinball.com/tournaments/view.php?t=121716"
+   "link": "https://www.ifpapinball.com/tournaments/view.php?t=121716",
+   "photo": ""
+  },
+  {
+   "id": "121942",
+   "name": "Planet Pinball Party",
+   "event": "",
+   "type": "Tournament",
+   "start": "2026-11-24",
+   "end": "2026-11-24",
+   "venue": "",
+   "city": "Perth",
+   "state": "WA",
+   "lat": -31.9484,
+   "lon": 115.8568,
+   "zone": "wa",
+   "website": "https://www.facebook.com/WAPinball/",
+   "director": "Anthony Cirillo",
+   "format": "Max Matchplay Qualifying / Match Play",
+   "ranking": "MAIN",
+   "women": false,
+   "link": "https://www.ifpapinball.com/tournaments/view.php?t=121942",
+   "photo": ""
   },
   {
    "id": "119710",
@@ -2719,7 +2914,8 @@
    "format": "Matchplay Qualifying / Match Play",
    "ranking": "MAIN",
    "women": false,
-   "link": "https://www.ifpapinball.com/tournaments/view.php?t=119710"
+   "link": "https://www.ifpapinball.com/tournaments/view.php?t=119710",
+   "photo": ""
   },
   {
    "id": "108254",
@@ -2739,7 +2935,8 @@
    "format": "Matchplay Qualifying / Match Play",
    "ranking": "MAIN",
    "women": false,
-   "link": "https://www.ifpapinball.com/tournaments/view.php?t=108254"
+   "link": "https://www.ifpapinball.com/tournaments/view.php?t=108254",
+   "photo": ""
   },
   {
    "id": "121392",
@@ -2759,7 +2956,8 @@
    "format": "Matchplay Qualifying / Fair Strike Knockout",
    "ranking": "MAIN",
    "women": false,
-   "link": "https://www.ifpapinball.com/tournaments/view.php?t=121392"
+   "link": "https://www.ifpapinball.com/tournaments/view.php?t=121392",
+   "photo": ""
   },
   {
    "id": "118956",
@@ -2779,7 +2977,8 @@
    "format": "Match Play",
    "ranking": "MAIN",
    "women": false,
-   "link": "https://www.ifpapinball.com/tournaments/view.php?t=118956"
+   "link": "https://www.ifpapinball.com/tournaments/view.php?t=118956",
+   "photo": ""
   },
   {
    "id": "108947",
@@ -2799,7 +2998,8 @@
    "format": "Matchplay Qualifying / Single Elimination",
    "ranking": "MAIN",
    "women": false,
-   "link": "https://www.ifpapinball.com/tournaments/view.php?t=108947"
+   "link": "https://www.ifpapinball.com/tournaments/view.php?t=108947",
+   "photo": ""
   },
   {
    "id": "115254",
@@ -2819,7 +3019,8 @@
    "format": "Flip Frenzy / Match Play",
    "ranking": "WOMEN",
    "women": true,
-   "link": "https://www.ifpapinball.com/tournaments/view.php?t=115254"
+   "link": "https://www.ifpapinball.com/tournaments/view.php?t=115254",
+   "photo": ""
   },
   {
    "id": "112246",
@@ -2839,7 +3040,8 @@
    "format": "Matchplay Qualifying / Double Elimination",
    "ranking": "MAIN",
    "women": false,
-   "link": "https://www.ifpapinball.com/tournaments/view.php?t=112246"
+   "link": "https://www.ifpapinball.com/tournaments/view.php?t=112246",
+   "photo": ""
   },
   {
    "id": "116732",
@@ -2859,7 +3061,8 @@
    "format": "Matchplay Qualifying / Match Play",
    "ranking": "MAIN",
    "women": false,
-   "link": "https://www.ifpapinball.com/tournaments/view.php?t=116732"
+   "link": "https://www.ifpapinball.com/tournaments/view.php?t=116732",
+   "photo": ""
   },
   {
    "id": "104531",
@@ -2879,7 +3082,8 @@
    "format": "Match Play",
    "ranking": "WOMEN",
    "women": true,
-   "link": "https://www.ifpapinball.com/tournaments/view.php?t=104531"
+   "link": "https://www.ifpapinball.com/tournaments/view.php?t=104531",
+   "photo": ""
   },
   {
    "id": "105027",
@@ -2899,7 +3103,8 @@
    "format": "Max Match Play",
    "ranking": "MAIN",
    "women": false,
-   "link": "https://www.ifpapinball.com/tournaments/view.php?t=105027"
+   "link": "https://www.ifpapinball.com/tournaments/view.php?t=105027",
+   "photo": ""
   },
   {
    "id": "100100",
@@ -2919,7 +3124,8 @@
    "format": "Pin-Golf Qualifying / Amazing Race",
    "ranking": "MAIN",
    "women": false,
-   "link": "https://www.ifpapinball.com/tournaments/view.php?t=100100"
+   "link": "https://www.ifpapinball.com/tournaments/view.php?t=100100",
+   "photo": ""
   },
   {
    "id": "114932",
@@ -2939,7 +3145,8 @@
    "format": "Max Matchplay Qualifying / Match Play",
    "ranking": "WOMEN",
    "women": true,
-   "link": "https://www.ifpapinball.com/tournaments/view.php?t=114932"
+   "link": "https://www.ifpapinball.com/tournaments/view.php?t=114932",
+   "photo": ""
   },
   {
    "id": "107687",
@@ -2959,7 +3166,8 @@
    "format": "Matchplay Qualifying / Match Play",
    "ranking": "WOMEN",
    "women": true,
-   "link": "https://www.ifpapinball.com/tournaments/view.php?t=107687"
+   "link": "https://www.ifpapinball.com/tournaments/view.php?t=107687",
+   "photo": ""
   },
   {
    "id": "121564",
@@ -2979,7 +3187,8 @@
    "format": "Best Game / Ladder Format",
    "ranking": "MAIN",
    "women": false,
-   "link": "https://www.ifpapinball.com/tournaments/view.php?t=121564"
+   "link": "https://www.ifpapinball.com/tournaments/view.php?t=121564",
+   "photo": ""
   },
   {
    "id": "120183",
@@ -2999,7 +3208,8 @@
    "format": "Matchplay Qualifying / Fair Strike Knockout",
    "ranking": "MAIN",
    "women": false,
-   "link": "https://www.ifpapinball.com/tournaments/view.php?t=120183"
+   "link": "https://www.ifpapinball.com/tournaments/view.php?t=120183",
+   "photo": ""
   },
   {
    "id": "121388",
@@ -3019,7 +3229,8 @@
    "format": "Matchplay Qualifying / Fair Strike Knockout",
    "ranking": "MAIN",
    "women": false,
-   "link": "https://www.ifpapinball.com/tournaments/view.php?t=121388"
+   "link": "https://www.ifpapinball.com/tournaments/view.php?t=121388",
+   "photo": ""
   },
   {
    "id": "106138",
@@ -3039,7 +3250,8 @@
    "format": "Matchplay Qualifying / Match Play",
    "ranking": "MAIN",
    "women": false,
-   "link": "https://www.ifpapinball.com/tournaments/view.php?t=106138"
+   "link": "https://www.ifpapinball.com/tournaments/view.php?t=106138",
+   "photo": ""
   },
   {
    "id": "109702",
@@ -3059,7 +3271,8 @@
    "format": "Best Game / Ladder Format",
    "ranking": "MAIN",
    "women": false,
-   "link": "https://www.ifpapinball.com/tournaments/view.php?t=109702"
+   "link": "https://www.ifpapinball.com/tournaments/view.php?t=109702",
+   "photo": ""
   },
   {
    "id": "121048",
@@ -3079,7 +3292,8 @@
    "format": "Match Play",
    "ranking": "MAIN",
    "women": false,
-   "link": "https://www.ifpapinball.com/tournaments/view.php?t=121048"
+   "link": "https://www.ifpapinball.com/tournaments/view.php?t=121048",
+   "photo": ""
   },
   {
    "id": "112136",
@@ -3099,7 +3313,8 @@
    "format": "Max Matchplay Qualifying / Match Play",
    "ranking": "MAIN",
    "women": false,
-   "link": "https://www.ifpapinball.com/tournaments/view.php?t=112136"
+   "link": "https://www.ifpapinball.com/tournaments/view.php?t=112136",
+   "photo": ""
   },
   {
    "id": "109443",
@@ -3119,7 +3334,8 @@
    "format": "Best Game / Flip Frenzy",
    "ranking": "MAIN",
    "women": false,
-   "link": "https://www.ifpapinball.com/tournaments/view.php?t=109443"
+   "link": "https://www.ifpapinball.com/tournaments/view.php?t=109443",
+   "photo": ""
   },
   {
    "id": "120144",
@@ -3139,7 +3355,71 @@
    "format": "Match Play",
    "ranking": "WOMEN",
    "women": true,
-   "link": "https://www.ifpapinball.com/tournaments/view.php?t=120144"
+   "link": "https://www.ifpapinball.com/tournaments/view.php?t=120144",
+   "photo": ""
+  },
+  {
+   "id": "103863",
+   "name": "Netherworld Flip Frenzy",
+   "event": "",
+   "type": "Tournament",
+   "start": "2026-12-05",
+   "end": "2026-12-05",
+   "venue": "",
+   "city": "Fortitude Valley",
+   "state": "QLD",
+   "lat": -27.4558,
+   "lon": 153.032,
+   "zone": "qld",
+   "website": "https://www.netherworldarcade.com/events/",
+   "director": "Jimmy Nails",
+   "format": "Flip Frenzy / Max Match Play",
+   "ranking": "MAIN",
+   "women": false,
+   "link": "https://www.ifpapinball.com/tournaments/view.php?t=103863",
+   "photo": ""
+  },
+  {
+   "id": "121506",
+   "name": "The Shoalhaven Storm: Stern Army Flip Frenzy",
+   "event": "",
+   "type": "Tournament",
+   "start": "2026-12-05",
+   "end": "2026-12-05",
+   "venue": "",
+   "city": "Nowra",
+   "state": "NSW",
+   "lat": -34.8747,
+   "lon": 150.6052,
+   "zone": "nsw",
+   "website": "https://www.facebook.com/profile.php?id=61591169102649",
+   "director": "Karyn Hunt",
+   "format": "Flip Frenzy / Match Play",
+   "ranking": "MAIN",
+   "women": false,
+   "link": "https://www.ifpapinball.com/tournaments/view.php?t=121506",
+   "photo": ""
+  },
+  {
+   "id": "105754",
+   "name": "Townsville Silverball Alligator December",
+   "event": "",
+   "type": "Tournament",
+   "start": "2026-12-05",
+   "end": "2026-12-05",
+   "venue": "",
+   "city": "Alligator Creek",
+   "state": "QLD",
+   "lat": -19.409,
+   "lon": 146.9468,
+   "zone": "qld",
+   "website": "https://www.pinhead.com.au/tournaments",
+   "director": "Rob Milla",
+   "format": "Match Play",
+   "ranking": "MAIN",
+   "women": false,
+   "link": "https://www.ifpapinball.com/tournaments/view.php?t=105754",
+   "photo": ""
   }
  ]
 }
