@@ -98,44 +98,126 @@ def comp_row(c, show_zone=True):
     kind = render.comp_kind(c)
     kind_html = f' <span class="pill">{e(kind)}</span>' if kind else ""
     sub = f' <span class="city">{e(c["event"])}</span>' if c["event"] else ""
-    where = ", ".join(x for x in (c["venue"], c["city"]) if x)
-    zone = f' <span class="city">· {e(short(c["zone"]))}</span>' if show_zone and c["zone"] else ""
+    venue = e(c["venue"])
+    if c.get("pbm_id"):
+        venue = (f'<a href="https://pinballmap.com/map?by_location_id={c["pbm_id"]}" '
+                 f'title="See the machines here on Pinball Map">{venue}</a>')
+    where = ", ".join(x for x in (venue, e(c["city"])) if x)
+    st = c["zone"] or "other"
+    zone = f' <span class="st st-{e(st)}">{e(short(c["zone"]) if c["zone"] else "Elsewhere")}</span>' if show_zone else ""
     more = f' · <a href="{e(c["website"])}">Event page</a>' if c["website"] else ""
     fmt = f'<span class="d">{e(c["format"])}</span>' if c["format"] else ""
-    return (f'<li class="comp"><span class="when">{e(render.comp_when(c))}</span><div>'
+    return (f'<li class="comp" data-state="{e(st)}"><span class="when">{e(render.comp_when(c))}</span><div>'
             f'<a class="cname" href="{e(c["link"])}">{e(c["name"])}</a>{kind_html}{sub}'
-            f'<div class="cwhere">{e(where)}{zone}{more}</div>{fmt}</div></li>')
+            f'<div class="cwhere">{where}{zone}{more}</div>{fmt}</div></li>')
 
 
 def comps_block(comps, since, until, title, empty, link=True):
-    rows = "".join(comp_row(c) for c in comps)
+    rows = "".join(comp_row(c, show_zone=False) for c in comps)
     body = f'<ul class="comps">{rows}</ul>' if comps else f'<p class="quiet">{e(empty)}</p>'
-    more = f'<p class="more"><a href="{u("/comps/")}">Every comp in Australia, next two months</a></p>' if link else ""
+    more = (f'<p class="more"><a href="{u("/comps/")}">The comps calendar for Australia, and how to add it '
+            f'to your own calendar</a></p>' if link else "")
     return (f'<section class="zone comps-zone"><header><h2>{e(title)}</h2>'
             f'<span class="when">{e(render.short_span(since, until))}</span></header>{body}{more}</section>')
 
 
+STATE_ORDER = ["vic", "nsw", "qld", "sa", "wa", "tas", "nt"]
+
+
+def _month_grid(year, month, comps_by_day, today):
+    import calendar
+    cal = calendar.Calendar(firstweekday=0)
+    rows = []
+    for week in cal.monthdatescalendar(year, month):
+        cells = []
+        for d in week:
+            iso = d.isoformat()
+            if d.month != month:
+                cells.append('<td class="out"></td>')
+                continue
+            todays = comps_by_day.get(iso, [])
+            cls = " past" if d < today else (" today" if d == today else "")
+            marks = "".join(f'<a class="ev st-{e(c["zone"] or "other")}" data-state="{e(c["zone"] or "other")}" '
+                            f'href="#d-{iso}" title="{e(c["name"])}"><span>{e(c["name"])}</span></a>' for c in todays)
+            extra = '<span class="more-ev"></span>' if todays else ""
+            num = (f'<a class="num" href="#d-{iso}">{d.day}</a>' if todays else f'<span class="num">{d.day}</span>')
+            cells.append(f'<td class="day{cls}{" has" if todays else ""}">{num}<div class="evs">{marks}{extra}</div></td>')
+        rows.append("<tr>" + "".join(cells) + "</tr>")
+    head = "".join(f'<th scope="col"><span class="long">{n}</span><span class="short">{n[0]}</span></th>'
+                   for n in ("Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"))
+    title = dt.date(year, month, 1).strftime("%B %Y")
+    return (f'<section class="month"><h2>{title}</h2><table class="cal"><thead><tr>{head}</tr></thead>'
+            f'<tbody>{"".join(rows)}</tbody></table></section>')
+
+
 def comps_page(comps, on):
-    by_zone = {}
+    until = on + dt.timedelta(days=ifpa.DAYS_AHEAD)
+    by_day, counts = {}, {}
     for c in comps:
-        by_zone.setdefault(c["zone"], []).append(c)
-    order = [z for z in issue.zone_order() if z in by_zone] + ([None] if None in by_zone else [])
-    nav = "".join(f'<a href="#comps-{e(z or "other")}">{e(short(z) if z else "Elsewhere")}'
-                  f'<span class="n">{len(by_zone[z])}</span></a>' for z in order)
-    sections = "".join(
-        f'<section class="zone" id="comps-{e(z or "other")}"><header><h2>{e(areas.LABELS.get(z, "Elsewhere"))}</h2></header>'
-        f'<ul class="comps">{"".join(comp_row(c, show_zone=False) for c in by_zone[z])}</ul></section>' for z in order)
+        d0 = max(dt.date.fromisoformat(c["start"]), on)
+        d1 = min(dt.date.fromisoformat(c["end"] or c["start"]), d0 + dt.timedelta(days=3))
+        d = d0
+        while d <= d1:                          # multi-day events mark each day, up to four
+            by_day.setdefault(d.isoformat(), []).append(c)
+            d += dt.timedelta(days=1)
+        counts[c["zone"] or "other"] = counts.get(c["zone"] or "other", 0) + 1
+    months, y, m = [], on.year, on.month
+    while (y, m) <= (until.year, until.month):
+        months.append(_month_grid(y, m, by_day, on))
+        y, m = (y + 1, 1) if m == 12 else (y, m + 1)
+    states = [z for z in STATE_ORDER if counts.get(z)]
+    chips = (f'<button type="button" data-pick="" aria-pressed="true">All <span class="n">{len(comps)}</span></button>'
+             + "".join(f'<button type="button" data-pick="{z}" aria-pressed="false"><i class="sw st-{z}"></i>'
+                       f'{e(short(z))} <span class="n">{counts[z]}</span></button>' for z in states))
+    days = []
+    for iso in sorted(by_day):
+        cs = by_day[iso]
+        if iso != max(cs[0]["start"], on.isoformat()) and all(iso != max(c["start"], on.isoformat()) for c in cs):
+            continue                              # continuing days show in the grid, not as list headings
+        starting = [c for c in cs if max(c["start"], on.isoformat()) == iso]
+        days.append(f'<section class="dayblock" id="d-{iso}"><h3>{e(render.long_day(iso).rsplit(" ", 1)[0])}</h3>'
+                    f'<ul class="comps">{"".join(comp_row(c) for c in starting)}</ul></section>')
+    base = SITE["base_url"]
+    feed_links = "".join(f'<li><a class="sub st-{z}-b" href="webcal://{e(base.split("://", 1)[1])}/comps/{z}.ics">'
+                         f'<i class="sw st-{z}"></i>{e(areas.LABELS[z])}</a></li>' for z in states)
+    feeds = (f'<section class="feeds"><h2>Put the comps in your own calendar</h2>'
+             '<p>Subscribe once and every IFPA comp in your state shows up in your phone\'s calendar, '
+             'kept up to date each day. Tap your state:</p>'
+             f'<ul class="feedlist">{feed_links}<li><a class="sub" href="webcal://{e(base.split("://", 1)[1])}/comps/all.ics">'
+             'All of Australia</a></li></ul>'
+             '<details><summary>Using Google Calendar on a computer?</summary><p>In Google Calendar choose '
+             '<b>Other calendars</b>, then <b>From URL</b>, and paste your state\'s address:</p><ul class="urls">'
+             + "".join(f'<li><code>{e(base)}/comps/{z}.ics</code></li>' for z in states + ["all"]) +
+             '</ul></details></section>')
     if not comps:
-        sections = ('<p class="quiet">No upcoming IFPA events are listed yet. '
-                    'They appear here as directors add them to the IFPA calendar.</p>')
-    until = (on + dt.timedelta(days=ifpa.DAYS_AHEAD)).isoformat()
+        body = ('<p class="quiet">No upcoming IFPA events are listed yet. '
+                'They appear here as directors add them to the IFPA calendar.</p>')
+    else:
+        body = (f'<div class="state-pick" role="group" aria-label="Show comps in">{chips}</div>'
+                f'<div class="months">{"".join(months)}</div>'
+                f'<div class="agenda">{"".join(days)}</div>'
+                '<p class="quiet" id="none-here" hidden>No IFPA comps listed here in the next two months.</p>'
+                f'{feeds}'
+                '<script>(function(){var bs=[].slice.call(document.querySelectorAll("[data-pick]"));'
+                'function pick(s){bs.forEach(function(b){b.setAttribute("aria-pressed",String(b.dataset.pick===s))});'
+                'document.querySelectorAll(".comp[data-state],.ev[data-state]").forEach(function(x){x.hidden=!!s&&x.dataset.state!==s});'
+                'var any=false;document.querySelectorAll(".dayblock").forEach(function(d){var v=!!d.querySelector(".comp:not([hidden])");d.hidden=!v;any=any||v});'
+                'document.getElementById("none-here").hidden=any;'
+                'cap();try{localStorage.setItem("comps-state",s)}catch(e){}}'
+                'function cap(){var lim=matchMedia("(max-width:700px)").matches?6:4;'
+                'document.querySelectorAll("td.day").forEach(function(td){var v=[].slice.call(td.querySelectorAll(".ev:not([hidden])"));'
+                'v.forEach(function(x,i){x.classList.toggle("over",i>=lim)});var m=td.querySelector(".more-ev");'
+                'if(m)m.textContent=v.length>lim?"+"+(v.length-lim):"";td.classList.toggle("has",v.length>0)})}'
+                'cap();addEventListener("resize",cap);'
+                'bs.forEach(function(b){b.addEventListener("click",function(){pick(b.dataset.pick)})});'
+                'var q=(location.search.match(/state=(\\w+)/)||[])[1],s0=q;if(s0===undefined){try{s0=localStorage.getItem("comps-state")}catch(e){}}'
+                'if(s0&&bs.some(function(b){return b.dataset.pick===s0}))pick(s0);})();</script>')
     box = ('<p class="wordmark" style="font-size:clamp(1.6rem,6vw,2.6rem)">Comps</p>'
-           f'<p class="lede">Every IFPA-sanctioned tournament and league in Australia from now to {e(render.day(until))}.'
-           '<small>From the IFPA calendar, updated every morning. Running a comp that is not here? Submit it to IFPA, '
-           'or tell us and we will add a way to list it.</small></p>')
-    nav_html = f'<nav class="chips" aria-label="Areas">{nav}</nav>' if comps else ""
-    return page("Comps", sections, path="/comps/", description="Upcoming pinball tournaments and leagues across Australia.",
-                box_extra=box, nav=nav_html, current="comps")
+           f'<p class="lede">Every IFPA-sanctioned tournament and league in Australia, from today to {e(render.day(until.isoformat()))}.'
+           '<small>From the IFPA calendar, updated every morning, with venues matched to Pinball Map so you can see '
+           'what you will be playing on. Running a comp that is not here? Add it to the IFPA calendar and it appears the next day.</small></p>')
+    return page("Comps", body, path="/comps/", description="Upcoming pinball tournaments and leagues across Australia, by month and state.",
+                box_extra=box, current="comps")
 
 
 def signup():
@@ -546,9 +628,15 @@ def build(on=None):
         shutil.rmtree(DIST)
     DIST.mkdir()
     shutil.copy(ROOT / "static" / "style.css", DIST / "style.css")
-    comps = ifpa.load()
+    comps = ifpa.enrich(ifpa.load(), ifpa.venues_from_events(events))
     write("/", home(weeks, counts, on, comps))
-    write("/comps/", comps_page(ifpa.between(comps, on.isoformat(), "9999-12-31"), on))
+    upcoming = ifpa.between(comps, on.isoformat(), "9999-12-31")
+    write("/comps/", comps_page(upcoming, on))
+    stamp = dt.datetime.now(dt.timezone.utc).strftime("%Y%m%dT%H%M%SZ")
+    for z in STATE_ORDER:
+        write(f"/comps/{z}.ics", ifpa.ics([c for c in upcoming if c["zone"] == z],
+                                          f"Pinball comps: {areas.LABELS[z]}", stamp))
+    write("/comps/all.ics", ifpa.ics(upcoming, "Pinball comps: Australia", stamp))
     for z in issue.zone_order():
         write(f"/zone/{z}/", zone_page(z, events, until, counts))
     dates = issue.published_dates()

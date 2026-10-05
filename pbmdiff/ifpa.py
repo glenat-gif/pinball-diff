@@ -160,3 +160,71 @@ def between(comps, since, until, zones=None):
     """Comps running at any point between two dates, optionally only in some zones."""
     return [c for c in comps if c["start"] <= until and (c["end"] or c["start"]) >= since
             and (zones is None or c["zone"] in zones)]
+
+
+MATCH_METRES = 120
+
+
+def venues_from_events(events):
+    """Every Pinball Map venue we have seen: id -> (name, lat, lon)."""
+    out = {}
+    for ev in events.values():
+        if ev.get("location_id") and ev.get("lat") is not None and ev.get("location_name"):
+            out[ev["location_id"]] = (ev["location_name"], ev["lat"], ev["lon"])
+    return out
+
+
+def enrich(comps, venues):
+    """Name each comp after the Pinball Map venue it sits on, when one is within MATCH_METRES.
+
+    IFPA leaves the venue blank for over half of Australian events; Pinball Map
+    names are also cleaner than addresses. Adds pbm_id for linking to the
+    venue's machine list.
+    """
+    out = []
+    for c in comps:
+        c = dict(c)
+        if c.get("lat") is not None and venues:
+            vid, (name, lat, lon) = min(venues.items(), key=lambda kv: areas.km_between(c["lat"], c["lon"], kv[1][1], kv[1][2]))
+            if areas.km_between(c["lat"], c["lon"], lat, lon) * 1000 <= MATCH_METRES:
+                c["venue"], c["pbm_id"] = name, vid
+        out.append(c)
+    return out
+
+
+def _ics_text(v):
+    return str(v).replace("\\", "\\\\").replace(";", "\\;").replace(",", "\\,").replace("\n", "\\n")
+
+
+def _fold(line):
+    """iCalendar lines are folded at 75 octets."""
+    raw = line.encode("utf-8")
+    if len(raw) <= 75:
+        return line
+    parts, cur = [], b""
+    for ch in line:
+        b = ch.encode("utf-8")
+        if len(cur) + len(b) > (75 if not parts else 74):
+            parts.append(cur.decode("utf-8"))
+            cur = b""
+        cur += b
+    parts.append(cur.decode("utf-8"))
+    return "\r\n ".join(parts)
+
+
+def ics(comps, title, stamp):
+    """An all-day calendar feed. IFPA gives dates but not start times."""
+    lines = ["BEGIN:VCALENDAR", "VERSION:2.0", "PRODID:-//Pinball This Week//Comps//EN", "CALSCALE:GREGORIAN",
+             "METHOD:PUBLISH", f"X-WR-CALNAME:{_ics_text(title)}", "X-WR-TIMEZONE:Australia/Melbourne",
+             "REFRESH-INTERVAL;VALUE=DURATION:PT12H", "X-PUBLISHED-TTL:PT12H"]
+    for c in comps:
+        start = dt.date.fromisoformat(c["start"])
+        end = dt.date.fromisoformat(c["end"] or c["start"]) + dt.timedelta(days=1)
+        where = ", ".join(x for x in (c["venue"], c["city"], c.get("state")) if x)
+        desc = " · ".join(x for x in (c.get("format"), "IFPA: " + c["link"], c.get("website")) if x)
+        lines += ["BEGIN:VEVENT", f"UID:ifpa-{c['id']}@pinballthisweek", f"DTSTAMP:{stamp}",
+                  f"DTSTART;VALUE=DATE:{start:%Y%m%d}", f"DTEND;VALUE=DATE:{end:%Y%m%d}",
+                  f"SUMMARY:{_ics_text(c['name'])}", f"LOCATION:{_ics_text(where)}",
+                  f"DESCRIPTION:{_ics_text(desc)}", f"URL:{c['link']}", "TRANSP:TRANSPARENT", "END:VEVENT"]
+    lines.append("END:VCALENDAR")
+    return "\r\n".join(_fold(l) for l in lines) + "\r\n"

@@ -130,3 +130,27 @@ class CompTests(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class EnrichAndFeedTests(unittest.TestCase):
+    def test_comps_take_the_pinball_map_venue_they_sit_on(self):
+        venues = {101: ("The Saloon Barcade", -38.0283, 145.1092), 102: ("Somewhere Far", -38.2, 145.3)}
+        comps = [{"id": 1, "venue": "", "lat": -38.02832, "lon": 145.10921, "name": "X"},     # a few metres away
+                 {"id": 2, "venue": "Hall", "lat": -38.10, "lon": 145.20, "name": "Y"}]        # kilometres away
+        out = ifpa.enrich(comps, venues)
+        self.assertEqual((out[0]["venue"], out[0]["pbm_id"]), ("The Saloon Barcade", 101))
+        self.assertEqual(out[1]["venue"], "Hall")
+        self.assertNotIn("pbm_id", out[1])
+        self.assertEqual(comps[0]["venue"], "")                       # the input is not changed
+
+    def test_calendar_feed_is_valid_all_day_ical(self):
+        c = {"id": 9, "name": "Monthly, with commas; and semis", "start": "2026-10-08", "end": "2026-10-09",
+             "venue": "The Saloon Barcade", "city": "Edithvale", "state": "VIC", "format": "Match Play",
+             "link": "https://www.ifpapinball.com/tournaments/view.php?t=9", "website": ""}
+        text = ifpa.ics([c], "Pinball comps: Victoria", "20261005T000000Z")
+        self.assertTrue(text.startswith("BEGIN:VCALENDAR\r\n") and text.endswith("END:VCALENDAR\r\n"))
+        self.assertIn("DTSTART;VALUE=DATE:20261008", text)
+        self.assertIn("DTEND;VALUE=DATE:20261010", text)                 # all-day end is exclusive
+        self.assertIn("SUMMARY:Monthly\\, with commas\; and semis", text)
+        self.assertIn("UID:ifpa-9@pinballthisweek", text)
+        self.assertTrue(all(len(line.encode()) <= 75 for line in text.split("\r\n")))
