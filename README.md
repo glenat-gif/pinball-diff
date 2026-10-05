@@ -63,7 +63,15 @@ a repository secret named `PINBALLMAP_API_TOKEN`.
 
 `python -m pbmdiff.run build` writes the website into `dist/`: this week for
 every zone with Victoria first, a page per zone with four weeks of history,
-the archive of emails, an about page and an Atom feed. GitHub Pages serves it.
+the archive of emails, a Machines page, an about page and an Atom feed.
+GitHub Pages serves it.
+
+The Machines page lists every title that landed or left in the last 90 days,
+with Pro, Premium and LE grouped together, and links each title to Pinball
+Map's own search for where it is now. It is built from change history only,
+so it never claims a full inventory, and it never says "first" or "only".
+Premium, LE, Collector's Edition and new releases are flagged in the digest
+and the email.
 
 `python -m pbmdiff.run issue` makes the email when it is due. An issue is
 dated Thursday, covers the seven days before it, and is frozen in

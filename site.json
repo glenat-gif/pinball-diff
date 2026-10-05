@@ -3,8 +3,14 @@
   "tagline": "What changed on Pinball Map this week, across Australia.",
   "base_url": "https://glenat-gif.github.io/pinball-diff",
   "base_path": "/pinball-diff",
-  "buttondown_username": "",
-  "email_zones": ["melbourne", "geelong", "gippsland", "northern-victoria", "western-victoria"],
+  "buttondown_username": "pinballthisweek",
+  "email_zones": [
+    "melbourne",
+    "geelong",
+    "gippsland",
+    "northern-victoria",
+    "western-victoria"
+  ],
   "email_mode": "draft",
   "issue_weekday": 3,
   "contact": "glenatwell86@gmail.com"

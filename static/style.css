@@ -144,6 +144,11 @@ main { padding-bottom: 3rem; }
 .what .m { font-weight: 600; }
 .what .mk { color: var(--muted); }
 .what .io { display: block; }
+.pill {
+  display: inline-block; font: 700 0.68rem/1.5 var(--body); text-transform: uppercase; letter-spacing: 0.06em;
+  padding: 0 0.45rem; border-radius: 999px; vertical-align: 0.12em; white-space: nowrap;
+  color: var(--plasma-text); border: 1px solid currentColor;
+}
 .what .io b { font-weight: 650; color: var(--muted); font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.05em; margin-right: 0.35rem; }
 blockquote.said { margin: 0.35rem 0 0; padding-left: 0.75rem; border-left: 3px solid var(--line); font-style: italic; }
 .meta { grid-column: 2; color: var(--muted); font-size: 0.86rem; }
@@ -152,6 +157,26 @@ blockquote.said { margin: 0.35rem 0 0; padding-left: 0.75rem; border-left: 3px s
 .more { margin: 0.7rem 0 0; font-size: 0.95rem; }
 .allquiet { margin-top: 2.4rem; color: var(--muted); }
 .allquiet strong { color: var(--ink); }
+
+/* Machines */
+.finder { margin-top: 1.8rem; }
+.finder label { display: block; font-weight: 650; margin-bottom: 0.35rem; }
+.finder input {
+  width: 100%; font: inherit; padding: 0.7rem 0.85rem; border-radius: 8px;
+  border: 1px solid var(--line); background: var(--surface); color: var(--ink);
+}
+.count { color: var(--muted); font-size: 0.92rem; margin: 0.6rem 0 0; }
+.title-card { border-bottom: 1px solid var(--line); padding: 1.3rem 0 1.1rem; }
+.title-card h2 { font-size: 1.2rem; line-height: 1.25; margin: 0; }
+.title-card h2 .mk { color: var(--muted); font-weight: 400; font-size: 0.95rem; margin-left: 0.3rem; }
+.eds { color: var(--muted); font-size: 0.9rem; margin: 0.2rem 0 0.6rem; }
+.moves { list-style: none; margin: 0; padding: 0; }
+.moves li { display: grid; grid-template-columns: 3.4rem 1fr; gap: 0 0.5rem; padding: 0.35rem 0; line-height: 1.45; }
+.moves .ed { font-weight: 650; }
+.moves .ed.rare { color: var(--plasma-text); }
+.moves .d { display: block; color: var(--muted); font-size: 0.86rem; }
+.now { margin: 0.55rem 0 0; font-size: 0.95rem; }
+.now a { font-weight: 600; }
 
 /* Prose pages */
 .prose { max-width: 38rem; }

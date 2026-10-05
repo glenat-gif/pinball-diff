@@ -50,6 +50,27 @@ def _label(e):
     return e["machine"]
 
 
+_FLAG = [(re.compile(r"\((?:LE|Limited Edition)\b", re.I), "Limited Edition"),
+         (re.compile(r"\((?:CE|Collector'?s Edition)\b", re.I), "Collector's Edition"),
+         (re.compile(r"\(Premium\b", re.I), "Premium")]
+_YEAR = re.compile(r"(\d{4})\)\s*$")
+
+
+def flags(name, this_year=None):
+    """What makes a machine worth the drive: a rarer edition, or a new game."""
+    import datetime as _dt
+    this_year = this_year or _dt.date.today().year
+    out = [label for rx, label in _FLAG if rx.search(name or "")][:1]
+    m = _YEAR.search(name or "")
+    if m and int(m.group(1)) >= this_year - 1:
+        out.append("New release")
+    return out
+
+
+def _ids(evs):
+    return {e["machine"]: e["machine_id"] for e in evs if e.get("machine_id")}
+
+
 def build(events):
     by_venue = defaultdict(list)
     for e in sorted(events, key=lambda e: e["id"]):
@@ -64,6 +85,8 @@ def build(events):
             kinds[e["type"]].append(e)
         confirmations += len(kinds["venue_confirmed"])
 
+        ids = _ids(evs)
+        venue["ids"] = ids
         if kinds["venue_added"]:
             items.append({**venue, "kind": "new_venue", "rank": 0, "date": kinds["venue_added"][0]["date"],
                           "machines": [_label(e) for e in kinds["machine_added"]],
@@ -99,6 +122,12 @@ def build(events):
                           "date": c["date"], "machine": _label(c), "comment": c["comment"], "user": c["user"],
                           "by": [c["user"]] if c["user"] else []})
 
+    for i in items:
+        arriving = i.get("machines", []) if i["kind"] in ("new_venue", "added", "rotation") else \
+            [i["in"]] if i["kind"] == "swap" else []
+        i["flags"] = {n: flags(n) for n in arriving if flags(n)}
+        if i["flags"]:
+            i["rank"] -= 0.05
     items.sort(key=lambda i: (i["rank"], i["location_name"]))
     return {"items": items, "confirmations": confirmations}
 

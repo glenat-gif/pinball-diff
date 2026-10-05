@@ -40,8 +40,13 @@ def subject(iss):
     return f"{n} change{'s' if n != 1 else ''} in Victoria{lead}"
 
 
-def _machines(names):
-    return render.join(names)
+def _machines(names, item=None):
+    return render.join(_machine(n, item) for n in names)
+
+
+def _machine(name, item=None):
+    flags = (item or {}).get("flags", {}).get(name, [])
+    return name + (f" **[{', '.join(flags)}]**" if flags else "")
 
 
 def line(item):
@@ -49,13 +54,13 @@ def line(item):
     venue = f"[{item['location_name']}]({item['link']})" + (f", {city}" if city else "")
     k = item["kind"]
     if k == "new_venue":
-        what = f"New to the map with {_machines(item['machines'])}." if item["machines"] else "New to the map."
+        what = f"New to the map with {_machines(item['machines'], item)}." if item["machines"] else "New to the map."
     elif k == "swap":
-        what = f"Swapped {item['out']} for {item['in']}."
+        what = f"Swapped {item['out']} for {_machine(item['in'], item)}."
     elif k == "rotation":
-        what = f"In: {_machines(item['machines'])}. Out: {_machines(item['out'])}."
+        what = f"In: {_machines(item['machines'], item)}. Out: {_machines(item['out'])}."
     elif k == "added":
-        what = f"Added {_machines(item['machines'])}."
+        what = f"Added {_machines(item['machines'], item)}."
     elif k == "removed":
         what = f"Removed {_machines(item['machines'])}."
     else:

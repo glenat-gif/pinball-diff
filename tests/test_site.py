@@ -64,12 +64,31 @@ class SiteTests(Built):
         self.assertIn("&lt;script&gt;", home)
 
     def test_signup_waits_until_there_is_a_buttondown_account(self):
-        home = (site.build(on=dt.date(2026, 10, 3)) / "index.html").read_text()
+        with mock.patch.dict(site.SITE, {"buttondown_username": ""}):
+            home = (site.build(on=dt.date(2026, 10, 3)) / "index.html").read_text()
         self.assertIn("Sign-ups open soon", home)
         with mock.patch.dict(site.SITE, {"buttondown_username": "pinballthisweek"}):
             home = (site.build(on=dt.date(2026, 10, 3)) / "index.html").read_text()
-        self.assertIn('action="https://buttondown.com/api/emails/pinballthisweek/embed-subscribe"', home)
+        self.assertIn('action="https://buttondown.com/api/emails/embed-subscribe/pinballthisweek"', home)
         self.assertIn('name="tag" value="melbourne"', home)
+
+
+class MachineTests(Built):
+    def test_machines_page_groups_editions_and_links_pinball_maps_search(self):
+        dist = site.build(on=dt.date(2026, 10, 3))
+        page = (dist / "machines" / "index.html").read_text()
+        self.assertIn("Cactus Canyon", page)
+        self.assertEqual(page.count("<h2>Cactus Canyon"), 1)     # original and remake are one title
+        self.assertIn("Remake Special", page)
+        self.assertIn("https://pinballmap.com/map?by_machine_id=", page)
+        self.assertIn('class="tag new">In<', page)
+        self.assertIn('class="tag gone">Out<', page)
+
+    def test_flags_mark_rarer_editions_and_new_games(self):
+        from pbmdiff import digest
+        self.assertEqual(digest.flags("Venom (LE) (Stern, 2023)", 2026), ["Limited Edition"])
+        self.assertEqual(digest.flags("Pokemon (Premium) (Stern, 2026)", 2026), ["Premium", "New release"])
+        self.assertEqual(digest.flags("Attack from Mars (Bally, 1995)", 2026), [])
 
 
 class IssueTests(Built):
