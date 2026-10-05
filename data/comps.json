@@ -1,4 +1,96 @@
 {
  "fetched": "2026-10-05",
+ "report": [
+  {
+   "query": {
+    "country": "Australia"
+   },
+   "type": "Tournament",
+   "total_results": 157,
+   "rows": 157,
+   "keys": [
+    "search_filter",
+    "total_results",
+    "tournaments"
+   ],
+   "error": null
+  },
+  {
+   "query": {
+    "country": "Australia"
+   },
+   "type": "League",
+   "total_results": 157,
+   "rows": 157,
+   "keys": [
+    "search_filter",
+    "total_results",
+    "tournaments"
+   ],
+   "error": null
+  },
+  {
+   "query": {
+    "country": "AU"
+   },
+   "type": "Tournament",
+   "total_results": 157,
+   "rows": 157,
+   "keys": [
+    "search_filter",
+    "total_results",
+    "tournaments"
+   ],
+   "error": null
+  },
+  {
+   "query": {
+    "country": "AU"
+   },
+   "type": "League",
+   "total_results": 157,
+   "rows": 157,
+   "keys": [
+    "search_filter",
+    "total_results",
+    "tournaments"
+   ],
+   "error": null
+  },
+  {
+   "query": {
+    "latitude": "-27.0",
+    "longitude": "134.0",
+    "radius": "2600",
+    "distance_unit": "k"
+   },
+   "type": "Tournament",
+   "total_results": 157,
+   "rows": 157,
+   "keys": [
+    "search_filter",
+    "total_results",
+    "tournaments"
+   ],
+   "error": null
+  },
+  {
+   "query": {
+    "latitude": "-27.0",
+    "longitude": "134.0",
+    "radius": "2600",
+    "distance_unit": "k"
+   },
+   "type": "League",
+   "total_results": 157,
+   "rows": 157,
+   "keys": [
+    "search_filter",
+    "total_results",
+    "tournaments"
+   ],
+   "error": null
+  }
+ ],
  "comps": []
 }
