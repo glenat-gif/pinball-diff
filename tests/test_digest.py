@@ -77,7 +77,13 @@ class ZoneTests(unittest.TestCase):
                                       ("Cairns", -16.92, 145.78, "qld"), ("Mackay", -21.14, 149.19, "qld"),
                                       ("Hobart", -42.88, 147.33, "tas"), ("Launceston", -41.43, 147.14, "tas"),
                                       ("Esperance", -33.86, 121.89, "wa"), ("Darwin", -12.46, 130.84, "nt"),
-                                      ("Alice Springs", -23.70, 133.88, "nt")]:
+                                      ("Alice Springs", -23.70, 133.88, "nt"),
+                                      ("Coffs Harbour", -30.30, 153.11, "nsw"), ("Broken Hill", -31.95, 141.45, "nsw"),
+                                      ("Tweed Heads", -28.19, 153.54, "nsw"), ("Coolangatta", -28.165, 153.54, "qld"),
+                                      ("Lismore", -28.81, 153.28, "nsw"), ("Toowoomba", -27.56, 151.95, "qld"),
+                                      ("Mount Isa", -20.73, 139.49, "qld"), ("Mount Gambier", -37.83, 140.78, "sa"),
+                                      ("Kalgoorlie", -30.75, 121.47, "wa"), ("Katherine", -14.47, 132.26, "nt"),
+                                      ("Coober Pedy", -29.01, 134.75, "sa"), ("Devonport", -41.18, 146.35, "tas")]:
             self.assertEqual(self.zone(lat, lon), state, name)
         self.assertIsNone(self.zone(None, None))
 

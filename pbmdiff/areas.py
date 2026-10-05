@@ -63,36 +63,42 @@ ZONES = [
     # key, label, test(lat, lon). Order matters: first match wins.
     ("vic", "Victoria", in_victoria),
 ]
-# Outside Victoria each venue goes to the state of the nearest centre, so
-# Townsville is not swallowed by Cairns, and Darwin and Alice are both NT.
-OTHER = [
-    ("nsw", -33.8688, 151.2093),       # Sydney
-    ("qld", -27.4698, 153.0251),       # Brisbane
-    ("qld", -16.9186, 145.7781),       # Cairns
-    ("qld", -19.2590, 146.8169),       # Townsville
-    ("qld", -23.3791, 150.5100),       # Rockhampton
-    ("wa", -31.9523, 115.8613),        # Perth
-    ("sa", -34.9285, 138.6007),        # Adelaide
-    ("tas", -42.8821, 147.3272),       # Hobart
-    ("nt", -12.4634, 130.8456),        # Darwin
-    ("nt", -23.6980, 133.8807),        # Alice Springs
-]
-OTHER_KM = 900
+def _qld_south_edge(lon):
+    """The Queensland border, roughly: the 29th parallel inland, rising to Point Danger on the coast."""
+    if lon < 148.9:
+        return -29.0
+    return -28.9 + (lon - 148.9) * (0.73 / 4.7)      # -28.9 at Mungindi to about -28.17 at the coast
+
+
+def _state(lat, lon):
+    """Mainland borders drawn as straight lines, which is what most of them are."""
+    if lat < -39.4 and 143.5 < lon < 149.0:
+        return "tas"
+    if lon < 129.0:
+        return "wa"
+    if lon < 138.0:
+        return "nt" if lat > -26.0 else "sa"
+    if lon < 141.0:
+        return "qld" if lat > -26.0 else "sa"
+    if lat > _qld_south_edge(lon):
+        return "qld"
+    return "nsw"                                      # the ACT files with NSW
+
+
 STATES = [("nsw", "New South Wales and the ACT"), ("qld", "Queensland"), ("sa", "South Australia"),
           ("wa", "Western Australia"), ("tas", "Tasmania"), ("nt", "Northern Territory")]
-ZONES += [(key, label, (lambda k: lambda lat, lon: _nearest_other(lat, lon) == k)(key)) for key, label in STATES]
+ZONES += [(key, label, (lambda k: lambda lat, lon: _state(lat, lon) == k)(key)) for key, label in STATES]
 LABELS = {key: label for key, label, _ in ZONES}
 SHORT = {"vic": "Victoria", "nsw": "NSW and ACT", "qld": "Queensland", "sa": "SA", "wa": "WA",
          "tas": "Tasmania", "nt": "NT"}
 
 
-def _nearest_other(lat, lon):
-    best = min(OTHER, key=lambda z: km_between(z[1], z[2], lat, lon))
-    return best[0] if km_between(best[1], best[2], lat, lon) <= OTHER_KM else None
+def _on_land(lat, lon):
+    return -44.0 <= lat <= -9.0 and 112.0 <= lon <= 154.5
 
 
 def zone_of(lat, lon):
-    if lat is None or lon is None:
+    if lat is None or lon is None or not _on_land(lat, lon):
         return None
     for key, _, test in ZONES:
         if test(lat, lon):

@@ -21,6 +21,7 @@ from . import areas, digest, ifpa, issue, render, store
 from .config import ROOT, SITE
 
 DIST = ROOT / "dist"
+CSS_VERSION = __import__("hashlib").sha1((ROOT / "static" / "style.css").read_bytes()).hexdigest()[:8]
 e = html.escape
 FONTS = ("https://fonts.googleapis.com/css2?family=Doto:wght@900"
          "&family=Instrument+Sans:wght@400;600;700&display=swap")
@@ -194,7 +195,7 @@ def comps_page(comps, on):
                 'They appear here as directors add them to the IFPA calendar.</p>')
     else:
         body = (f'<div class="state-pick" role="group" aria-label="Show comps in">{chips}</div>'
-                f'<div class="months">{"".join(months)}</div>'
+                f'<div class="months dots">{"".join(months)}</div>'
                 f'<div class="agenda">{"".join(days)}</div>'
                 '<p class="quiet" id="none-here" hidden>No IFPA comps listed here in the next two months.</p>'
                 f'{feeds}'
@@ -203,8 +204,9 @@ def comps_page(comps, on):
                 'document.querySelectorAll(".comp[data-state],.ev[data-state]").forEach(function(x){x.hidden=!!s&&x.dataset.state!==s});'
                 'var any=false;document.querySelectorAll(".dayblock").forEach(function(d){var v=!!d.querySelector(".comp:not([hidden])");d.hidden=!v;any=any||v});'
                 'document.getElementById("none-here").hidden=any;'
+                'document.querySelector(".months").classList.toggle("dots",!s);'
                 'cap();try{localStorage.setItem("comps-state",s)}catch(e){}}'
-                'function cap(){var lim=matchMedia("(max-width:700px)").matches?6:4;'
+                'function cap(){var lim=matchMedia("(max-width:700px)").matches||document.querySelector(".months.dots")?6:4;'
                 'document.querySelectorAll("td.day").forEach(function(td){var v=[].slice.call(td.querySelectorAll(".ev:not([hidden])"));'
                 'v.forEach(function(x,i){x.classList.toggle("over",i>=lim)});var m=td.querySelector(".more-ev");'
                 'if(m)m.textContent=v.length>lim?"+"+(v.length-lim):"";td.classList.toggle("has",v.length>0)})}'
@@ -283,7 +285,7 @@ def page(title, body, *, path, description, box_extra="", nav="", current=None):
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="{FONTS}">
-<link rel="stylesheet" href="{u('/style.css')}">
+<link rel="stylesheet" href="{u('/style.css')}?v={CSS_VERSION}">
 </head>
 <body>
 <header class="box"><div class="wrap">
@@ -298,6 +300,7 @@ def page(title, body, *, path, description, box_extra="", nav="", current=None):
 <footer class="foot"><div class="wrap">
 <p>Every venue links to its listing on <a href="https://pinballmap.com">Pinball Map</a>. If something is wrong, or you played something new, update it there. That is where this comes from.</p>
 <p>Data from Pinball Map, CC BY-SA 4.0. Built from what Australian players submit; thanks to every one of them.</p>
+<p>Comps from the <a href="https://www.ifpapinball.com">IFPA</a> calendar. Machine artwork from the <a href="https://opdb.org">Open Pinball Database</a>.</p>
 </div></footer>
 </body>
 </html>
@@ -553,12 +556,10 @@ def title_page(g, catalogue=None):
                        f'title="Show only the {e(ed)}"><img src="{e(src)}" alt="{e(g["title"])} {e(ed)} artwork" '
                        f'width="{w}" height="{h}" loading="lazy" decoding="async"><span class="cap">{e(ed)}</span></button>'
                        for ed, src, w, h in art)
-        gallery = (f'<div class="art">{figs}</div>'
-                   '<p class="credit">Artwork via the <a href="https://opdb.org">Open Pinball Database</a>. '
-                   'Tap an edition to show only its moves.</p>')
+        gallery = f'<div class="art">{figs}</div>'
     picker = ""
     if len(eds) > 1:
-        picker = ('<div class="ed-pick" role="group" aria-label="Show moves for">'
+        picker = ('<div class="ed-pick" role="group" aria-label="Show moves for"><span class="lbl">Show</span>'
                   f'<button type="button" data-ed="" aria-pressed="true">All <span class="n">{len(g["events"])}</span></button>'
                   + "".join(f'<button type="button" data-ed="{e(ed)}" aria-pressed="false">{e(ed)} '
                             f'<span class="n">{counts[ed]}</span></button>' for ed in eds) + "</div>")

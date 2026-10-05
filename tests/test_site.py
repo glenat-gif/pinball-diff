@@ -53,7 +53,7 @@ class SiteTests(Built):
 
     def test_links_carry_the_pages_base_path(self):
         home = (site.build(on=dt.date(2026, 10, 3)) / "index.html").read_text()
-        self.assertIn('href="/pinball-diff/style.css"', home)
+        self.assertRegex(home, r'href="/pinball-diff/style\.css\?v=[0-9a-f]{8}"')
         self.assertIn('href="/pinball-diff/zone/vic/"', home)
         self.assertNotIn('href="/zone/', home)
 
