@@ -384,7 +384,7 @@ def _move_row(ev):
     zone = areas.zone_of(ev["lat"], ev["lon"])
     where = f' <span class="city">{e(ev["city"])}{", " + e(short(zone)) if zone else ""}</span>'
     link = f"https://pinballmap.com/map?by_location_id={ev['location_id']}"
-    return (f'<li><span class="tag {tone}">{"In" if tone == "new" else "Out"}</span><div>'
+    return (f'<li data-ed="{e(_edition(ev["machine"]))}"><span class="tag {tone}">{"In" if tone == "new" else "Out"}</span><div>'
             f'<span class="ed{rare}">{e(_edition(ev["machine"]))}</span>{pills} '
             f'{"at" if tone == "new" else "from"} '
             f'<a href="{e(link)}" title="See or update this listing at Pinball Map">{e(ev["location_name"])}</a>{where}'
@@ -460,13 +460,34 @@ def title_page(g, catalogue=None):
            f'{g["ins"]} in and {n - g["ins"]} out, from {e(render.month(g["first"]))} to {e(render.month(g["latest"]))}.</small></p>'
            f'<p><a class="cta" href="{e(_now_link(g))}">Where it is now, on Pinball Map</a></p>')
     art = _art(g, catalogue)
+    counts = {}
+    for ev in g["events"]:
+        counts[_edition(ev["machine"])] = counts.get(_edition(ev["machine"]), 0) + 1
+    order = {"Standard": 0, "Pro": 1, "Premium": 2, "LE": 3}
+    eds = sorted(counts, key=lambda x: (order.get(x, 4), x))
     gallery = ""
     if art:
-        figs = "".join(f'<figure><img src="{e(src)}" alt="{e(g["title"])} {e(ed)} artwork" width="{w}" height="{h}" '
-                       f'loading="lazy" decoding="async"><figcaption>{e(ed)}</figcaption></figure>' for ed, src, w, h in art)
+        figs = "".join(f'<button type="button" class="art-pick" data-ed="{e(ed)}" aria-pressed="false" '
+                       f'title="Show only the {e(ed)}"><img src="{e(src)}" alt="{e(g["title"])} {e(ed)} artwork" '
+                       f'width="{w}" height="{h}" loading="lazy" decoding="async"><span class="cap">{e(ed)}</span></button>'
+                       for ed, src, w, h in art)
         gallery = (f'<div class="art">{figs}</div>'
-                   '<p class="credit">Artwork via the <a href="https://opdb.org">Open Pinball Database</a>.</p>')
-    body = f'<p class="more"><a href="{u("/machines/")}">All machines</a></p>{gallery}{years}'
+                   '<p class="credit">Artwork via the <a href="https://opdb.org">Open Pinball Database</a>. '
+                   'Tap an edition to show only its moves.</p>')
+    picker = ""
+    if len(eds) > 1:
+        picker = ('<div class="ed-pick" role="group" aria-label="Show moves for">'
+                  f'<button type="button" data-ed="" aria-pressed="true">All <span class="n">{len(g["events"])}</span></button>'
+                  + "".join(f'<button type="button" data-ed="{e(ed)}" aria-pressed="false">{e(ed)} '
+                            f'<span class="n">{counts[ed]}</span></button>' for ed in eds) + "</div>")
+    script = ('<script>(function(){var b=[].slice.call(document.querySelectorAll("[data-ed]")).filter(function(x){'
+              'return x.tagName=="BUTTON"});function pick(ed){b.forEach(function(x){x.setAttribute("aria-pressed",'
+              'String(x.dataset.ed===ed))});document.querySelectorAll(".moves li").forEach(function(li){'
+              'li.hidden=!!ed&&li.dataset.ed!==ed});document.querySelectorAll(".year").forEach(function(y){'
+              'y.hidden=!y.querySelector("li:not([hidden])")})}b.forEach(function(x){x.addEventListener("click",'
+              'function(){var on=x.getAttribute("aria-pressed")=="true"&&x.dataset.ed;pick(on?"":x.dataset.ed)})})})();</script>'
+              if len(eds) > 1 else "")
+    body = f'<p class="more"><a href="{u("/machines/")}">All machines</a></p>{gallery}{picker}{years}{script}'
     return page(g["title"], body, path=f"/machines/{g['slug']}/",
                 description=f"Where {g['title']} has landed and left in Australia, edition by edition.",
                 box_extra=box, current="machines")
