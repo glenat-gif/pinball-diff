@@ -41,6 +41,17 @@ def _num(v):
         return None
 
 
+def _yes(v):
+    """IFPA flags may arrive as true/false, "Y"/"N" or 1/0."""
+    return str(v).strip().lower() in ("true", "y", "yes", "1")
+
+
+def _country_ok(t):
+    code = str(t.get("country_code") or "").upper()
+    name = str(t.get("country_name") or "").lower()
+    return code in ("", "AU", "AUS") or name == "australia"
+
+
 def normalise(t):
     lat, lon = _num(t.get("latitude")), _num(t.get("longitude"))
     start = (t.get("event_start_date") or "")[:10]
@@ -74,7 +85,7 @@ def fetch(key=None, today=None, sleep=time.sleep, get=_get):
         return None
     today = today or dt.datetime.now(store.LOCAL).date()
     end = today + dt.timedelta(days=DAYS_AHEAD)
-    found, report = {}, []
+    found, report, sample = {}, [], {}
     for query in QUERIES:
         for event_type in ("Tournament", "League"):
             pos, seen = 1, 0
@@ -90,23 +101,32 @@ def fetch(key=None, today=None, sleep=time.sleep, get=_get):
                 if isinstance(rows, dict):
                     rows = [rows]
                 seen += len(rows)
+                dropped = {"private": 0, "country": 0, "no_date": 0}
                 for t in rows:
-                    if t.get("private_flag") or (t.get("country_code") or "AU").upper() != "AU":
+                    if _yes(t.get("private_flag")):
+                        dropped["private"] += 1
+                        continue
+                    if not _country_ok(t):
+                        dropped["country"] += 1
                         continue
                     c = normalise(t)
                     if c["id"] and c["start"]:
                         found[c["id"]] = c
+                    else:
+                        dropped["no_date"] += 1
+                if rows and not sample:
+                    sample.update({k: rows[0].get(k) for k in list(rows[0])[:30]})
                 total = int(data.get("total_results") or 0)
                 pos += PAGE
                 if len(rows) < PAGE or pos > total:
                     report.append({"query": query, "type": event_type, "total_results": total, "rows": seen,
                                    "keys": sorted(data.keys())[:8],
-                                   "error": data.get("error") or data.get("message")})
+                                   "error": data.get("error") or data.get("message"), "dropped": dropped})
                     break
                 sleep(1)
             sleep(0.5)
     comps = sorted(found.values(), key=lambda c: (c["start"], c["name"]))
-    COMPS.write_text(json.dumps({"fetched": today.isoformat(), "report": report, "comps": comps},
+    COMPS.write_text(json.dumps({"fetched": today.isoformat(), "report": report, "sample": sample, "comps": comps},
                                 indent=1, ensure_ascii=False), encoding="utf-8")
     return comps
 

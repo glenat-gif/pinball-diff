@@ -21,7 +21,7 @@ def t(i, name, start, lat, lon, city, **kw):
     return {"tournament_id": i, "tournament_name": name, "event_name": "Main Tournament", "event_type": "Tournament",
             "location_name": kw.get("venue", "Venue"), "city": city, "stateprov": "VIC", "country_code": "AU",
             "event_start_date": start + "T00:00:00.000Z", "event_end_date": kw.get("end", start) + "T00:00:00.000Z",
-            "latitude": str(lat), "longitude": str(lon), "private_flag": kw.get("private", False),
+            "latitude": str(lat), "longitude": str(lon), "private_flag": "Y" if kw.get("private") else "N",
             "ranking_system": kw.get("rank", "MAIN"), "qualifying_format": "Match Play", "finals_format": "Strike Knockout",
             "director_name": "Someone", "website": kw.get("site", "")}
 
@@ -37,6 +37,14 @@ EVENTS = {"Tournament": [t(1, "Parlour Monthly", "2026-10-10", -37.64, 144.95, "
 def fake_get(path, key, **params):
     rows = EVENTS[params["event_type"]]
     return {"total_results": len(rows), "tournaments": rows}
+
+
+class FlagTests(unittest.TestCase):
+    def test_flags_in_any_form(self):
+        for v in (True, "Y", "y", "1", 1, "true"):
+            self.assertTrue(ifpa._yes(v), v)
+        for v in (False, "N", "n", "0", 0, None, ""):
+            self.assertFalse(ifpa._yes(v), v)
 
 
 class CompTests(unittest.TestCase):
