@@ -1,10 +1,41 @@
 {
  "items": [
   {
+   "location_id": 21512,
+   "location_name": "The Suburban Brew - Brewery & Taproom",
+   "city": "Glynde",
+   "link": "https://pinballmap.com/map?by_location_id=21512",
+   "ids": {
+    "Batman: The Dark Knight (Stern, 2008)": 652,
+    "AC/DC (Premium Vault Edition) (Stern, 2017)": 2892
+   },
+   "kind": "rotation",
+   "rank": 2.85,
+   "date": "2026-09-28",
+   "machines": [
+    "AC/DC (Premium Vault Edition) (Stern, 2017)"
+   ],
+   "out": [
+    "Batman: The Dark Knight (Stern, 2008)"
+   ],
+   "by": [
+    "imczr"
+   ],
+   "flags": {
+    "AC/DC (Premium Vault Edition) (Stern, 2017)": [
+     "Premium"
+    ]
+   }
+  },
+  {
    "location_id": 26318,
    "location_name": "Hendon Hotel",
    "city": "Hendon",
    "link": "https://pinballmap.com/map?by_location_id=26318",
+   "ids": {
+    "AC/DC (Premium Vault Edition) (Stern, 2017)": 2892,
+    "Guardians of the Galaxy (Pro) (Stern, 2017)": 2875
+   },
    "kind": "rotation",
    "rank": 2.9,
    "date": "2026-09-28",
@@ -16,25 +47,8 @@
    ],
    "by": [
     "imczr"
-   ]
-  },
-  {
-   "location_id": 21512,
-   "location_name": "The Suburban Brew - Brewery & Taproom",
-   "city": "Glynde",
-   "link": "https://pinballmap.com/map?by_location_id=21512",
-   "kind": "rotation",
-   "rank": 2.9,
-   "date": "2026-09-28",
-   "machines": [
-    "AC/DC (Premium Vault Edition) (Stern, 2017)"
    ],
-   "out": [
-    "Batman: The Dark Knight (Stern, 2008)"
-   ],
-   "by": [
-    "imczr"
-   ]
+   "flags": {}
   }
  ],
  "confirmations": 0

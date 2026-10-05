@@ -5,13 +5,20 @@
    "location_name": "Replay Bar",
    "city": "Hobart",
    "link": "https://pinballmap.com/map?by_location_id=15125",
+   "ids": {
+    "Deadpool (Pro) (Stern, 2018)": 3022
+   },
    "kind": "condition",
    "status": "amber",
    "rank": 5,
    "date": "2026-10-01",
    "machine": "Deadpool (Pro) (Stern, 2018)",
    "comment": "Machine broken",
-   "user": "lenndy21"
+   "user": "lenndy21",
+   "by": [
+    "lenndy21"
+   ],
+   "flags": {}
   }
  ],
  "confirmations": 0
