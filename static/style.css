@@ -178,6 +178,19 @@ blockquote.said { margin: 0.35rem 0 0; padding-left: 0.75rem; border-left: 3px s
 .now { margin: 0.55rem 0 0; font-size: 0.95rem; }
 .now a { font-weight: 600; }
 
+.title-list { list-style: none; margin: 1rem 0 0; padding: 0; }
+.title-row { border-bottom: 1px solid var(--line); padding: 0.7rem 0; }
+.title-row a { text-decoration: none; }
+.title-row .t { font-weight: 650; font-size: 1.05rem; text-decoration: underline; text-decoration-color: color-mix(in srgb, currentColor 35%, transparent); text-underline-offset: 0.18em; }
+.title-row .mk { color: var(--muted); margin-left: 0.45rem; font-size: 0.92rem; }
+.title-row .sub { display: block; color: var(--muted); font-size: 0.88rem; }
+.year h2 { font: 900 1.4rem/1 var(--display); color: var(--plasma-text); margin: 2rem 0 0.4rem; letter-spacing: 0.04em; }
+.cta {
+  display: inline-block; font-weight: 650; text-decoration: none; padding: 0.55rem 0.95rem; border-radius: 6px;
+  background: var(--plasma); color: var(--on-plasma);
+}
+.cta:hover { filter: brightness(1.08); }
+
 /* Prose pages */
 .prose { max-width: 38rem; }
 .prose h2 { font-size: 1.2rem; margin: 2rem 0 0.4rem; }

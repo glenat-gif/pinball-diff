@@ -242,78 +242,127 @@ def issues_page(dates):
     return page("Past emails", body, path="/issues/", description="Every past email.", box_extra=box, current="issues")
 
 
-MACHINE_DAYS = 90
+import re as _re
 
 
 def _edition(name):
     title, _ = render.split_machine(name)
-    m = __import__("re").search(r"\(([^()]*)\)\s*$", title)
+    m = _re.search(r"\(([^()]*)\)\s*$", title)
     return m.group(1) if m else "Standard"
 
 
 def _plain_title(name):
     title, _ = render.split_machine(name)
-    return __import__("re").sub(r"\s*\([^()]*\)\s*$", "", title).strip()
+    return _re.sub(r"\s*\([^()]*\)\s*$", "", title).strip()
+
+
+def slug(text):
+    import unicodedata
+    t = unicodedata.normalize("NFKD", text).encode("ascii", "ignore").decode().lower()
+    return _re.sub(r"[^a-z0-9]+", "-", t).strip("-") or "machine"
 
 
 def machine_groups(events, until):
-    since = (dt.date.fromisoformat(until) - dt.timedelta(days=MACHINE_DAYS - 1)).isoformat()
+    """Every title that has ever landed or left, editions together, newest first."""
     groups = {}
-    for ev in store.between(events, since, until):
-        if ev["type"] not in ("machine_added", "machine_removed") or not ev["machine"]:
+    for ev in events.values():
+        if ev["type"] not in ("machine_added", "machine_removed") or not ev["machine"] or ev["date"] > until:
             continue
         key = digest.base_title(ev["machine"])
-        g = groups.setdefault(key, {"title": _plain_title(ev["machine"]), "maker": render.split_machine(ev["machine"])[1],
-                                    "machine_id": ev["machine_id"], "events": [], "editions": set()})
+        if not key:
+            continue
+        g = groups.setdefault(key, {"title": _plain_title(ev["machine"]), "events": [], "editions": set(),
+                                    "makers": set()})
         g["editions"].add(_edition(ev["machine"]))
+        maker = render.split_machine(ev["machine"])[1]
+        if maker:
+            g["makers"].add(maker)
         g["events"].append(ev)
+    used = {}
     for g in groups.values():
         g["events"].sort(key=lambda ev: (ev["date"], ev["id"]), reverse=True)
-        g["machine_id"] = g["events"][0]["machine_id"] or g["machine_id"]
-        g["latest"] = g["events"][0]["date"]
+        g["machine_id"] = next((ev["machine_id"] for ev in g["events"] if ev["machine_id"]), None)
+        g["latest"], g["first"] = g["events"][0]["date"], g["events"][-1]["date"]
+        g["ins"] = sum(1 for ev in g["events"] if ev["type"] == "machine_added")
+        base = slug(g["title"])
+        used[base] = used.get(base, 0) + 1
+        g["slug"] = base if used[base] == 1 else f"{base}-{used[base]}"
     return sorted(groups.values(), key=lambda g: (g["latest"], len(g["events"])), reverse=True)
 
 
-def machines_page(events, until):
-    groups = machine_groups(events, until)
-    cards = []
+def _editions_text(g):
+    return " · ".join(sorted(g["editions"], key=lambda x: (x != "Standard", x)))
+
+
+def _makers_text(g):
+    makers = sorted({m.split(",")[0].strip() for m in g["makers"]})
+    return ", ".join(makers)
+
+
+def _move_row(ev):
+    tone = "new" if ev["type"] == "machine_added" else "gone"
+    pills = ""                       # on a title page "new release" would repeat on every row
+    rare = " rare" if tone == "new" and any(f != "New release" for f in digest.flags(ev["machine"])) else ""
+    zone = areas.zone_of(ev["lat"], ev["lon"])
+    where = f' <span class="city">{e(ev["city"])}{", " + e(short(zone)) if zone else ""}</span>'
+    link = f"https://pinballmap.com/map?by_location_id={ev['location_id']}"
+    return (f'<li><span class="tag {tone}">{"In" if tone == "new" else "Out"}</span><div>'
+            f'<span class="ed{rare}">{e(_edition(ev["machine"]))}</span>{pills} '
+            f'{"at" if tone == "new" else "from"} '
+            f'<a href="{e(link)}" title="See or update this listing at Pinball Map">{e(ev["location_name"])}</a>{where}'
+            f'<span class="d">{e(render.day(ev["date"]))}</span></div></li>')
+
+
+def _now_link(g):
+    return f"https://pinballmap.com/map?by_machine_id={g['machine_id']}" if g["machine_id"] else "https://pinballmap.com"
+
+
+def machines_page(groups):
+    rows = []
     for g in groups:
-        rows = []
-        for ev in g["events"][:8]:
-            tone = "new" if ev["type"] == "machine_added" else "gone"
-            flags = [f for f in digest.flags(ev["machine"]) if f == "New release"] if ev["type"] == "machine_added" else []
-            pills = "".join(f' <span class="pill">{e(f)}</span>' for f in flags)
-            rare = " rare" if ev["type"] == "machine_added" and any(f != "New release" for f in digest.flags(ev["machine"])) else ""
-            zone = areas.zone_of(ev["lat"], ev["lon"])
-            where = f' <span class="city">{e(ev["city"])}{", " + e(short(zone)) if zone else ""}</span>'
-            link = f"https://pinballmap.com/map?by_location_id={ev['location_id']}"
-            rows.append(f'<li><span class="tag {tone}">{"In" if tone == "new" else "Out"}</span><div>'
-                        f'<span class="ed{rare}">{e(_edition(ev["machine"]))}</span>{pills} '
-                        f'{"at" if tone == "new" else "from"} '
-                        f'<a href="{e(link)}" title="See or update this listing at Pinball Map">{e(ev["location_name"])}</a>{where}'
-                        f'<span class="d">{e(render.day(ev["date"]))}</span></div></li>')
-        now = f"https://pinballmap.com/map?by_machine_id={g['machine_id']}" if g["machine_id"] else "https://pinballmap.com"
-        eds = " · ".join(sorted(g["editions"], key=lambda x: (x != "Standard", x)))
-        cards.append(f'<article class="title-card" data-name="{e(g["title"].lower())} {e(g["maker"].lower())}">'
-                     f'<h2>{e(g["title"])} <span class="mk">{e(g["maker"])}</span></h2>'
-                     f'<p class="eds">Editions seen moving: {e(eds)}</p>'
-                     f'<ul class="moves">{"".join(rows)}</ul>'
-                     f'<p class="now"><a href="{e(now)}">Where it is now, on Pinball Map</a></p></article>')
+        n = len(g["events"])
+        rows.append(f'<li class="title-row" data-name="{e(g["title"].lower())} {e(_makers_text(g).lower())}">'
+                    f'<a href="{u("/machines/" + g["slug"] + "/")}"><span class="t">{e(g["title"])}</span></a>'
+                    f'<span class="mk">{e(_makers_text(g))}</span>'
+                    f'<span class="sub">{e(_editions_text(g))} · {n} move{"s" if n != 1 else ""} · '
+                    f'last {e(render.month(g["latest"]))}</span></li>')
+    first = min((g["first"] for g in groups), default=None)
+    since = f" since {render.month(first)}" if first else ""
     body = ('<div class="finder"><label for="q">Find a machine</label>'
             '<input id="q" type="search" placeholder="Godzilla, Pokémon, Twilight Zone" autocomplete="off"></div>'
-            f'<p class="count" id="count">{len(groups)} titles moved in the last {MACHINE_DAYS} days.</p>'
-            + "".join(cards) +
-            '<p class="quiet" id="none" hidden>Nothing by that name has moved lately. Pinball Map can tell you where it is now.</p>'
-            '<script>(function(){var q=document.getElementById("q"),c=[].slice.call(document.querySelectorAll(".title-card")),'
-            'n=document.getElementById("none"),k=document.getElementById("count");q.addEventListener("input",function(){'
-            'var t=q.value.trim().toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,""),s=0;c.forEach(function(x){'
-            'var hit=!t||x.dataset.name.normalize("NFD").replace(/[\u0300-\u036f]/g,"").indexOf(t)>-1;x.hidden=!hit;if(hit)s++;});'
-            'n.hidden=s>0;k.textContent=s+" title"+(s==1?"":"s")+(t?" match.":" moved lately.");});})();</script>')
+            f'<p class="count" id="count">{len(groups)} titles have landed or left{e(since)}. Most recent first.</p>'
+            f'<ul class="title-list">{"".join(rows)}</ul>'
+            '<p class="quiet" id="none" hidden>Nothing by that name has moved on Pinball Map in Australia. '
+            '<a href="https://pinballmap.com">Pinball Map</a> can tell you where it is now.</p>'
+            '<script>(function(){var f=function(x){return x.toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g,"")};'
+            'var q=document.getElementById("q"),c=[].slice.call(document.querySelectorAll(".title-row")),'
+            'n=document.getElementById("none"),k=document.getElementById("count"),k0=k.textContent;'
+            'c.forEach(function(x){x._n=f(x.dataset.name)});q.addEventListener("input",function(){'
+            'var t=f(q.value.trim()),s=0;c.forEach(function(x){var h=!t||x._n.indexOf(t)>-1;x.hidden=!h;if(h)s++;});'
+            'n.hidden=s>0;k.textContent=t?s+" title"+(s==1?"":"s")+" match.":k0;});})();</script>')
     box = ('<p class="wordmark" style="font-size:clamp(1.6rem,6vw,2.6rem)">Machines</p>'
-           '<p class="lede">Every machine that landed somewhere or left, across Australia, in the last three months. '
-           'Pro, Premium and LE together, so you can see which edition went where.'
+           '<p class="lede">Every machine that has landed somewhere or left, across Australia, as recorded on Pinball Map. '
+           'Pro, Premium and LE together, so you can follow where each edition went.'
            '<small>For where a machine is right now, each title links to Pinball Map.</small></p>')
-    return page("Machines", body, path="/machines/", description="Which pinball machines have landed and left around Australia lately.",
+    return page("Machines", body, path="/machines/", description="Which pinball machines have landed and left around Australia.",
+                box_extra=box, current="machines")
+
+
+def title_page(g):
+    by_year = {}
+    for ev in g["events"]:
+        by_year.setdefault(ev["date"][:4], []).append(ev)
+    years = "".join(f'<section class="year"><h2>{y}</h2><ul class="moves">{"".join(_move_row(ev) for ev in evs)}</ul></section>'
+                    for y, evs in by_year.items())
+    n = len(g["events"])
+    box = (f'<p class="wordmark" style="font-size:clamp(1.5rem,6vw,2.6rem)">{e(g["title"])}</p>'
+           f'<p class="lede">{e(_makers_text(g))}. Editions seen: {e(_editions_text(g))}.'
+           f'<small>{n} move{"s" if n != 1 else ""} in Australia on Pinball Map, '
+           f'{g["ins"]} in and {n - g["ins"]} out, from {e(render.month(g["first"]))} to {e(render.month(g["latest"]))}.</small></p>'
+           f'<p><a class="cta" href="{e(_now_link(g))}">Where it is now, on Pinball Map</a></p>')
+    body = f'<p class="more"><a href="{u("/machines/")}">All machines</a></p>{years}'
+    return page(g["title"], body, path=f"/machines/{g['slug']}/",
+                description=f"Where {g['title']} has landed and left in Australia, edition by edition.",
                 box_extra=box, current="machines")
 
 
@@ -377,7 +426,10 @@ def build(on=None):
     for d in dates:
         write(f"/issues/{d}/", issue_page(issue.load(d)))
     write("/issues/", issues_page(dates))
-    write("/machines/", machines_page(events, until))
+    groups = machine_groups(events, until)
+    write("/machines/", machines_page(groups))
+    for g in groups:
+        write(f"/machines/{g['slug']}/", title_page(g))
     write("/about/", about_page())
     write("/feed.xml", feed(dates))
     (DIST / ".nojekyll").write_text("", encoding="utf-8")

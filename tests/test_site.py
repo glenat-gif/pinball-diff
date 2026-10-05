@@ -74,15 +74,21 @@ class SiteTests(Built):
 
 
 class MachineTests(Built):
-    def test_machines_page_groups_editions_and_links_pinball_maps_search(self):
+    def test_machines_index_and_title_pages(self):
         dist = site.build(on=dt.date(2026, 10, 3))
-        page = (dist / "machines" / "index.html").read_text()
-        self.assertIn("Cactus Canyon", page)
-        self.assertEqual(page.count("<h2>Cactus Canyon"), 1)     # original and remake are one title
+        index = (dist / "machines" / "index.html").read_text()
+        self.assertEqual(index.count('<span class="t">Cactus Canyon</span>'), 1)   # original and remake together
+        self.assertIn('href="/pinball-diff/machines/cactus-canyon/"', index)
+        page = (dist / "machines" / "cactus-canyon" / "index.html").read_text()
         self.assertIn("Remake Special", page)
-        self.assertIn("https://pinballmap.com/map?by_machine_id=", page)
         self.assertIn('class="tag new">In<', page)
         self.assertIn('class="tag gone">Out<', page)
+        self.assertIn("https://pinballmap.com/map?by_machine_id=", page)
+        self.assertIn("<h2>2026</h2>", page)
+
+    def test_slugs_drop_accents(self):
+        self.assertEqual(site.slug("Pokémon"), "pokemon")
+        self.assertEqual(site.slug("Elvira's House of Horrors"), "elvira-s-house-of-horrors")
 
     def test_flags_mark_rarer_editions_and_new_games(self):
         from pbmdiff import digest

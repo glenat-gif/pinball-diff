@@ -66,12 +66,17 @@ every zone with Victoria first, a page per zone with four weeks of history,
 the archive of emails, a Machines page, an about page and an Atom feed.
 GitHub Pages serves it.
 
-The Machines page lists every title that landed or left in the last 90 days,
-with Pro, Premium and LE grouped together, and links each title to Pinball
-Map's own search for where it is now. It is built from change history only,
-so it never claims a full inventory, and it never says "first" or "only".
-Premium, LE, Collector's Edition and new releases are flagged in the digest
-and the email.
+The Machines page is an index of every title that has landed or left in
+Australia since Pinball Map's records begin in April 2018, with a page per
+title telling its story year by year, Pro, Premium and LE together. Each
+title links to Pinball Map's search for where it is now. It is built from
+change history only, so it never claims a full inventory, and it never says
+"first" or "only". Premium, LE, Collector's Edition and new releases are
+flagged in the digest and the email.
+
+The history was loaded once by paging the submissions feed back to 2008
+(it starts in 2018). The feed returns at most 50 per page and silently stops
+at 200 without paging, so the client always pages.
 
 `python -m pbmdiff.run issue` makes the email when it is due. An issue is
 dated Thursday, covers the seven days before it, and is frozen in

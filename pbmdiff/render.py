@@ -47,9 +47,18 @@ def where(item):
     return city if city and city.lower() not in item["location_name"].lower() else ""
 
 
-def day(iso):
+def day(iso, today=None):
+    """Sat 3 Oct this year; 3 Oct 2024 for anything older."""
     d = dt.date.fromisoformat(iso)
-    return f"{d:%a} {d.day} {d:%b}"
+    today = today or dt.date.today()
+    if (today - d).days < 300:
+        return f"{d:%a} {d.day} {d:%b}"
+    return f"{d.day} {d:%b %Y}"
+
+
+def month(iso):
+    d = dt.date.fromisoformat(iso)
+    return f"{d:%B %Y}"
 
 
 def long_day(iso):

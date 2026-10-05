@@ -40,6 +40,19 @@ class StoreTests(unittest.TestCase):
                 self.assertEqual(len(store.load()), 9)
 
 
+class PagingTests(unittest.TestCase):
+    def test_every_page_is_fetched(self):
+        from pbmdiff import api
+        pages = {1: {"user_submissions": [{"id": 1}, {"id": 2}], "pagy": {"next": 2}},
+                 2: {"user_submissions": [{"id": 3}], "pagy": {"next": None}}}
+        client = api.PinballMap(token="t", sleep=lambda s: None)
+        calls = []
+        client.get = lambda path, **params: calls.append(params) or pages[params["page"]]
+        self.assertEqual([s["id"] for s in client.submissions_within(-37.8, 145.0, 250, "2026-01-01")], [1, 2, 3])
+        self.assertEqual([c["page"] for c in calls], [1, 2])
+        self.assertTrue(all(c["limit"] == 50 for c in calls))
+
+
 class ZoneTests(unittest.TestCase):
     def zone(self, lat, lon):
         return areas.zone_of(lat, lon)
@@ -76,6 +89,13 @@ class ZoneTests(unittest.TestCase):
         self.assertEqual(self.zone(-42.88, 147.33), "hobart")
         self.assertEqual(self.zone(-41.43, 147.14), "hobart")             # Launceston
         self.assertEqual(self.zone(-39.13, 146.37), "gippsland")          # Wilsons Prom
+        self.assertEqual(self.zone(-19.26, 146.82), "townsville")         # not Cairns
+        self.assertEqual(self.zone(-16.92, 145.78), "cairns")
+        self.assertEqual(self.zone(-21.14, 149.19), "rockhampton")        # Mackay is nearer Rockhampton
+        self.assertEqual(self.zone(-26.65, 153.09), "brisbane")           # Sunshine Coast
+        self.assertEqual(self.zone(-32.93, 151.78), "sydney")             # Newcastle
+        self.assertEqual(self.zone(-33.86, 121.89), "perth")              # Esperance
+        self.assertEqual(self.zone(-12.46, 130.84), "darwin")
         self.assertIsNone(self.zone(None, None))
 
     def test_distance_matches_pinball_maps_own(self):

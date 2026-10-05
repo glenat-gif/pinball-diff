@@ -77,23 +77,34 @@ ZONES = [
      lambda lat, lon: in_victoria(lat, lon) and lat > -37.2),
     ("western-victoria", "Western Victoria: Ballarat, the south west and the Wimmera",
      lambda lat, lon: in_victoria(lat, lon)),
-    ("sydney", "Sydney, Canberra and the Hunter", within(-33.8688, 151.2093, 400)),
-    ("brisbane", "Brisbane, Gold Coast and Sunshine Coast", within(-27.4698, 153.0251, 400)),
-    ("perth", "Perth and the south west", within(-31.9523, 115.8613, 400)),
-    ("adelaide", "Adelaide and South Australia", within(-34.9285, 138.6007, 400)),
-    ("hobart", "Tasmania", within(-42.8821, 147.3272, 400)),
-    ("darwin", "Darwin and the Top End", within(-12.4634, 130.8456, 400)),
-    ("cairns", "Far North Queensland", within(-16.9186, 145.7781, 400)),
-    ("townsville", "Townsville and Mackay", within(-19.2590, 146.8169, 400)),
-    ("rockhampton", "Central Queensland", within(-23.3791, 150.5100, 400)),
-    ("alice", "Central Australia", within(-23.6980, 133.8807, 400)),
 ]
+# Outside Victoria each venue goes to the nearest of these centres, so
+# Townsville is not swallowed by Cairns just because Cairns is listed first.
+OTHER = [
+    ("sydney", "Sydney, Canberra and the Hunter", -33.8688, 151.2093),
+    ("brisbane", "Brisbane, Gold Coast and Sunshine Coast", -27.4698, 153.0251),
+    ("perth", "Perth and the south west", -31.9523, 115.8613),
+    ("adelaide", "Adelaide and South Australia", -34.9285, 138.6007),
+    ("hobart", "Tasmania", -42.8821, 147.3272),
+    ("darwin", "Darwin and the Top End", -12.4634, 130.8456),
+    ("cairns", "Far North Queensland", -16.9186, 145.7781),
+    ("townsville", "Townsville and the north", -19.2590, 146.8169),
+    ("rockhampton", "Mackay and Central Queensland", -23.3791, 150.5100),
+    ("alice", "Central Australia", -23.6980, 133.8807),
+]
+OTHER_KM = 900
+ZONES += [(key, label, (lambda k: lambda lat, lon: _nearest_other(lat, lon) == k)(key)) for key, label, _, _ in OTHER]
 LABELS = {key: label for key, label, _ in ZONES}
 SHORT = {"melbourne": "Greater Melbourne", "geelong": "Geelong", "gippsland": "Gippsland",
          "northern-victoria": "Northern Vic", "western-victoria": "Western Vic", "sydney": "NSW and ACT",
          "brisbane": "South east Qld", "perth": "WA", "adelaide": "SA", "hobart": "Tasmania",
          "darwin": "Top End", "cairns": "Far North Qld", "townsville": "North Qld",
          "rockhampton": "Central Qld", "alice": "Central Australia"}
+
+
+def _nearest_other(lat, lon):
+    best = min(OTHER, key=lambda z: km_between(z[2], z[3], lat, lon))
+    return best[0] if km_between(best[2], best[3], lat, lon) <= OTHER_KM else None
 
 
 def zone_of(lat, lon):
