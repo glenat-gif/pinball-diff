@@ -145,7 +145,7 @@ def signup():
                 '<p class="soon">Sign-ups open soon. Every Thursday, the week\'s changes for Victoria, '
                 'in time to plan the weekend.</p></div>')
     picks = ('<label><input type="checkbox" name="tag" value="vic" checked> Victoria</label>'
-             + "".join(f'<label><input type="checkbox" name="tag" value="{k}"> {e(areas.SHORT[k])}, when it starts</label>'
+             + "".join(f'<label><input type="checkbox" name="tag" value="{k}"> {e(areas.SHORT[k])}</label>'
                        for k, _ in areas.STATES))
     return (f'<form class="signup" action="https://buttondown.com/api/emails/embed-subscribe/{e(user)}" method="post">'
             '<h2>The weekly email</h2>'
@@ -154,7 +154,8 @@ def signup():
             '<div class="row"><label class="sr" for="em" hidden>Email address</label>'
             '<input id="em" type="email" name="email" required placeholder="you@example.com" autocomplete="email">'
             '<button type="submit">Subscribe</button></div>'
-            f'<fieldset><legend>Which states?</legend><div class="zones-pick">{picks}</div></fieldset>'
+            f'<fieldset><legend>Which states? The email covers Victoria for now, and others will follow.</legend>'
+            f'<div class="zones-pick">{picks}</div></fieldset>'
             '<input type="hidden" name="embed" value="1"></form>')
 
 
