@@ -16,7 +16,7 @@ import json
 import pathlib
 import sys
 
-from . import api, areas, digest, ifpa, issue, mail, site, store
+from . import api, areas, digest, ifpa, issue, mail, podcasts, site, store
 
 FIXTURES = pathlib.Path(__file__).resolve().parent.parent / "tests" / "fixtures"
 
@@ -89,6 +89,9 @@ def cmd_sync(args):
         cmd_comps(args)
     except Exception as err:                # comps are a bonus; never let them stop the digest
         print(f"comps fetch failed: {err}")
+    pods = podcasts.fetch()
+    print(f"podcasts: {len(pods.get('episodes', []))} episodes from {len(pods.get('shows', []))} shows"
+          + (f"; problems: {pods['errors']}" if pods.get("errors") else ""))
     for key in areas.LABELS:
         _digest(key, args.days)
 

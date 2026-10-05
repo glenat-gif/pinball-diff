@@ -17,7 +17,7 @@ import json
 import pathlib
 import shutil
 
-from . import areas, digest, ifpa, issue, render, store
+from . import areas, digest, ifpa, issue, podcasts, render, store
 from .config import ROOT, SITE
 
 DIST = ROOT / "dist"
@@ -235,6 +235,58 @@ def comps_page(comps, on):
                 box_extra=box, current="comps")
 
 
+def _mins(m):
+    if not m:
+        return ""
+    return f"{m // 60} hr {m % 60} min" if m >= 60 else f"{m} min"
+
+
+def episode_row(ep, shows, show_name=True):
+    show = shows.get(ep["show"], {})
+    who = f'<span class="show">{e(show.get("name", ""))}</span>' if show_name else ""
+    meta = " · ".join(x for x in (render.day(ep["date"]), _mins(ep.get("minutes"))) if x)
+    summary = f'<p class="sum">{e(ep["summary"])}</p>' if ep.get("summary") else ""
+    return (f'<li class="ep" data-show="{e(ep["show"])}">{who}'
+            f'<a class="etitle" href="{e(ep["link"])}">{e(ep["title"])}</a>'
+            f'<span class="d">{e(meta)}</span>{summary}</li>')
+
+
+def podcasts_page(data):
+    shows = {sh["key"]: sh for sh in data.get("shows", [])}
+    cards = []
+    for sh in data.get("shows", []):
+        n = sum(1 for ep in data.get("episodes", []) if ep["show"] == sh["key"])
+        follow = [f'<a href="{e(sh["link"])}">Website</a>' if sh.get("link") else "",
+                  f'<a href="{e(sh["apple"])}">Apple Podcasts</a>' if sh.get("apple") else "",
+                  f'<a href="{e(sh["spotify"])}">Spotify</a>' if sh.get("spotify") else "",
+                  f'<a href="{e(sh["feed"])}">RSS</a>']
+        img = (f'<img src="{e(sh["image"])}" alt="" width="120" height="120" loading="lazy">' if sh.get("image") else "")
+        cards.append(f'<article class="show-card">{img}<div><h2>{e(sh["name"])}</h2>'
+                     f'<p>{e(sh.get("about", ""))}</p><p class="follow">{" · ".join(x for x in follow if x)}'
+                     f'<span class="n"> · {n} episodes</span></p></div></article>')
+    picks = ""
+    if len(shows) > 1:
+        picks = ('<div class="ed-pick" role="group" aria-label="Show"><span class="lbl">Show</span>'
+                 '<button type="button" data-sh="" aria-pressed="true">Both</button>'
+                 + "".join(f'<button type="button" data-sh="{e(k)}" aria-pressed="false">{e(v["name"])}</button>'
+                           for k, v in shows.items()) + "</div>")
+    eps = "".join(episode_row(ep, shows) for ep in data.get("episodes", []))
+    script = ('<script>(function(){var b=[].slice.call(document.querySelectorAll("button[data-sh]"));'
+              'b.forEach(function(x){x.addEventListener("click",function(){var s=x.dataset.sh;'
+              'b.forEach(function(y){y.setAttribute("aria-pressed",String(y===x))});'
+              'document.querySelectorAll(".ep").forEach(function(li){li.hidden=!!s&&li.dataset.show!==s})})})})();</script>'
+              if picks else "")
+    body = (f'<div class="shows">{"".join(cards)}</div>'
+            f'<h2 class="eps-h">Latest episodes</h2>{picks}<ul class="eps">{eps}</ul>{script}'
+            if shows else '<p class="quiet">No podcasts yet.</p>')
+    box = ('<p class="wordmark" style="font-size:clamp(1.6rem,6vw,2.6rem)">Podcasts</p>'
+           '<p class="lede">Australian pinball, talked about by Australians.'
+           '<small>Every episode links to the show itself, so the hosts get your listen. '
+           'Making an Australian pinball podcast that is not here? Say so and it will be added.</small></p>')
+    return page("Podcasts", body, path="/podcasts/", description="Australian pinball podcasts and their latest episodes.",
+                box_extra=box, current="podcasts")
+
+
 def signup():
     user = SITE.get("buttondown_username")
     if not user:
@@ -303,7 +355,7 @@ def page(title, body, *, path, description, box_extra="", nav="", current=None):
 <body>
 <header class="box"><div class="wrap">
 <nav class="topnav" aria-label="Site"><a class="home" href="{u('/')}">{e(SITE['name'])}</a>
-<a href="{u('/comps/')}"{cur('comps')}>Comps</a><a href="{u('/machines/')}"{cur('machines')}>Machines</a><a href="{u('/issues/')}"{cur('issues')}>Past emails</a><a href="{u('/about/')}"{cur('about')}>About</a></nav>
+<a href="{u('/comps/')}"{cur('comps')}>Comps</a><a href="{u('/machines/')}"{cur('machines')}>Machines</a><a href="{u('/podcasts/')}"{cur('podcasts')}>Podcasts</a><a href="{u('/issues/')}"{cur('issues')}>Emails</a><a href="{u('/about/')}"{cur('about')}>About</a></nav>
 {box_extra}
 </div></header>
 <main><div class="wrap">
@@ -337,6 +389,13 @@ def home(weeks, counts, built_on, comps=()):
     soon = ifpa.between(list(comps), built_on.isoformat(), soon_until, set(SITE["email_zones"]))
     blocks = comps_block(soon, built_on.isoformat(), soon_until, "Comps in Victoria this week",
                          "No IFPA comps listed in Victoria in the next seven days.") if comps else ""
+    pods = podcasts.load()
+    fresh = podcasts.between(pods, (built_on - dt.timedelta(days=14)).isoformat(), built_on.isoformat())
+    if fresh:
+        shows = {sh["key"]: sh for sh in pods.get("shows", [])}
+        blocks += (f'<section class="zone pods-zone"><header><h2>New on the podcasts</h2></header>'
+                   f'<ul class="eps">{"".join(episode_row(ep, shows) for ep in fresh)}</ul>'
+                   f'<p class="more"><a href="{u("/podcasts/")}">Every Australian pinball podcast</a></p></section>')
     blocks += "".join(zone_block(z, when=False, more=True) for z in active)
     if quiet:
         names = render.join(f'<a href="{u("/zone/" + z["zone"] + "/")}">{e(short(z["label"]))}</a>' for z in quiet)
@@ -690,6 +749,7 @@ def build(on=None):
     write("/machines/", machines_page(groups, catalogue))
     for g in groups:
         write(f"/machines/{g['slug']}/", title_page(g, catalogue))
+    write("/podcasts/", podcasts_page(podcasts.load()))
     write("/about/", about_page())
     write("/feed.xml", feed(dates))
     (DIST / ".nojekyll").write_text("", encoding="utf-8")

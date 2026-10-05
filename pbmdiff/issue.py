@@ -11,7 +11,7 @@ arrive late show up on the website, never in an issue that has gone out.
 import datetime as dt
 import json
 
-from . import areas, digest, ifpa, store
+from . import areas, digest, ifpa, podcasts, store
 from .config import SITE
 
 ISSUES = store.DATA / "issues"
@@ -49,8 +49,11 @@ def make(events, issue_date):
     since = zones[0]["since"]
     ahead = (issue_date + dt.timedelta(days=COMPS_AHEAD)).isoformat()
     comps = ifpa.between(ifpa.load(), issue_date.isoformat(), ahead)
+    pods = podcasts.load()
+    shows = {sh["key"]: sh["name"] for sh in pods.get("shows", [])}
+    episodes = [dict(ep, show_name=shows.get(ep["show"], "")) for ep in podcasts.between(pods, since, until)]
     return {"date": issue_date.isoformat(), "since": since, "until": until, "zones": zones,
-            "comps": comps, "comps_until": ahead, "email": None}
+            "comps": comps, "comps_until": ahead, "episodes": episodes, "email": None}
 
 
 def path(date):

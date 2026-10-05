@@ -10,5 +10,23 @@
   "email_mode": "draft",
   "issue_weekday": 3,
   "contact": "glenatwell86@gmail.com",
-  "machine_art": true
+  "machine_art": true,
+  "podcasts": [
+    {
+      "key": "pinball-oz-wide",
+      "name": "Pinball Oz Wide",
+      "feed": "https://anchor.fm/s/10135800c/podcast/rss",
+      "apple": "https://podcasts.apple.com/au/podcast/id1796638031",
+      "spotify": "https://podcasters.spotify.com/pod/show/pinball-oz-wide",
+      "strip": "PINBALL OZ WIDE - "
+    },
+    {
+      "key": "aussie-pinball-podcast",
+      "name": "The Aussie Pinball Podcast",
+      "feed": "https://feed.podbean.com/aussiepinballpodcast/feed.xml",
+      "apple": "https://podcasts.apple.com/au/podcast/id1848661993",
+      "spotify": "",
+      "strip": ""
+    }
+  ]
 }

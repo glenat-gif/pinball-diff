@@ -93,6 +93,9 @@ def markdown(iss):
         out += ["## Comps coming up", ""] + [comp_line(c) for c in comps] + [""]
     for z in active:
         out += [f"## {z['label']}", ""] + [line(i) for i in z["items"]] + [""]
+    eps = iss.get("episodes") or []
+    if eps:
+        out += ["## On the podcasts", ""] + [f"- **{ep['show_name']}:** [{ep['title']}]({ep['link']})" for ep in eps] + [""]
     if quiet:
         out += [f"Quiet on the map: {render.join(render.SHORT_NAMES.get(z['zone'], z['label']) for z in quiet)}.", ""]
     out += ["---", "",

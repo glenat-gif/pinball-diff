@@ -1,0 +1,351 @@
+{
+ "shows": [
+  {
+   "key": "pinball-oz-wide",
+   "name": "Pinball Oz Wide",
+   "link": "https://podcasters.spotify.com/pod/show/pinball-oz-wide",
+   "image": "https://d3t3ozftmdmh3i.cloudfront.net/staging/podcast_uploaded_nologo/43052507/43052507-1739536407309-abb503a907dde.jpg",
+   "about": "JAZ and MAT here! We are the admin of Pinball Oz Wide Buy Swap and Sell Facebook page and we thought we would have a chat with you all so you can you can hear about our…",
+   "apple": "https://podcasts.apple.com/au/podcast/id1796638031",
+   "spotify": "https://podcasters.spotify.com/pod/show/pinball-oz-wide",
+   "feed": "https://anchor.fm/s/10135800c/podcast/rss"
+  },
+  {
+   "key": "aussie-pinball-podcast",
+   "name": "The Aussie Pinball Podcast",
+   "link": "https://aussiepinballpodcast.podbean.com",
+   "image": "https://pbcdn1.podbean.com/imglogo/image-logo/21544087/2meglogo.jpg",
+   "about": "The Aussie Pinball Podcast is all about pinball players in Australia. Alex and Doctor John host the show and chat about their experiences, and are joined by other…",
+   "apple": "https://podcasts.apple.com/au/podcast/id1848661993",
+   "spotify": "",
+   "feed": "https://feed.podbean.com/aussiepinballpodcast/feed.xml"
+  }
+ ],
+ "episodes": [
+  {
+   "show": "pinball-oz-wide",
+   "title": "Episode 24: The Games We Hate to Love",
+   "date": "2026-10-01",
+   "minutes": 127,
+   "summary": "In this months episode we are joined by George and Sonia from Melbourne Pinball Expo as well as the return of Behind the Backglass with Phillip De BortoliWe kick off with.... The usual thank you's Month in review Behind the Backglass with…",
+   "link": "https://podcasters.spotify.com/pod/show/pinball-oz-wide/episodes/PINBALL-OZ-WIDE---EPISODE-24--THE-GAMES-WE-HATE-TO-LOVE-e3pm80e",
+   "id": "9d4dbea0-bbb3-4ae3-966f-e3917929cc4b"
+  },
+  {
+   "show": "aussie-pinball-podcast",
+   "title": "Newcastle Pinfest 15",
+   "date": "2026-09-26",
+   "minutes": 53,
+   "summary": "This episode we chat about the fun we had at Pinfest in Newcastle last weekend. We cover some of the games we played for the first time, some old favourites, why Alex has to learn about dress codes and the fun times air freighting in…",
+   "link": "https://aussiepinballpodcast.podbean.com/e/newcastle-pinfest-15/",
+   "id": "aussiepinballpodcast.podbean.com/234f09dd-cff4-3e05-a19d-4e867a379ebf"
+  },
+  {
+   "show": "pinball-oz-wide",
+   "title": "Episode 23: Pimping Our Way to W.A",
+   "date": "2026-08-27",
+   "minutes": 110,
+   "summary": "This month’s episode we launch a new segment for the people of pinball called Behind the Backglass with special guest Jason from Pimp My Pin. We kick things off with the usual thank you before diving into our Month in Review . Behind the…",
+   "link": "https://podcasters.spotify.com/pod/show/pinball-oz-wide/episodes/PINBALL-OZ-WIDE---EPISODE-23--PIMPING-OUR-WAY-TO-W-A-e3nuubc",
+   "id": "9e17df02-f1d6-42cf-9e78-138137e8a4e8"
+  },
+  {
+   "show": "pinball-oz-wide",
+   "title": "Episode 22: Tazpin Walkthrough and Interviews",
+   "date": "2026-08-04",
+   "minutes": 50,
+   "summary": "Mat and Jarrod attended TAZpin on the weekend. We did a walk through and chatted to those who attended and those who helped set up. Thanks to Justin and Frank and the Mafia Crew for being so supportive!! Enjoy Find us here…",
+   "link": "https://podcasters.spotify.com/pod/show/pinball-oz-wide/episodes/PINBALL-OZ-WIDE---EPISODE-22-TAZPIN-WALKTHROUGH-AND-INTERVIEWS-e3muju6",
+   "id": "bf606b42-9e57-4571-8391-cf3179abbd44"
+  },
+  {
+   "show": "aussie-pinball-podcast",
+   "title": "Episode 35 - New Games Week",
+   "date": "2026-08-01",
+   "minutes": 46,
+   "summary": "Alex and Dr John share their excitement about the release of Bon Jovi by Barrels of Fun and Dungeon Crawler Carl and Ender's Game by Multimorphic.",
+   "link": "https://aussiepinballpodcast.podbean.com/e/episode-35-new-games-week/",
+   "id": "aussiepinballpodcast.podbean.com/da568bf1-3370-3cd1-915f-dac9f68332f2"
+  },
+  {
+   "show": "pinball-oz-wide",
+   "title": "Episode 21: No Ragrets",
+   "date": "2026-07-28",
+   "minutes": 114,
+   "summary": "This month’s episode we have a special guest to talk all things pinball and Pinfest with us, Robert Charles. We kick things off with the usual thank you before diving into our Month in Review . Pinball Price Watch with our Best Buy and the…",
+   "link": "https://podcasters.spotify.com/pod/show/pinball-oz-wide/episodes/PINBALL-OZ-WIDE---EPISODE-21--NO-RAGRETS-e3mkr13",
+   "id": "36d05550-e3f7-4103-85e3-373e9d9c9786"
+  },
+  {
+   "show": "aussie-pinball-podcast",
+   "title": "Brisbane Masters and Aussie Pinball Expo",
+   "date": "2026-07-22",
+   "minutes": 36,
+   "summary": "Josh from New Zealand joins us to talk about his Brisbane Masters Experiences, including THAT hat, why everyone is now playing on their knees, and the pinball scene in New Zealand. Alex and I describe our experiences at the Australian…",
+   "link": "https://aussiepinballpodcast.podbean.com/e/brisbane-masters-and-aussie-pinball-expo/",
+   "id": "aussiepinballpodcast.podbean.com/39730aa7-7d6b-3273-ad12-637d6eb2c083"
+  },
+  {
+   "show": "pinball-oz-wide",
+   "title": "EPISODE 20: JUSTIN FROM TAZPIN and SECRET EASTER EGGS UNVEILED",
+   "date": "2026-06-25",
+   "minutes": 121,
+   "summary": "This month’s episode is packed with pinball news, opinions, and plenty of laughs! We kick things off with the usual thank you before diving into our Month in Review . Then we sit down with Justin from TAZPIN for an in-depth interview…",
+   "link": "https://podcasters.spotify.com/pod/show/pinball-oz-wide/episodes/PINBALL-OZ-WIDE---EPISODE-20-JUSTIN-FROM-TAZPIN-and-SECRET-EASTER-EGGS-UNVEILED-e3l8l29",
+   "id": "03296fea-a83d-4791-beb8-ce6594c20d6c"
+  },
+  {
+   "show": "pinball-oz-wide",
+   "title": "Episode 19: Remakes vs Og and Why We Don't Need Them",
+   "date": "2026-05-29",
+   "minutes": 72,
+   "summary": "This month on the podcast, Jarrod and Mat dive headfirst into another huge month in pinball chaos. - We talk month in review. Where Mat finally finishes his deck and Jarrod sets up and dials in Deadpool. - We also cover the Nhill trip, the…",
+   "link": "https://podcasters.spotify.com/pod/show/pinball-oz-wide/episodes/PINBALL-OZ-WIDE---EPISODE-19-REMAKES-VS-OG-AND-WHY-WE-DONT-NEED-THEM-e3k1u56",
+   "id": "722af645-ed71-42e2-8c9b-319ee5d0dff4"
+  },
+  {
+   "show": "pinball-oz-wide",
+   "title": "Episode 18: Lyndon Carter From Australian Pinball Museum",
+   "date": "2026-05-25",
+   "minutes": 50,
+   "summary": "Jarrod and Mat chat all things pinball with Lyndon. We talk about the history of the museum and the Australian Pinball Expo, his 1 of 1 Pokémon card dispenser, IFPA tournaments and launch parties and more. Make sure you listen till the…",
+   "link": "https://podcasters.spotify.com/pod/show/pinball-oz-wide/episodes/PINBALL-OZ-WIDE---EPISODE-18-LYNDON-CARTER-FROM-AUSTRALIAN-PINBALL-MUSEUM-e3jrv0i",
+   "id": "ecded056-e3c6-4889-95c9-e56ba7e2d710"
+  },
+  {
+   "show": "aussie-pinball-podcast",
+   "title": "A chat with David Van Ess from Barrels of Fun",
+   "date": "2026-05-25",
+   "minutes": 59,
+   "summary": "Alex and I catch up and I chat with David about what's happening at Barrels with game production. We also talk about his visit to Australia for the Adelaide Pinball Expo, and what's the latest with planning for the Brisbane Masters week.",
+   "link": "https://aussiepinballpodcast.podbean.com/e/a-chat-with-david-van-ess-from-barrels-of-fun/",
+   "id": "aussiepinballpodcast.podbean.com/581a15b5-f293-394b-a430-5cf5950aeac6"
+  },
+  {
+   "show": "pinball-oz-wide",
+   "title": "Episode 17: I Like Wide Bodys An' I Can Not Lie",
+   "date": "2026-04-30",
+   "minutes": 83,
+   "summary": "Back again for another month of frivolity. This month joined by George from MPE: - We get into the usual Month in Review. Hear about Mat's big deck and Jarrod's house fire (nearly). - Segment : Pinball Price Watch The usual Best Buy and…",
+   "link": "https://podcasters.spotify.com/pod/show/pinball-oz-wide/episodes/PINBALL-OZ-WIDE---EPISODE-17-I-LIKE-WIDE-BODYS-AN-I-CAN-NOT-LIE-e3im7h9",
+   "id": "3f9aa169-f201-4926-82a1-4ec8df12c901"
+  },
+  {
+   "show": "aussie-pinball-podcast",
+   "title": "Emily joins us to chat about our USA Trip",
+   "date": "2026-04-18",
+   "minutes": 53,
+   "summary": "Emily and Dr John recently headed over to the USA to attend the Texas Pinball Festival and the Women's World Championships in Colorado. We hear about her success in Texas, the latest games on show there and our visit to the Barrels of Fun…",
+   "link": "https://aussiepinballpodcast.podbean.com/e/emily-joins-us-to-chat-about-our-usa-trip/",
+   "id": "aussiepinballpodcast.podbean.com/dc6bbefd-d821-3cd6-b85a-e69d8f59a148"
+  },
+  {
+   "show": "pinball-oz-wide",
+   "title": "PINBALL OZ WIDE PODCAST - EPISODE 16: WHY THE 90's IS THE BEST ERA OF PINBALL",
+   "date": "2026-03-26",
+   "minutes": 66,
+   "summary": "Mat and Jarrod get together for another chat. This month: - We get into the usual Month of Review: YouTube Channel, Podcast Facebook page, GOT sold, TAZpin booked and some decking great fun!! - Segment : Pinball Price Watch The market may…",
+   "link": "https://podcasters.spotify.com/pod/show/pinball-oz-wide/episodes/PINBALL-OZ-WIDE-PODCAST---EPISODE-16--WHY-THE-90s-IS-THE-BEST-ERA-OF-PINBALL-e3h02p1",
+   "id": "aac0b70c-cbda-4ac0-9f4d-60703cedcd0c"
+  },
+  {
+   "show": "aussie-pinball-podcast",
+   "title": "Episode 31 Queensland State Champs",
+   "date": "2026-02-27",
+   "minutes": 43,
+   "summary": "A quick chat about our trip up to Townsville for the Queensland State Champs and the paradise that is Jason's Empire Arcade and Level 1 facilities.",
+   "link": "https://aussiepinballpodcast.podbean.com/e/episode-31-queensland-state-champs/",
+   "id": "aussiepinballpodcast.podbean.com/4b48a1c9-2e92-339b-af27-d81aee07ddc7"
+  },
+  {
+   "show": "pinball-oz-wide",
+   "title": "Episode 15: The Three Amigos",
+   "date": "2026-02-26",
+   "minutes": 75,
+   "summary": "Thanks for joining us again!! This month: - George from Melbourne Pinball Expo joins us this time around as we get into the usual.... - Month in Review : Birthday's, Facebook Podcast Page, Yard work, Brotherly love, Vegas and MPE info …",
+   "link": "https://podcasters.spotify.com/pod/show/pinball-oz-wide/episodes/PINBALL-OZ-WIDE---EPISODE-15--THE-THREE-AMIGOS-e3fk4c7",
+   "id": "1081562f-a25c-4308-87a1-02a79d82587e"
+  },
+  {
+   "show": "pinball-oz-wide",
+   "title": "Episode 14: New Year, Same Podcast",
+   "date": "2026-01-30",
+   "minutes": 83,
+   "summary": "We always start with the usual welcome and thank you's. - Month in Review - 2026 Predictions - Pinball Price Watch with our Best Buys, WTF and a chat about if the market is done! - Just the Tip where Mat and Jarrod give quality industry…",
+   "link": "https://podcasters.spotify.com/pod/show/pinball-oz-wide/episodes/Pinball-Oz-Wide---Episode-14--New-Year--Same-Podcast-e3ed7nl",
+   "id": "d8865a14-5838-4db6-8439-921f74fa3465"
+  },
+  {
+   "show": "aussie-pinball-podcast",
+   "title": "Episode 30 with Escher Lefkoff",
+   "date": "2026-01-04",
+   "minutes": 76,
+   "summary": "Alex and I chat with Escher about his tournament playing and how he got to be the number one player in the world. He shares his top tournament memories, memorable wins, and whether he still enjoys just playing for fun. The links to watch…",
+   "link": "https://aussiepinballpodcast.podbean.com/e/episode-30-with-escher-lefkoff/",
+   "id": "aussiepinballpodcast.podbean.com/e069a354-4fb9-35d7-ac4f-9e0e656cc0a0"
+  },
+  {
+   "show": "pinball-oz-wide",
+   "title": "Episode 13: Its Christmas Time Again",
+   "date": "2025-12-30",
+   "minutes": 83,
+   "summary": "Last Podcast for the year...Thank you to all who have listened! - Quick run down on what's in this months episode - Month in Review - Mat's Top 5 for 2025 - Quick catch up with George and Sonia from MPE - Pinball Price watch with our Best…",
+   "link": "https://podcasters.spotify.com/pod/show/pinball-oz-wide/episodes/Pinball-Oz-Wide---Episode-13--Its-Christmas-Time-Again-e3cv4sb",
+   "id": "5dcf8bbc-c0be-44de-a996-f4aba92bfa9f"
+  },
+  {
+   "show": "aussie-pinball-podcast",
+   "title": "Episode 29 with Stacy Borg",
+   "date": "2025-12-23",
+   "minutes": 51,
+   "summary": "Alex and Dr John chat with Doctor Curlytek about the Melbourne Pinball scene. Stacy is mainly into competitive pinball, but we chat about his favorite games, his experiences at Melbourne Pinball Expo and why some University Degrees are…",
+   "link": "https://aussiepinballpodcast.podbean.com/e/episode-29-with-stacy-borg/",
+   "id": "aussiepinballpodcast.podbean.com/59ba9f09-73c6-394c-8909-eee4aa99c2ff"
+  },
+  {
+   "show": "aussie-pinball-podcast",
+   "title": "Aussie Pinball Open",
+   "date": "2025-12-09",
+   "minutes": 44,
+   "summary": "This episode we chat about what goes into running a large pinball event. The Australian Pinball Open attracted over 110 players from around Australia to compete for large cash prizes. We pass on how we went about it, without actually…",
+   "link": "https://aussiepinballpodcast.podbean.com/e/aussie-pinball-open/",
+   "id": "aussiepinballpodcast.podbean.com/7312bd2f-c6ad-37da-906a-7601541012b7"
+  },
+  {
+   "show": "pinball-oz-wide",
+   "title": "Episode 12: Itchy & Scratchy meet Bert and Ernie",
+   "date": "2025-11-28",
+   "minutes": 68,
+   "summary": "Our third quick fire podcast for the month starts with our typical intro as we discuss all things pinball - Intro and chat - Month in review where Mat talks his cave, live HP draw and tech help. Jarrod touches on MPE and Shannon's (boys)…",
+   "link": "https://podcasters.spotify.com/pod/show/pinball-oz-wide/episodes/Pinball-Oz-Wide---Episode-12--Itchy--Scratchy-meet-Bert-and-Ernie-e3bj2hq",
+   "id": "0c085fba-7a5b-47fa-9707-67bf78da8f8b"
+  },
+  {
+   "show": "pinball-oz-wide",
+   "title": "Pinball Oz Wide: Episode 11 - Melbourne Pinball Expo Wrap Up",
+   "date": "2025-11-13",
+   "minutes": 65,
+   "summary": "We give our feedback and general discussion about the huge weekend gone that was the MELBOURNE PINBALL EXPO - Intro and chat - Wrap up of Thursday to Sunday of the MPE - Shout outs to those we bumped into - Walk around and chatting to all…",
+   "link": "https://podcasters.spotify.com/pod/show/pinball-oz-wide/episodes/PINBALL-OZ-WIDE--EPISODE-11---MELBOURNE-PINBALL-EXPO-WRAP-UP-e3athi1",
+   "id": "af8cc157-d104-4250-838c-88fba530bb23"
+  },
+  {
+   "show": "aussie-pinball-podcast",
+   "title": "Episode 27 with Lyndon from the Australian Pinball Museum",
+   "date": "2025-11-11",
+   "minutes": 50,
+   "summary": "We catch up with Lyndon, owner of the Aussie Pinball museum in Nhill. We chat about his recent trip to Chicago for the Expo there, and his plans for the Australian Pinball Expo next year in July.",
+   "link": "https://aussiepinballpodcast.podbean.com/e/episode-27-with-lyndon-from-the-australian-pinball-museum/",
+   "id": "aussiepinballpodcast.podbean.com/7bb57f64-fb48-34e7-a93a-b89b974feda1"
+  },
+  {
+   "show": "pinball-oz-wide",
+   "title": "Episode 10 Haggis is back on the Menu",
+   "date": "2025-11-04",
+   "minutes": 33,
+   "summary": "Just a brief drop and chat about the resurrection of Damien Hartin.",
+   "link": "https://podcasters.spotify.com/pod/show/pinball-oz-wide/episodes/Pinball-Oz-Wide---Episode-10-Haggis-is-back-on-the-Menu-e3afm3q",
+   "id": "e3e97246-7d6d-4e69-8a9c-9454a9cd8f80"
+  },
+  {
+   "show": "pinball-oz-wide",
+   "title": "Episode 9: The Wait is Over",
+   "date": "2025-10-30",
+   "minutes": 57,
+   "summary": "- Welcome and Thank You for listening intro - Month in review including the great 'Chilli Incident\". Plenty to talk about with live streams, giveaways and unboxings - Pinball Price Watch Segment which we discuss what we feel is a slight…",
+   "link": "https://podcasters.spotify.com/pod/show/pinball-oz-wide/episodes/Pinball-Oz-Wide---Episode-9--The-Wait-is-Over-e3a89po",
+   "id": "8cd32c08-2b84-48a8-bfd3-3621c0549a28"
+  },
+  {
+   "show": "aussie-pinball-podcast",
+   "title": "Part 2 of our interview with Andy, a new pinball owner",
+   "date": "2025-10-27",
+   "minutes": 48,
+   "summary": "We interview Andy to explore what a new pinball owner thinks of our hobby and the excitement of getting your first game at home.",
+   "link": "https://aussiepinballpodcast.podbean.com/e/part-2-of-our-interview-with-andy-a-new-pinball-owner/",
+   "id": "aussiepinballpodcast.podbean.com/9d4e122d-ecc5-32ab-b469-7941c6aa4005"
+  },
+  {
+   "show": "aussie-pinball-podcast",
+   "title": "Aussie Pinball Podcast episode 26",
+   "date": "2025-10-25",
+   "minutes": 36,
+   "summary": "The new revamped Aussie Pinball Podcast returns with two hosts this time. Alex joins Dr John to talk all about pinball in Australia and are joined each episode by someone who shares the pinball passion. This episode we chat with Andy who…",
+   "link": "https://aussiepinballpodcast.podbean.com/e/aussie-pinball-podcast-episode-26/",
+   "id": "aussiepinballpodcast.podbean.com/80a0da74-2a1c-347b-afa1-6b164e6f716a"
+  },
+  {
+   "show": "pinball-oz-wide",
+   "title": "Episode 8: The return of the Prodigal Son",
+   "date": "2025-09-19",
+   "minutes": 83,
+   "summary": "-Mat returns with a special guest in George from MPE who also joins us for a fun episode. - We give thanks - Our month in review - George brings us up to date with a little Melbourne Expo chat - Pinfest and Perth Expo news - Game of the…",
+   "link": "https://podcasters.spotify.com/pod/show/pinball-oz-wide/episodes/Pinball-OZ-Wide---Episode-8--The-return-of-the-Prodigal-Son-e38e1v1",
+   "id": "b0db6d10-158a-42b5-9eab-6c5ba71f7cdd"
+  },
+  {
+   "show": "pinball-oz-wide",
+   "title": "Episode 7. Flying Solo from Peninsula to Peninsula",
+   "date": "2025-08-28",
+   "minutes": 89,
+   "summary": "- No Mat this week with a throat that just won’tget better I run solo - Month in review - Solo trip to Geelong to visit Tim at Hot RoddedPins and a long overdue catch up with Erik while down there. - Mr. Pinball right of reply to the expo…",
+   "link": "https://podcasters.spotify.com/pod/show/pinball-oz-wide/episodes/Pinball-Oz-Wide---Episode-7--Flying-Solo-from-Peninsula-to-Peninsula-e37dspp",
+   "id": "5d23731c-0145-4297-9a6d-7460b7f9bb03"
+  },
+  {
+   "show": "pinball-oz-wide",
+   "title": "PinballOZwide Podcast - Episode 6 The TAZPIN Experience",
+   "date": "2025-08-07",
+   "minutes": 61,
+   "summary": "What a month ohhh.... what a month we both had! A huge shout out and thanks to Paul from Pinball Sales, George from the Melbourne Pinball Expo, Justin & Frank from the TazziePinball Maffia and the rest of the Mafia Family. We start off…",
+   "link": "https://podcasters.spotify.com/pod/show/pinball-oz-wide/episodes/PinballOZwide-Podcast---Episode-6-The-TAZPIN-Experience-e36icq1",
+   "id": "696d4fe5-8d9d-4427-9966-ee476eb349cc"
+  },
+  {
+   "show": "pinball-oz-wide",
+   "title": "PinballOZwide Podcast - Episode 5 Flipping Down With The Sickness",
+   "date": "2025-07-01",
+   "minutes": 79,
+   "summary": "The Flu took a hold of MaT and his family this month but we are back on full throttle. Thank you to all the people who listened and enjoyed our previouse two Podcasts and thank you to all the new listeners. We start off talking about what…",
+   "link": "https://podcasters.spotify.com/pod/show/pinball-oz-wide/episodes/PinballOZwide-Podcast---Episode-5-Flipping-Down-With-The-Sickness-e34v2kp",
+   "id": "2d039f5a-919c-45ac-834b-f7e601cb9430"
+  },
+  {
+   "show": "pinball-oz-wide",
+   "title": "PinballOZwide Podcast - Episode 4 Can We Please Get A GFX Designer!",
+   "date": "2025-05-30",
+   "minutes": 72,
+   "summary": "Can We Please Get A GFX Designer! If you or anyone you know can draw an awesome back peice for a shirt hit us up!! Thank you to all the people who listened and enjoyed our previouse two Podcasts and thank you to all the new listeners. We…",
+   "link": "https://podcasters.spotify.com/pod/show/pinball-oz-wide/episodes/PinballOZwide-Podcast---Episode-4-Can-We-Please-Get-A-GFX-Designer-e33i6u3",
+   "id": "e1f6de1c-5f38-4523-95d6-908b28a45f5f"
+  },
+  {
+   "show": "pinball-oz-wide",
+   "title": "PinballOZwide Podcast - Episode 3 Where Did That Month Go!",
+   "date": "2025-05-04",
+   "minutes": 71,
+   "summary": "We are back once again with the renegade masters; with the ill behaviour of Pinball. Thank you to all the people who listened and enjoyed our previouse two Podcasts and thank you to all the new listeners. We start off talking about what we…",
+   "link": "https://podcasters.spotify.com/pod/show/pinball-oz-wide/episodes/PinballOZwide-Podcast---Episode-3-Where-Did-That-Month-Go-e32brek",
+   "id": "6fbe2ccb-3304-4f7c-8730-d487219d5296"
+  },
+  {
+   "show": "pinball-oz-wide",
+   "title": "PinballOZwide Podcast - Episode: 2 The Nhill Experience.",
+   "date": "2025-04-02",
+   "minutes": 49,
+   "summary": "We are back once again by popular demand! Thank you to all the people who listened and enjoyed our first Podcast and thank you to all the new listeners. We start off talking about what we have both been upto for the past month. We move…",
+   "link": "https://podcasters.spotify.com/pod/show/pinball-oz-wide/episodes/PinballOZwide-Podcast---Episode-2-The-Nhill-Experience-e3109j4",
+   "id": "839fafe0-55d9-4d8f-b376-ec850bb6ed05"
+  },
+  {
+   "show": "pinball-oz-wide",
+   "title": "PinballOZwide Podcast - Episode: 1 Where it all began and more!",
+   "date": "2025-02-14",
+   "minutes": 44,
+   "summary": "We start off talking about how we both found our love for pinball from our childhoods. We move onto talking about the Melbourne Pinball Expo. If you are still interested you might as well as listen as we have some fun banter and segments.…",
+   "link": "https://podcasters.spotify.com/pod/show/pinball-oz-wide/episodes/PinballOZwide-Podcast---Episode-1-Where-it-all-began-and-more-e2us9qt",
+   "id": "9a64ba45-a339-4d9b-9ad4-3cbcb19c2c31"
+  }
+ ],
+ "errors": []
+}
