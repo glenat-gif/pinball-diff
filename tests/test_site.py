@@ -126,6 +126,19 @@ class MachineTests(Built):
         page = (site.build(on=dt.date(2026, 10, 3)) / "machines" / "cactus-canyon" / "index.html").read_text()
         self.assertIn('data-ed="Remake Special" data-state="vic"', page)
 
+    def test_near_data_and_attract_lines(self):
+        import json as _json
+        dist = site.build(on=dt.date(2026, 10, 3))
+        near = _json.loads((dist / "near.json").read_text())
+        self.assertTrue(all({"d", "lat", "lon", "k", "html"} <= set(i) for i in near["items"]))
+        self.assertIn(["Morwell", -38.239, 146.41, "vic"], near["places"])
+        home = (dist / "index.html").read_text()
+        self.assertIn("var ATTRACT=", home)
+        self.assertIn("NEW VENUE  MORWELL HOTEL", home)
+        self.assertIn("CACTUS CANYON (REMAKE SPECIAL)  LANDS AT  RAILWAY HOTEL SOUTH MELBOURNE", home)
+        self.assertIn("VENOM (LE)  NEEDS A TECH  FORTRESS MELBOURNE", home)
+        self.assertIn('id="near-form"', home)
+
     def test_slugs_drop_accents(self):
         self.assertEqual(site.slug("Pokémon"), "pokemon")
         self.assertEqual(site.slug("Elvira's House of Horrors"), "elvira-s-house-of-horrors")

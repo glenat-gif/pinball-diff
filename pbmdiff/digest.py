@@ -79,7 +79,8 @@ def build(events):
 
     for lid, evs in by_venue.items():
         venue = {"location_id": evs[0]["location_id"], "location_name": evs[0]["location_name"],
-                 "city": evs[0]["city"], "link": ATTRIB.format(id=evs[0]["location_id"])}
+                 "city": evs[0]["city"], "link": ATTRIB.format(id=evs[0]["location_id"]),
+                 "lat": evs[0].get("lat"), "lon": evs[0].get("lon")}
         kinds = defaultdict(list)
         for e in evs:
             kinds[e["type"]].append(e)

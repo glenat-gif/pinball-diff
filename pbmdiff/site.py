@@ -407,6 +407,92 @@ def page(title, body, *, path, description, box_extra="", nav="", current=None):
 
 # ---------- pages ----------
 
+NEAR_DAYS = 60
+
+
+def near_data(events, comps, on):
+    """Everything the near-me box needs, rendered once here so the page has one renderer."""
+    until = (on - dt.timedelta(days=1)).isoformat()
+    since = (on - dt.timedelta(days=NEAR_DAYS - 1)).isoformat()
+    recent = [ev for ev in store.between(events, since, until) if ev.get("lat") is not None]
+    items = []
+    for i in digest.build(recent)["items"]:
+        if i.get("lat") is None:
+            continue
+        items.append({"d": i["date"], "lat": round(i["lat"], 4), "lon": round(i["lon"], 4),
+                      "k": i["kind"], "html": change(i)})
+    soon = ifpa.between(comps, on.isoformat(), (on + dt.timedelta(days=30)).isoformat())
+    comp_rows = [{"d": c["start"], "e": c["end"] or c["start"], "lat": round(c["lat"], 4), "lon": round(c["lon"], 4),
+                  "html": comp_row(c)} for c in soon if c.get("lat") is not None]
+    # a geocoder made only of places that have pinball: every suburb Pinball Map has recorded a venue in
+    seen = {}
+    for ev in events.values():
+        if ev.get("city") and ev.get("lat") is not None:
+            key = ev["city"].strip().lower()
+            cur = seen.get(key)
+            if cur is None or ev["date"] > cur[3]:
+                seen[key] = (ev["city"].strip(), round(ev["lat"], 3), round(ev["lon"], 3), ev["date"],
+                             areas.zone_of(ev["lat"], ev["lon"]) or "")
+    places = sorted(([v[0], v[1], v[2], v[4]] for v in seen.values()), key=lambda x: x[0].lower())
+    return {"built": on.isoformat(), "since": since, "items": items, "comps": comp_rows, "places": places}
+
+
+def near_box():
+    return ('<section class="near" id="near" hidden>'
+            '<header><h2 id="near-title">Near you</h2><button type="button" class="near-change" id="near-change">Change</button></header>'
+            '<div class="near-controls">'
+            '<label>Within <select id="near-km"><option value="10">10 km</option><option value="25">25 km</option>'
+            '<option value="50" selected>50 km</option><option value="100">100 km</option><option value="250">250 km</option></select></label>'
+            '<label>Last <select id="near-days"><option value="7">week</option><option value="30" selected>month</option>'
+            '<option value="60">two months</option></select></label></div>'
+            '<div id="near-body"></div></section>'
+            '<section class="near-ask" id="near-ask">'
+            '<h2>What changed near you?</h2>'
+            '<p>Pick your suburb, or use your location. Nothing leaves your browser; this page just does the sums.</p>'
+            '<form class="row" id="near-form" autocomplete="off">'
+            '<input type="text" id="near-q" list="near-places" placeholder="Suburb or town" aria-label="Suburb or town">'
+            '<datalist id="near-places"></datalist>'
+            '<button type="submit">Show</button>'
+            '<button type="button" class="ghost" id="near-geo">Use my location</button></form>'
+            '<p class="near-note" id="near-note" hidden></p></section>')
+
+
+NEAR_SCRIPT = r"""<script>(function(){
+var ask=document.getElementById("near-ask"),box=document.getElementById("near"),body=document.getElementById("near-body"),
+title=document.getElementById("near-title"),note=document.getElementById("near-note"),q=document.getElementById("near-q"),
+km=document.getElementById("near-km"),days=document.getElementById("near-days"),data=null,here=null;
+function load(cb){if(data)return cb();fetch(NEAR_URL).then(function(r){return r.json()}).then(function(d){data=d;
+var dl=document.getElementById("near-places");d.places.forEach(function(p){var o=document.createElement("option");o.value=p[0];dl.appendChild(o)});cb()})}
+function dist(a,b,c,d){var R=6371,x=(c-a)*Math.PI/180,y=(d-b)*Math.PI/180,s=Math.sin(x/2)*Math.sin(x/2)+Math.cos(a*Math.PI/180)*Math.cos(c*Math.PI/180)*Math.sin(y/2)*Math.sin(y/2);return 2*R*Math.asin(Math.sqrt(s))}
+function fmt(d){var t=new Date(d+"T00:00:00");return t.toLocaleDateString("en-AU",{weekday:"short",day:"numeric",month:"short"})}
+function show(){if(!here||!data)return;var r=+km.value,n=+days.value,cut=new Date(Date.now()-n*864e5).toISOString().slice(0,10);
+var items=data.items.filter(function(i){return i.d>=cut&&dist(here.lat,here.lon,i.lat,i.lon)<=r});
+var comps=data.comps.filter(function(c){return dist(here.lat,here.lon,c.lat,c.lon)<=r});
+title.textContent=(here.name?"Near "+here.name:"Near you")+" · "+r+" km";
+var h="";if(comps.length)h+='<h3>Comps in the next 30 days</h3><ul class="comps">'+comps.map(function(c){return c.html}).join("")+"</ul>";
+h+='<h3>Changes in the last '+(n==7?"week":n==30?"month":"two months")+"</h3>";
+h+=items.length?'<ul class="changes">'+items.map(function(i){return i.html}).join("")+"</ul>":'<p class="quiet">Nothing has changed on the map within '+r+' km. Try a wider circle, or a longer stretch.</p>';
+if(here.osm)h+='<p class="credit-osm">Suburb found with <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>.</p>';
+body.innerHTML=h;box.hidden=false;ask.hidden=true;try{localStorage.setItem("near",JSON.stringify(here))}catch(e){}}
+function pick(name){var key=name.trim().toLowerCase();if(!key)return;var p=data.places.filter(function(x){return x[0].toLowerCase()===key})[0]||
+data.places.filter(function(x){return x[0].toLowerCase().indexOf(key)===0})[0];
+if(p){here={name:p[0],lat:p[1],lon:p[2]};show();return}
+note.hidden=false;note.textContent="Looking up "+name.trim()+"\u2026";
+fetch("https://nominatim.openstreetmap.org/search?countrycodes=au&format=jsonv2&limit=1&q="+encodeURIComponent(name.trim()),{headers:{"Accept":"application/json"}})
+.then(function(r){return r.json()}).then(function(rows){if(!rows.length)throw 0;var r=rows[0];
+here={name:name.trim().replace(/\b\w/g,function(c){return c.toUpperCase()}),lat:+r.lat,lon:+r.lon,osm:true};note.hidden=true;show()})
+.catch(function(){note.hidden=false;note.textContent="Could not find that suburb. Try the nearest town, or use your location."})}
+document.getElementById("near-form").addEventListener("submit",function(ev){ev.preventDefault();load(function(){pick(q.value)})});
+document.getElementById("near-geo").addEventListener("click",function(){if(!navigator.geolocation){note.hidden=false;note.textContent="Your browser does not share location. Type a suburb instead.";return}
+navigator.geolocation.getCurrentPosition(function(pos){load(function(){here={name:"",lat:pos.coords.latitude,lon:pos.coords.longitude};show()})},
+function(){note.hidden=false;note.textContent="Location was not shared. Type a suburb instead."},{timeout:8000})});
+document.getElementById("near-change").addEventListener("click",function(){box.hidden=true;ask.hidden=false;q.focus();try{localStorage.removeItem("near")}catch(e){}});
+km.addEventListener("change",show);days.addEventListener("change",show);
+var saved=null;try{saved=JSON.parse(localStorage.getItem("near")||"null")}catch(e){}
+if(saved&&saved.lat){here=saved;load(show)}
+})();</script>"""
+
+
 def home(weeks, counts, built_on, comps=()):
     total = render.count_changes(weeks)
     active = [z for z in weeks if z["items"]]
@@ -417,11 +503,13 @@ def home(weeks, counts, built_on, comps=()):
            f'<small>New venues, machines landing and leaving, and which machines need a tech. '
            f'Updated every morning from <a href="https://pinballmap.com">Pinball Map</a>.</small></p>'
            f'<p class="score"><b>{total}</b> change{"s" if total != 1 else ""} · {e(short_span)}</p>'
+           f'<p class="dmd" id="dmd" aria-hidden="true" hidden></p>'
            f"{signup()}")
     soon_until = (built_on + dt.timedelta(days=7)).isoformat()
     soon = ifpa.between(list(comps), built_on.isoformat(), soon_until, set(SITE["email_zones"]))
-    blocks = comps_block(soon, built_on.isoformat(), soon_until, "Comps in Victoria this week",
-                         "No IFPA comps listed in Victoria in the next seven days.") if comps else ""
+    blocks = near_box()
+    blocks += comps_block(soon, built_on.isoformat(), soon_until, "Comps in Victoria this week",
+                          "No IFPA comps listed in Victoria in the next seven days.") if comps else ""
     pods = podcasts.load()
     fresh = podcasts.between(pods, (built_on - dt.timedelta(days=14)).isoformat(), built_on.isoformat())
     if fresh:
@@ -433,8 +521,44 @@ def home(weeks, counts, built_on, comps=()):
     if quiet:
         names = render.join(f'<a href="{u("/zone/" + z["zone"] + "/")}">{e(short(z["label"]))}</a>' for z in quiet)
         blocks += f'<p class="allquiet"><strong>Quiet on the map this week:</strong> {names}.</p>'
-    return page("", blocks, path="/", description=SITE["tagline"], box_extra=box,
+    blocks += f'<script>var NEAR_URL={json.dumps(u("/near.json"))};</script>' + NEAR_SCRIPT
+    lines = []
+    for z in active:
+        for i in z["items"]:
+            lines.append(attract_line(i, z["zone"]))
+    attract = f'<script>var ATTRACT={json.dumps(lines[:40], ensure_ascii=False)};</script>' + ATTRACT_SCRIPT
+    return page("", blocks, path="/", description=SITE["tagline"], box_extra=box + attract,
                 nav=chips("home", counts), current="home")
+
+
+def attract_line(i, zone):
+    """One DMD line per change: terse, upper case, the way a backbox would say it."""
+    where = (i["location_name"] + (", " + i["city"] if render.where(i) else "")).upper()
+    k = i["kind"]
+    if k == "new_venue":
+        return f"NEW VENUE  {where}"
+    if k == "swap":
+        return f"{render.split_machine(i['in'])[0].upper()}  LANDS AT  {where}"
+    if k == "rotation" or k == "added":
+        return f"{render.split_machine(i['machines'][0])[0].upper()}  LANDS AT  {where}"
+    if k == "removed":
+        return f"{render.split_machine(i['machines'][0])[0].upper()}  LEAVES  {where}"
+    status = {"amber": "NEEDS A TECH", "green": "FIXED", "note": "NOTE"}[i["status"]]
+    return f"{render.split_machine(i['machine'])[0].upper()}  {status}  {where}"
+
+
+ATTRACT_SCRIPT = r"""<script>(function(){
+if(!ATTRACT.length||matchMedia("(prefers-reduced-motion: reduce)").matches)return;
+var el=document.getElementById("dmd"),timer=null,tick=null,i=0,on=false;
+function type(text,done){el.textContent="";var j=0;clearInterval(tick);tick=setInterval(function(){
+el.textContent=text.slice(0,++j)+(j<text.length?"█":"");if(j>=text.length){clearInterval(tick);setTimeout(done,2600)}},28)}
+function loop(){if(!on)return;type(ATTRACT[i%ATTRACT.length],function(){i++;loop()})}
+function start(){if(on)return;on=true;el.hidden=false;document.body.classList.add("attract");loop()}
+function stop(){clearTimeout(timer);if(on){on=false;clearInterval(tick);el.hidden=true;document.body.classList.remove("attract")}
+timer=setTimeout(start,9000)}
+["mousemove","keydown","scroll","touchstart","click"].forEach(function(e){addEventListener(e,stop,{passive:true})});
+stop();
+})();</script>"""
 
 
 def zone_page(z, events, until, counts):
@@ -768,6 +892,7 @@ def build(on=None):
     shutil.copy(ROOT / "static" / "style.css", DIST / "style.css")
     comps = ifpa.enrich(ifpa.load(), ifpa.venues_from_events(events))
     write("/", home(weeks, counts, on, comps))
+    write("/near.json", json.dumps(near_data(events, comps, on), ensure_ascii=False, separators=(",", ":")))
     upcoming = ifpa.between(comps, on.isoformat(), "9999-12-31")
     write("/comps/", comps_page(upcoming, on))
     stamp = dt.datetime.now(dt.timezone.utc).strftime("%Y%m%dT%H%M%SZ")
