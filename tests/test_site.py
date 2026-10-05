@@ -14,7 +14,7 @@ from unittest import mock
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT))
-from pbmdiff import issue, mail, render, site, store  # noqa: E402
+from pbmdiff import ifpa, issue, mail, render, site, store  # noqa: E402
 
 SUBS = json.loads((ROOT / "tests" / "fixtures" / "melbourne_week.json").read_text(encoding="utf-8"))["user_submissions"]
 ON = dt.date(2026, 10, 1)            # a Thursday; the fixture week ends the day before
@@ -27,7 +27,8 @@ class Built(unittest.TestCase):
         self.patches = [mock.patch.object(store, "EVENTS", t / "events.jsonl"),
                         mock.patch.object(issue, "ISSUES", t / "issues"),
                         mock.patch.object(site, "DIST", t / "dist"),
-                        mock.patch.object(issue, "today", lambda: ON)]
+                        mock.patch.object(issue, "today", lambda: ON),
+                        mock.patch.object(ifpa, "COMPS", t / "comps.json")]   # never read the real calendar
         for p in self.patches:
             p.start()
         store.add(SUBS)
