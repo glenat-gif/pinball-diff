@@ -12,7 +12,7 @@ from .areas import SHORT as SHORT_NAMES
 
 KIND_LABEL = {"new_venue": "New venue", "swap": "Swap", "rotation": "Rotation", "added": "Landed",
               "removed": "Gone", "condition": None}
-STATUS_LABEL = {"amber": "Trouble", "green": "Good news", "note": "Note"}
+STATUS_LABEL = {"amber": "Needs a tech", "green": "Good news", "note": "Note"}
 
 _MAKER = re.compile(r"^(.*?)\s*\(([^()]*?,\s*\d{4})\)\s*$")
 

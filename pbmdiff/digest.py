@@ -168,7 +168,7 @@ def to_markdown(digest, label, period):
             head = "**Gone:**" if n == 1 else f"**{n} gone:**"
             lines.append(f"- {head} {v} removed {_join(i['machines'])}.")
         elif i["kind"] == "condition":
-            flag = {"amber": "Trouble", "green": "Good news", "note": "Note"}[i["status"]]
+            flag = {"amber": "Needs a tech", "green": "Good news", "note": "Note"}[i["status"]]
             who = f" ({i['user']})" if i["user"] else ""
             lines.append(f"- **{flag}:** {i['machine']} at {v}: \"{i['comment']}\"{who}")
     lines += ["", f"Lineups confirmed unchanged at {digest['confirmations']} venue{'s' if digest['confirmations'] != 1 else ''}.",

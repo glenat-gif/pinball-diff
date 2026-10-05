@@ -231,7 +231,7 @@ def home(weeks, counts, built_on, comps=()):
     short_span = render.short_span(weeks[0]["since"], weeks[0]["until"])
     box = (f'<h1 class="wordmark"><a href="{u("/")}">{e(SITE["name"])}</a></h1>'
            f'<p class="lede">{e(SITE["tagline"])}'
-           f'<small>New venues, machines landing and leaving, and what is playing badly. '
+           f'<small>New venues, machines landing and leaving, and which machines need a tech. '
            f'Updated every morning from <a href="https://pinballmap.com">Pinball Map</a>.</small></p>'
            f'<p class="score"><b>{total}</b> change{"s" if total != 1 else ""} · {e(short_span)}</p>'
            f"{signup()}")
@@ -475,7 +475,7 @@ def title_page(g, catalogue=None):
 def about_page():
     body = f"""<div class="prose">
 <h2>What this is</h2>
-<p>A weekly list of what changed on Pinball Map in Australia: new venues, machines landing and leaving, swaps, and notes from players about machines that are playing badly or have been fixed. It exists so that people hear about the new game at the pub down the road, and so a Rowville player knows whether it is worth the drive to Campbellfield on Saturday.</p>
+<p>A weekly list of what changed on Pinball Map in Australia: new venues, machines landing and leaving, swaps, and notes from players about machines that need a tech or have been fixed. It exists so that people hear about the new game at the pub down the road, and so a Rowville player knows whether it is worth the drive to Campbellfield on Saturday.</p>
 <h2>What it is not</h2>
 <p>It is not a map and it will not help you find somewhere to play. <a href="https://pinballmap.com">Pinball Map</a> does that, and does it well. Every venue here links straight to its Pinball Map listing.</p>
 <h2>Where it comes from</h2>

@@ -11,6 +11,7 @@ Without a key the fetch is skipped and the site simply has no comps.
 import datetime as dt
 import json
 import os
+import re
 import time
 import urllib.error
 import urllib.parse
@@ -52,6 +53,26 @@ def _country_ok(t):
     return code in ("", "AU", "AUS") or name == "australia"
 
 
+_BLANK = {"", "none", "not set", "n/a", "tbd"}
+
+
+def _venue(t):
+    """IFPA often leaves location_name empty; the address usually starts with the venue."""
+    name = (t.get("location_name") or "").strip()
+    if name:
+        return name
+    first = (t.get("raw_address") or "").split(",")[0].strip()
+    street = (t.get("address1") or "").strip().lower()
+    looks_like_street = bool(re.match(r"^\d", first)) or (street and street.split()[-1] in first.lower()
+                                                          and first.lower().split()[-1] in street)
+    return "" if not first or looks_like_street else first
+
+
+def _format(t):
+    parts = [str(x).strip() for x in (t.get("qualifying_format"), t.get("finals_format")) if x]
+    return " / ".join(p for p in parts if p.lower() not in _BLANK)
+
+
 def normalise(t):
     lat, lon = _num(t.get("latitude")), _num(t.get("longitude"))
     start = (t.get("event_start_date") or "")[:10]
@@ -62,20 +83,18 @@ def normalise(t):
         "id": t.get("tournament_id"), "name": name,
         "event": event if event and event.lower() not in ("main tournament", name.lower()) else "",
         "type": t.get("event_type") or "Tournament", "start": start, "end": end,
-        "venue": (t.get("location_name") or "").strip(), "city": (t.get("city") or "").strip(),
+        "venue": _venue(t), "city": (t.get("city") or "").strip(),
         "state": (t.get("stateprov") or "").strip(), "lat": lat, "lon": lon,
         "zone": areas.zone_of(lat, lon),
         "website": (t.get("website") or "").strip(), "director": (t.get("director_name") or "").strip(),
-        "format": " / ".join(x for x in (t.get("qualifying_format"), t.get("finals_format")) if x),
+        "format": _format(t),
         "ranking": t.get("ranking_system") or "MAIN", "women": (t.get("ranking_system") or "") == "WOMEN",
         "link": EVENT_URL.format(id=t.get("tournament_id")),
     }
 
 
-QUERIES = [  # three ways to say "Australia"; results are merged by tournament id
+QUERIES = [  # the country name, code and a continent-wide radius all return the same events
     {"country": "Australia"},
-    {"country": "AU"},
-    {"latitude": "-27.0", "longitude": "134.0", "radius": "2600", "distance_unit": "k"},
 ]
 
 
@@ -87,7 +106,7 @@ def fetch(key=None, today=None, sleep=time.sleep, get=_get):
     end = today + dt.timedelta(days=DAYS_AHEAD)
     found, report, sample = {}, [], {}
     for query in QUERIES:
-        for event_type in ("Tournament", "League"):
+        for event_type in ("Tournament",):          # IFPA ignores the type filter; leagues come back too
             pos, seen = 1, 0
             while True:
                 try:

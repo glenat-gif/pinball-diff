@@ -35,7 +35,7 @@ EVENTS = {"Tournament": [t(1, "Parlour Monthly", "2026-10-10", -37.64, 144.95, "
 
 
 def fake_get(path, key, **params):
-    rows = EVENTS[params["event_type"]]
+    rows = EVENTS["Tournament"] + EVENTS["League"]          # IFPA ignores the type filter
     return {"total_results": len(rows), "tournaments": rows}
 
 
@@ -45,6 +45,20 @@ class FlagTests(unittest.TestCase):
             self.assertTrue(ifpa._yes(v), v)
         for v in (False, "N", "n", "0", 0, None, ""):
             self.assertFalse(ifpa._yes(v), v)
+
+
+class VenueTests(unittest.TestCase):
+    def test_venue_from_the_address_when_ifpa_leaves_it_blank(self):
+        row = {"location_name": None, "address1": " Beetaloo Street",
+               "raw_address": "Belconnen Bowling Club, Beetaloo St, Hawker, ACT, Australia"}
+        self.assertEqual(ifpa._venue(row), "Belconnen Bowling Club")
+        self.assertEqual(ifpa._venue({"location_name": None, "address1": "12 Smith St",
+                                      "raw_address": "12 Smith St, Fitzroy, VIC"}), "")
+        self.assertEqual(ifpa._venue({"location_name": "The Pinball Parlour"}), "The Pinball Parlour")
+
+    def test_blank_formats_are_dropped(self):
+        self.assertEqual(ifpa._format({"qualifying_format": "None", "finals_format": "Match Play"}), "Match Play")
+        self.assertEqual(ifpa._format({"qualifying_format": "Not Set", "finals_format": "Strike Knockout"}), "Strike Knockout")
 
 
 class CompTests(unittest.TestCase):
