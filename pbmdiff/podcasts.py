@@ -72,7 +72,9 @@ def parse(xml_text, show):
         if not when:
             continue
         date = when.astimezone(store.LOCAL).date().isoformat()
+        ep_img = it.find(IT + "image")
         episodes.append({"show": show["key"], "title": _tidy_title(it.findtext("title"), show.get("strip", "")),
+                         "image": (ep_img.get("href") if ep_img is not None else "") or info["image"],
                          "date": date, "minutes": _minutes(it.findtext(IT + "duration")),
                          "summary": _text(it.findtext("description") or it.findtext(IT + "summary"), 240),
                          "link": it.findtext("link") or info["link"],

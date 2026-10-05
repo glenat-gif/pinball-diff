@@ -262,6 +262,9 @@ blockquote.said { margin: 0.35rem 0 0; padding-left: 0.75rem; border-left: 3px s
 .eps-h { font-size: 1.3rem; margin: 2.4rem 0 0; padding-bottom: 0.4rem; border-bottom: 2px solid var(--ink); }
 .eps { list-style: none; margin: 0.4rem 0 0; padding: 0; }
 .ep { padding: 0.95rem 0; border-bottom: 1px solid var(--line); }
+.ep.has-art { display: grid; grid-template-columns: 72px 1fr; gap: 0 1rem; align-items: start; }
+.ep .eart img { width: 72px; height: 72px; border-radius: 8px; object-fit: cover; display: block; background: var(--line); }
+@media (max-width: 560px) { .ep.has-art { grid-template-columns: 56px 1fr; gap: 0 0.8rem; } .ep .eart img { width: 56px; height: 56px; } }
 .ep .show { display: block; font: 800 0.72rem/1.6 var(--body); text-transform: uppercase; letter-spacing: 0.08em; color: var(--plasma-text); }
 .ep .etitle { font-weight: 650; font-size: 1.05rem; }
 .ep .d { display: block; color: var(--muted); font-size: 0.86rem; margin-top: 0.1rem; }

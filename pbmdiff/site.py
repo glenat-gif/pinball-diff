@@ -246,9 +246,12 @@ def episode_row(ep, shows, show_name=True):
     who = f'<span class="show">{e(show.get("name", ""))}</span>' if show_name else ""
     meta = " · ".join(x for x in (render.day(ep["date"]), _mins(ep.get("minutes"))) if x)
     summary = f'<p class="sum">{e(ep["summary"])}</p>' if ep.get("summary") else ""
-    return (f'<li class="ep" data-show="{e(ep["show"])}">{who}'
+    img = ep.get("image") or show.get("image")
+    art = (f'<a class="eart" href="{e(ep["link"])}" tabindex="-1" aria-hidden="true">'
+           f'<img src="{e(img)}" alt="" width="72" height="72" loading="lazy" decoding="async"></a>' if img else "")
+    return (f'<li class="ep{" has-art" if art else ""}" data-show="{e(ep["show"])}">{art}<div>{who}'
             f'<a class="etitle" href="{e(ep["link"])}">{e(ep["title"])}</a>'
-            f'<span class="d">{e(meta)}</span>{summary}</li>')
+            f'<span class="d">{e(meta)}</span>{summary}</div></li>')
 
 
 def podcasts_page(data):

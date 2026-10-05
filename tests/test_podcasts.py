@@ -33,6 +33,7 @@ class PodcastTests(unittest.TestCase):
         self.assertEqual(eps[0]["minutes"], 127)
         self.assertEqual(eps[0]["summary"], "In this month's episode we are joined by George & Sonia.")
         self.assertEqual((eps[1]["title"], eps[1]["minutes"]), ("Newcastle Pinfest 15", 53))
+        self.assertEqual(eps[0]["image"], "https://example.com/logo.jpg")         # falls back to the show's logo
 
     def test_a_broken_feed_keeps_yesterdays_copy(self):
         with tempfile.TemporaryDirectory() as tmp, \
