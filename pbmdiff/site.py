@@ -556,15 +556,14 @@ def attract_line(i, zone):
 
 ATTRACT_SCRIPT = r"""<script>(function(){
 if(!ATTRACT.length||matchMedia("(prefers-reduced-motion: reduce)").matches)return;
-var el=document.getElementById("dmd"),timer=null,tick=null,i=0,on=false;
+var el=document.getElementById("dmd"),tick=null,i=0,paused=false;
+el.hidden=false;
 function type(text,done){el.textContent="";var j=0;clearInterval(tick);tick=setInterval(function(){
-el.textContent=text.slice(0,++j)+(j<text.length?"█":"");if(j>=text.length){clearInterval(tick);setTimeout(done,2600)}},28)}
-function loop(){if(!on)return;type(ATTRACT[i%ATTRACT.length],function(){i++;loop()})}
-function start(){if(on)return;on=true;el.hidden=false;document.body.classList.add("attract");loop()}
-function stop(){clearTimeout(timer);if(on){on=false;clearInterval(tick);el.hidden=true;document.body.classList.remove("attract")}
-timer=setTimeout(start,9000)}
-["mousemove","keydown","scroll","touchstart","click"].forEach(function(e){addEventListener(e,stop,{passive:true})});
-stop();
+if(paused)return;el.textContent=text.slice(0,++j)+(j<text.length?"\u2588":"");if(j>=text.length){clearInterval(tick);setTimeout(done,3200)}},26)}
+function loop(){type(ATTRACT[i%ATTRACT.length],function(){i++;loop()})}
+el.addEventListener("mouseenter",function(){paused=true});el.addEventListener("mouseleave",function(){paused=false});
+document.addEventListener("visibilitychange",function(){paused=document.hidden});
+setTimeout(loop,900);
 })();</script>"""
 
 
