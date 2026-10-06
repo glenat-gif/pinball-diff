@@ -533,33 +533,37 @@ def home(weeks, counts, built_on, comps=()):
     lines = []
     for c in soon[:6]:
         when = render.day(c["start"]).upper()
-        where = (c["venue"] or c["city"]).upper()
-        lines.append(f"COMP  {when}  {c['name'].upper()}" + (f"  AT  {where}" if where else ""))
+        where = ", ".join(x for x in (c["venue"], c["city"]) if x).upper()
+        lines.append((f"{where}  COMP {when}  " if where else f"COMP {when}  ") + c["name"].upper())
     for z in active:
         for i in z["items"]:
             lines.append(attract_line(i, z["zone"]))
     for ep in fresh[:4]:
         show = {sh["key"]: sh for sh in pods.get("shows", [])}.get(ep["show"], {}).get("name", "")
-        lines.append(f"NEW EPISODE  {show.upper()}  {ep['title'].upper()}")
+        lines.append(f"{show.upper()}  NEW EPISODE  {ep['title'].upper()}")
     attract = f'<script>var ATTRACT={json.dumps(lines[:40], ensure_ascii=False)};</script>' + ATTRACT_SCRIPT
     return page("", blocks, path="/", description=SITE["tagline"], box_extra=box + attract,
                 nav=chips("home", counts), current="home")
 
 
 def attract_line(i, zone):
-    """One DMD line per change: terse, upper case, the way a backbox would say it."""
-    where = (i["location_name"] + (", " + i["city"] if render.where(i) else "")).upper()
+    """One DMD line per change, venue first: the venue is the news, the machine is the detail."""
+    where = (i["location_name"] + (" IN " + i["city"] if render.where(i) else "")).upper()
+    title = lambda n: render.split_machine(n)[0].upper()
     k = i["kind"]
     if k == "new_venue":
-        return f"NEW VENUE  {where}"
+        first = f"  WITH {title(i['machines'][0])}" if i.get("machines") else ""
+        return f"{where} IS NEW ON THE MAP{first}"
     if k == "swap":
-        return f"{render.split_machine(i['in'])[0].upper()}  LANDS AT  {where}"
-    if k == "rotation" or k == "added":
-        return f"{render.split_machine(i['machines'][0])[0].upper()}  LANDS AT  {where}"
+        return f"{where} NOW HAS {title(i['in'])}"
+    if k in ("rotation", "added"):
+        names = [title(n) for n in i["machines"][:2]]
+        more = f" AND {len(i['machines']) - 2} MORE" if len(i["machines"]) > 2 else ""
+        return f"{where} NOW HAS {' AND '.join(names)}{more}"
     if k == "removed":
-        return f"{render.split_machine(i['machines'][0])[0].upper()}  LEAVES  {where}"
-    status = {"amber": "NEEDS A TECH", "green": "FIXED", "note": "NOTE"}[i["status"]]
-    return f"{render.split_machine(i['machine'])[0].upper()}  {status}  {where}"
+        return f"{where} HAS LOST {title(i['machines'][0])}"
+    status = {"amber": "NEEDS A TECH", "green": "IS FIXED", "note": "NOTE"}[i["status"]]
+    return f"{where}  {title(i['machine'])} {status}"
 
 
 ATTRACT_SCRIPT = r"""<script>(function(){

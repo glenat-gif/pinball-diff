@@ -146,9 +146,10 @@ class MachineTests(Built):
         self.assertIn(["Rowville", "3178", "VIC", -37.921, 145.2425], subs)
         home = (dist / "index.html").read_text()
         self.assertIn("var ATTRACT=", home)
-        self.assertIn("NEW VENUE  MORWELL HOTEL", home)
-        self.assertIn("CACTUS CANYON (REMAKE SPECIAL)  LANDS AT  RAILWAY HOTEL SOUTH MELBOURNE", home)
-        self.assertIn("VENOM (LE)  NEEDS A TECH  FORTRESS MELBOURNE", home)
+        self.assertIn("MORWELL HOTEL IS NEW ON THE MAP  WITH GHOSTBUSTERS (PRO)", home)
+        self.assertIn("RAILWAY HOTEL SOUTH MELBOURNE NOW HAS CACTUS CANYON (REMAKE SPECIAL)", home)
+        self.assertIn("FORTRESS MELBOURNE  VENOM (LE) NEEDS A TECH", home)
+        self.assertIn("BLACK JACKS CAFE DE WHEELS IN ALBURY  DEVIL RIDERS NEEDS A TECH", home)
         self.assertIn('id="near-form"', home)
 
     def test_slugs_drop_accents(self):
