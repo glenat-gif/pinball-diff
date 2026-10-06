@@ -52,10 +52,21 @@ class SiteTests(Built):
             self.assertTrue((dist / page).exists(), page)
 
     def test_links_carry_the_pages_base_path(self):
-        home = (site.build(on=dt.date(2026, 10, 3)) / "index.html").read_text()
+        with mock.patch.dict(site.SITE, {"base_path": "/pinball-diff", "base_url": "https://glenat-gif.github.io/pinball-diff"}):
+            dist = site.build(on=dt.date(2026, 10, 3))
+        home = (dist / "index.html").read_text()
         self.assertRegex(home, r'href="/pinball-diff/style\.css\?v=[0-9a-f]{8}"')
         self.assertIn('href="/pinball-diff/zone/vic/"', home)
         self.assertNotIn('href="/zone/', home)
+        self.assertFalse((dist / "CNAME").exists())
+
+    def test_custom_domain_build_is_rooted_and_has_cname(self):
+        dist = site.build(on=dt.date(2026, 10, 3))
+        home = (dist / "index.html").read_text()
+        self.assertIn('href="/zone/vic/"', home)
+        self.assertIn('href="https://pinballthisweek.au/"', home)
+        self.assertEqual((dist / "CNAME").read_text().strip(), "pinballthisweek.au")
+        self.assertTrue((dist / "comps" / "vic.ics").exists())
 
     def test_text_from_players_is_escaped(self):
         evil = dict(SUBS[5], id=999999, comment="<script>alert(1)</script>")
@@ -79,7 +90,7 @@ class MachineTests(Built):
         dist = site.build(on=dt.date(2026, 10, 3))
         index = (dist / "machines" / "index.html").read_text()
         self.assertEqual(index.count('<span class="t">Cactus Canyon</span>'), 1)   # original and remake together
-        self.assertIn('href="/pinball-diff/machines/cactus-canyon/"', index)
+        self.assertIn('href="/machines/cactus-canyon/"', index)
         page = (dist / "machines" / "cactus-canyon" / "index.html").read_text()
         self.assertIn("Remake Special", page)
         self.assertIn('class="tag new">In<', page)
@@ -118,8 +129,8 @@ class MachineTests(Built):
 
     def test_machine_names_in_the_week_link_to_their_pages(self):
         home = (site.build(on=dt.date(2026, 10, 3)) / "index.html").read_text()
-        self.assertIn('<a class="m" href="/pinball-diff/machines/cactus-canyon/">Cactus Canyon</a>', home)
-        self.assertIn('<a class="m" href="/pinball-diff/machines/ghostbusters/">Ghostbusters (Pro)</a>', home)
+        self.assertIn('<a class="m" href="/machines/cactus-canyon/">Cactus Canyon</a>', home)
+        self.assertIn('<a class="m" href="/machines/ghostbusters/">Ghostbusters (Pro)</a>', home)
         self.assertIn('<span class="m">Venom (LE)</span>', home)     # only condition notes, so no page
 
     def test_title_rows_carry_edition_and_state(self):

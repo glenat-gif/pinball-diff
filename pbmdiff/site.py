@@ -919,4 +919,7 @@ def build(on=None):
     write("/about/", about_page())
     write("/feed.xml", feed(dates))
     (DIST / ".nojekyll").write_text("", encoding="utf-8")
+    host = SITE["base_url"].split("://", 1)[1]
+    if "github.io" not in host:
+        (DIST / "CNAME").write_text(host + "\n", encoding="utf-8")
     return DIST
