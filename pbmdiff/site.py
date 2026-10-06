@@ -424,17 +424,7 @@ def near_data(events, comps, on):
     soon = ifpa.between(comps, on.isoformat(), (on + dt.timedelta(days=30)).isoformat())
     comp_rows = [{"d": c["start"], "e": c["end"] or c["start"], "lat": round(c["lat"], 4), "lon": round(c["lon"], 4),
                   "html": comp_row(c)} for c in soon if c.get("lat") is not None]
-    # a geocoder made only of places that have pinball: every suburb Pinball Map has recorded a venue in
-    seen = {}
-    for ev in events.values():
-        if ev.get("city") and ev.get("lat") is not None:
-            key = ev["city"].strip().lower()
-            cur = seen.get(key)
-            if cur is None or ev["date"] > cur[3]:
-                seen[key] = (ev["city"].strip(), round(ev["lat"], 3), round(ev["lon"], 3), ev["date"],
-                             areas.zone_of(ev["lat"], ev["lon"]) or "")
-    places = sorted(([v[0], v[1], v[2], v[4]] for v in seen.values()), key=lambda x: x[0].lower())
-    return {"built": on.isoformat(), "since": since, "items": items, "comps": comp_rows, "places": places}
+    return {"built": on.isoformat(), "since": since, "items": items, "comps": comp_rows}
 
 
 def near_box():
@@ -450,8 +440,9 @@ def near_box():
             '<h2>What changed near you?</h2>'
             '<p>Pick your suburb, or use your location. Nothing leaves your browser; this page just does the sums.</p>'
             '<form class="row" id="near-form" autocomplete="off">'
-            '<input type="text" id="near-q" list="near-places" placeholder="Suburb or town" aria-label="Suburb or town">'
-            '<datalist id="near-places"></datalist>'
+            '<div class="ac"><input type="text" id="near-q" placeholder="Suburb or postcode" aria-label="Suburb or postcode" '
+            'role="combobox" aria-expanded="false" aria-controls="near-list" aria-autocomplete="list" inputmode="search">'
+            '<ul id="near-list" class="ac-list" role="listbox" hidden></ul></div>'
             '<button type="submit">Show</button>'
             '<button type="button" class="ghost" id="near-geo">Use my location</button></form>'
             '<p class="near-note" id="near-note" hidden></p></section>')
@@ -461,8 +452,25 @@ NEAR_SCRIPT = r"""<script>(function(){
 var ask=document.getElementById("near-ask"),box=document.getElementById("near"),body=document.getElementById("near-body"),
 title=document.getElementById("near-title"),note=document.getElementById("near-note"),q=document.getElementById("near-q"),
 km=document.getElementById("near-km"),days=document.getElementById("near-days"),data=null,here=null;
-function load(cb){if(data)return cb();fetch(NEAR_URL).then(function(r){return r.json()}).then(function(d){data=d;
-var dl=document.getElementById("near-places");d.places.forEach(function(p){var o=document.createElement("option");o.value=p[0];dl.appendChild(o)});cb()})}
+function load(cb){if(data)return cb();fetch(NEAR_URL).then(function(r){return r.json()}).then(function(d){data=d;cb()})}
+var subs=null,subsLoading=null,list=document.getElementById("near-list"),sel=-1,matches=[];
+function loadSubs(cb){if(subs)return cb();if(!subsLoading)subsLoading=fetch(SUBURBS_URL).then(function(r){return r.json()}).then(function(d){subs=d});subsLoading.then(cb)}
+function norm(t){return t.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"")}
+function find(t){t=norm(t.trim());if(!t)return[];var out=[];
+if(/^\d+$/.test(t)){for(var i=0;i<subs.length&&out.length<8;i++)if(subs[i][1].indexOf(t)===0)out.push(subs[i]);return out}
+var starts=[],words=[];for(var i=0;i<subs.length;i++){var n=norm(subs[i][0]);if(n.indexOf(t)===0)starts.push(subs[i]);else if(n.indexOf(" "+t)>-1)words.push(subs[i]);if(starts.length>=8)break}
+return starts.concat(words).slice(0,8)}
+function render(){list.innerHTML="";matches.forEach(function(m,i){var li=document.createElement("li");li.setAttribute("role","option");li.id="near-opt-"+i;
+li.setAttribute("aria-selected",String(i===sel));li.innerHTML='<b>'+m[0]+'</b> <span>'+m[2]+' '+m[1]+'</span>';
+li.addEventListener("mousedown",function(ev){ev.preventDefault();choose(m)});list.appendChild(li)});
+list.hidden=!matches.length;q.setAttribute("aria-expanded",String(!!matches.length))}
+function choose(m){here={name:m[0]+" "+m[1],lat:m[3],lon:m[4]};q.value=m[0]+" "+m[2]+" "+m[1];matches=[];render();load(show)}
+q.addEventListener("input",function(){loadSubs(function(){matches=find(q.value);sel=-1;render()})});
+q.addEventListener("focus",function(){loadSubs(function(){})});
+q.addEventListener("blur",function(){setTimeout(function(){matches=[];render()},150)});
+q.addEventListener("keydown",function(ev){if(!matches.length)return;if(ev.key==="ArrowDown"){sel=(sel+1)%matches.length;render();ev.preventDefault()}
+else if(ev.key==="ArrowUp"){sel=(sel-1+matches.length)%matches.length;render();ev.preventDefault()}
+else if(ev.key==="Enter"&&sel>=0){choose(matches[sel]);ev.preventDefault()}else if(ev.key==="Escape"){matches=[];render()}});
 function dist(a,b,c,d){var R=6371,x=(c-a)*Math.PI/180,y=(d-b)*Math.PI/180,s=Math.sin(x/2)*Math.sin(x/2)+Math.cos(a*Math.PI/180)*Math.cos(c*Math.PI/180)*Math.sin(y/2)*Math.sin(y/2);return 2*R*Math.asin(Math.sqrt(s))}
 function fmt(d){var t=new Date(d+"T00:00:00");return t.toLocaleDateString("en-AU",{weekday:"short",day:"numeric",month:"short"})}
 function show(){if(!here||!data)return;var r=+km.value,n=+days.value,cut=new Date(Date.now()-n*864e5).toISOString().slice(0,10);
@@ -474,15 +482,14 @@ h+='<h3>Changes in the last '+(n==7?"week":n==30?"month":"two months")+"</h3>";
 h+=items.length?'<ul class="changes">'+items.map(function(i){return i.html}).join("")+"</ul>":'<p class="quiet">Nothing has changed on the map within '+r+' km. Try a wider circle, or a longer stretch.</p>';
 if(here.osm)h+='<p class="credit-osm">Suburb found with <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>.</p>';
 body.innerHTML=h;box.hidden=false;ask.hidden=true;try{localStorage.setItem("near",JSON.stringify(here))}catch(e){}}
-function pick(name){var key=name.trim().toLowerCase();if(!key)return;var p=data.places.filter(function(x){return x[0].toLowerCase()===key})[0]||
-data.places.filter(function(x){return x[0].toLowerCase().indexOf(key)===0})[0];
-if(p){here={name:p[0],lat:p[1],lon:p[2]};show();return}
+function pick(name){var key=name.trim().toLowerCase();if(!key)return;
+var m=subs?find(name)[0]:null;if(m){choose(m);return}
 note.hidden=false;note.textContent="Looking up "+name.trim()+"\u2026";
 fetch("https://nominatim.openstreetmap.org/search?countrycodes=au&format=jsonv2&limit=1&q="+encodeURIComponent(name.trim()),{headers:{"Accept":"application/json"}})
 .then(function(r){return r.json()}).then(function(rows){if(!rows.length)throw 0;var r=rows[0];
 here={name:name.trim().replace(/\b\w/g,function(c){return c.toUpperCase()}),lat:+r.lat,lon:+r.lon,osm:true};note.hidden=true;show()})
 .catch(function(){note.hidden=false;note.textContent="Could not find that suburb. Try the nearest town, or use your location."})}
-document.getElementById("near-form").addEventListener("submit",function(ev){ev.preventDefault();load(function(){pick(q.value)})});
+document.getElementById("near-form").addEventListener("submit",function(ev){ev.preventDefault();loadSubs(function(){load(function(){pick(q.value)})})});
 document.getElementById("near-geo").addEventListener("click",function(){if(!navigator.geolocation){note.hidden=false;note.textContent="Your browser does not share location. Type a suburb instead.";return}
 navigator.geolocation.getCurrentPosition(function(pos){load(function(){here={name:"",lat:pos.coords.latitude,lon:pos.coords.longitude};show()})},
 function(){note.hidden=false;note.textContent="Location was not shared. Type a suburb instead."},{timeout:8000})});
@@ -502,8 +509,8 @@ def home(weeks, counts, built_on, comps=()):
            f'<p class="lede">{e(SITE["tagline"])}'
            f'<small>New venues, machines landing and leaving, and which machines need a tech. '
            f'Updated every morning from <a href="https://pinballmap.com">Pinball Map</a>.</small></p>'
-           f'<p class="score"><b>{total}</b> change{"s" if total != 1 else ""} · {e(short_span)}</p>'
-           f'<p class="dmd" id="dmd" aria-hidden="true" hidden></p>'
+           f'<div class="dmd-panel"><p class="score"><b>{total}</b> change{"s" if total != 1 else ""} · {e(short_span)}</p>'
+           f'<p class="dmd" id="dmd" aria-hidden="true" hidden><span id="dmd-text"></span></p></div>'
            f"{signup()}")
     soon_until = (built_on + dt.timedelta(days=7)).isoformat()
     soon = ifpa.between(list(comps), built_on.isoformat(), soon_until, set(SITE["email_zones"]))
@@ -521,7 +528,8 @@ def home(weeks, counts, built_on, comps=()):
     if quiet:
         names = render.join(f'<a href="{u("/zone/" + z["zone"] + "/")}">{e(short(z["label"]))}</a>' for z in quiet)
         blocks += f'<p class="allquiet"><strong>Quiet on the map this week:</strong> {names}.</p>'
-    blocks += f'<script>var NEAR_URL={json.dumps(u("/near.json"))};</script>' + NEAR_SCRIPT
+    blocks += (f'<script>var NEAR_URL={json.dumps(u("/near.json"))},SUBURBS_URL={json.dumps(u("/suburbs.json"))};</script>'
+               + NEAR_SCRIPT)
     lines = []
     for c in soon[:6]:
         when = render.day(c["start"]).upper()
@@ -556,12 +564,15 @@ def attract_line(i, zone):
 
 ATTRACT_SCRIPT = r"""<script>(function(){
 if(!ATTRACT.length||matchMedia("(prefers-reduced-motion: reduce)").matches)return;
-var el=document.getElementById("dmd"),tick=null,i=0,paused=false;
-el.hidden=false;
-function type(text,done){el.textContent="";var j=0;clearInterval(tick);tick=setInterval(function(){
-if(paused)return;el.textContent=text.slice(0,++j)+(j<text.length?"\u2588":"");if(j>=text.length){clearInterval(tick);setTimeout(done,3200)}},26)}
+var box=document.getElementById("dmd"),el=document.getElementById("dmd-text"),tick=null,i=0,paused=false;
+box.hidden=false;
+function type(text,done){el.style.transition="none";el.style.transform="none";el.textContent="";var j=0;clearInterval(tick);
+tick=setInterval(function(){if(paused)return;el.textContent=text.slice(0,++j)+(j<text.length?"\u2588":"");
+if(j>=text.length){clearInterval(tick);var over=el.scrollWidth-box.clientWidth;
+if(over>0){setTimeout(function(){el.style.transition="transform "+(over/55)+"s linear";el.style.transform="translateX(-"+over+"px)";
+setTimeout(done,over/55*1000+1600)},700)}else setTimeout(done,3200)}},26)}
 function loop(){type(ATTRACT[i%ATTRACT.length],function(){i++;loop()})}
-el.addEventListener("mouseenter",function(){paused=true});el.addEventListener("mouseleave",function(){paused=false});
+box.addEventListener("mouseenter",function(){paused=true});box.addEventListener("mouseleave",function(){paused=false});
 document.addEventListener("visibilitychange",function(){paused=document.hidden});
 setTimeout(loop,900);
 })();</script>"""
@@ -845,6 +856,7 @@ def about_page():
 <h2>The states</h2>
 <p>Changes are grouped by state, and every line names its suburb or town. The email covers Victoria for now; the other states are on the website, and the email will follow as each one gets busy enough to fill a week.</p>
 <h2>Who</h2>
+<p class="muted">Suburbs and postcodes for the near-you search come from Matthew Proctor's public-domain <a href="https://www.matthewproctor.com/australian_postcodes">Australian Postcodes</a> list.</p>
 <p class="muted">Made by a Melbourne player. Contact: <a href="mailto:{e(SITE['contact'])}">{e(SITE['contact'])}</a>. The code is open on <a href="https://github.com/glenat-gif/pinball-diff">GitHub</a>. Data from Pinball Map under CC BY-SA 4.0.</p>
 </div>"""
     box = ('<p class="wordmark" style="font-size:clamp(1.6rem,6vw,2.6rem)">About</p>'
@@ -896,6 +908,7 @@ def build(on=None):
         shutil.rmtree(DIST)
     DIST.mkdir()
     shutil.copy(ROOT / "static" / "style.css", DIST / "style.css")
+    shutil.copy(store.DATA / "suburbs.json", DIST / "suburbs.json")
     comps = ifpa.enrich(ifpa.load(), ifpa.venues_from_events(events))
     write("/", home(weeks, counts, on, comps))
     write("/near.json", json.dumps(near_data(events, comps, on), ensure_ascii=False, separators=(",", ":")))
