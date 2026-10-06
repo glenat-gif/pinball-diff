@@ -1,0 +1,65 @@
+{
+ "items": [
+  {
+   "location_id": 27424,
+   "location_name": "Illawarra Pinball Club",
+   "city": "Wollongong",
+   "link": "https://pinballmap.com/map?by_location_id=27424",
+   "lat": -34.4345904,
+   "lon": 150.8957631,
+   "ids": {
+    "Harlem Globetrotters On Tour (Bally, 1978)": 834,
+    "Blackout (Williams, 1980)": 1109,
+    "Revenge from Mars (Bally, 1999)": 678,
+    "Johnny Mnemonic (Williams, 1995)": 646,
+    "Firepower II (Williams, 1983)": 1054,
+    "Black Knight (Williams, 1980)": 1055,
+    "Star Trek: The Next Generation (Williams, 1993)": 684
+   },
+   "kind": "rotation",
+   "rank": 2.7,
+   "date": "2026-10-01",
+   "machines": [
+    "Blackout (Williams, 1980)",
+    "Revenge from Mars (Bally, 1999)",
+    "Johnny Mnemonic (Williams, 1995)",
+    "Firepower II (Williams, 1983)"
+   ],
+   "out": [
+    "Harlem Globetrotters On Tour (Bally, 1978)",
+    "Black Knight (Williams, 1980)",
+    "Star Trek: The Next Generation (Williams, 1993)"
+   ],
+   "by": [
+    "jimmyp_oz"
+   ],
+   "flags": {}
+  },
+  {
+   "location_id": 22933,
+   "location_name": "The Annandale Hotel",
+   "city": "Annandale",
+   "link": "https://pinballmap.com/map?by_location_id=22933",
+   "lat": -33.8874195,
+   "lon": 151.1714996,
+   "ids": {
+    "Fish Tales (Williams, 1992)": 654,
+    "Guns N' Roses (LE) (Jersey Jack, 2020)": 3271
+   },
+   "kind": "rotation",
+   "rank": 2.9,
+   "date": "2026-10-03",
+   "machines": [
+    "Fish Tales (Williams, 1992)"
+   ],
+   "out": [
+    "Guns N' Roses (LE) (Jersey Jack, 2020)"
+   ],
+   "by": [
+    "Bruce007"
+   ],
+   "flags": {}
+  }
+ ],
+ "confirmations": 1
+}
