@@ -1,0 +1,26 @@
+{
+ "items": [
+  {
+   "location_id": 30582,
+   "location_name": "Morwell Hotel",
+   "city": "Morwell",
+   "link": "https://pinballmap.com/map?by_location_id=30582",
+   "lat": -38.2389112,
+   "lon": 146.409661,
+   "ids": {
+    "Ghostbusters (Pro) (Stern, 2016)": 2569
+   },
+   "kind": "new_venue",
+   "rank": 0,
+   "date": "2026-10-02",
+   "machines": [
+    "Ghostbusters (Pro) (Stern, 2016)"
+   ],
+   "by": [
+    "buttercup"
+   ],
+   "flags": {}
+  }
+ ],
+ "confirmations": 1
+}

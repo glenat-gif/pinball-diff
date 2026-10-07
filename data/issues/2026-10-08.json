@@ -1,0 +1,886 @@
+{
+ "date": "2026-10-08",
+ "since": "2026-10-01",
+ "until": "2026-10-07",
+ "zones": [
+  {
+   "zone": "vic",
+   "label": "Victoria",
+   "since": "2026-10-01",
+   "until": "2026-10-07",
+   "items": [
+    {
+     "location_id": 30582,
+     "location_name": "Morwell Hotel",
+     "city": "Morwell",
+     "link": "https://pinballmap.com/map?by_location_id=30582",
+     "lat": -38.2389112,
+     "lon": 146.409661,
+     "ids": {
+      "Ghostbusters (Pro) (Stern, 2016)": 2569
+     },
+     "kind": "new_venue",
+     "rank": 0,
+     "date": "2026-10-02",
+     "machines": [
+      "Ghostbusters (Pro) (Stern, 2016)"
+     ],
+     "by": [
+      "buttercup"
+     ],
+     "flags": {}
+    }
+   ],
+   "confirmations": 1
+  },
+  {
+   "zone": "nsw",
+   "label": "New South Wales and the ACT",
+   "since": "2026-10-01",
+   "until": "2026-10-07",
+   "items": [
+    {
+     "location_id": 30623,
+     "location_name": "AB Hotel",
+     "city": "Glebe",
+     "link": "https://pinballmap.com/map?by_location_id=30623",
+     "lat": -33.8796324,
+     "lon": 151.1870205,
+     "ids": {
+      "Aerosmith (LE) (Stern, 2017)": 2773
+     },
+     "kind": "new_venue",
+     "rank": -0.05,
+     "date": "2026-10-07",
+     "machines": [
+      "Aerosmith (LE) (Stern, 2017)"
+     ],
+     "by": [
+      "achuter"
+     ],
+     "flags": {
+      "Aerosmith (LE) (Stern, 2017)": [
+       "Limited Edition"
+      ]
+     }
+    },
+    {
+     "location_id": 27424,
+     "location_name": "Illawarra Pinball Club",
+     "city": "Wollongong",
+     "link": "https://pinballmap.com/map?by_location_id=27424",
+     "lat": -34.4345904,
+     "lon": 150.8957631,
+     "ids": {
+      "Harlem Globetrotters On Tour (Bally, 1978)": 834,
+      "Blackout (Williams, 1980)": 1109,
+      "Revenge from Mars (Bally, 1999)": 678,
+      "Johnny Mnemonic (Williams, 1995)": 646,
+      "Firepower II (Williams, 1983)": 1054,
+      "Black Knight (Williams, 1980)": 1055,
+      "Star Trek: The Next Generation (Williams, 1993)": 684
+     },
+     "kind": "rotation",
+     "rank": 2.7,
+     "date": "2026-10-01",
+     "machines": [
+      "Blackout (Williams, 1980)",
+      "Revenge from Mars (Bally, 1999)",
+      "Johnny Mnemonic (Williams, 1995)",
+      "Firepower II (Williams, 1983)"
+     ],
+     "out": [
+      "Harlem Globetrotters On Tour (Bally, 1978)",
+      "Black Knight (Williams, 1980)",
+      "Star Trek: The Next Generation (Williams, 1993)"
+     ],
+     "by": [
+      "jimmyp_oz"
+     ],
+     "flags": {}
+    },
+    {
+     "location_id": 22933,
+     "location_name": "The Annandale Hotel",
+     "city": "Annandale",
+     "link": "https://pinballmap.com/map?by_location_id=22933",
+     "lat": -33.8874195,
+     "lon": 151.1714996,
+     "ids": {
+      "Fish Tales (Williams, 1992)": 654,
+      "Guns N' Roses (LE) (Jersey Jack, 2020)": 3271
+     },
+     "kind": "rotation",
+     "rank": 2.9,
+     "date": "2026-10-03",
+     "machines": [
+      "Fish Tales (Williams, 1992)"
+     ],
+     "out": [
+      "Guns N' Roses (LE) (Jersey Jack, 2020)"
+     ],
+     "by": [
+      "Bruce007"
+     ],
+     "flags": {}
+    }
+   ],
+   "confirmations": 2
+  },
+  {
+   "zone": "qld",
+   "label": "Queensland",
+   "since": "2026-10-01",
+   "until": "2026-10-07",
+   "items": [
+    {
+     "location_id": 9885,
+     "location_name": "Netherworld",
+     "city": "Fortitude Valley",
+     "link": "https://pinballmap.com/map?by_location_id=9885",
+     "lat": -27.4558148,
+     "lon": 153.0321039,
+     "ids": {
+      "Creature from the Black Lagoon (Bally, 1992)": 647,
+      "Dr. Dude (Bally, 1990)": 738,
+      "Godzilla (Premium) (Stern, 2021)": 3416,
+      "The Party Zone (Bally, 1991)": 719,
+      "Elvira's House of Horrors (Premium) (Stern, 2019)": 3179,
+      "Portal (Standard) (Multimorphic, 2025)": 4526,
+      "Batman 66 (Premium) (Stern, 2016)": 2727,
+      "Funhouse (Williams, 1990)": 703
+     },
+     "kind": "rotation",
+     "rank": 2.6500000000000004,
+     "date": "2026-10-06",
+     "machines": [
+      "Elvira's House of Horrors (Premium) (Stern, 2019)",
+      "Portal (Standard) (Multimorphic, 2025)",
+      "Batman 66 (Premium) (Stern, 2016)",
+      "Funhouse (Williams, 1990)"
+     ],
+     "out": [
+      "Creature from the Black Lagoon (Bally, 1992)",
+      "Dr. Dude (Bally, 1990)",
+      "Godzilla (Premium) (Stern, 2021)",
+      "The Party Zone (Bally, 1991)"
+     ],
+     "by": [
+      "jimmynails"
+     ],
+     "flags": {
+      "Elvira's House of Horrors (Premium) (Stern, 2019)": [
+       "Premium"
+      ],
+      "Portal (Standard) (Multimorphic, 2025)": [
+       "New release"
+      ],
+      "Batman 66 (Premium) (Stern, 2016)": [
+       "Premium"
+      ]
+     }
+    }
+   ],
+   "confirmations": 0
+  },
+  {
+   "zone": "sa",
+   "label": "South Australia",
+   "since": "2026-10-01",
+   "until": "2026-10-07",
+   "items": [],
+   "confirmations": 0
+  },
+  {
+   "zone": "wa",
+   "label": "Western Australia",
+   "since": "2026-10-01",
+   "until": "2026-10-07",
+   "items": [
+    {
+     "location_id": 15908,
+     "location_name": "Barcadia",
+     "city": "Northbridge",
+     "link": "https://pinballmap.com/map?by_location_id=15908",
+     "lat": -31.948399,
+     "lon": 115.8567085,
+     "ids": {
+      "Transformers: More Than Meets the Eye (LE) (Stern, 2026)": 4627,
+      "Iron Maiden: Legacy of the Beast (Premium) (Stern, 2018)": 2924
+     },
+     "kind": "rotation",
+     "rank": 2.85,
+     "date": "2026-10-03",
+     "machines": [
+      "Transformers: More Than Meets the Eye (LE) (Stern, 2026)"
+     ],
+     "out": [
+      "Iron Maiden: Legacy of the Beast (Premium) (Stern, 2018)"
+     ],
+     "by": [
+      "damo"
+     ],
+     "flags": {
+      "Transformers: More Than Meets the Eye (LE) (Stern, 2026)": [
+       "Limited Edition",
+       "New release"
+      ]
+     }
+    },
+    {
+     "location_id": 25470,
+     "location_name": "Peters by The Sea",
+     "city": "Scarborough",
+     "link": "https://pinballmap.com/map?by_location_id=25470",
+     "lat": -31.8926846,
+     "lon": 115.7564437,
+     "ids": {
+      "Star Wars (Pro) (Stern, 2017)": 2843,
+      "Iron Maiden: Legacy of the Beast (Pro) (Stern, 2018)": 2923
+     },
+     "kind": "rotation",
+     "rank": 2.9,
+     "date": "2026-10-06",
+     "machines": [
+      "Iron Maiden: Legacy of the Beast (Pro) (Stern, 2018)"
+     ],
+     "out": [
+      "Star Wars (Pro) (Stern, 2017)"
+     ],
+     "by": [
+      "theroadtrain"
+     ],
+     "flags": {}
+    }
+   ],
+   "confirmations": 0
+  },
+  {
+   "zone": "tas",
+   "label": "Tasmania",
+   "since": "2026-10-01",
+   "until": "2026-10-07",
+   "items": [
+    {
+     "location_id": 15125,
+     "location_name": "Replay Bar",
+     "city": "Hobart",
+     "link": "https://pinballmap.com/map?by_location_id=15125",
+     "lat": -42.8817828,
+     "lon": 147.3287145,
+     "ids": {
+      "Deadpool (Pro) (Stern, 2018)": 3022
+     },
+     "kind": "condition",
+     "status": "amber",
+     "rank": 5,
+     "date": "2026-10-01",
+     "machine": "Deadpool (Pro) (Stern, 2018)",
+     "comment": "Machine broken",
+     "user": "lenndy21",
+     "by": [
+      "lenndy21"
+     ],
+     "flags": {}
+    }
+   ],
+   "confirmations": 0
+  },
+  {
+   "zone": "nt",
+   "label": "Northern Territory",
+   "since": "2026-10-01",
+   "until": "2026-10-07",
+   "items": [],
+   "confirmations": 0
+  }
+ ],
+ "comps": [
+  {
+   "id": "112135",
+   "name": "Flipper Fellowship Max Matchplay",
+   "event": "",
+   "type": "Tournament",
+   "start": "2026-10-08",
+   "end": "2026-10-08",
+   "venue": "Bayside Anglican Church Hall  Pitt-Owen Street",
+   "city": "Arncliffe",
+   "state": "NSW",
+   "lat": -33.9396,
+   "lon": 151.1435,
+   "zone": "nsw",
+   "website": "https://www.aussiearcade.com/topic/104635-flipper-fellowship",
+   "director": "GEE",
+   "format": "Max Matchplay Qualifying / Match Play",
+   "ranking": "MAIN",
+   "women": false,
+   "link": "https://www.ifpapinball.com/tournaments/view.php?t=112135",
+   "photo": ""
+  },
+  {
+   "id": "120051",
+   "name": "Illawarra Frenzy 081026",
+   "event": "",
+   "type": "Tournament",
+   "start": "2026-10-08",
+   "end": "2026-10-08",
+   "venue": "Illawarra Clubhouse  147 Kembla St  Wollongong NSW 2500",
+   "city": "Wollongong",
+   "state": "NSW",
+   "lat": -34.4346,
+   "lon": 150.8958,
+   "zone": "nsw",
+   "website": "https://www.facebook.com/profile.php?id=100083023758401",
+   "director": "Paul Soutter",
+   "format": "Flip Frenzy / Match Play",
+   "ranking": "MAIN",
+   "women": false,
+   "link": "https://www.ifpapinball.com/tournaments/view.php?t=120051",
+   "photo": ""
+  },
+  {
+   "id": "117711",
+   "name": "October Double Banger #1",
+   "event": "Classics",
+   "type": "Tournament",
+   "start": "2026-10-08",
+   "end": "2026-10-10",
+   "venue": "",
+   "city": "Burnside",
+   "state": "QLD",
+   "lat": -26.6353,
+   "lon": 152.9394,
+   "zone": "qld",
+   "website": "http://matchplay.live/098",
+   "director": "Stephen Bardell",
+   "format": "Card Format / Match Play",
+   "ranking": "MAIN",
+   "women": false,
+   "link": "https://www.ifpapinball.com/tournaments/view.php?t=117711",
+   "photo": ""
+  },
+  {
+   "id": "117714",
+   "name": "October Double Banger #2",
+   "event": "Modern Division",
+   "type": "Tournament",
+   "start": "2026-10-08",
+   "end": "2026-10-10",
+   "venue": "",
+   "city": "Burnside",
+   "state": "QLD",
+   "lat": -26.6353,
+   "lon": 152.9394,
+   "zone": "qld",
+   "website": "http://matchplay.live/098",
+   "director": "Stephen Bardell",
+   "format": "Card Format / Match Play",
+   "ranking": "MAIN",
+   "women": false,
+   "link": "https://www.ifpapinball.com/tournaments/view.php?t=117714",
+   "photo": ""
+  },
+  {
+   "id": "115788",
+   "name": "SCP @ Slipstream Brewing Social House",
+   "event": "",
+   "type": "Tournament",
+   "start": "2026-10-08",
+   "end": "2026-10-08",
+   "venue": "",
+   "city": "Birtinya",
+   "state": "QLD",
+   "lat": -26.739,
+   "lon": 153.1173,
+   "zone": "qld",
+   "website": "https://www.facebook.com/groups/1968161230227326",
+   "director": "Tristan Ford",
+   "format": "Flip Frenzy / Single Elimination",
+   "ranking": "MAIN",
+   "women": false,
+   "link": "https://www.ifpapinball.com/tournaments/view.php?t=115788",
+   "photo": ""
+  },
+  {
+   "id": "120142",
+   "name": "Saloon Barcade Second Thursday October Tournament",
+   "event": "",
+   "type": "Tournament",
+   "start": "2026-10-08",
+   "end": "2026-10-08",
+   "venue": "",
+   "city": "Edithvale",
+   "state": "VIC",
+   "lat": -38.039,
+   "lon": 145.1085,
+   "zone": "vic",
+   "website": "https://www.facebook.com/share/g/1HkLFrx2GU/",
+   "director": "Phillip De Bortoli",
+   "format": "Fair Strike Knockout",
+   "ranking": "MAIN",
+   "women": false,
+   "link": "https://www.ifpapinball.com/tournaments/view.php?t=120142",
+   "photo": ""
+  },
+  {
+   "id": "119001",
+   "name": "TAPP Cooldown",
+   "event": "",
+   "type": "Tournament",
+   "start": "2026-10-08",
+   "end": "2026-10-08",
+   "venue": "Replay Bar  Level 1",
+   "city": "Hobart",
+   "state": "TAS",
+   "lat": -42.8818,
+   "lon": 147.3287,
+   "zone": "tas",
+   "website": "https://www.tapp.net.au",
+   "director": "Joshua Hesketh",
+   "format": "Match Play",
+   "ranking": "MAIN",
+   "women": false,
+   "link": "https://www.ifpapinball.com/tournaments/view.php?t=119001",
+   "photo": ""
+  },
+  {
+   "id": "119908",
+   "name": "Drain Your Balls in a Group!",
+   "event": "",
+   "type": "Tournament",
+   "start": "2026-10-09",
+   "end": "2026-10-09",
+   "venue": "",
+   "city": "Adelaide",
+   "state": "SA",
+   "lat": -34.7495,
+   "lon": 138.6397,
+   "zone": "sa",
+   "website": "https://sapinballandarcade.com.au/",
+   "director": "Scottie Taylor",
+   "format": "Match Play",
+   "ranking": "MAIN",
+   "women": false,
+   "link": "https://www.ifpapinball.com/tournaments/view.php?t=119908",
+   "photo": ""
+  },
+  {
+   "id": "110791",
+   "name": "Moorooka Pinball Club",
+   "event": "",
+   "type": "Tournament",
+   "start": "2026-10-09",
+   "end": "2026-10-09",
+   "venue": "",
+   "city": "Moorooka",
+   "state": "QLD",
+   "lat": -27.5311,
+   "lon": 153.0278,
+   "zone": "qld",
+   "website": "https://www.facebook.com/groups/thepinballclubhousemoorooka",
+   "director": "Raynor Aaron",
+   "format": "Match Play",
+   "ranking": "MAIN",
+   "women": false,
+   "link": "https://www.ifpapinball.com/tournaments/view.php?t=110791",
+   "photo": ""
+  },
+  {
+   "id": "116557",
+   "name": "Atomic Arcade 2026 # 07",
+   "event": "",
+   "type": "Tournament",
+   "start": "2026-10-10",
+   "end": "2026-10-10",
+   "venue": "",
+   "city": "Perth",
+   "state": "WA",
+   "lat": -31.9452,
+   "lon": 115.8593,
+   "zone": "wa",
+   "website": "https://www.facebook.com/share/1EJyEZZ8vS/",
+   "director": "Brett Paton",
+   "format": "Match Play",
+   "ranking": "MAIN",
+   "women": false,
+   "link": "https://www.ifpapinball.com/tournaments/view.php?t=116557",
+   "photo": ""
+  },
+  {
+   "id": "108886",
+   "name": "Belles & Chimes Flip Frenzy",
+   "event": "Womens Division",
+   "type": "Tournament",
+   "start": "2026-10-10",
+   "end": "2026-10-10",
+   "venue": "",
+   "city": "Brisbane",
+   "state": "QLD",
+   "lat": -27.4558,
+   "lon": 153.0321,
+   "zone": "qld",
+   "website": "https://www.netherworldarcade.com/events/",
+   "director": "Emily Cosson",
+   "format": "Flip Frenzy / Double Elimination",
+   "ranking": "WOMEN",
+   "women": true,
+   "link": "https://www.ifpapinball.com/tournaments/view.php?t=108886",
+   "photo": ""
+  },
+  {
+   "id": "120130",
+   "name": "FLOP - Stern Army Tournament",
+   "event": "",
+   "type": "Tournament",
+   "start": "2026-10-10",
+   "end": "2026-10-10",
+   "venue": "",
+   "city": "Adelaide",
+   "state": "SA",
+   "lat": -35.2311,
+   "lon": 138.4759,
+   "zone": "sa",
+   "website": "https://www.facebook.com/floppinball",
+   "director": "Jan Saurbrey",
+   "format": "Matchplay Qualifying / Ladder Format",
+   "ranking": "MAIN",
+   "women": false,
+   "link": "https://www.ifpapinball.com/tournaments/view.php?t=120130",
+   "photo": ""
+  },
+  {
+   "id": "112853",
+   "name": "Pinawarra 41",
+   "event": "",
+   "type": "Tournament",
+   "start": "2026-10-10",
+   "end": "2026-10-10",
+   "venue": "Illawarra Clubhouse  147 Kembla St  Wollongong NSW 2500",
+   "city": "Wollongong",
+   "state": "NSW",
+   "lat": -34.4346,
+   "lon": 150.8958,
+   "zone": "nsw",
+   "website": "https://www.facebook.com/profile.php?id=100083023758401",
+   "director": "Paul Soutter",
+   "format": "Matchplay Qualifying / Match Play",
+   "ranking": "MAIN",
+   "women": false,
+   "link": "https://www.ifpapinball.com/tournaments/view.php?t=112853",
+   "photo": ""
+  },
+  {
+   "id": "120984",
+   "name": "Pinball Planet Monthly Matchplay (October)",
+   "event": "",
+   "type": "Tournament",
+   "start": "2026-10-11",
+   "end": "2026-10-11",
+   "venue": "",
+   "city": "Torquay",
+   "state": "QLD",
+   "lat": -25.2857,
+   "lon": 152.8702,
+   "zone": "qld",
+   "website": "https://www.facebook.com/pinballplanetoz/",
+   "director": "Andrew Priest",
+   "format": "Matchplay Qualifying / Single Elimination",
+   "ranking": "MAIN",
+   "women": false,
+   "link": "https://www.ifpapinball.com/tournaments/view.php?t=120984",
+   "photo": ""
+  },
+  {
+   "id": "116796",
+   "name": "ParkNPlunge",
+   "event": "",
+   "type": "Tournament",
+   "start": "2026-10-12",
+   "end": "2026-10-12",
+   "venue": "The Park",
+   "city": "Coomera",
+   "state": "QLD",
+   "lat": -27.8528,
+   "lon": 153.3145,
+   "zone": "qld",
+   "website": "https://www.facebook.com/p/ParkNplunge-100057368742650",
+   "director": "Shane Parkes",
+   "format": "Max Match Play",
+   "ranking": "MAIN",
+   "women": false,
+   "link": "https://www.ifpapinball.com/tournaments/view.php?t=116796",
+   "photo": ""
+  },
+  {
+   "id": "118566",
+   "name": "Pinball Planet Pizza Pinball Social (October)",
+   "event": "",
+   "type": "Tournament",
+   "start": "2026-10-12",
+   "end": "2026-10-12",
+   "venue": "",
+   "city": "Torquay",
+   "state": "QLD",
+   "lat": -25.2857,
+   "lon": 152.8702,
+   "zone": "qld",
+   "website": "https://www.facebook.com/pinballplanetoz",
+   "director": "Kieran Braden",
+   "format": "Matchplay Qualifying / Double Elimination",
+   "ranking": "MAIN",
+   "women": false,
+   "link": "https://www.ifpapinball.com/tournaments/view.php?t=118566",
+   "photo": ""
+  },
+  {
+   "id": "117496",
+   "name": "Amusement Worx Max Matchplay13th October",
+   "event": "",
+   "type": "Tournament",
+   "start": "2026-10-13",
+   "end": "2026-10-13",
+   "venue": "",
+   "city": "Croydon Park",
+   "state": "SA",
+   "lat": -34.8845,
+   "lon": 138.5631,
+   "zone": "sa",
+   "website": "https://www.aussiearcade.com/topic/107080-amusement-worx-max-matchplay-tournament-tuesday-13th-october-2026/",
+   "director": "simon wisbey",
+   "format": "Max Match Play",
+   "ranking": "MAIN",
+   "women": false,
+   "link": "https://www.ifpapinball.com/tournaments/view.php?t=117496",
+   "photo": ""
+  },
+  {
+   "id": "112945",
+   "name": "Pinball at the Basement",
+   "event": "",
+   "type": "Tournament",
+   "start": "2026-10-13",
+   "end": "2026-10-13",
+   "venue": "",
+   "city": "Canberra",
+   "state": "ACT",
+   "lat": -35.2403,
+   "lon": 149.0591,
+   "zone": "nsw",
+   "website": "https://www.facebook.com/events/1106539491185183",
+   "director": "James Todd",
+   "format": "Matchplay Qualifying / Match Play",
+   "ranking": "MAIN",
+   "women": false,
+   "link": "https://www.ifpapinball.com/tournaments/view.php?t=112945",
+   "photo": ""
+  },
+  {
+   "id": "117580",
+   "name": "Planet Pinball Party",
+   "event": "",
+   "type": "Tournament",
+   "start": "2026-10-13",
+   "end": "2026-10-13",
+   "venue": "",
+   "city": "Perth",
+   "state": "WA",
+   "lat": -31.9484,
+   "lon": 115.8568,
+   "zone": "wa",
+   "website": "https://www.facebook.com/WAPinball/",
+   "director": "Anthony Cirillo",
+   "format": "Matchplay Qualifying / Match Play",
+   "ranking": "MAIN",
+   "women": false,
+   "link": "https://www.ifpapinball.com/tournaments/view.php?t=117580",
+   "photo": ""
+  },
+  {
+   "id": "119704",
+   "name": "Tower Tuesdays",
+   "event": "",
+   "type": "Tournament",
+   "start": "2026-10-13",
+   "end": "2026-10-13",
+   "venue": "",
+   "city": "Newcastle",
+   "state": "NSW",
+   "lat": -32.9271,
+   "lon": 151.7766,
+   "zone": "nsw",
+   "website": "https://www.facebook.com/profile.php?id=61585774299291",
+   "director": "Pat Nichols",
+   "format": "Matchplay Qualifying / Match Play",
+   "ranking": "MAIN",
+   "women": false,
+   "link": "https://www.ifpapinball.com/tournaments/view.php?t=119704",
+   "photo": ""
+  },
+  {
+   "id": "108897",
+   "name": "Brewdog Pentridge Best Game",
+   "event": "",
+   "type": "Tournament",
+   "start": "2026-10-14",
+   "end": "2026-10-14",
+   "venue": "Brewdog  1 Champ Street Coburg VIC",
+   "city": "Coburg",
+   "state": "VIC",
+   "lat": -37.7368,
+   "lon": 144.9683,
+   "zone": "vic",
+   "website": "https://www.facebook.com/groups/MelbPinball",
+   "director": "Stuart Thornton",
+   "format": "Best Game / Match Play",
+   "ranking": "MAIN",
+   "women": false,
+   "link": "https://www.ifpapinball.com/tournaments/view.php?t=108897",
+   "photo": ""
+  },
+  {
+   "id": "113310",
+   "name": "Central Coast Pinball @ Six Strings",
+   "event": "",
+   "type": "Tournament",
+   "start": "2026-10-14",
+   "end": "2026-10-14",
+   "venue": "",
+   "city": "Erina",
+   "state": "NSW",
+   "lat": -33.4381,
+   "lon": 151.3724,
+   "zone": "nsw",
+   "website": "https://www.aussiearcade.com/topic/106633-central-coast-pinball-six-strings-brewing/",
+   "director": "Terry Hunt",
+   "format": "Matchplay Qualifying / Match Play",
+   "ranking": "MAIN",
+   "women": false,
+   "link": "https://www.ifpapinball.com/tournaments/view.php?t=113310",
+   "photo": ""
+  },
+  {
+   "id": "112242",
+   "name": "Flipper Fellowship Group Matchplay",
+   "event": "",
+   "type": "Tournament",
+   "start": "2026-10-15",
+   "end": "2026-10-15",
+   "venue": "Bayside Anglican Church Hall   Pitt-Owen Street",
+   "city": "Arncliffe",
+   "state": "NSW",
+   "lat": -33.9396,
+   "lon": 151.1435,
+   "zone": "nsw",
+   "website": "https://www.aussiearcade.com/topic/104635-flipper-fellowship",
+   "director": "GEE",
+   "format": "Matchplay Qualifying / Double Elimination",
+   "ranking": "MAIN",
+   "women": false,
+   "link": "https://www.ifpapinball.com/tournaments/view.php?t=112242",
+   "photo": ""
+  },
+  {
+   "id": "119905",
+   "name": "Drain Your Balls in a Group!",
+   "event": "",
+   "type": "Tournament",
+   "start": "2026-10-16",
+   "end": "2026-10-16",
+   "venue": "",
+   "city": "Adelaide",
+   "state": "SA",
+   "lat": -34.7495,
+   "lon": 138.6397,
+   "zone": "sa",
+   "website": "https://sapinballandarcade.com.au/",
+   "director": "Scottie Taylor",
+   "format": "Match Play",
+   "ranking": "MAIN",
+   "women": false,
+   "link": "https://www.ifpapinball.com/tournaments/view.php?t=119905",
+   "photo": ""
+  },
+  {
+   "id": "116584",
+   "name": "Atomic Arcade Women's No 9",
+   "event": "Womens Division",
+   "type": "Tournament",
+   "start": "2026-10-17",
+   "end": "2026-10-17",
+   "venue": "",
+   "city": "Perth",
+   "state": "WA",
+   "lat": -31.9452,
+   "lon": 115.8593,
+   "zone": "wa",
+   "website": "https://www.facebook.com/share/18g74yTXJB/",
+   "director": "Tammy Paton",
+   "format": "Matchplay Qualifying / Match Play",
+   "ranking": "WOMEN",
+   "women": true,
+   "link": "https://www.ifpapinball.com/tournaments/view.php?t=116584",
+   "photo": ""
+  },
+  {
+   "id": "98571",
+   "name": "Flippermania",
+   "event": "",
+   "type": "Tournament",
+   "start": "2026-10-17",
+   "end": "2026-10-17",
+   "venue": "Bayside Anglican Church Hall  Pitt-Owen Street",
+   "city": "Arncliffe",
+   "state": "NSW",
+   "lat": -33.9396,
+   "lon": 151.1435,
+   "zone": "nsw",
+   "website": "https://www.aussiearcade.com/topic/104635-flipper-fellowship/",
+   "director": "GEE",
+   "format": "Matchplay Qualifying / Match Play",
+   "ranking": "MAIN",
+   "women": false,
+   "link": "https://www.ifpapinball.com/tournaments/view.php?t=98571",
+   "photo": ""
+  },
+  {
+   "id": "120052",
+   "name": "Illawarra Frenzy",
+   "event": "",
+   "type": "Tournament",
+   "start": "2026-10-18",
+   "end": "2026-10-18",
+   "venue": "Illawarra Clubhouse  147 Kembla St  Wollongong NSW 2500",
+   "city": "Wollongong",
+   "state": "NSW",
+   "lat": -34.4346,
+   "lon": 150.8958,
+   "zone": "nsw",
+   "website": "https://www.facebook.com/profile.php?id=100083023758401",
+   "director": "Paul Soutter",
+   "format": "Flip Frenzy / Match Play",
+   "ranking": "MAIN",
+   "women": false,
+   "link": "https://www.ifpapinball.com/tournaments/view.php?t=120052",
+   "photo": ""
+  }
+ ],
+ "comps_until": "2026-10-18",
+ "episodes": [
+  {
+   "show": "pinball-oz-wide",
+   "title": "Episode 24: The Games We Hate to Love",
+   "image": "https://d3t3ozftmdmh3i.cloudfront.net/staging/podcast_uploaded_nologo/43052507/43052507-1739536407309-abb503a907dde.jpg",
+   "date": "2026-10-01",
+   "minutes": 127,
+   "summary": "In this months episode we are joined by George and Sonia from Melbourne Pinball Expo as well as the return of Behind the Backglass with Phillip De BortoliWe kick off with.... The usual thank you's Month in review Behind the Backglass with\u2026",
+   "link": "https://podcasters.spotify.com/pod/show/pinball-oz-wide/episodes/PINBALL-OZ-WIDE---EPISODE-24--THE-GAMES-WE-HATE-TO-LOVE-e3pm80e",
+   "id": "9d4dbea0-bbb3-4ae3-966f-e3917929cc4b",
+   "show_name": "Pinball Oz Wide"
+  }
+ ],
+ "email": {
+  "status": "draft",
+  "id": "em_70xtm17s5d8gzb5yxmh1twg92j",
+  "at": "2026-10-07T20:29:42+00:00"
+ }
+}
