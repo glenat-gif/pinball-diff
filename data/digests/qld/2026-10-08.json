@@ -1,0 +1,79 @@
+{
+ "items": [
+  {
+   "location_id": 9885,
+   "location_name": "Netherworld",
+   "city": "Fortitude Valley",
+   "link": "https://pinballmap.com/map?by_location_id=9885",
+   "lat": -27.4558148,
+   "lon": 153.0321039,
+   "ids": {
+    "Creature from the Black Lagoon (Bally, 1992)": 647,
+    "Dr. Dude (Bally, 1990)": 738,
+    "Godzilla (Premium) (Stern, 2021)": 3416,
+    "The Party Zone (Bally, 1991)": 719,
+    "Elvira's House of Horrors (Premium) (Stern, 2019)": 3179,
+    "Portal (Standard) (Multimorphic, 2025)": 4526,
+    "Batman 66 (Premium) (Stern, 2016)": 2727,
+    "Funhouse (Williams, 1990)": 703
+   },
+   "kind": "rotation",
+   "rank": 2.6500000000000004,
+   "date": "2026-10-06",
+   "machines": [
+    "Elvira's House of Horrors (Premium) (Stern, 2019)",
+    "Portal (Standard) (Multimorphic, 2025)",
+    "Batman 66 (Premium) (Stern, 2016)",
+    "Funhouse (Williams, 1990)"
+   ],
+   "out": [
+    "Creature from the Black Lagoon (Bally, 1992)",
+    "Dr. Dude (Bally, 1990)",
+    "Godzilla (Premium) (Stern, 2021)",
+    "The Party Zone (Bally, 1991)"
+   ],
+   "by": [
+    "jimmynails"
+   ],
+   "flags": {
+    "Elvira's House of Horrors (Premium) (Stern, 2019)": [
+     "Premium"
+    ],
+    "Portal (Standard) (Multimorphic, 2025)": [
+     "New release"
+    ],
+    "Batman 66 (Premium) (Stern, 2016)": [
+     "Premium"
+    ]
+   }
+  },
+  {
+   "location_id": 14333,
+   "location_name": "BrewDog DogTap Brisbane",
+   "city": "Brisbane City",
+   "link": "https://pinballmap.com/map?by_location_id=14333",
+   "lat": -27.4484924,
+   "lon": 153.0998284,
+   "ids": {
+    "The Shadow (Bally, 1994)": 681,
+    "Dr. Dude (Bally, 1990)": 738,
+    "Star Trek: The Next Generation (Williams, 1993)": 684
+   },
+   "kind": "rotation",
+   "rank": 2.8,
+   "date": "2026-10-08",
+   "machines": [
+    "Dr. Dude (Bally, 1990)",
+    "Star Trek: The Next Generation (Williams, 1993)"
+   ],
+   "out": [
+    "The Shadow (Bally, 1994)"
+   ],
+   "by": [
+    "jimmynails"
+   ],
+   "flags": {}
+  }
+ ],
+ "confirmations": 0
+}

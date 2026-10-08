@@ -1,0 +1,55 @@
+{
+ "items": [
+  {
+   "location_id": 30623,
+   "location_name": "AB Hotel",
+   "city": "Glebe",
+   "link": "https://pinballmap.com/map?by_location_id=30623",
+   "lat": -33.8796324,
+   "lon": 151.1870205,
+   "ids": {
+    "Aerosmith (LE) (Stern, 2017)": 2773
+   },
+   "kind": "new_venue",
+   "rank": -0.05,
+   "date": "2026-10-07",
+   "machines": [
+    "Aerosmith (LE) (Stern, 2017)"
+   ],
+   "by": [
+    "achuter"
+   ],
+   "flags": {
+    "Aerosmith (LE) (Stern, 2017)": [
+     "Limited Edition"
+    ]
+   }
+  },
+  {
+   "location_id": 22933,
+   "location_name": "The Annandale Hotel",
+   "city": "Annandale",
+   "link": "https://pinballmap.com/map?by_location_id=22933",
+   "lat": -33.8874195,
+   "lon": 151.1714996,
+   "ids": {
+    "Fish Tales (Williams, 1992)": 654,
+    "Guns N' Roses (LE) (Jersey Jack, 2020)": 3271
+   },
+   "kind": "rotation",
+   "rank": 2.9,
+   "date": "2026-10-03",
+   "machines": [
+    "Fish Tales (Williams, 1992)"
+   ],
+   "out": [
+    "Guns N' Roses (LE) (Jersey Jack, 2020)"
+   ],
+   "by": [
+    "Bruce007"
+   ],
+   "flags": {}
+  }
+ ],
+ "confirmations": 2
+}

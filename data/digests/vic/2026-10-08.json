@@ -1,0 +1,48 @@
+{
+ "items": [
+  {
+   "location_id": 30582,
+   "location_name": "Morwell Hotel",
+   "city": "Morwell",
+   "link": "https://pinballmap.com/map?by_location_id=30582",
+   "lat": -38.2389112,
+   "lon": 146.409661,
+   "ids": {
+    "Ghostbusters (Pro) (Stern, 2016)": 2569
+   },
+   "kind": "new_venue",
+   "rank": 0,
+   "date": "2026-10-02",
+   "machines": [
+    "Ghostbusters (Pro) (Stern, 2016)"
+   ],
+   "by": [
+    "buttercup"
+   ],
+   "flags": {}
+  },
+  {
+   "location_id": 23306,
+   "location_name": "Shooters Lounge",
+   "city": "Ballarat North",
+   "link": "https://pinballmap.com/map?by_location_id=23306",
+   "lat": -37.5431791,
+   "lon": 143.8576379,
+   "ids": {
+    "Pirates of the Caribbean (Stern, 2006)": 676
+   },
+   "kind": "condition",
+   "status": "amber",
+   "rank": 5,
+   "date": "2026-10-08",
+   "machine": "Pirates of the Caribbean (Stern, 2006)",
+   "comment": "Left flipper is dead. 8/10/2026\nAt least it was only one dollar wasted",
+   "user": "The_Bat",
+   "by": [
+    "The_Bat"
+   ],
+   "flags": {}
+  }
+ ],
+ "confirmations": 1
+}
