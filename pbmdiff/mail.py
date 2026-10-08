@@ -36,7 +36,7 @@ def subject(iss):
     lead = ""
     if items and items[0]["kind"] in LEAD:
         top = items[0]
-        lead = ": " + LEAD[top["kind"]].format(where=render.where(top) or top["location_name"], venue=top["location_name"])
+        lead = ": " + LEAD[top["kind"]].format(where=top.get("city") or top["location_name"], venue=top["location_name"])
     if n == 0:
         k = len(issue.email_comps(iss))
         return f"{k} comp{'s' if k != 1 else ''} coming up in Victoria"

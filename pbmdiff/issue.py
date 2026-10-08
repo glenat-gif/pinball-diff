@@ -48,7 +48,7 @@ def make(events, issue_date):
     zones = [week(events, z, until) for z in zone_order()]
     since = zones[0]["since"]
     ahead = (issue_date + dt.timedelta(days=COMPS_AHEAD)).isoformat()
-    comps = ifpa.between(ifpa.load(), issue_date.isoformat(), ahead)
+    comps = ifpa.between(ifpa.enrich(ifpa.load(), ifpa.venues_from_events(events)), issue_date.isoformat(), ahead)
     pods = podcasts.load()
     shows = {sh["key"]: sh["name"] for sh in pods.get("shows", [])}
     episodes = [dict(ep, show_name=shows.get(ep["show"], "")) for ep in podcasts.between(pods, since, until)]

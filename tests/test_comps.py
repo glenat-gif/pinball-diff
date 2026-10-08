@@ -117,6 +117,14 @@ class CompTests(unittest.TestCase):
         self.assertNotIn("NSW Open", md)
         self.assertIn("League", md)
 
+    def test_issue_comps_take_pinball_map_venue_names(self):
+        ifpa.fetch(key="k", today=TODAY, get=fake_get, sleep=lambda s: None)
+        ev = {"id": 1, "type": "machine_added", "date": "2026-10-01", "location_id": 55, "location_name": "The Pinball Parlour",
+              "city": "Campbellfield", "lat": -37.64, "lon": 144.95, "machine_id": 1, "machine": "X", "comment": "", "user": ""}
+        iss = issue.make({1: ev}, TODAY)
+        parlour = next(c for c in iss["comps"] if c["id"] == 1)
+        self.assertEqual((parlour["venue"], parlour["pbm_id"]), ("The Pinball Parlour", 55))
+
     def test_a_week_with_comps_but_no_changes_still_sends(self):
         ifpa.fetch(key="k", today=TODAY, get=fake_get, sleep=lambda s: None)
         iss = issue.make({}, TODAY)
