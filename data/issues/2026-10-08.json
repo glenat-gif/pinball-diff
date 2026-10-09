@@ -297,160 +297,13 @@
  ],
  "comps": [
   {
-   "id": "112135",
-   "name": "Flipper Fellowship Max Matchplay",
-   "event": "",
-   "type": "Tournament",
-   "start": "2026-10-08",
-   "end": "2026-10-08",
-   "venue": "Bayside Anglican Church Hall  Pitt-Owen Street",
-   "city": "Arncliffe",
-   "state": "NSW",
-   "lat": -33.9396,
-   "lon": 151.1435,
-   "zone": "nsw",
-   "website": "https://www.aussiearcade.com/topic/104635-flipper-fellowship",
-   "director": "GEE",
-   "format": "Max Matchplay Qualifying / Match Play",
-   "ranking": "MAIN",
-   "women": false,
-   "link": "https://www.ifpapinball.com/tournaments/view.php?t=112135",
-   "photo": ""
-  },
-  {
-   "id": "120051",
-   "name": "Illawarra Frenzy 081026",
-   "event": "",
-   "type": "Tournament",
-   "start": "2026-10-08",
-   "end": "2026-10-08",
-   "venue": "Illawarra Clubhouse  147 Kembla St  Wollongong NSW 2500",
-   "city": "Wollongong",
-   "state": "NSW",
-   "lat": -34.4346,
-   "lon": 150.8958,
-   "zone": "nsw",
-   "website": "https://www.facebook.com/profile.php?id=100083023758401",
-   "director": "Paul Soutter",
-   "format": "Flip Frenzy / Match Play",
-   "ranking": "MAIN",
-   "women": false,
-   "link": "https://www.ifpapinball.com/tournaments/view.php?t=120051",
-   "photo": ""
-  },
-  {
-   "id": "117711",
-   "name": "October Double Banger #1",
-   "event": "Classics",
-   "type": "Tournament",
-   "start": "2026-10-08",
-   "end": "2026-10-10",
-   "venue": "",
-   "city": "Burnside",
-   "state": "QLD",
-   "lat": -26.6353,
-   "lon": 152.9394,
-   "zone": "qld",
-   "website": "http://matchplay.live/098",
-   "director": "Stephen Bardell",
-   "format": "Card Format / Match Play",
-   "ranking": "MAIN",
-   "women": false,
-   "link": "https://www.ifpapinball.com/tournaments/view.php?t=117711",
-   "photo": ""
-  },
-  {
-   "id": "117714",
-   "name": "October Double Banger #2",
-   "event": "Modern Division",
-   "type": "Tournament",
-   "start": "2026-10-08",
-   "end": "2026-10-10",
-   "venue": "",
-   "city": "Burnside",
-   "state": "QLD",
-   "lat": -26.6353,
-   "lon": 152.9394,
-   "zone": "qld",
-   "website": "http://matchplay.live/098",
-   "director": "Stephen Bardell",
-   "format": "Card Format / Match Play",
-   "ranking": "MAIN",
-   "women": false,
-   "link": "https://www.ifpapinball.com/tournaments/view.php?t=117714",
-   "photo": ""
-  },
-  {
-   "id": "115788",
-   "name": "SCP @ Slipstream Brewing Social House",
-   "event": "",
-   "type": "Tournament",
-   "start": "2026-10-08",
-   "end": "2026-10-08",
-   "venue": "",
-   "city": "Birtinya",
-   "state": "QLD",
-   "lat": -26.739,
-   "lon": 153.1173,
-   "zone": "qld",
-   "website": "https://www.facebook.com/groups/1968161230227326",
-   "director": "Tristan Ford",
-   "format": "Flip Frenzy / Single Elimination",
-   "ranking": "MAIN",
-   "women": false,
-   "link": "https://www.ifpapinball.com/tournaments/view.php?t=115788",
-   "photo": ""
-  },
-  {
-   "id": "120142",
-   "name": "Saloon Barcade Second Thursday October Tournament",
-   "event": "",
-   "type": "Tournament",
-   "start": "2026-10-08",
-   "end": "2026-10-08",
-   "venue": "",
-   "city": "Edithvale",
-   "state": "VIC",
-   "lat": -38.039,
-   "lon": 145.1085,
-   "zone": "vic",
-   "website": "https://www.facebook.com/share/g/1HkLFrx2GU/",
-   "director": "Phillip De Bortoli",
-   "format": "Fair Strike Knockout",
-   "ranking": "MAIN",
-   "women": false,
-   "link": "https://www.ifpapinball.com/tournaments/view.php?t=120142",
-   "photo": ""
-  },
-  {
-   "id": "119001",
-   "name": "TAPP Cooldown",
-   "event": "",
-   "type": "Tournament",
-   "start": "2026-10-08",
-   "end": "2026-10-08",
-   "venue": "Replay Bar  Level 1",
-   "city": "Hobart",
-   "state": "TAS",
-   "lat": -42.8818,
-   "lon": 147.3287,
-   "zone": "tas",
-   "website": "https://www.tapp.net.au",
-   "director": "Joshua Hesketh",
-   "format": "Match Play",
-   "ranking": "MAIN",
-   "women": false,
-   "link": "https://www.ifpapinball.com/tournaments/view.php?t=119001",
-   "photo": ""
-  },
-  {
    "id": "119908",
    "name": "Drain Your Balls in a Group!",
    "event": "",
    "type": "Tournament",
    "start": "2026-10-09",
    "end": "2026-10-09",
-   "venue": "",
+   "venue": "South Australia Pinball and Arcade",
    "city": "Adelaide",
    "state": "SA",
    "lat": -34.7495,
@@ -462,7 +315,8 @@
    "ranking": "MAIN",
    "women": false,
    "link": "https://www.ifpapinball.com/tournaments/view.php?t=119908",
-   "photo": ""
+   "photo": "",
+   "pbm_id": 23168
   },
   {
    "id": "110791",
@@ -471,7 +325,7 @@
    "type": "Tournament",
    "start": "2026-10-09",
    "end": "2026-10-09",
-   "venue": "",
+   "venue": "The Clubhouse Moorooka",
    "city": "Moorooka",
    "state": "QLD",
    "lat": -27.5311,
@@ -483,7 +337,8 @@
    "ranking": "MAIN",
    "women": false,
    "link": "https://www.ifpapinball.com/tournaments/view.php?t=110791",
-   "photo": ""
+   "photo": "",
+   "pbm_id": 17389
   },
   {
    "id": "116557",
@@ -492,7 +347,7 @@
    "type": "Tournament",
    "start": "2026-10-10",
    "end": "2026-10-10",
-   "venue": "",
+   "venue": "Zero Latency Perth (Atomic Arcade)",
    "city": "Perth",
    "state": "WA",
    "lat": -31.9452,
@@ -504,7 +359,8 @@
    "ranking": "MAIN",
    "women": false,
    "link": "https://www.ifpapinball.com/tournaments/view.php?t=116557",
-   "photo": ""
+   "photo": "",
+   "pbm_id": 15060
   },
   {
    "id": "108886",
@@ -513,7 +369,7 @@
    "type": "Tournament",
    "start": "2026-10-10",
    "end": "2026-10-10",
-   "venue": "",
+   "venue": "Netherworld",
    "city": "Brisbane",
    "state": "QLD",
    "lat": -27.4558,
@@ -525,7 +381,8 @@
    "ranking": "WOMEN",
    "women": true,
    "link": "https://www.ifpapinball.com/tournaments/view.php?t=108886",
-   "photo": ""
+   "photo": "",
+   "pbm_id": 9885
   },
   {
    "id": "120130",
@@ -555,7 +412,7 @@
    "type": "Tournament",
    "start": "2026-10-10",
    "end": "2026-10-10",
-   "venue": "Illawarra Clubhouse  147 Kembla St  Wollongong NSW 2500",
+   "venue": "Illawarra Pinball Club",
    "city": "Wollongong",
    "state": "NSW",
    "lat": -34.4346,
@@ -567,7 +424,8 @@
    "ranking": "MAIN",
    "women": false,
    "link": "https://www.ifpapinball.com/tournaments/view.php?t=112853",
-   "photo": ""
+   "photo": "",
+   "pbm_id": 27424
   },
   {
    "id": "120984",
@@ -576,7 +434,7 @@
    "type": "Tournament",
    "start": "2026-10-11",
    "end": "2026-10-11",
-   "venue": "",
+   "venue": "Pinball Planet",
    "city": "Torquay",
    "state": "QLD",
    "lat": -25.2857,
@@ -588,7 +446,8 @@
    "ranking": "MAIN",
    "women": false,
    "link": "https://www.ifpapinball.com/tournaments/view.php?t=120984",
-   "photo": ""
+   "photo": "",
+   "pbm_id": 23158
   },
   {
    "id": "116796",
@@ -618,7 +477,7 @@
    "type": "Tournament",
    "start": "2026-10-12",
    "end": "2026-10-12",
-   "venue": "",
+   "venue": "Pinball Planet",
    "city": "Torquay",
    "state": "QLD",
    "lat": -25.2857,
@@ -630,7 +489,8 @@
    "ranking": "MAIN",
    "women": false,
    "link": "https://www.ifpapinball.com/tournaments/view.php?t=118566",
-   "photo": ""
+   "photo": "",
+   "pbm_id": 23158
   },
   {
    "id": "117496",
@@ -639,7 +499,7 @@
    "type": "Tournament",
    "start": "2026-10-13",
    "end": "2026-10-13",
-   "venue": "",
+   "venue": "Amusement Worx",
    "city": "Croydon Park",
    "state": "SA",
    "lat": -34.8845,
@@ -651,7 +511,8 @@
    "ranking": "MAIN",
    "women": false,
    "link": "https://www.ifpapinball.com/tournaments/view.php?t=117496",
-   "photo": ""
+   "photo": "",
+   "pbm_id": 12171
   },
   {
    "id": "112945",
@@ -660,7 +521,7 @@
    "type": "Tournament",
    "start": "2026-10-13",
    "end": "2026-10-13",
-   "venue": "",
+   "venue": "The Baso Canberra",
    "city": "Canberra",
    "state": "ACT",
    "lat": -35.2403,
@@ -672,7 +533,8 @@
    "ranking": "MAIN",
    "women": false,
    "link": "https://www.ifpapinball.com/tournaments/view.php?t=112945",
-   "photo": ""
+   "photo": "",
+   "pbm_id": 12192
   },
   {
    "id": "117580",
@@ -681,7 +543,7 @@
    "type": "Tournament",
    "start": "2026-10-13",
    "end": "2026-10-13",
-   "venue": "",
+   "venue": "Barcadia",
    "city": "Perth",
    "state": "WA",
    "lat": -31.9484,
@@ -693,7 +555,8 @@
    "ranking": "MAIN",
    "women": false,
    "link": "https://www.ifpapinball.com/tournaments/view.php?t=117580",
-   "photo": ""
+   "photo": "",
+   "pbm_id": 15908
   },
   {
    "id": "119704",
@@ -702,7 +565,7 @@
    "type": "Tournament",
    "start": "2026-10-13",
    "end": "2026-10-13",
-   "venue": "",
+   "venue": "Five Star Tower Cinemas - Newcastle",
    "city": "Newcastle",
    "state": "NSW",
    "lat": -32.9271,
@@ -714,7 +577,8 @@
    "ranking": "MAIN",
    "women": false,
    "link": "https://www.ifpapinball.com/tournaments/view.php?t=119704",
-   "photo": ""
+   "photo": "",
+   "pbm_id": 28014
   },
   {
    "id": "108897",
@@ -723,7 +587,7 @@
    "type": "Tournament",
    "start": "2026-10-14",
    "end": "2026-10-14",
-   "venue": "Brewdog  1 Champ Street Coburg VIC",
+   "venue": "BrewDog Pentridge",
    "city": "Coburg",
    "state": "VIC",
    "lat": -37.7368,
@@ -735,7 +599,8 @@
    "ranking": "MAIN",
    "women": false,
    "link": "https://www.ifpapinball.com/tournaments/view.php?t=108897",
-   "photo": ""
+   "photo": "",
+   "pbm_id": 19635
   },
   {
    "id": "113310",
@@ -744,7 +609,7 @@
    "type": "Tournament",
    "start": "2026-10-14",
    "end": "2026-10-14",
-   "venue": "",
+   "venue": "Six String Brewing Company",
    "city": "Erina",
    "state": "NSW",
    "lat": -33.4381,
@@ -756,7 +621,8 @@
    "ranking": "MAIN",
    "women": false,
    "link": "https://www.ifpapinball.com/tournaments/view.php?t=113310",
-   "photo": ""
+   "photo": "",
+   "pbm_id": 28530
   },
   {
    "id": "112242",
@@ -765,7 +631,7 @@
    "type": "Tournament",
    "start": "2026-10-15",
    "end": "2026-10-15",
-   "venue": "Bayside Anglican Church Hall   Pitt-Owen Street",
+   "venue": "Flipper Fellowship",
    "city": "Arncliffe",
    "state": "NSW",
    "lat": -33.9396,
@@ -777,7 +643,8 @@
    "ranking": "MAIN",
    "women": false,
    "link": "https://www.ifpapinball.com/tournaments/view.php?t=112242",
-   "photo": ""
+   "photo": "",
+   "pbm_id": 28054
   },
   {
    "id": "119905",
@@ -786,7 +653,7 @@
    "type": "Tournament",
    "start": "2026-10-16",
    "end": "2026-10-16",
-   "venue": "",
+   "venue": "South Australia Pinball and Arcade",
    "city": "Adelaide",
    "state": "SA",
    "lat": -34.7495,
@@ -798,7 +665,8 @@
    "ranking": "MAIN",
    "women": false,
    "link": "https://www.ifpapinball.com/tournaments/view.php?t=119905",
-   "photo": ""
+   "photo": "",
+   "pbm_id": 23168
   },
   {
    "id": "116584",
@@ -807,7 +675,7 @@
    "type": "Tournament",
    "start": "2026-10-17",
    "end": "2026-10-17",
-   "venue": "",
+   "venue": "Zero Latency Perth (Atomic Arcade)",
    "city": "Perth",
    "state": "WA",
    "lat": -31.9452,
@@ -819,7 +687,8 @@
    "ranking": "WOMEN",
    "women": true,
    "link": "https://www.ifpapinball.com/tournaments/view.php?t=116584",
-   "photo": ""
+   "photo": "",
+   "pbm_id": 15060
   },
   {
    "id": "98571",
@@ -828,7 +697,7 @@
    "type": "Tournament",
    "start": "2026-10-17",
    "end": "2026-10-17",
-   "venue": "Bayside Anglican Church Hall  Pitt-Owen Street",
+   "venue": "Flipper Fellowship",
    "city": "Arncliffe",
    "state": "NSW",
    "lat": -33.9396,
@@ -840,7 +709,8 @@
    "ranking": "MAIN",
    "women": false,
    "link": "https://www.ifpapinball.com/tournaments/view.php?t=98571",
-   "photo": ""
+   "photo": "",
+   "pbm_id": 28054
   },
   {
    "id": "120052",
@@ -849,7 +719,7 @@
    "type": "Tournament",
    "start": "2026-10-18",
    "end": "2026-10-18",
-   "venue": "Illawarra Clubhouse  147 Kembla St  Wollongong NSW 2500",
+   "venue": "Illawarra Pinball Club",
    "city": "Wollongong",
    "state": "NSW",
    "lat": -34.4346,
@@ -861,7 +731,8 @@
    "ranking": "MAIN",
    "women": false,
    "link": "https://www.ifpapinball.com/tournaments/view.php?t=120052",
-   "photo": ""
+   "photo": "",
+   "pbm_id": 27424
   }
  ],
  "comps_until": "2026-10-18",
@@ -881,6 +752,7 @@
  "email": {
   "status": "draft",
   "id": "em_70xtm17s5d8gzb5yxmh1twg92j",
-  "at": "2026-10-07T20:29:42+00:00"
+  "at": "2026-10-07T20:29:42+00:00",
+  "redrafted_at": "2026-10-09T01:30:18+00:00"
  }
 }
