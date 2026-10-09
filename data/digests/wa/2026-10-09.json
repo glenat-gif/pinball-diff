@@ -1,0 +1,89 @@
+{
+ "items": [
+  {
+   "location_id": 15908,
+   "location_name": "Barcadia",
+   "city": "Northbridge",
+   "link": "https://pinballmap.com/map?by_location_id=15908",
+   "lat": -31.948399,
+   "lon": 115.8567085,
+   "ids": {
+    "Transformers: More Than Meets the Eye (LE) (Stern, 2026)": 4627,
+    "Iron Maiden: Legacy of the Beast (Premium) (Stern, 2018)": 2924
+   },
+   "kind": "rotation",
+   "rank": 2.85,
+   "date": "2026-10-03",
+   "machines": [
+    "Transformers: More Than Meets the Eye (LE) (Stern, 2026)"
+   ],
+   "out": [
+    "Iron Maiden: Legacy of the Beast (Premium) (Stern, 2018)"
+   ],
+   "by": [
+    "damo"
+   ],
+   "flags": {
+    "Transformers: More Than Meets the Eye (LE) (Stern, 2026)": [
+     "Limited Edition",
+     "New release"
+    ]
+   }
+  },
+  {
+   "location_id": 22439,
+   "location_name": "BrewDog Perth",
+   "city": "West Perth",
+   "link": "https://pinballmap.com/map?by_location_id=22439",
+   "lat": -31.9483284,
+   "lon": 115.8473473,
+   "ids": {
+    "Deadpool (Premium) (Stern, 2018)": 3023,
+    "Guardians of the Galaxy (LE) (Stern, 2017)": 2877
+   },
+   "kind": "rotation",
+   "rank": 2.85,
+   "date": "2026-10-09",
+   "machines": [
+    "Guardians of the Galaxy (LE) (Stern, 2017)"
+   ],
+   "out": [
+    "Deadpool (Premium) (Stern, 2018)"
+   ],
+   "by": [
+    "theroadtrain"
+   ],
+   "flags": {
+    "Guardians of the Galaxy (LE) (Stern, 2017)": [
+     "Limited Edition"
+    ]
+   }
+  },
+  {
+   "location_id": 25470,
+   "location_name": "Peters by The Sea",
+   "city": "Scarborough",
+   "link": "https://pinballmap.com/map?by_location_id=25470",
+   "lat": -31.8926846,
+   "lon": 115.7564437,
+   "ids": {
+    "Star Wars (Pro) (Stern, 2017)": 2843,
+    "Iron Maiden: Legacy of the Beast (Pro) (Stern, 2018)": 2923
+   },
+   "kind": "rotation",
+   "rank": 2.9,
+   "date": "2026-10-06",
+   "machines": [
+    "Iron Maiden: Legacy of the Beast (Pro) (Stern, 2018)"
+   ],
+   "out": [
+    "Star Wars (Pro) (Stern, 2017)"
+   ],
+   "by": [
+    "theroadtrain"
+   ],
+   "flags": {}
+  }
+ ],
+ "confirmations": 0
+}

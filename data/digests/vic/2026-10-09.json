@@ -1,0 +1,27 @@
+{
+ "items": [
+  {
+   "location_id": 23306,
+   "location_name": "Shooters Lounge",
+   "city": "Ballarat North",
+   "link": "https://pinballmap.com/map?by_location_id=23306",
+   "lat": -37.5431791,
+   "lon": 143.8576379,
+   "ids": {
+    "Pirates of the Caribbean (Stern, 2006)": 676
+   },
+   "kind": "condition",
+   "status": "amber",
+   "rank": 5,
+   "date": "2026-10-08",
+   "machine": "Pirates of the Caribbean (Stern, 2006)",
+   "comment": "Left flipper is dead. 8/10/2026\nAt least it was only one dollar wasted",
+   "user": "The_Bat",
+   "by": [
+    "The_Bat"
+   ],
+   "flags": {}
+  }
+ ],
+ "confirmations": 1
+}

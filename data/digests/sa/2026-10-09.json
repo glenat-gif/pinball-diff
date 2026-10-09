@@ -1,0 +1,30 @@
+{
+ "items": [
+  {
+   "location_id": 28121,
+   "location_name": "Black Bull Hotel",
+   "city": "Adelaide",
+   "link": "https://pinballmap.com/map?by_location_id=28121",
+   "lat": -34.922731,
+   "lon": 138.5972391,
+   "ids": {
+    "Family Guy (Stern, 2006)": 664,
+    "Indiana Jones (Stern, 2008)": 653
+   },
+   "kind": "rotation",
+   "rank": 2.9,
+   "date": "2026-10-09",
+   "machines": [
+    "Family Guy (Stern, 2006)"
+   ],
+   "out": [
+    "Indiana Jones (Stern, 2008)"
+   ],
+   "by": [
+    "westyz86"
+   ],
+   "flags": {}
+  }
+ ],
+ "confirmations": 0
+}
