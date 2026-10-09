@@ -109,6 +109,19 @@ def cmd_zones(args):
 
 def cmd_issue(args):
     events = store.load()
+    if args.redraft:
+        latest = issue.latest_issue_date().isoformat()
+        if not issue.path(latest).exists():
+            print(f"nothing to redraft: no issue for {latest}")
+            return
+        old = issue.load(latest)
+        fresh = issue.make(events, dt.date.fromisoformat(latest))
+        fresh["email"] = old.get("email")              # keep the Buttondown id; refresh the content
+        issue.save(fresh)
+        print(f"issue {latest}: {mail.subject(fresh)}")
+        print(f"copy at {mail.keep_copy(fresh)}")
+        print(mail.redraft(fresh))
+        return
     if args.date:
         d = dt.date.fromisoformat(args.date)
         iss = issue.load(d.isoformat()) if issue.path(d.isoformat()).exists() else issue.make(events, d)
@@ -144,7 +157,9 @@ def main(argv=None):
     s.add_argument("--days", type=int, default=7); s.set_defaults(fn=cmd_sync)
     sub.add_parser("zones").set_defaults(fn=cmd_zones)
     sub.add_parser("comps").set_defaults(fn=cmd_comps)
-    i = sub.add_parser("issue"); i.add_argument("--date"); i.set_defaults(fn=cmd_issue)
+    i = sub.add_parser("issue"); i.add_argument("--date")
+    i.add_argument("--redraft", action="store_true", help="rebuild this week's issue and rewrite its Buttondown draft")
+    i.set_defaults(fn=cmd_issue)
     sub.add_parser("build").set_defaults(fn=cmd_build)
     args = p.parse_args(argv)
     args.fn(args)

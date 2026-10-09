@@ -195,7 +195,33 @@ class IssueTests(Built):
         self.assertIn("CC BY-SA 4.0", md)
         self.assertTrue(md.startswith("<!-- buttondown-editor-mode: plaintext -->"))
         self.assertNotIn("\n---\n", md.split("\n", 1)[0])   # Buttondown rejects a body that opens with ---
-        self.assertEqual(mail.subject(iss), "4 changes in Victoria: a swap at Railway Hotel South Melbourne")
+        self.assertEqual(mail.subject(iss), "Cactus Canyon (Remake Special) lands at Railway Hotel South Melbourne")
+        page = mail.html(iss)
+        self.assertTrue(page.startswith("<!-- buttondown-editor-mode: fancy -->"))
+        self.assertIn("PINBALL THIS WEEK", page)
+        self.assertIn("Railway Hotel South Melbourne", page)
+        self.assertIn("Needs a tech", page)
+        self.assertNotIn("<script", page)
+
+    def test_highlights_from_other_states_fill_a_quiet_week(self):
+        iss = issue.ensure_latest(self.events, on=ON)
+        nsw = {"zone": "nsw", "label": "New South Wales and the ACT", "since": iss["since"], "until": iss["until"],
+               "confirmations": 0, "items": [
+                   {"kind": "added", "rank": 2.9, "date": "2026-09-28", "location_id": 7, "location_name": "Barcadia", "city": "Northbridge",
+                    "link": "https://pinballmap.com/map?by_location_id=7", "machines": ["Transformers (LE) (Stern, 2026)"],
+                    "flags": {"Transformers (LE) (Stern, 2026)": ["Limited Edition", "New release"]}, "by": ["bt"]},
+                   {"kind": "added", "rank": 2.9, "date": "2026-09-28", "location_id": 8, "location_name": "Some Pub", "city": "Glebe",
+                    "link": "https://pinballmap.com/map?by_location_id=8", "machines": ["Fish Tales (Williams, 1992)"], "flags": {}, "by": []}]}
+        iss["zones"] = [z for z in iss["zones"] if z["zone"] == "vic"] + [nsw]
+        hi = issue.highlights(iss)
+        self.assertEqual([h["location_name"] for h in hi], ["Barcadia"])      # plain arrivals are not highlights
+        self.assertIn("## Around Australia", mail.markdown(iss))
+        self.assertIn("Transformers (LE)", mail.html(iss))
+        self.assertEqual(mail.subject(iss), "Cactus Canyon (Remake Special) lands at Railway Hotel South Melbourne, and Transformers (LE) lands in Northbridge")
+        iss["zones"][0]["items"] = []
+        self.assertEqual(mail.subject(iss), "Transformers (LE) lands in Northbridge")
+        iss["zones"] = iss["zones"][:1]
+        self.assertEqual(mail.subject(iss), "This week in Australian pinball")
 
 
 class DeliverTests(Built):
@@ -215,6 +241,19 @@ class DeliverTests(Built):
         again = issue.load("2026-10-01")
         self.assertIn("already handled", mail.deliver(again, key="k", opener=self.fake(seen)))
         self.assertEqual(len(seen), 1)
+
+    def test_redraft_rewrites_only_a_draft(self):
+        iss = issue.ensure_latest(self.events, on=ON)
+        seen = []
+        def opener(req, timeout):
+            seen.append((req.get_method(), req.full_url, json.loads(req.data)))
+            return io.BytesIO(b'{"id": "em_1"}')
+        self.assertIn("not redrafted", mail.redraft(iss, key="k", opener=opener))     # nothing in Buttondown yet
+        mail.deliver(iss, key="k", opener=opener)
+        self.assertIn("redrafted", mail.redraft(issue.load("2026-10-01"), key="k", opener=opener))
+        self.assertEqual(seen[-1][0], "PATCH")
+        self.assertTrue(seen[-1][1].endswith("/emails/em_1"))
+        self.assertIn("PINBALL THIS WEEK", seen[-1][2]["body"])
 
     def test_send_mode_sends(self):
         iss = issue.ensure_latest(self.events, on=ON)

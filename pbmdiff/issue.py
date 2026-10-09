@@ -91,6 +91,30 @@ def ensure_latest(events, on=None):
     return issue
 
 
+HIGHLIGHT_WEIGHT = {"New release": 3, "Limited Edition": 3, "Collector's Edition": 3, "Premium": 1}
+
+
+def highlights(issue, limit=6):
+    """The week's notable arrivals outside the email zones: new venues, rarer
+    editions and new releases, best first, so a quiet local week still has
+    something worth the open."""
+    out = []
+    for z in issue["zones"]:
+        if z["zone"] in SITE["email_zones"]:
+            continue
+        for item in z["items"]:
+            arriving = {n: f for n, f in (item.get("flags") or {}).items()}
+            score = sum(HIGHLIGHT_WEIGHT.get(f, 0) for fl in arriving.values() for f in fl)
+            if item["kind"] == "new_venue":
+                score += 2
+            if score == 0:
+                continue
+            best = max(arriving, key=lambda n: sum(HIGHLIGHT_WEIGHT.get(f, 0) for f in arriving[n])) if arriving else None
+            out.append({**item, "zone": z["zone"], "state": z["label"], "score": score, "star": best})
+    out.sort(key=lambda h: (-h["score"], h["location_name"]))
+    return out[:limit]
+
+
 def email_comps(issue):
     return [c for c in issue.get("comps", []) if c["zone"] in SITE["email_zones"]]
 

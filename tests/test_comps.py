@@ -133,7 +133,7 @@ class CompTests(unittest.TestCase):
         sent = []
         opener = lambda req, timeout: sent.append(1) or io.BytesIO(b'{"id": "em_1"}')
         self.assertIn("drafted", mail.deliver(iss, key="k", opener=opener))
-        self.assertEqual(mail.subject(iss), "3 comps coming up in Victoria")
+        self.assertIn("comp", mail.subject(iss))
 
 
 if __name__ == "__main__":

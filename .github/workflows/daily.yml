@@ -10,6 +10,11 @@ on:
     - cron: "17 20 * * *"      # about 6 or 7 am in Melbourne; GitHub often runs it later
     - cron: "17 23 * * *"      # a second go mid-morning, in case GitHub cancelled the first in its queue
   workflow_dispatch:
+    inputs:
+      redraft:
+        description: "Rebuild this week's issue and rewrite its Buttondown draft"
+        type: boolean
+        default: false
 
 permissions:
   contents: write
@@ -36,7 +41,7 @@ jobs:
           PINBALLMAP_API_TOKEN: ${{ secrets.PINBALLMAP_API_TOKEN }}
           IFPA_API_KEY: ${{ secrets.IFPA_API_KEY }}
       - name: Make and deliver this week's email if due
-        run: python -m pbmdiff.run issue
+        run: python -m pbmdiff.run issue ${{ inputs.redraft && '--redraft' || '' }}
         env:
           BUTTONDOWN_API_KEY: ${{ secrets.BUTTONDOWN_API_KEY }}
       - name: Keep the events, digests and issues
