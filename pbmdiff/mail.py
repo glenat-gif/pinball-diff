@@ -130,6 +130,7 @@ def markdown(iss):
     hi = issue.highlights(iss)
     if hi:
         out += ["## Around Australia", ""] + [line(h) + f" _{areas.SHORT[h['zone']]}_" for h in hi] + [""]
+    out += [f"**[Every change in every state, this week]({site_url('/')})**, or type your suburb on the site for what changed near you.", ""]
     eps = iss.get("episodes") or []
     if eps:
         out += ["## On the podcasts", ""] + [f"- **{ep['show_name']}:** [{ep['title']}]({ep['link']})" for ep in eps] + [""]
@@ -225,6 +226,12 @@ def html(iss):
     hi = issue.highlights(iss)
     if hi:
         parts.append(_h_section("Around Australia", [_h_item(h, areas.SHORT[h["zone"]]) for h in hi]))
+    parts.append(
+        f'<table role="presentation" cellpadding="0" cellspacing="0" style="margin:22px auto 0"><tr><td style="background:#ff7a1a;border-radius:6px">'
+        f'<a href="{_e(site_url("/"))}" style="display:inline-block;padding:11px 20px;font:700 15px Arial,sans-serif;color:#1b0c00;text-decoration:none">'
+        f'Every change in every state, this week &rarr;</a></td></tr></table>'
+        f'<p style="font:13px/1.5 Arial,sans-serif;color:#655e6e;text-align:center;margin:8px 0 0">'
+        f'Or type your suburb on the site for what changed near you.</p>')
     eps = iss.get("episodes") or []
     if eps:
         rows = [_h_row("Episode", "#b84c00", f'<span style="color:#655e6e">{_e(ep["show_name"])}</span><br>'

@@ -201,6 +201,7 @@ class IssueTests(Built):
         self.assertIn("PINBALL THIS WEEK", page)
         self.assertIn("Railway Hotel South Melbourne", page)
         self.assertIn("Needs a tech", page)
+        self.assertIn("Every change in every state", page)
         self.assertNotIn("<script", page)
 
     def test_highlights_from_other_states_fill_a_quiet_week(self):
