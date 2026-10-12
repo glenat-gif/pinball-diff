@@ -649,7 +649,7 @@ def issue_page(iss):
     body = ""
     for z, items, ic in active:
         body += zone_block(z, when=False) if items else ""
-        body += comps_block(ic, iss["date"], iss.get("comps_until", iss["date"]), f"Comps coming up in {areas.SHORT[z['zone']]}",
+        body += comps_block(ic, iss["date"], iss.get("comps_until", iss["date"]), f"Comps this week in {areas.SHORT[z['zone']]}",
                             "", link=False) if ic else ""
     if quiet:
         body += (f'<p class="allquiet"><strong>Quiet on the map:</strong> '

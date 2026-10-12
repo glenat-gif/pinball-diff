@@ -139,7 +139,7 @@ def markdown(iss):
         if items:
             out += [line(i) for i in items] + [""]
         if comps:
-            out += [f"**Comps coming up in {areas.SHORT[z['zone']]}**", ""] + [comp_line(c) for c in comps] + [""]
+            out += [f"**Comps this week in {areas.SHORT[z['zone']]}**", ""] + [comp_line(c) for c in comps] + [""]
     hi = issue.highlights(iss)
     if hi:
         out += ["## Around Australia", ""] + [line(h) + f" _{areas.SHORT[h['zone']]}_" for h in hi] + [""]
@@ -241,7 +241,7 @@ def html(iss):
     for z, items, comps in active:
         rows = [_h_item(i) for i in items]
         if comps:
-            rows.append(_h_sub(f"Comps coming up in {areas.SHORT[z['zone']]}"))
+            rows.append(_h_sub(f"Comps this week in {areas.SHORT[z['zone']]}"))
             rows += [_h_comp(c) for c in comps]
         parts.append(_h_section(z["label"], rows))
     if quiet:

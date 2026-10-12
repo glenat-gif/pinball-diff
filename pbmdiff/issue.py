@@ -15,7 +15,7 @@ from . import areas, digest, ifpa, podcasts, store
 from .config import SITE
 
 ISSUES = store.DATA / "issues"
-COMPS_AHEAD = 10          # Thursday to the Sunday after next
+COMPS_AHEAD = 7           # Thursday to the following Wednesday: one weekend, like the site
 
 
 def today():
