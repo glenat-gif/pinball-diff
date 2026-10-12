@@ -151,6 +151,11 @@ class MachineTests(Built):
         self.assertIn("FORTRESS MELBOURNE  VENOM (LE) NEEDS A TECH", home)
         self.assertIn("BLACK JACKS CAFE DE WHEELS IN ALBURY  DEVIL RIDERS NEEDS A TECH", home)
         self.assertIn('id="near-form"', home)
+        # Near-you panel lists machine changes before comps, and folds comps past the first few.
+        script = site.NEAR_SCRIPT
+        self.assertLess(script.index("Changes in the last"), script.index("Comps in the next 30 days"))
+        self.assertIn("var FOLD=3", script)
+        self.assertIn('class="near-more"', script)
 
     def test_slugs_drop_accents(self):
         self.assertEqual(site.slug("Pokémon"), "pokemon")

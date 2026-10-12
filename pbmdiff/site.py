@@ -448,7 +448,7 @@ def near_box():
             '<p class="near-note" id="near-note" hidden></p></section>')
 
 
-NEAR_SCRIPT = r"""<script>(function(){
+NEAR_SCRIPT = r"""<script>(function(){var FOLD=3;
 var ask=document.getElementById("near-ask"),box=document.getElementById("near"),body=document.getElementById("near-body"),
 title=document.getElementById("near-title"),note=document.getElementById("near-note"),q=document.getElementById("near-q"),
 km=document.getElementById("near-km"),days=document.getElementById("near-days"),data=null,here=null;
@@ -477,9 +477,10 @@ function show(){if(!here||!data)return;var r=+km.value,n=+days.value,cut=new Dat
 var items=data.items.filter(function(i){return i.d>=cut&&dist(here.lat,here.lon,i.lat,i.lon)<=r});
 var comps=data.comps.filter(function(c){return dist(here.lat,here.lon,c.lat,c.lon)<=r});
 title.textContent=(here.name?"Near "+here.name:"Near you")+" · "+r+" km";
-var h="";if(comps.length)h+='<h3>Comps in the next 30 days</h3><ul class="comps">'+comps.map(function(c){return c.html}).join("")+"</ul>";
-h+='<h3>Changes in the last '+(n==7?"week":n==30?"month":"two months")+"</h3>";
+var h='<h3>Changes in the last '+(n==7?"week":n==30?"month":"two months")+"</h3>";
 h+=items.length?'<ul class="changes">'+items.map(function(i){return i.html}).join("")+"</ul>":'<p class="quiet">Nothing has changed on the map within '+r+' km. Try a wider circle, or a longer stretch.</p>';
+if(comps.length){h+='<h3>Comps in the next 30 days</h3><ul class="comps">'+comps.map(function(c,i){return i<FOLD?c.html:c.html.replace(/^<li/,"<li hidden")}).join("")+"</ul>";
+if(comps.length>FOLD)h+='<button type="button" class="near-more">Show '+(comps.length-FOLD)+' more comp'+(comps.length-FOLD==1?"":"s")+'</button>'}
 if(here.osm)h+='<p class="credit-osm">Suburb found with <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>.</p>';
 body.innerHTML=h;box.hidden=false;ask.hidden=true;try{localStorage.setItem("near",JSON.stringify(here))}catch(e){}}
 function pick(name){var key=name.trim().toLowerCase();if(!key)return;
@@ -495,6 +496,7 @@ navigator.geolocation.getCurrentPosition(function(pos){load(function(){here={nam
 function(){note.hidden=false;note.textContent="Location was not shared. Type a suburb instead."},{timeout:8000})});
 document.getElementById("near-change").addEventListener("click",function(){box.hidden=true;ask.hidden=false;q.focus();try{localStorage.removeItem("near")}catch(e){}});
 km.addEventListener("change",show);days.addEventListener("change",show);
+body.addEventListener("click",function(ev){var b=ev.target.closest(".near-more");if(!b)return;body.querySelectorAll(".comps li[hidden]").forEach(function(li){li.hidden=false});b.remove()});
 var saved=null;try{saved=JSON.parse(localStorage.getItem("near")||"null")}catch(e){}
 if(saved&&saved.lat){here=saved;load(show)}
 })();</script>"""
