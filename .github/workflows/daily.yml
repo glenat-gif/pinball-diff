@@ -15,6 +15,10 @@ on:
         description: "Rebuild this week's issue and rewrite its Buttondown draft"
         type: boolean
         default: false
+      preview:
+        description: "Draft next Thursday's email from today's data as a throwaway Buttondown draft"
+        type: boolean
+        default: false
 
 permissions:
   contents: write
@@ -41,7 +45,7 @@ jobs:
           PINBALLMAP_API_TOKEN: ${{ secrets.PINBALLMAP_API_TOKEN }}
           IFPA_API_KEY: ${{ secrets.IFPA_API_KEY }}
       - name: Make and deliver this week's email if due
-        run: python -m pbmdiff.run issue ${{ inputs.redraft && '--redraft' || '' }}
+        run: python -m pbmdiff.run issue ${{ inputs.redraft && '--redraft' || '' }} ${{ inputs.preview && '--preview' || '' }}
         env:
           BUTTONDOWN_API_KEY: ${{ secrets.BUTTONDOWN_API_KEY }}
       - name: Keep the events, digests and issues

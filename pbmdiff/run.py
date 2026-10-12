@@ -11,6 +11,7 @@
   python -m pbmdiff.run build                       build the website into dist/
 """
 import argparse
+import os
 import datetime as dt
 import json
 import pathlib
@@ -109,6 +110,20 @@ def cmd_zones(args):
 
 def cmd_issue(args):
     events = store.load()
+    if args.preview:
+        # A throwaway Buttondown draft of the coming issue, built from today's data, so the
+        # design can be checked in a real inbox. Nothing is saved to data/issues.
+        nxt = issue.latest_issue_date() + dt.timedelta(days=7)
+        iss = issue.make(events, nxt)
+        subject = f"[PREVIEW] {mail.subject(iss)}"
+        print(f"preview of {nxt}: {subject}")
+        key = os.environ.get("BUTTONDOWN_API_KEY")
+        if not key:
+            print("not drafted: no BUTTONDOWN_API_KEY")
+            return
+        created = mail.post({"subject": subject, "body": mail.html(iss), "status": "draft"}, key)
+        print(f"drafted in Buttondown: {created.get('id')} (delete it there when done)")
+        return
     if args.redraft:
         latest = issue.latest_issue_date().isoformat()
         if not issue.path(latest).exists():
@@ -159,6 +174,7 @@ def main(argv=None):
     sub.add_parser("comps").set_defaults(fn=cmd_comps)
     i = sub.add_parser("issue"); i.add_argument("--date")
     i.add_argument("--redraft", action="store_true", help="rebuild this week's issue and rewrite its Buttondown draft")
+    i.add_argument("--preview", action="store_true", help="draft next Thursday's email from today's data, without saving an issue")
     i.set_defaults(fn=cmd_issue)
     sub.add_parser("build").set_defaults(fn=cmd_build)
     args = p.parse_args(argv)
