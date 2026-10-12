@@ -153,6 +153,8 @@ a:hover { text-decoration-thickness: 2px; }
 .near h3 { font-size: 1rem; margin: 1.2rem 0 0; color: var(--muted); font-weight: 650; }
 .near-more { display: block; margin: 0.6rem 0 0; font: 600 0.9rem var(--body); background: none; border: 1px solid var(--line); color: var(--muted); border-radius: 999px; padding: 0.3rem 0.9rem; cursor: pointer; }
 .near-more:hover { color: var(--ink); border-color: var(--ink); }
+.near li.far { position: relative; padding-right: 5.2rem; }
+.near .km { position: absolute; right: 0; top: 0.85rem; font-size: 0.78rem; font-weight: 600; color: var(--muted); border: 1px solid var(--line); border-radius: 999px; padding: 0.1rem 0.55rem; white-space: nowrap; }
 
 /* Zone chips */
 .chips {

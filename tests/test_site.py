@@ -156,6 +156,10 @@ class MachineTests(Built):
         self.assertLess(script.index("Changes in the last"), script.index("Comps in the next 30 days"))
         self.assertIn("var FOLD=3", script)
         self.assertIn('class="near-more"', script)
+        # An empty circle widens to the closest changes further out, each tagged with its distance.
+        self.assertIn("The closest changes further out", script)
+        self.assertIn('class="km"', script)
+        self.assertNotIn('value="10">10 km', home)
 
     def test_slugs_drop_accents(self):
         self.assertEqual(site.slug("Pokémon"), "pokemon")

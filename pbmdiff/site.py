@@ -431,7 +431,7 @@ def near_box():
     return ('<section class="near" id="near" hidden>'
             '<header><h2 id="near-title">Near you</h2><button type="button" class="near-change" id="near-change">Change</button></header>'
             '<div class="near-controls">'
-            '<label>Within <select id="near-km"><option value="10">10 km</option><option value="25">25 km</option>'
+            '<label>Within <select id="near-km"><option value="25">25 km</option>'
             '<option value="50" selected>50 km</option><option value="100">100 km</option><option value="250">250 km</option></select></label>'
             '<label>Last <select id="near-days"><option value="7">week</option><option value="30" selected>month</option>'
             '<option value="60">two months</option></select></label></div>'
@@ -448,7 +448,7 @@ def near_box():
             '<p class="near-note" id="near-note" hidden></p></section>')
 
 
-NEAR_SCRIPT = r"""<script>(function(){var FOLD=3;
+NEAR_SCRIPT = r"""<script>(function(){var FOLD=3,FAR=5;
 var ask=document.getElementById("near-ask"),box=document.getElementById("near"),body=document.getElementById("near-body"),
 title=document.getElementById("near-title"),note=document.getElementById("near-note"),q=document.getElementById("near-q"),
 km=document.getElementById("near-km"),days=document.getElementById("near-days"),data=null,here=null;
@@ -474,12 +474,16 @@ else if(ev.key==="Enter"&&sel>=0){choose(matches[sel]);ev.preventDefault()}else 
 function dist(a,b,c,d){var R=6371,x=(c-a)*Math.PI/180,y=(d-b)*Math.PI/180,s=Math.sin(x/2)*Math.sin(x/2)+Math.cos(a*Math.PI/180)*Math.cos(c*Math.PI/180)*Math.sin(y/2)*Math.sin(y/2);return 2*R*Math.asin(Math.sqrt(s))}
 function fmt(d){var t=new Date(d+"T00:00:00");return t.toLocaleDateString("en-AU",{weekday:"short",day:"numeric",month:"short"})}
 function show(){if(!here||!data)return;var r=+km.value,n=+days.value,cut=new Date(Date.now()-n*864e5).toISOString().slice(0,10);
-var items=data.items.filter(function(i){return i.d>=cut&&dist(here.lat,here.lon,i.lat,i.lon)<=r});
-var comps=data.comps.filter(function(c){return dist(here.lat,here.lon,c.lat,c.lon)<=r});
+data.items.forEach(function(i){i.km=dist(here.lat,here.lon,i.lat,i.lon)});data.comps.forEach(function(c){c.km=dist(here.lat,here.lon,c.lat,c.lon)});
+var recent=data.items.filter(function(i){return i.d>=cut}),items=recent.filter(function(i){return i.km<=r}),comps=data.comps.filter(function(c){return c.km<=r});
+function far(list,n){return list.filter(function(x){return x.km>r}).sort(function(a,b){return a.km-b.km}).slice(0,n).map(function(x){var li=x.html.replace(/^<li class="/,'<li class="far ');if(li===x.html)li=li.replace(/^<li/,'<li class="far"');return li.replace(/^(<li[^>]*>)/,'$1<span class="km">'+Math.round(x.km)+' km</span>')})}
 title.textContent=(here.name?"Near "+here.name:"Near you")+" · "+r+" km";
-var h='<h3>Changes in the last '+(n==7?"week":n==30?"month":"two months")+"</h3>";
-h+=items.length?'<ul class="changes">'+items.map(function(i){return i.html}).join("")+"</ul>":'<p class="quiet">Nothing has changed on the map within '+r+' km. Try a wider circle, or a longer stretch.</p>';
-if(comps.length){h+='<h3>Comps in the next 30 days</h3><ul class="comps">'+comps.map(function(c,i){return i<FOLD?c.html:c.html.replace(/^<li/,"<li hidden")}).join("")+"</ul>";
+var span=n==7?"week":n==30?"month":"two months",h='<h3>Changes in the last '+span+"</h3>";
+if(items.length)h+='<ul class="changes">'+items.map(function(i){return i.html}).join("")+"</ul>";
+else{var fi=far(recent,FAR);h+=fi.length?'<p class="quiet">Nothing has changed within '+r+' km this '+span+'. The closest changes further out:</p><ul class="changes">'+fi.join("")+"</ul>":'<p class="quiet">Nothing has changed on the map anywhere in the last '+span+'. Try a longer stretch.</p>'}
+var fc=comps.length?[]:far(data.comps,FOLD);
+if(comps.length||fc.length){h+='<h3>Comps in the next 30 days</h3>';if(!comps.length)h+='<p class="quiet">No comps within '+r+' km. The closest further out:</p>';
+h+='<ul class="comps">'+(comps.length?comps.map(function(c,i){return i<FOLD?c.html:c.html.replace(/^<li/,"<li hidden")}):fc).join("")+"</ul>";
 if(comps.length>FOLD)h+='<button type="button" class="near-more">Show '+(comps.length-FOLD)+' more comp'+(comps.length-FOLD==1?"":"s")+'</button>'}
 if(here.osm)h+='<p class="credit-osm">Suburb found with <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>.</p>';
 body.innerHTML=h;box.hidden=false;ask.hidden=true;try{localStorage.setItem("near",JSON.stringify(here))}catch(e){}}
