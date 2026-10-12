@@ -409,9 +409,14 @@ def page(title, body, *, path, description, box_extra="", nav="", current=None):
 <meta property="og:title" content="{e(full)}">
 <meta property="og:description" content="{e(description)}">
 <meta property="og:url" content="{e(absolute(path))}">
+<meta property="og:image" content="{e(absolute('/share.png'))}">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
 <link rel="canonical" href="{e(absolute(path))}">
 <link rel="alternate" type="application/atom+xml" title="{e(SITE['name'])}" href="{u('/feed.xml')}">
 <link rel="icon" href="{FAVICON}">
+<link rel="apple-touch-icon" href="{u('/icon.png')}">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="{FONTS}">
@@ -952,6 +957,8 @@ def build(on=None):
         shutil.rmtree(DIST)
     DIST.mkdir()
     shutil.copy(ROOT / "static" / "style.css", DIST / "style.css")
+    for name in ("icon.png", "share.png"):
+        shutil.copy(ROOT / "static" / name, DIST / name)
     shutil.copy(store.DATA / "suburbs.json", DIST / "suburbs.json")
     comps = ifpa.enrich(ifpa.load(), ifpa.venues_from_events(events))
     write("/", home(weeks, counts, on, comps))

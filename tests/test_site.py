@@ -151,6 +151,8 @@ class MachineTests(Built):
         self.assertIn("FORTRESS MELBOURNE  VENOM (LE) NEEDS A TECH", home)
         self.assertIn("BLACK JACKS CAFE DE WHEELS IN ALBURY  DEVIL RIDERS NEEDS A TECH", home)
         self.assertIn('id="near-form"', home)
+        self.assertIn('property="og:image" content="https://pinballthisweek.au/share.png"', home)
+        self.assertTrue((dist / "share.png").exists() and (dist / "icon.png").exists())
         # Near-you panel lists machine changes before comps, and folds comps past the first few.
         script = site.NEAR_SCRIPT
         self.assertLess(script.index("Changes in the last"), script.index("Comps in the next 30 days"))
