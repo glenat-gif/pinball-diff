@@ -229,7 +229,7 @@ def html(iss):
     parts.append(
         f'<table role="presentation" cellpadding="0" cellspacing="0" style="margin:22px auto 0"><tr><td style="background:#ff7a1a;border-radius:6px">'
         f'<a href="{_e(site_url("/"))}" style="display:inline-block;padding:11px 20px;font:700 15px Arial,sans-serif;color:#1b0c00;text-decoration:none">'
-        f'Every change in every state, this week &rarr;</a></td></tr></table>'
+        f'<span style="color:#1b0c00">Every change in every state, this week &rarr;</span></a></td></tr></table>'
         f'<p style="font:13px/1.5 Arial,sans-serif;color:#655e6e;text-align:center;margin:8px 0 0">'
         f'Or type your suburb on the site for what changed near you.</p>')
     eps = iss.get("episodes") or []
@@ -242,10 +242,10 @@ def html(iss):
     head = (f'<table role="presentation" cellpadding="0" cellspacing="0" width="100%" style="background:#120e18;border-radius:10px">'
             f'<tr><td style="padding:26px 24px 22px">'
             f'<div style="font:900 30px/1 \'Courier New\',Courier,monospace;letter-spacing:2px;color:#ff7a1a">PINBALL THIS WEEK</div>'
-            f'<div style="font:15px/1.5 Arial,sans-serif;color:#f4efe6;margin-top:12px">What changed on Pinball Map in Victoria, {_e(span)}.</div>'
+            f'<div style="font:15px/1.5 Arial,sans-serif;color:#f4efe6;margin-top:12px">What changed on Pinball Map in Victoria, and the best of the rest of Australia.</div>'
             f'<div style="font:700 13px/1.6 \'Courier New\',Courier,monospace;letter-spacing:1px;color:#ff7a1a;margin-top:10px">'
             f'VICTORIA &middot; {_e(span.upper())} &middot; '
-            f'<a href="{_e(site_url("/"))}" style="color:#ff7a1a">EVERY STATE ON THE WEBSITE</a></div>'
+            f'<a href="{_e(site_url("/"))}" style="color:#ff7a1a;text-decoration:none"><span style="color:#ff7a1a;text-decoration:underline">EVERY STATE ON THE WEBSITE</span></a></div>'
             f'</td></tr></table>')
     foot = (f'<p style="font:13px/1.5 Arial,sans-serif;color:#655e6e;margin:30px 0 0;padding-top:14px;border-top:1px solid #e2dccf">'
             f'Every venue links to its Pinball Map listing. If something is wrong, or you played something new, '
