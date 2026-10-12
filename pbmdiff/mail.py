@@ -120,7 +120,7 @@ def markdown(iss):
     active = [z for z in zones if z["items"]]
     quiet = [z for z in zones if not z["items"]]
     out = ["<!-- buttondown-editor-mode: plaintext -->",
-           f"What changed on Pinball Map in Victoria, {render.span(iss['since'], iss['until'])}. "
+           f"What changed in pinball in Victoria, {render.span(iss['since'], iss['until'])}. "
            f"Every state is on [the website]({site_url('/')}).", ""]
     comps = issue.email_comps(iss)
     if comps:
@@ -242,7 +242,7 @@ def html(iss):
     head = (f'<table role="presentation" cellpadding="0" cellspacing="0" width="100%" style="background:#120e18;border-radius:10px">'
             f'<tr><td style="padding:26px 24px 22px">'
             f'<div style="font:900 30px/1 \'Courier New\',Courier,monospace;letter-spacing:2px;color:#ff7a1a">PINBALL THIS WEEK</div>'
-            f'<div style="font:15px/1.5 Arial,sans-serif;color:#f4efe6;margin-top:12px">What changed on Pinball Map in Victoria, and the best of the rest of Australia.</div>'
+            f'<div style="font:15px/1.5 Arial,sans-serif;color:#f4efe6;margin-top:12px">What changed in pinball in Victoria, and the best of the rest of Australia.</div>'
             f'<div style="font:700 13px/1.6 \'Courier New\',Courier,monospace;letter-spacing:1px;color:#ff7a1a;margin-top:10px">'
             f'VICTORIA &middot; {_e(span.upper())} &middot; '
             f'<a href="{_e(site_url("/"))}" style="color:#ff7a1a;text-decoration:none"><span style="color:#ff7a1a;text-decoration:underline">EVERY STATE ON THE WEBSITE</span></a></div>'

@@ -634,7 +634,7 @@ def zone_page(z, events, until, counts):
     box = (f'<p class="wordmark" style="font-size:clamp(1.6rem,6vw,2.6rem)">{e(short(z))}</p>'
            f'<p class="lede">{e(label) + ". " if label != short(z) else ""}The last four weeks of changes on Pinball Map.</p>')
     body = "".join(zone_block({**w, "label": "Week to " + render.day(w["until"])}, heading_link=False) for w in weeks)
-    return page(short(z), body, path=f"/zone/{z}/", description=f"What changed on Pinball Map in {label}.",
+    return page(short(z), body, path=f"/zone/{z}/", description=f"What changed in pinball in {label}.",
                 box_extra=box, nav=chips(z, counts), current=z)
 
 
@@ -894,7 +894,7 @@ def title_page(g, catalogue=None):
 def about_page():
     body = f"""<div class="prose">
 <h2>What this is</h2>
-<p>A weekly list of what changed on Pinball Map in Australia: new venues, machines landing and leaving, swaps, and notes from players about machines that need a tech or have been fixed. It exists so that people hear about the new game at the pub down the road, and so a Rowville player knows whether it is worth the drive to Campbellfield on Saturday.</p>
+<p>A weekly list of what changed in Australian pinball, as recorded on Pinball Map: new venues, machines landing and leaving, swaps, and notes from players about machines that need a tech or have been fixed. It exists so that people hear about the new game at the pub down the road, and so a Rowville player knows whether it is worth the drive to Campbellfield on Saturday.</p>
 <h2>What it is not</h2>
 <p>It is not a map and it will not help you find somewhere to play. <a href="https://pinballmap.com">Pinball Map</a> does that, and does it well. Every venue here links straight to its Pinball Map listing.</p>
 <h2>Where it comes from</h2>
@@ -920,7 +920,7 @@ def feed(dates):
         url = absolute(f"/issues/{d}/")
         entries.append(f"<entry><title>{e(render.long_day(d))}: {n} changes</title><link href=\"{e(url)}\"/>"
                        f"<id>{e(url)}</id><updated>{d}T07:00:00+10:00</updated>"
-                       f"<summary>What changed on Pinball Map in Victoria, {e(render.span(iss['since'], iss['until']))}.</summary></entry>")
+                       f"<summary>What changed in pinball in Victoria, {e(render.span(iss['since'], iss['until']))}.</summary></entry>")
     updated = f"{dates[0]}T07:00:00+10:00" if dates else "2026-10-01T07:00:00+10:00"
     return (f'<?xml version="1.0" encoding="utf-8"?>\n<feed xmlns="http://www.w3.org/2005/Atom">'
             f"<title>{e(SITE['name'])}</title><link href=\"{e(absolute('/'))}\"/><id>{e(absolute('/'))}</id>"
