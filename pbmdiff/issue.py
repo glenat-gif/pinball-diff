@@ -115,8 +115,13 @@ def highlights(issue, limit=6):
     return out[:limit]
 
 
-def email_comps(issue):
-    return [c for c in issue.get("comps", []) if c["zone"] in SITE["email_zones"]]
+def home_zone():
+    """The state the email leads with and the subject line favours on a tie."""
+    return SITE["email_zones"][0]
+
+
+def email_comps(issue, zone=None):
+    return [c for c in issue.get("comps", []) if c["zone"] in SITE["email_zones"] and (zone is None or c["zone"] == zone)]
 
 
 def email_zones(issue):

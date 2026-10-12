@@ -38,42 +38,46 @@ def _headline(item, zone, local):
     flagged = sorted((n for n in flags if flags[n]), key=weight, reverse=True)   # rarest first
     k = item["kind"]
     if k == "new_venue":
-        first = f", with {title(item['machines'][0])}" if item.get("machines") else ""
-        return (f"New venue: {item['location_name']}{first}", 12 if local else 5)
+        if local:
+            first = f", with {title(item['machines'][0])}" if item.get("machines") else ""
+            return (f"New venue: {item['location_name']}{first}", 12)
+        return (f"New venue: {item['location_name']}" + (f" in {item['city']}" if item.get("city") else ""), 11)
     if k in ("added", "rotation", "swap"):
         names = flagged or item.get("machines") or [item.get("in")]
         name = title(names[0]) if names and names[0] else None
         if not name:
             return None
-        score = (10 if local else 3) + (weight(names[0]) if flagged else 0)   # local always leads
+        score = (10 if local else 9) + (weight(names[0]) if flagged else 0)   # home state wins a tie, no more
         return (f"{name} lands at {item['location_name']}" if local else f"{name} lands in {where}", score)
     if k == "removed":
-        return (f"{title(item['machines'][0])} leaves {item['location_name']}", 2 if local else 0)
+        return (f"{title(item['machines'][0])} leaves {item['location_name']}", 2 if local else 1)
     if k == "condition" and item.get("status") == "green":
-        return (f"{title(item['machine'])} fixed at {item['location_name']}", 2 if local else 0)
+        return (f"{title(item['machine'])} fixed at {item['location_name']}", 2 if local else 1)
     return None
 
 
 def subject(iss):
     """Lead with the best thing that happened, never with a count."""
-    heads = []
+    heads, home = [], issue.home_zone()
     for z in iss["zones"]:
-        local = z["zone"] in SITE["email_zones"]
+        if z["zone"] not in SITE["email_zones"]:
+            continue
         for item in z["items"]:
-            h = _headline(item, z["zone"], local)
+            h = _headline(item, z["zone"], z["zone"] == home)
             if h and h[1] > 0:
                 heads.append(h)
-    comps = issue.email_comps(iss)
-    for c in comps[:2]:
+    for c in issue.email_comps(iss, home)[:2]:
         when = render.day(c["start"]).split(" ", 1)[0]       # Thu
         heads.append((f"{c['venue'] or c['name']} comp {when}", 4))
     heads.sort(key=lambda h: -h[1])
     if not heads:
         return "This week in Australian pinball"
-    if len(heads) > 1 and heads[1][1] > 3:          # a plain interstate arrival is not a headline
+    if len(heads) > 1 and heads[1][1] >= 9:          # a second arrival or venue, never a departure or a comp
         second = heads[1][0]
         second = second[0].lower() + second[1:] if second.startswith("New venue") else second
-        return f"{heads[0][0]}, and {second}"
+        both = f"{heads[0][0]}, and {second}"
+        if len(both) <= 100:
+            return both
     return heads[0][0]
 
 
@@ -115,22 +119,31 @@ def comp_line(c):
     return f"- **{render.comp_when(c)}.** [{c['name']}]({c['link']}), {where}.{extra}{page}"
 
 
+def sections(iss):
+    """(zone, items, comps) per email state in email order, then the states with nothing at all."""
+    active, quiet = [], []
+    for z in issue.email_zones(iss):
+        comps = issue.email_comps(iss, z["zone"])
+        (active if z["items"] or comps else quiet).append((z, z["items"], comps))
+    return active, [z for z, _, _ in quiet]
+
+
 def markdown(iss):
-    zones = issue.email_zones(iss)
-    active = [z for z in zones if z["items"]]
-    quiet = [z for z in zones if not z["items"]]
+    active, quiet = sections(iss)
+    home = areas.SHORT[issue.home_zone()]
     out = ["<!-- buttondown-editor-mode: plaintext -->",
-           f"What changed in pinball in Victoria, {render.span(iss['since'], iss['until'])}. "
-           f"Every state is on [the website]({site_url('/')}).", ""]
-    comps = issue.email_comps(iss)
-    if comps:
-        out += ["## Comps coming up", ""] + [comp_line(c) for c in comps] + [""]
-    for z in active:
-        out += [f"## {z['label']}", ""] + [line(i) for i in z["items"]] + [""]
+           f"What changed in pinball across Australia, {render.span(iss['since'], iss['until'])}. "
+           f"{home} first, then every other state.", ""]
+    for z, items, comps in active:
+        out += [f"## {z['label']}", ""]
+        if items:
+            out += [line(i) for i in items] + [""]
+        if comps:
+            out += [f"**Comps coming up in {areas.SHORT[z['zone']]}**", ""] + [comp_line(c) for c in comps] + [""]
     hi = issue.highlights(iss)
     if hi:
         out += ["## Around Australia", ""] + [line(h) + f" _{areas.SHORT[h['zone']]}_" for h in hi] + [""]
-    out += [f"**[Every change in every state, this week]({site_url('/')})**, or type your suburb on the site for what changed near you.", ""]
+    out += [f"**[What changed near you]({site_url('/')})**: type your suburb on the site for changes and comps within 50 km.", ""]
     eps = iss.get("episodes") or []
     if eps:
         out += ["## On the podcasts", ""] + [f"- **{ep['show_name']}:** [{ep['title']}]({ep['link']})" for ep in eps] + [""]
@@ -195,12 +208,23 @@ def _h_item(item, state=""):
 
 
 def _h_comp(c):
+    """One tight line per comp: name, then where, format and the event page in muted type."""
     where = ", ".join(x for x in (c["venue"], c["city"]) if x)
-    more = f' · <a href="{_e(c["website"])}" style="color:#5b3fd6">Event page</a>' if c["website"] else ""
-    fmt = f'<div style="color:#655e6e;font-size:13px">{_e(c["format"])}</div>' if c.get("format") else ""
-    body = (f'<a href="{_e(c["link"])}" style="color:#1b1720;font-weight:700">{_e(c["name"])}</a><br>'
-            f'<span style="color:#655e6e">{_e(where)}</span>{more}{fmt}')
-    return _h_row(render.comp_when(c), "#b84c00", body)
+    bits = [_e(x) for x in (where, c.get("format")) if x]
+    if c["website"]:
+        bits.append(f'<a href="{_e(c["website"])}" style="color:#5b3fd6">Event page</a>')
+    body = (f'<a href="{_e(c["link"])}" style="color:#1b1720;font-weight:700">{_e(c["name"])}</a> '
+            f'<span style="color:#655e6e;font-size:13px">{" · ".join(bits)}</span>')
+    return (f'<tr><td style="padding:7px 0;border-bottom:1px solid #eee9df;vertical-align:top;width:104px">'
+            f'<span style="font:800 11px/1.8 Arial,sans-serif;letter-spacing:1px;text-transform:uppercase;color:#b84c00">'
+            f'{_e(render.comp_when(c))}</span></td>'
+            f'<td style="padding:7px 0 7px 10px;border-bottom:1px solid #eee9df;vertical-align:top;font:14px/1.45 Arial,sans-serif;color:#1b1720">'
+            f'{body}</td></tr>')
+
+
+def _h_sub(title):
+    return (f'<tr><td colspan="2" style="padding:14px 0 2px;font:800 11px/1.8 Arial,sans-serif;letter-spacing:1px;'
+            f'text-transform:uppercase;color:#655e6e">{_e(title)}</td></tr>')
 
 
 def _h_section(title, rows):
@@ -212,14 +236,14 @@ def _h_section(title, rows):
 def html(iss):
     """The email as its own page: the backbox header, then the week."""
     zones = issue.email_zones(iss)
-    active = [z for z in zones if z["items"]]
-    quiet = [z for z in zones if not z["items"]]
+    active, quiet = sections(iss)
     parts = []
-    comps = issue.email_comps(iss)
-    if comps:
-        parts.append(_h_section("Comps coming up", [_h_comp(c) for c in comps]))
-    for z in active:
-        parts.append(_h_section(z["label"], [_h_item(i) for i in z["items"]]))
+    for z, items, comps in active:
+        rows = [_h_item(i) for i in items]
+        if comps:
+            rows.append(_h_sub(f"Comps coming up in {areas.SHORT[z['zone']]}"))
+            rows += [_h_comp(c) for c in comps]
+        parts.append(_h_section(z["label"], rows))
     if quiet:
         parts.append(f'<p style="font:15px/1.5 Arial,sans-serif;color:#655e6e;margin:18px 0 0">Quiet on the map in '
                      f'{_e(render.join(areas.SHORT[z["zone"]] for z in quiet))}: nothing changed this week.</p>')
@@ -229,9 +253,9 @@ def html(iss):
     parts.append(
         f'<table role="presentation" cellpadding="0" cellspacing="0" style="margin:22px auto 0"><tr><td style="background:#ff7a1a;border-radius:6px">'
         f'<a href="{_e(site_url("/"))}" style="display:inline-block;padding:11px 20px;font:700 15px Arial,sans-serif;color:#1b0c00;text-decoration:none">'
-        f'<span style="color:#1b0c00">Every change in every state, this week &rarr;</span></a></td></tr></table>'
+        f'<span style="color:#1b0c00">What changed near you &rarr;</span></a></td></tr></table>'
         f'<p style="font:13px/1.5 Arial,sans-serif;color:#655e6e;text-align:center;margin:8px 0 0">'
-        f'Or type your suburb on the site for what changed near you.</p>')
+        f'Type your suburb on the site for changes and comps within 50 km.</p>')
     eps = iss.get("episodes") or []
     if eps:
         rows = [_h_row("Episode", "#b84c00", f'<span style="color:#655e6e">{_e(ep["show_name"])}</span><br>'
@@ -242,10 +266,10 @@ def html(iss):
     head = (f'<table role="presentation" cellpadding="0" cellspacing="0" width="100%" style="background:#120e18;border-radius:10px">'
             f'<tr><td style="padding:26px 24px 22px">'
             f'<div style="font:900 30px/1 \'Courier New\',Courier,monospace;letter-spacing:2px;color:#ff7a1a">PINBALL THIS WEEK</div>'
-            f'<div style="font:15px/1.5 Arial,sans-serif;color:#f4efe6;margin-top:12px">What changed in pinball in Victoria, and the best of the rest of Australia.</div>'
+            f'<div style="font:15px/1.5 Arial,sans-serif;color:#f4efe6;margin-top:12px">What changed in pinball this week, across Australia.</div>'
             f'<div style="font:700 13px/1.6 \'Courier New\',Courier,monospace;letter-spacing:1px;color:#ff7a1a;margin-top:10px">'
-            f'VICTORIA &middot; {_e(span.upper())} &middot; '
-            f'<a href="{_e(site_url("/"))}" style="color:#ff7a1a;text-decoration:none"><span style="color:#ff7a1a;text-decoration:underline">EVERY STATE ON THE WEBSITE</span></a></div>'
+            f'{_e(span.upper())} &middot; {n} CHANGE{"" if n == 1 else "S"} &middot; '
+            f'<a href="{_e(site_url("/"))}" style="color:#ff7a1a;text-decoration:none"><span style="color:#ff7a1a;text-decoration:underline">NEAR YOU ON THE WEBSITE</span></a></div>'
             f'</td></tr></table>')
     foot = (f'<p style="font:13px/1.5 Arial,sans-serif;color:#655e6e;margin:30px 0 0;padding-top:14px;border-top:1px solid #e2dccf">'
             f'Every venue links to its Pinball Map listing. If something is wrong, or you played something new, '

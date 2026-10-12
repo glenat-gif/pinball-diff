@@ -212,7 +212,7 @@ class IssueTests(Built):
         issue.save(iss)
         self.assertEqual(issue.published_dates(), ["2026-10-01"])
 
-    def test_email_covers_victoria_only_and_reads_cleanly(self):
+    def test_email_leads_with_victoria_and_reads_cleanly(self):
         iss = issue.ensure_latest(self.events, on=ON)
         md = mail.markdown(iss)
         self.assertIn("## Victoria", md)
@@ -228,10 +228,11 @@ class IssueTests(Built):
         self.assertIn("PINBALL THIS WEEK", page)
         self.assertIn("Railway Hotel South Melbourne", page)
         self.assertIn("Needs a tech", page)
-        self.assertIn("Every change in every state", page)
+        self.assertIn("What changed near you", page)
+        self.assertIn("across Australia", page)
         self.assertNotIn("<script", page)
 
-    def test_highlights_from_other_states_fill_a_quiet_week(self):
+    def test_every_state_is_in_the_email_and_the_subject_favours_home(self):
         iss = issue.ensure_latest(self.events, on=ON)
         nsw = {"zone": "nsw", "label": "New South Wales and the ACT", "since": iss["since"], "until": iss["until"],
                "confirmations": 0, "items": [
@@ -241,13 +242,19 @@ class IssueTests(Built):
                    {"kind": "added", "rank": 2.9, "date": "2026-09-28", "location_id": 8, "location_name": "Some Pub", "city": "Glebe",
                     "link": "https://pinballmap.com/map?by_location_id=8", "machines": ["Fish Tales (Williams, 1992)"], "flags": {}, "by": []}]}
         iss["zones"] = [z for z in iss["zones"] if z["zone"] == "vic"] + [nsw]
-        hi = issue.highlights(iss)
-        self.assertEqual([h["location_name"] for h in hi], ["Barcadia"])      # plain arrivals are not highlights
-        self.assertIn("## Around Australia", mail.markdown(iss))
+        self.assertEqual(issue.highlights(iss), [])                      # nothing is outside the email any more
+        md = mail.markdown(iss)
+        self.assertNotIn("## Around Australia", md)
+        self.assertLess(md.index("## Victoria"), md.index("## New South Wales and the ACT"))
+        self.assertIn("Some Pub", md)                                     # plain interstate arrivals are in, not just highlights
         self.assertIn("Transformers (LE)", mail.html(iss))
-        self.assertEqual(mail.subject(iss), "Cactus Canyon (Remake Special) lands at Railway Hotel South Melbourne, and Transformers (LE) lands in Northbridge")
-        iss["zones"][0]["items"] = []
+        # A limited-edition new release interstate outranks a plain local swap; the home state only wins ties.
         self.assertEqual(mail.subject(iss), "Transformers (LE) lands in Northbridge")
+        iss["zones"][1]["items"][0]["flags"] = {}
+        # ...and a second headline only rides along when the pair stays under 100 characters.
+        self.assertEqual(mail.subject(iss), "Cactus Canyon (Remake Special) lands at Railway Hotel South Melbourne")
+        iss["zones"][0]["items"] = []
+        self.assertEqual(mail.subject(iss), "Transformers (LE) lands in Northbridge, and Fish Tales lands in Glebe")
         iss["zones"] = iss["zones"][:1]
         self.assertEqual(mail.subject(iss), "This week in Australian pinball")
 

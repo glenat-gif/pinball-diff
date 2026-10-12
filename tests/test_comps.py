@@ -112,9 +112,10 @@ class CompTests(unittest.TestCase):
         self.assertIn("Thursday League", page)
         iss = issue.make({}, TODAY)
         md = mail.markdown(iss)
-        self.assertIn("## Comps coming up", md)
+        self.assertIn("**Comps coming up in Victoria**", md)
         self.assertIn("[Parlour Monthly](https://www.ifpapinball.com/tournaments/view.php?t=1)", md)
-        self.assertNotIn("NSW Open", md)
+        self.assertLess(md.index("## Victoria"), md.index("## New South Wales and the ACT"))   # home state first
+        self.assertLess(md.index("## New South Wales and the ACT"), md.index("NSW Open"))    # each state's comps under its heading
         self.assertIn("League", md)
 
     def test_issue_comps_take_pinball_map_venue_names(self):

@@ -1,6 +1,6 @@
 """Build the public website into dist/.
 
-  /                       this week, every zone, Victoria first
+  /                       this week, every state, Victoria first
   /zone/<key>/            one zone, the last four weeks
   /issues/                every email issue
   /issues/<date>/         one issue, as sent
@@ -17,7 +17,7 @@ import json
 import pathlib
 import shutil
 
-from . import areas, digest, ifpa, issue, podcasts, render, store
+from . import mail, areas, digest, ifpa, issue, podcasts, render, store
 from .config import ROOT, SITE
 
 DIST = ROOT / "dist"
@@ -356,19 +356,19 @@ def signup():
     user = SITE.get("buttondown_username")
     if not user:
         return ('<div class="signup"><h2>The weekly email</h2>'
-                '<p class="soon">Sign-ups open soon. Every Thursday, the week\'s changes for Victoria, '
+                '<p class="soon">Sign-ups open soon. Every Thursday, the week\'s changes in every state, '
                 'in time to plan the weekend.</p></div>')
     picks = ('<label><input type="checkbox" name="tag" value="vic" checked> Victoria</label>'
              + "".join(f'<label><input type="checkbox" name="tag" value="{k}"> {e(areas.SHORT[k])}</label>'
                        for k, _ in areas.STATES))
     return (f'<form class="signup" action="https://buttondown.com/api/emails/embed-subscribe/{e(user)}" method="post">'
             '<h2>The weekly email</h2>'
-            '<p>Every Thursday, the week\'s changes for Victoria, in time to plan the weekend. '
+            '<p>Every Thursday, the week\'s changes in every state, in time to plan the weekend. '
             'Free. One click to leave.</p>'
             '<div class="row"><label class="sr" for="em" hidden>Email address</label>'
             '<input id="em" type="email" name="email" required placeholder="you@example.com" autocomplete="email">'
             '<button type="submit">Subscribe</button></div>'
-            f'<fieldset><legend>Which states? The email covers Victoria for now, and others will follow.</legend>'
+            f'<fieldset><legend>Where do you play?</legend>'
             f'<div class="zones-pick">{picks}</div></fieldset>'
             '<input type="hidden" name="embed" value="1"></form>')
 
@@ -556,10 +556,11 @@ def home(weeks, counts, built_on, comps=()):
            f'<p class="dmd" id="dmd" aria-hidden="true" hidden><span id="dmd-text"></span></p></div>'
            f"{signup()}")
     soon_until = (built_on + dt.timedelta(days=7)).isoformat()
-    soon = ifpa.between(list(comps), built_on.isoformat(), soon_until, set(SITE["email_zones"]))
+    home = issue.home_zone()
+    soon = ifpa.between(list(comps), built_on.isoformat(), soon_until, {home})
     blocks = near_box()
-    blocks += comps_block(soon, built_on.isoformat(), soon_until, "Comps in Victoria this week",
-                          "No IFPA comps listed in Victoria in the next seven days.") if comps else ""
+    blocks += comps_block(soon, built_on.isoformat(), soon_until, f"Comps in {areas.SHORT[home]} this week",
+                          f"No IFPA comps listed in {areas.SHORT[home]} in the next seven days.") if comps else ""
     pods = podcasts.load()
     fresh = podcasts.between(pods, (built_on - dt.timedelta(days=14)).isoformat(), built_on.isoformat())
     if fresh:
@@ -643,13 +644,13 @@ def issue_page(iss):
     n = render.count_changes(zones)
     box = (f'<p class="wordmark" style="font-size:clamp(1.6rem,6vw,2.6rem)">{e(render.long_day(iss["date"]))}</p>'
            f'<p class="lede">The email for {e(render.span(iss["since"], iss["until"]))}. '
-           f'{n} change{"s" if n != 1 else ""} across Victoria.</p>')
-    active = [z for z in zones if z["items"]]
-    quiet = [z for z in zones if not z["items"]]
-    ic = issue.email_comps(iss)
-    body = comps_block(ic, iss["date"], iss.get("comps_until", iss["date"]), "Comps coming up",
-                       "No IFPA comps listed in Victoria.", link=False) if ic else ""
-    body += "".join(zone_block(z, when=False) for z in active)
+           f'{n} change{"s" if n != 1 else ""} across Australia.</p>')
+    active, quiet = mail.sections(iss)
+    body = ""
+    for z, items, ic in active:
+        body += zone_block(z, when=False) if items else ""
+        body += comps_block(ic, iss["date"], iss.get("comps_until", iss["date"]), f"Comps coming up in {areas.SHORT[z['zone']]}",
+                            "", link=False) if ic else ""
     if quiet:
         body += (f'<p class="allquiet"><strong>Quiet on the map:</strong> '
                  f'{render.join(e(short(z["label"])) for z in quiet)}.</p>')
@@ -901,7 +902,7 @@ def about_page():
 <p>Every change here was submitted to Pinball Map by a player. Once a day this site asks Pinball Map what changed around Australia, sorts it by area, and tidies it: a machine removed and a new edition of the same game added becomes a swap, and a new venue and its first machines become one line. Nothing is added by hand.</p>
 <p>That means it is only as good as what people submit. If you played somewhere and the lineup was different, or a machine was off, update the listing on Pinball Map. It will be here the next morning and in Thursday's email.</p>
 <h2>The states</h2>
-<p>Changes are grouped by state, and every line names its suburb or town. The email covers Victoria for now; the other states are on the website, and the email will follow as each one gets busy enough to fill a week.</p>
+<p>Changes are grouped by state, and every line names its suburb or town. Thursday's email carries every state, Victoria first, with each state's comps under its changes.</p>
 <h2>Who</h2>
 <p class="muted">Suburbs and postcodes for the near-you search come from Matthew Proctor's public-domain <a href="https://www.matthewproctor.com/australian_postcodes">Australian Postcodes</a> list.</p>
 <p class="muted">Made by a Melbourne player. Contact: <a href="mailto:{e(SITE['contact'])}">{e(SITE['contact'])}</a>. The code is open on <a href="https://github.com/glenat-gif/pinball-diff">GitHub</a>. Data from Pinball Map under CC BY-SA 4.0.</p>
@@ -920,7 +921,7 @@ def feed(dates):
         url = absolute(f"/issues/{d}/")
         entries.append(f"<entry><title>{e(render.long_day(d))}: {n} changes</title><link href=\"{e(url)}\"/>"
                        f"<id>{e(url)}</id><updated>{d}T07:00:00+10:00</updated>"
-                       f"<summary>What changed in pinball in Victoria, {e(render.span(iss['since'], iss['until']))}.</summary></entry>")
+                       f"<summary>What changed in pinball across Australia, {e(render.span(iss['since'], iss['until']))}.</summary></entry>")
     updated = f"{dates[0]}T07:00:00+10:00" if dates else "2026-10-01T07:00:00+10:00"
     return (f'<?xml version="1.0" encoding="utf-8"?>\n<feed xmlns="http://www.w3.org/2005/Atom">'
             f"<title>{e(SITE['name'])}</title><link href=\"{e(absolute('/'))}\"/><id>{e(absolute('/'))}</id>"
