@@ -958,7 +958,7 @@ def build(on=None):
         shutil.rmtree(DIST)
     DIST.mkdir()
     shutil.copy(ROOT / "static" / "style.css", DIST / "style.css")
-    for name in ("icon.png", "share.png"):
+    for name in ("icon.png", "share.png", "email-head.png"):
         shutil.copy(ROOT / "static" / name, DIST / name)
     shutil.copy(store.DATA / "suburbs.json", DIST / "suburbs.json")
     comps = ifpa.enrich(ifpa.load(), ifpa.venues_from_events(events))

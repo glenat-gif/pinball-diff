@@ -305,14 +305,13 @@ def html(iss):
         parts.append(_h_section("On the podcasts", rows))
     span = render.span(iss["since"], iss["until"])
     n = render.count_changes(zones)
-    head = (f'<table role="presentation" cellpadding="0" cellspacing="0" width="100%" style="background:#120e18;border-radius:10px">'
-            f'<tr><td style="padding:26px 24px 22px">'
-            f'<div style="font:900 30px/1 \'Courier New\',Courier,monospace;letter-spacing:2px;color:#ff7a1a">PINBALL THIS WEEK</div>'
-            f'<div style="font:15px/1.5 Arial,sans-serif;color:#f4efe6;margin-top:12px">What changed in pinball this week, across Australia.</div>'
-            f'<div style="font:700 13px/1.6 \'Courier New\',Courier,monospace;letter-spacing:1px;color:#ff7a1a;margin-top:10px">'
+    # The wordmark is an image so dark-mode mail apps cannot invert it; everything else is plain text.
+    head = (f'<a href="{_e(site_url("/"))}" style="display:block"><img src="{_e(site_url("/email-head.png"))}" width="600" height="110" '
+            f'alt="PINBALL THIS WEEK" style="display:block;width:100%;max-width:600px;height:auto;border:0;border-radius:10px"></a>'
+            f'<div style="font:16px/1.5 Arial,sans-serif;color:#1b1720;margin:14px 0 0">What changed in pinball this week, across Australia.</div>'
+            f'<div style="font:700 13px/1.6 \'Courier New\',Courier,monospace;letter-spacing:1px;color:#b84c00;margin-top:6px">'
             f'{_e(span.upper())} &middot; {n} CHANGE{"" if n == 1 else "S"} &middot; '
-            f'<a href="{_e(site_url("/"))}" style="color:#ff7a1a;text-decoration:none"><span style="color:#ff7a1a;text-decoration:underline">NEAR YOU ON THE WEBSITE</span></a></div>'
-            f'</td></tr></table>')
+            f'<a href="{_e(site_url("/"))}" style="color:#b84c00">NEAR YOU ON THE WEBSITE</a></div>')
     foot = (f'<p style="font:13px/1.5 Arial,sans-serif;color:#655e6e;margin:30px 0 0;padding-top:14px;border-top:1px solid #e2dccf">'
             f'Every venue links to its Pinball Map listing. If something is wrong, or you played something new, '
             f'update it there and it will be in next week\'s email.<br>'
