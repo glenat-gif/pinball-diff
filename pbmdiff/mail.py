@@ -17,7 +17,7 @@ import os
 import urllib.error
 import urllib.request
 
-from . import areas, issue, render
+from . import areas, issue, render, store
 from .config import SITE
 
 API = "https://api.buttondown.com/v1/emails"
@@ -188,6 +188,48 @@ def _h_what(item):
             f'padding-left:8px;display:inline-block;margin-top:4px">{_e(item["comment"])}</span>')
 
 
+_CATALOGUE = None
+
+
+def _catalogue():
+    """Pinball Map machine id (as a string) -> catalogue record with the OPDB image; loaded once."""
+    global _CATALOGUE
+    if _CATALOGUE is None:
+        _CATALOGUE = store.load_machines() or {}
+    return _CATALOGUE
+
+
+def _h_art(item, limit=6):
+    """Backglass tiles for the machines a change mentions, arrivals first, the ones leaving dimmed."""
+    if not SITE.get("machine_art"):
+        return ""
+    cat = _catalogue()
+    k = item["kind"]
+    if k == "swap":
+        names = [(item["in"], False), (item["out"], True)]
+    elif k == "condition":
+        names = [(item["machine"], False)]
+    else:
+        gone = k == "removed"
+        names = [(n, gone) for n in item.get("machines") or []] + [(n, True) for n in item.get("out") or []]
+    ids = item.get("ids") or {}
+    tiles, seen = [], set()
+    for name, leaving in names:
+        mid = ids.get(name)
+        img = (cat.get(str(mid)) or {}).get("img") if mid else None
+        if not img or img in seen:
+            continue
+        seen.add(img)
+        dim = "opacity:.45;" if leaving else ""
+        tiles.append(f'<a href="https://pinballmap.com/map?by_machine_id={mid}&amp;by_country=AU" title="{_e(name)}">'
+                     f'<img src="{_e(img)}" alt="{_e(name)}" width="72" height="45" '
+                     f'style="display:inline-block;width:72px;height:45px;object-fit:cover;border-radius:4px;'
+                     f'margin:7px 6px 0 0;border:0;{dim}"></a>')
+        if len(tiles) == limit:
+            break
+    return f'<div>{"".join(tiles)}</div>' if tiles else ""
+
+
 def _h_row(label, colour, body, meta=""):
     meta_html = f'<div style="color:#655e6e;font-size:13px;margin-top:3px">{meta}</div>' if meta else ""
     return (f'<tr><td style="padding:12px 0;border-bottom:1px solid #e2dccf;vertical-align:top;width:104px">'
@@ -204,7 +246,7 @@ def _h_item(item, state=""):
     venue += f' <span style="color:#b84c00;font-size:12px;font-weight:700">&nbsp;{_e(state)}</span>' if state else ""
     by = item.get("by") or []
     meta = _e(render.day(item["date"])) + (f" · via {_e(render.join(by))}" if by else "")
-    return _h_row(render.label(item), TONE[render.tone(item)], f"{venue}<br>{_h_what(item)}", meta)
+    return _h_row(render.label(item), TONE[render.tone(item)], f"{venue}<br>{_h_what(item)}{_h_art(item)}", meta)
 
 
 def _h_comp(c):
@@ -276,6 +318,7 @@ def html(iss):
             f'update it there and it will be in next week\'s email.<br>'
             f'Data from <a href="https://pinballmap.com" style="color:#655e6e">Pinball Map</a>, CC BY-SA 4.0. '
             f'Comps from the IFPA calendar. '
+            + ('Machine artwork from the <a href="https://opdb.org" style="color:#655e6e">Open Pinball Database</a>. ' if SITE.get("machine_art") else "") +
             f'<a href="{_e(site_url("/issues/"))}" style="color:#655e6e">Past emails</a> &middot; '
             f'<a href="{_e(site_url("/about/"))}" style="color:#655e6e">About</a></p>')
     return ('<!-- buttondown-editor-mode: fancy -->'
