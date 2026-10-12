@@ -294,6 +294,11 @@ blockquote.said { margin: 0.35rem 0 0; padding-left: 0.75rem; border-left: 3px s
 .landed .tiles { display: flex; gap: 0.4rem; flex-wrap: wrap; }
 .landed img { width: 64px; height: 40px; object-fit: cover; border-radius: 4px; display: block; background: var(--line); transition: transform 0.15s; }
 .landed a:hover img { transform: translateY(-2px); }
+.change .art { display: flex; gap: 0.4rem; flex-wrap: wrap; margin-top: 0.5rem; }
+.change .art img { width: 72px; height: 45px; object-fit: cover; border-radius: 4px; display: block; background: var(--line); transition: transform 0.15s; }
+.change .art a:hover img { transform: translateY(-2px); }
+.change .art .out img { opacity: 0.45; filter: grayscale(0.6); }
+.change .art a.out:hover img { opacity: 0.9; filter: none; }
 .comp.has-photo > div { display: block; }
 .cphoto { width: 72px; height: 72px; border-radius: 8px; object-fit: cover; float: right; margin: 0 0 0.5rem 0.8rem; }
 

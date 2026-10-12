@@ -161,6 +161,22 @@ class MachineTests(Built):
         self.assertIn('class="km"', script)
         self.assertNotIn('value="10">10 km', home)
 
+    def test_change_rows_carry_machine_art(self):
+        site.CATALOGUE.clear()
+        site.CATALOGUE.update({"5": {"img": "https://img.example/a", "w": 640, "h": 400},
+                               "6": {"img": "https://img.example/b", "w": 640, "h": 400}})
+        site.SITE["machine_art"] = True
+        item = {"kind": "rotation", "date": "2026-10-10", "location_name": "The Pub", "link": "https://pinballmap.com/map?by_location_id=1",
+                "machines": ["Godzilla (Stern, 2021)"], "out": ["Taxi (Williams, 1988)"],
+                "ids": {"Godzilla (Stern, 2021)": 5, "Taxi (Williams, 1988)": 6}, "zone": "vic", "city": "Fitzroy"}
+        html = site.change(item)
+        self.assertIn('<div class="art">', html)
+        self.assertIn('src="https://img.example/a"', html)
+        self.assertIn('class="out"', html)           # the machine leaving is dimmed
+        self.assertLess(html.index("img.example/a"), html.index("img.example/b"))  # arrivals first
+        site.CATALOGUE.clear()
+        self.assertNotIn('class="art"', site.change(item))  # no catalogue, no tiles
+
     def test_slugs_drop_accents(self):
         self.assertEqual(site.slug("Pokémon"), "pokemon")
         self.assertEqual(site.slug("Elvira's House of Horrors"), "elvira-s-house-of-horrors")

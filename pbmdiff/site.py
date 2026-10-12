@@ -45,6 +45,8 @@ MACHINE_PAGES = {"ids": {}, "names": {}}
 # Pinball Map venue id -> [(machine name, image, slug)] for machines that landed there in the last year
 # and have not left since; filled in by build()
 VENUE_ARRIVALS = {}
+# Pinball Map machine id (as a string) -> catalogue record with the OPDB image; filled in by build()
+CATALOGUE = {}
 
 
 def venue_arrivals(events, catalogue, until, days=365):
@@ -100,6 +102,36 @@ def what(item):
     return f'{machine(item["machine"], item)}<blockquote class="said">{e(item["comment"])}</blockquote>'
 
 
+def art_strip(item, limit=6):
+    """Backglass tiles for the machines a change mentions, the arrivals first."""
+    if not SITE.get("machine_art") or not CATALOGUE:
+        return ""
+    k = item["kind"]
+    if k == "swap":
+        names = [(item["in"], False), (item["out"], True)]
+    elif k == "condition":
+        names = [(item["machine"], False)]
+    else:
+        gone = k == "removed"
+        names = ([(n, gone) for n in item.get("machines") or []] + [(n, True) for n in item.get("out") or []])
+    ids = item.get("ids") or {}
+    tiles, seen = [], set()
+    for name, leaving in names:
+        mid = ids.get(name)
+        img = (CATALOGUE.get(str(mid)) or {}).get("img") if mid else None
+        if not img or img in seen:
+            continue
+        seen.add(img)
+        slug = machine_page_for(name, item)
+        cls = ' class="out"' if leaving else ""
+        pic = f'<img src="{e(img)}" alt="{e(name)}" width="72" height="45" loading="lazy" decoding="async">'
+        tiles.append(f'<a{cls} href="{u("/machines/" + slug + "/")}" title="{e(name)}">{pic}</a>' if slug
+                     else f'<span{cls} title="{e(name)}">{pic}</span>')
+        if len(tiles) == limit:
+            break
+    return f'<div class="art">{"".join(tiles)}</div>' if tiles else ""
+
+
 def change(item):
     city = render.where(item)
     city_html = f' <span class="city">{e(city)}</span>' if city else ""
@@ -108,7 +140,7 @@ def change(item):
     return (f'<li class="change"><span class="tag {render.tone(item)}">{e(render.label(item))}</span>'
             f'<div><div class="venue"><a href="{e(item["link"])}" '
             f'title="See or update this listing at Pinball Map">{e(item["location_name"])}</a>{city_html}</div>'
-            f'<div class="what">{what(item)}</div></div>'
+            f'<div class="what">{what(item)}</div>{art_strip(item)}</div>'
             f'<div class="meta">{e(render.day(item["date"]))}{credit}</div></li>')
 
 
@@ -912,6 +944,8 @@ def build(on=None):
             MACHINE_PAGES["names"].setdefault(ev["machine"], g["slug"])
     VENUE_ARRIVALS.clear()
     VENUE_ARRIVALS.update(venue_arrivals(events, catalogue, until))
+    CATALOGUE.clear()
+    CATALOGUE.update(catalogue or {})
     weeks = [issue.week(events, z, until) for z in issue.zone_order()]
     counts = {w["zone"]: len(w["items"]) for w in weeks}
     if DIST.exists():
