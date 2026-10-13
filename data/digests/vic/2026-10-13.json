@@ -1,0 +1,52 @@
+{
+ "items": [
+  {
+   "location_id": 30659,
+   "location_name": "Troll Aus Melbourne PTY LTD",
+   "city": "Thornbury",
+   "link": "https://pinballmap.com/map?by_location_id=30659",
+   "lat": -37.7540291,
+   "lon": 144.9940153,
+   "ids": {
+    "Pok\u00e9mon (Pro) (Stern, 2026)": 4615
+   },
+   "kind": "new_venue",
+   "rank": -0.05,
+   "date": "2026-10-12",
+   "machines": [
+    "Pok\u00e9mon (Pro) (Stern, 2026)"
+   ],
+   "by": [
+    "intric8"
+   ],
+   "flags": {
+    "Pok\u00e9mon (Pro) (Stern, 2026)": [
+     "New release"
+    ]
+   }
+  },
+  {
+   "location_id": 23306,
+   "location_name": "Shooters Lounge",
+   "city": "Ballarat North",
+   "link": "https://pinballmap.com/map?by_location_id=23306",
+   "lat": -37.5431791,
+   "lon": 143.8576379,
+   "ids": {
+    "Pirates of the Caribbean (Stern, 2006)": 676
+   },
+   "kind": "condition",
+   "status": "amber",
+   "rank": 5,
+   "date": "2026-10-08",
+   "machine": "Pirates of the Caribbean (Stern, 2006)",
+   "comment": "Left flipper is dead. 8/10/2026\nAt least it was only one dollar wasted",
+   "user": "The_Bat",
+   "by": [
+    "The_Bat"
+   ],
+   "flags": {}
+  }
+ ],
+ "confirmations": 2
+}
