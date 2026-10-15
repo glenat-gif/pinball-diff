@@ -1,0 +1,264 @@
+{
+ "items": [
+  {
+   "location_id": 30627,
+   "location_name": "Dundas Sports & Recreation Club",
+   "city": "Dundas",
+   "link": "https://pinballmap.com/map?by_location_id=30627",
+   "lat": -33.8038346,
+   "lon": 151.039673,
+   "ids": {
+    "Pirates of the Caribbean (Stern, 2006)": 676
+   },
+   "kind": "new_venue",
+   "rank": 0,
+   "date": "2026-10-09",
+   "machines": [
+    "Pirates of the Caribbean (Stern, 2006)"
+   ],
+   "by": [
+    "JoRoss6"
+   ],
+   "flags": {}
+  },
+  {
+   "location_id": 28530,
+   "location_name": "Six String Brewing Company",
+   "city": "Erina",
+   "link": "https://pinballmap.com/map?by_location_id=28530",
+   "lat": -33.4381088,
+   "lon": 151.3723981,
+   "ids": {
+    "Fish Tales (Williams, 1992)": 654,
+    "Godzilla (Pro) (Stern, 2021)": 3415,
+    "Foo Fighters (Pro) (Stern, 2023)": 3673,
+    "Big Buck Hunter Pro (Stern, 2009)": 759,
+    "Fathom (Bally, 1981)": 784
+   },
+   "kind": "rotation",
+   "rank": 2.8,
+   "date": "2026-10-14",
+   "machines": [
+    "Big Buck Hunter Pro (Stern, 2009)",
+    "Fathom (Bally, 1981)"
+   ],
+   "out": [
+    "Fish Tales (Williams, 1992)",
+    "Godzilla (Pro) (Stern, 2021)",
+    "Foo Fighters (Pro) (Stern, 2023)"
+   ],
+   "by": [
+    "michaelb"
+   ],
+   "flags": {}
+  },
+  {
+   "location_id": 21380,
+   "location_name": "The Durham Castle Arms",
+   "city": "Kingston",
+   "link": "https://pinballmap.com/map?by_location_id=21380",
+   "lat": -35.3157956,
+   "lon": 149.1413808,
+   "ids": {
+    "Medieval Madness (Remake LE) (Chicago Gaming, 2015)": 3507,
+    "Game of Thrones (Premium) (Stern, 2015)": 2527
+   },
+   "kind": "rotation",
+   "rank": 2.85,
+   "date": "2026-10-10",
+   "machines": [
+    "Game of Thrones (Premium) (Stern, 2015)"
+   ],
+   "out": [
+    "Medieval Madness (Remake LE) (Chicago Gaming, 2015)"
+   ],
+   "by": [
+    "SavageAus"
+   ],
+   "flags": {
+    "Game of Thrones (Premium) (Stern, 2015)": [
+     "Premium"
+    ]
+   }
+  },
+  {
+   "location_id": 17248,
+   "location_name": "Beercade Australia",
+   "city": "Redfern",
+   "link": "https://pinballmap.com/map?by_location_id=17248",
+   "lat": -33.8922008,
+   "lon": 151.20083,
+   "ids": {
+    "Spider-Man (Vault Edition) (Stern, 2016)": 2565
+   },
+   "kind": "added",
+   "rank": 2.9,
+   "date": "2026-10-09",
+   "machines": [
+    "Spider-Man (Vault Edition) (Stern, 2016)"
+   ],
+   "by": [
+    "merlinsmagic"
+   ],
+   "flags": {}
+  },
+  {
+   "location_id": 25096,
+   "location_name": "The Ex Servos",
+   "city": "Nowra",
+   "link": "https://pinballmap.com/map?by_location_id=25096",
+   "lat": -34.8747971,
+   "lon": 150.6052146,
+   "ids": {
+    "Jacks Open (Gottlieb, 1977)": 2840,
+    "Joker Poker (Gottlieb, 1978)": 1443
+   },
+   "kind": "rotation",
+   "rank": 2.9,
+   "date": "2026-10-09",
+   "machines": [
+    "Joker Poker (Gottlieb, 1978)"
+   ],
+   "out": [
+    "Jacks Open (Gottlieb, 1977)"
+   ],
+   "by": [
+    "ShoalhavenPinball"
+   ],
+   "flags": {}
+  },
+  {
+   "location_id": 21522,
+   "location_name": "Windsor Ten Pin Bowl",
+   "city": "South Windsor",
+   "link": "https://pinballmap.com/map?by_location_id=21522",
+   "lat": -33.6250895,
+   "lon": 150.8065191,
+   "ids": {
+    "Family Guy (Stern, 2006)": 664,
+    "Spider-Man (Stern, 2007)": 663
+   },
+   "kind": "rotation",
+   "rank": 2.9,
+   "date": "2026-10-12",
+   "machines": [
+    "Spider-Man (Stern, 2007)"
+   ],
+   "out": [
+    "Family Guy (Stern, 2006)"
+   ],
+   "by": [
+    "Talldude610"
+   ],
+   "flags": {}
+  },
+  {
+   "location_id": 26691,
+   "location_name": "Billy's Fish n Chips",
+   "city": "Warilla",
+   "link": "https://pinballmap.com/map?by_location_id=26691",
+   "lat": -34.5524534,
+   "lon": 150.8614152,
+   "ids": {
+    "Stranger Things (Pro) (Stern, 2019)": 3226
+   },
+   "kind": "removed",
+   "rank": 4,
+   "date": "2026-10-15",
+   "machines": [
+    "Stranger Things (Pro) (Stern, 2019)"
+   ],
+   "by": [
+    "jimmyp_oz"
+   ],
+   "flags": {}
+  },
+  {
+   "location_id": 28224,
+   "location_name": "First Light Brewing Co",
+   "city": "Coniston",
+   "link": "https://pinballmap.com/map?by_location_id=28224",
+   "lat": -34.4394815,
+   "lon": 150.8885715,
+   "ids": {
+    "Game of Thrones (Pro) (Stern, 2015)": 2441,
+    "World Cup Soccer (Bally, 1994)": 707
+   },
+   "kind": "removed",
+   "rank": 4,
+   "date": "2026-10-09",
+   "machines": [
+    "Game of Thrones (Pro) (Stern, 2015)",
+    "World Cup Soccer (Bally, 1994)"
+   ],
+   "by": [
+    "ShoalhavenPinball"
+   ],
+   "flags": {}
+  },
+  {
+   "location_id": 11261,
+   "location_name": "Low and Loftys",
+   "city": "Cronulla",
+   "link": "https://pinballmap.com/map?by_location_id=11261",
+   "lat": -34.053239,
+   "lon": 151.152318,
+   "ids": {
+    "Foo Fighters (Premium) (Stern, 2023)": 3674
+   },
+   "kind": "removed",
+   "rank": 4,
+   "date": "2026-10-11",
+   "machines": [
+    "Foo Fighters (Premium) (Stern, 2023)"
+   ],
+   "by": [
+    "bogandhi"
+   ],
+   "flags": {}
+  },
+  {
+   "location_id": 28617,
+   "location_name": "The Erko Hotel",
+   "city": "Erskineville",
+   "link": "https://pinballmap.com/map?by_location_id=28617",
+   "lat": -33.8990709,
+   "lon": 151.183431,
+   "ids": {
+    "Batman: The Dark Knight (Stern, 2008)": 652
+   },
+   "kind": "removed",
+   "rank": 4,
+   "date": "2026-10-15",
+   "machines": [
+    "Batman: The Dark Knight (Stern, 2008)"
+   ],
+   "by": [
+    "achuter"
+   ],
+   "flags": {}
+  },
+  {
+   "location_id": 25371,
+   "location_name": "Timezone Woden",
+   "city": "Phillip",
+   "link": "https://pinballmap.com/map?by_location_id=25371",
+   "lat": -35.3457518,
+   "lon": 149.0841565,
+   "ids": {
+    "The Uncanny X-Men (Pro) (Stern, 2024)": 4506
+   },
+   "kind": "removed",
+   "rank": 4,
+   "date": "2026-10-10",
+   "machines": [
+    "The Uncanny X-Men (Pro) (Stern, 2024)"
+   ],
+   "by": [
+    "SavageAus"
+   ],
+   "flags": {}
+  }
+ ],
+ "confirmations": 5
+}

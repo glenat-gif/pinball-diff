@@ -1,0 +1,52 @@
+{
+ "items": [
+  {
+   "location_id": 30659,
+   "location_name": "Troll Aus Melbourne PTY LTD",
+   "city": "Thornbury",
+   "link": "https://pinballmap.com/map?by_location_id=30659",
+   "lat": -37.7540291,
+   "lon": 144.9940153,
+   "ids": {
+    "Pok\u00e9mon (Pro) (Stern, 2026)": 4615
+   },
+   "kind": "new_venue",
+   "rank": -0.05,
+   "date": "2026-10-12",
+   "machines": [
+    "Pok\u00e9mon (Pro) (Stern, 2026)"
+   ],
+   "by": [
+    "intric8"
+   ],
+   "flags": {
+    "Pok\u00e9mon (Pro) (Stern, 2026)": [
+     "New release"
+    ]
+   }
+  },
+  {
+   "location_id": 28236,
+   "location_name": "Kingpin Melbourne",
+   "city": "Melbourne",
+   "link": "https://pinballmap.com/map?by_location_id=28236",
+   "lat": -37.8152725,
+   "lon": 144.9650986,
+   "ids": {
+    "Pok\u00e9mon (Pro) (Stern, 2026)": 4615
+   },
+   "kind": "condition",
+   "status": "amber",
+   "rank": 5,
+   "date": "2026-10-14",
+   "machine": "Pok\u00e9mon (Pro) (Stern, 2026)",
+   "comment": "Machine bash toy broken, unable to complete battles to start multiball",
+   "user": "sc0ttf",
+   "by": [
+    "sc0ttf"
+   ],
+   "flags": {}
+  }
+ ],
+ "confirmations": 3
+}
