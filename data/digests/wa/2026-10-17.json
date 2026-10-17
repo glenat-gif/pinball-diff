@@ -1,0 +1,34 @@
+{
+ "items": [
+  {
+   "location_id": 28432,
+   "location_name": "Atomic Arcade",
+   "city": "Perth",
+   "link": "https://pinballmap.com/map?by_location_id=28432",
+   "lat": -31.9452203,
+   "lon": 115.8593287,
+   "ids": {
+    "Iron Maiden: Legacy of the Beast (Pro) (Stern, 2018)": 2923,
+    "Judge Dredd (Bally, 1993)": 815,
+    "Metallica (Pro) (Stern, 2013)": 1591,
+    "Star Wars (Pro) (Stern, 2017)": 2843
+   },
+   "kind": "rotation",
+   "rank": 2.8,
+   "date": "2026-10-11",
+   "machines": [
+    "Metallica (Pro) (Stern, 2013)",
+    "Star Wars (Pro) (Stern, 2017)"
+   ],
+   "out": [
+    "Iron Maiden: Legacy of the Beast (Pro) (Stern, 2018)",
+    "Judge Dredd (Bally, 1993)"
+   ],
+   "by": [
+    "brodersau"
+   ],
+   "flags": {}
+  }
+ ],
+ "confirmations": 0
+}
