@@ -1,0 +1,141 @@
+{
+ "items": [
+  {
+   "location_id": 30027,
+   "location_name": "BeastieMonk",
+   "city": "Ipswich",
+   "link": "https://pinballmap.com/map?by_location_id=30027",
+   "lat": -27.6122298,
+   "lon": 152.7619663,
+   "ids": {
+    "Fish Tales (Williams, 1992)": 654,
+    "Black Jack (Bally, 1977)": 833
+   },
+   "kind": "added",
+   "rank": 2.8,
+   "date": "2026-10-18",
+   "machines": [
+    "Fish Tales (Williams, 1992)",
+    "Black Jack (Bally, 1977)"
+   ],
+   "by": [
+    "mischke"
+   ],
+   "flags": {}
+  },
+  {
+   "location_id": 9885,
+   "location_name": "Netherworld",
+   "city": "Fortitude Valley",
+   "link": "https://pinballmap.com/map?by_location_id=9885",
+   "lat": -27.4558148,
+   "lon": 153.0321039,
+   "ids": {
+    "Funhouse (Williams, 1990)": 703,
+    "Creature from the Black Lagoon (Bally, 1992)": 647
+   },
+   "kind": "rotation",
+   "rank": 2.9,
+   "date": "2026-10-17",
+   "machines": [
+    "Creature from the Black Lagoon (Bally, 1992)"
+   ],
+   "out": [
+    "Funhouse (Williams, 1990)"
+   ],
+   "by": [
+    "jimmynails"
+   ],
+   "flags": {}
+  },
+  {
+   "location_id": 25074,
+   "location_name": "Green Beacon Brewing Co.",
+   "city": "Teneriffe",
+   "link": "https://pinballmap.com/map?by_location_id=25074",
+   "lat": -27.4527777,
+   "lon": 153.0463709,
+   "ids": {
+    "Judge Dredd (Bally, 1993)": 815,
+    "Magic Castle (Zaccaria, 1984)": 2025
+   },
+   "kind": "removed",
+   "rank": 4,
+   "date": "2026-10-14",
+   "machines": [
+    "Judge Dredd (Bally, 1993)",
+    "Magic Castle (Zaccaria, 1984)"
+   ],
+   "by": [
+    "rexeverything"
+   ],
+   "flags": {}
+  },
+  {
+   "location_id": 25558,
+   "location_name": "The Brass Bookie",
+   "city": "Cairns City",
+   "link": "https://pinballmap.com/map?by_location_id=25558",
+   "lat": -16.9196191,
+   "lon": 145.7758608,
+   "ids": {
+    "Stranger Things (Premium) (Stern, 2019)": 3227
+   },
+   "kind": "removed",
+   "rank": 4,
+   "date": "2026-10-12",
+   "machines": [
+    "Stranger Things (Premium) (Stern, 2019)"
+   ],
+   "by": [
+    "CotClownfish"
+   ],
+   "flags": {}
+  },
+  {
+   "location_id": 17389,
+   "location_name": "The Clubhouse Moorooka",
+   "city": "Moorooka",
+   "link": "https://pinballmap.com/map?by_location_id=17389",
+   "lat": -27.5310871,
+   "lon": 153.0277733,
+   "ids": {
+    "Cosmic Princess (Allied Leisure, 1979)": 3319,
+    "Meteor (Stern Electronics, 1979)": 851
+   },
+   "kind": "removed",
+   "rank": 4,
+   "date": "2026-10-16",
+   "machines": [
+    "Cosmic Princess (Allied Leisure, 1979)",
+    "Meteor (Stern Electronics, 1979)"
+   ],
+   "by": [
+    "rexeverything"
+   ],
+   "flags": {}
+  },
+  {
+   "location_id": 14778,
+   "location_name": "The Park Coomera",
+   "city": "Coomera",
+   "link": "https://pinballmap.com/map?by_location_id=14778",
+   "lat": -27.8555051,
+   "lon": 153.3135258,
+   "ids": {
+    "JAWS (Pro) (Stern, 2024)": 3799
+   },
+   "kind": "removed",
+   "rank": 4,
+   "date": "2026-10-12",
+   "machines": [
+    "JAWS (Pro) (Stern, 2024)"
+   ],
+   "by": [
+    "pinzvidz"
+   ],
+   "flags": {}
+  }
+ ],
+ "confirmations": 0
+}

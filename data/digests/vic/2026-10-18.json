@@ -1,0 +1,94 @@
+{
+ "items": [
+  {
+   "location_id": 30659,
+   "location_name": "Troll Aus Melbourne PTY LTD",
+   "city": "Thornbury",
+   "link": "https://pinballmap.com/map?by_location_id=30659",
+   "lat": -37.7540291,
+   "lon": 144.9940153,
+   "ids": {
+    "Pok\u00e9mon (Pro) (Stern, 2026)": 4615
+   },
+   "kind": "new_venue",
+   "rank": -0.05,
+   "date": "2026-10-12",
+   "machines": [
+    "Pok\u00e9mon (Pro) (Stern, 2026)"
+   ],
+   "by": [
+    "intric8"
+   ],
+   "flags": {
+    "Pok\u00e9mon (Pro) (Stern, 2026)": [
+     "New release"
+    ]
+   }
+  },
+  {
+   "location_id": 18887,
+   "location_name": "The Pinball Parlour",
+   "city": "Campbellfield",
+   "link": "https://pinballmap.com/map?by_location_id=18887",
+   "lat": -37.6668223,
+   "lon": 144.9558168,
+   "ids": {
+    "Dr. Dude (Bally, 1990)": 738
+   },
+   "kind": "added",
+   "rank": 2.9,
+   "date": "2026-10-17",
+   "machines": [
+    "Dr. Dude (Bally, 1990)"
+   ],
+   "by": [
+    "trd"
+   ],
+   "flags": {}
+  },
+  {
+   "location_id": 27598,
+   "location_name": "Wangaratta Supa Bowl",
+   "city": "Wangaratta",
+   "link": "https://pinballmap.com/map?by_location_id=27598",
+   "lat": -36.3537027,
+   "lon": 146.3252495,
+   "ids": {
+    "Scared Stiff (Bally, 1996)": 648
+   },
+   "kind": "removed",
+   "rank": 4,
+   "date": "2026-10-18",
+   "machines": [
+    "Scared Stiff (Bally, 1996)"
+   ],
+   "by": [
+    "Oliwardcomics"
+   ],
+   "flags": {}
+  },
+  {
+   "location_id": 28236,
+   "location_name": "Kingpin Melbourne",
+   "city": "Melbourne",
+   "link": "https://pinballmap.com/map?by_location_id=28236",
+   "lat": -37.8152725,
+   "lon": 144.9650986,
+   "ids": {
+    "Pok\u00e9mon (Pro) (Stern, 2026)": 4615
+   },
+   "kind": "condition",
+   "status": "amber",
+   "rank": 5,
+   "date": "2026-10-16",
+   "machine": "Pok\u00e9mon (Pro) (Stern, 2026)",
+   "comment": "Crazy how quickly this has gone from brand new to unplayable. As others have reported the Meowth balloon is broken, it flops onto the playfield, doesn\u2019t register, the ball gets stuck behind it, and obviously makes the mulitball very difficult to get.  \nAlso, the scoop is no longer consistently registering the ball, so you miss out on beginning battles and claiming free balls. Sometimes it registers, mostly it doesn\u2019t. The machine will spit it during a ball search. \nAnd to top it off, the Charmander spinner is spinning but not registering spins, making the Charmander mode useless for scoring. \nThe machine should be switched off until a tech visits.",
+   "user": "nelgsta",
+   "by": [
+    "nelgsta"
+   ],
+   "flags": {}
+  }
+ ],
+ "confirmations": 4
+}
