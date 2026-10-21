@@ -1,0 +1,159 @@
+{
+ "items": [
+  {
+   "location_id": 11216,
+   "location_name": "Tattersalls Hotel",
+   "city": "Penrith",
+   "link": "https://pinballmap.com/map?by_location_id=11216",
+   "lat": -33.753351992739,
+   "lon": 150.694679953273,
+   "ids": {
+    "Transformers: More Than Meets the Eye (Premium) (Stern, 2026)": 4626,
+    "Attack From Mars (Remake LE) (Chicago Gaming, 2017)": 2835,
+    "Aerosmith (LE) (Stern, 2017)": 2773,
+    "Star Wars: Fall of the Empire (Premium) (Stern, 2025)": 4548,
+    "John Wick (Premium) (Stern, 2024)": 3846
+   },
+   "kind": "rotation",
+   "rank": 2.6500000000000004,
+   "date": "2026-10-18",
+   "machines": [
+    "Transformers: More Than Meets the Eye (Premium) (Stern, 2026)",
+    "Attack From Mars (Remake LE) (Chicago Gaming, 2017)",
+    "John Wick (Premium) (Stern, 2024)"
+   ],
+   "out": [
+    "Aerosmith (LE) (Stern, 2017)",
+    "Star Wars: Fall of the Empire (Premium) (Stern, 2025)"
+   ],
+   "by": [
+    "JediPimp"
+   ],
+   "flags": {
+    "Transformers: More Than Meets the Eye (Premium) (Stern, 2026)": [
+     "Premium",
+     "New release"
+    ],
+    "John Wick (Premium) (Stern, 2024)": [
+     "Premium"
+    ]
+   }
+  },
+  {
+   "location_id": 20102,
+   "location_name": "White Cockatoo Hotel",
+   "city": "Petersham",
+   "link": "https://pinballmap.com/map?by_location_id=20102",
+   "lat": -33.8933268,
+   "lon": 151.1557268,
+   "ids": {
+    "Jurassic Park (Pro) (Stern, 2019)": 3167,
+    "Iron Maiden: Legacy of the Beast (Premium) (Stern, 2018)": 2924
+   },
+   "kind": "rotation",
+   "rank": 2.85,
+   "date": "2026-10-20",
+   "machines": [
+    "Iron Maiden: Legacy of the Beast (Premium) (Stern, 2018)"
+   ],
+   "out": [
+    "Jurassic Park (Pro) (Stern, 2019)"
+   ],
+   "by": [
+    "Bruce007"
+   ],
+   "flags": {
+    "Iron Maiden: Legacy of the Beast (Premium) (Stern, 2018)": [
+     "Premium"
+    ]
+   }
+  },
+  {
+   "location_id": 26691,
+   "location_name": "Billy's Fish n Chips",
+   "city": "Warilla",
+   "link": "https://pinballmap.com/map?by_location_id=26691",
+   "lat": -34.5524534,
+   "lon": 150.8614152,
+   "ids": {
+    "Stranger Things (Pro) (Stern, 2019)": 3226
+   },
+   "kind": "removed",
+   "rank": 4,
+   "date": "2026-10-15",
+   "machines": [
+    "Stranger Things (Pro) (Stern, 2019)"
+   ],
+   "by": [
+    "jimmyp_oz"
+   ],
+   "flags": {}
+  },
+  {
+   "location_id": 14587,
+   "location_name": "Public House Petersham",
+   "city": "Petersham",
+   "link": "https://pinballmap.com/map?by_location_id=14587",
+   "lat": -33.8966608,
+   "lon": 151.1594821,
+   "ids": {
+    "Iron Maiden: Legacy of the Beast (Premium) (Stern, 2018)": 2924,
+    "Kiss (Stern, 2015)": 2353
+   },
+   "kind": "removed",
+   "rank": 4,
+   "date": "2026-10-20",
+   "machines": [
+    "Iron Maiden: Legacy of the Beast (Premium) (Stern, 2018)",
+    "Kiss (Stern, 2015)"
+   ],
+   "by": [
+    "Bruce007"
+   ],
+   "flags": {}
+  },
+  {
+   "location_id": 28617,
+   "location_name": "The Erko Hotel",
+   "city": "Erskineville",
+   "link": "https://pinballmap.com/map?by_location_id=28617",
+   "lat": -33.8990709,
+   "lon": 151.183431,
+   "ids": {
+    "Batman: The Dark Knight (Stern, 2008)": 652
+   },
+   "kind": "removed",
+   "rank": 4,
+   "date": "2026-10-15",
+   "machines": [
+    "Batman: The Dark Knight (Stern, 2008)"
+   ],
+   "by": [
+    "achuter"
+   ],
+   "flags": {}
+  },
+  {
+   "location_id": 11260,
+   "location_name": "Timezone Miranda",
+   "city": "Miranda",
+   "link": "https://pinballmap.com/map?by_location_id=11260",
+   "lat": -34.0355512,
+   "lon": 151.1006368,
+   "ids": {
+    "Beatles (Gold) (Stern, 2018)": 3086
+   },
+   "kind": "removed",
+   "rank": 4,
+   "date": "2026-10-16",
+   "machines": [
+    "Beatles (Gold) (Stern, 2018)"
+   ],
+   "by": [
+    "bogandhi"
+   ],
+   "flags": {}
+  }
+ ],
+ "confirmations": 3
+}
