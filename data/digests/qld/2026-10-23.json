@@ -1,0 +1,148 @@
+{
+ "items": [
+  {
+   "location_id": 30761,
+   "location_name": "Wellers Hill Bowls Club",
+   "city": "Tarragindi",
+   "link": "https://pinballmap.com/map?by_location_id=30761",
+   "lat": -27.5180274,
+   "lon": 153.048043,
+   "ids": {
+    "Gladiators (Gottlieb, 1993)": 1240
+   },
+   "kind": "new_venue",
+   "rank": 0,
+   "date": "2026-10-22",
+   "machines": [
+    "Gladiators (Gottlieb, 1993)"
+   ],
+   "by": [
+    "rexeverything"
+   ],
+   "flags": {}
+  },
+  {
+   "location_id": 14333,
+   "location_name": "BrewDog DogTap Brisbane",
+   "city": "Brisbane City",
+   "link": "https://pinballmap.com/map?by_location_id=14333",
+   "lat": -27.4484924,
+   "lon": 153.0998284,
+   "ids": {
+    "Centigrade 37 (Gottlieb, 1977)": 1674,
+    "Stars (Stern Electronics, 1978)": 855,
+    "Cosmic Princess (Allied Leisure, 1979)": 3319,
+    "Meteor (Stern Electronics, 1979)": 851
+   },
+   "kind": "swap",
+   "rank": 2,
+   "date": "2026-10-19",
+   "out": "Centigrade 37 (Gottlieb, 1977)",
+   "in": "Centigrade 37 (Gottlieb, 1977)",
+   "by": [
+    "victabeer"
+   ],
+   "flags": {}
+  },
+  {
+   "location_id": 14333,
+   "location_name": "BrewDog DogTap Brisbane",
+   "city": "Brisbane City",
+   "link": "https://pinballmap.com/map?by_location_id=14333",
+   "lat": -27.4484924,
+   "lon": 153.0998284,
+   "ids": {
+    "Centigrade 37 (Gottlieb, 1977)": 1674,
+    "Stars (Stern Electronics, 1978)": 855,
+    "Cosmic Princess (Allied Leisure, 1979)": 3319,
+    "Meteor (Stern Electronics, 1979)": 851
+   },
+   "kind": "added",
+   "rank": 2.7,
+   "date": "2026-10-19",
+   "machines": [
+    "Stars (Stern Electronics, 1978)",
+    "Cosmic Princess (Allied Leisure, 1979)",
+    "Meteor (Stern Electronics, 1979)"
+   ],
+   "by": [
+    "victabeer"
+   ],
+   "flags": {}
+  },
+  {
+   "location_id": 30027,
+   "location_name": "BeastieMonk",
+   "city": "Ipswich",
+   "link": "https://pinballmap.com/map?by_location_id=30027",
+   "lat": -27.6122298,
+   "lon": 152.7619663,
+   "ids": {
+    "Fish Tales (Williams, 1992)": 654,
+    "Black Jack (Bally, 1977)": 833
+   },
+   "kind": "added",
+   "rank": 2.8,
+   "date": "2026-10-18",
+   "machines": [
+    "Fish Tales (Williams, 1992)",
+    "Black Jack (Bally, 1977)"
+   ],
+   "by": [
+    "mischke"
+   ],
+   "flags": {}
+  },
+  {
+   "location_id": 9885,
+   "location_name": "Netherworld",
+   "city": "Fortitude Valley",
+   "link": "https://pinballmap.com/map?by_location_id=9885",
+   "lat": -27.4558148,
+   "lon": 153.0321039,
+   "ids": {
+    "Funhouse (Williams, 1990)": 703,
+    "Creature from the Black Lagoon (Bally, 1992)": 647
+   },
+   "kind": "rotation",
+   "rank": 2.9,
+   "date": "2026-10-17",
+   "machines": [
+    "Creature from the Black Lagoon (Bally, 1992)"
+   ],
+   "out": [
+    "Funhouse (Williams, 1990)"
+   ],
+   "by": [
+    "jimmynails"
+   ],
+   "flags": {}
+  },
+  {
+   "location_id": 17389,
+   "location_name": "The Clubhouse Moorooka",
+   "city": "Moorooka",
+   "link": "https://pinballmap.com/map?by_location_id=17389",
+   "lat": -27.5310871,
+   "lon": 153.0277733,
+   "ids": {
+    "Gladiators (Gottlieb, 1993)": 1240,
+    "Magic Castle (Zaccaria, 1984)": 2025
+   },
+   "kind": "rotation",
+   "rank": 2.9,
+   "date": "2026-10-23",
+   "machines": [
+    "Magic Castle (Zaccaria, 1984)"
+   ],
+   "out": [
+    "Gladiators (Gottlieb, 1993)"
+   ],
+   "by": [
+    "rexeverything"
+   ],
+   "flags": {}
+  }
+ ],
+ "confirmations": 2
+}
