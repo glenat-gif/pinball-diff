@@ -1,0 +1,158 @@
+{
+ "items": [
+  {
+   "location_id": 23700,
+   "location_name": "Timezone Ballarat",
+   "city": "Ballarat Central",
+   "link": "https://pinballmap.com/map?by_location_id=23700",
+   "lat": -37.5626162,
+   "lon": 143.8608632,
+   "ids": {
+    "Iron Maiden: Legacy of the Beast (Pro) (Stern, 2018)": 2923,
+    "Godzilla (Pro) (Stern, 2021)": 3415
+   },
+   "kind": "added",
+   "rank": 2.9,
+   "date": "2026-10-22",
+   "machines": [
+    "Iron Maiden: Legacy of the Beast (Pro) (Stern, 2018)"
+   ],
+   "by": [
+    "Jamestb0060"
+   ],
+   "flags": {}
+  },
+  {
+   "location_id": 29773,
+   "location_name": "Berwick Springs Hotel",
+   "city": "Berwick",
+   "link": "https://pinballmap.com/map?by_location_id=29773",
+   "lat": -38.0590453,
+   "lon": 145.3373345,
+   "ids": {
+    "Guns N' Roses (LE) (Jersey Jack, 2020)": 3271
+   },
+   "kind": "removed",
+   "rank": 4,
+   "date": "2026-10-22",
+   "machines": [
+    "Guns N' Roses (LE) (Jersey Jack, 2020)"
+   ],
+   "by": [
+    "guineapigface"
+   ],
+   "flags": {}
+  },
+  {
+   "location_id": 18887,
+   "location_name": "The Pinball Parlour",
+   "city": "Campbellfield",
+   "link": "https://pinballmap.com/map?by_location_id=18887",
+   "lat": -37.6668223,
+   "lon": 144.9558168,
+   "ids": {
+    "Dr. Dude (Bally, 1990)": 738
+   },
+   "kind": "removed",
+   "rank": 4,
+   "date": "2026-10-24",
+   "machines": [
+    "Dr. Dude (Bally, 1990)"
+   ],
+   "by": [
+    "trd"
+   ],
+   "flags": {}
+  },
+  {
+   "location_id": 27598,
+   "location_name": "Wangaratta Supa Bowl",
+   "city": "Wangaratta",
+   "link": "https://pinballmap.com/map?by_location_id=27598",
+   "lat": -36.3537027,
+   "lon": 146.3252495,
+   "ids": {
+    "Scared Stiff (Bally, 1996)": 648
+   },
+   "kind": "removed",
+   "rank": 4,
+   "date": "2026-10-18",
+   "machines": [
+    "Scared Stiff (Bally, 1996)"
+   ],
+   "by": [
+    "Oliwardcomics"
+   ],
+   "flags": {}
+  },
+  {
+   "location_id": 28236,
+   "location_name": "Kingpin Melbourne",
+   "city": "Melbourne",
+   "link": "https://pinballmap.com/map?by_location_id=28236",
+   "lat": -37.8152725,
+   "lon": 144.9650986,
+   "ids": {
+    "Deadpool (Pro) (Stern, 2018)": 3022
+   },
+   "kind": "condition",
+   "status": "amber",
+   "rank": 5,
+   "date": "2026-10-19",
+   "machine": "Deadpool (Pro) (Stern, 2018)",
+   "comment": "Left Flipper not working, don't play until fixed",
+   "user": "sc0ttf",
+   "by": [
+    "sc0ttf"
+   ],
+   "flags": {}
+  },
+  {
+   "location_id": 23700,
+   "location_name": "Timezone Ballarat",
+   "city": "Ballarat Central",
+   "link": "https://pinballmap.com/map?by_location_id=23700",
+   "lat": -37.5626162,
+   "lon": 143.8608632,
+   "ids": {
+    "Iron Maiden: Legacy of the Beast (Pro) (Stern, 2018)": 2923,
+    "Godzilla (Pro) (Stern, 2021)": 3415
+   },
+   "kind": "condition",
+   "status": "amber",
+   "rank": 5,
+   "date": "2026-10-22",
+   "machine": "Iron Maiden: Legacy of the Beast (Pro) (Stern, 2018)",
+   "comment": "Right flipper slightly weak",
+   "user": "Jamestb0060",
+   "by": [
+    "Jamestb0060"
+   ],
+   "flags": {}
+  },
+  {
+   "location_id": 23700,
+   "location_name": "Timezone Ballarat",
+   "city": "Ballarat Central",
+   "link": "https://pinballmap.com/map?by_location_id=23700",
+   "lat": -37.5626162,
+   "lon": 143.8608632,
+   "ids": {
+    "Iron Maiden: Legacy of the Beast (Pro) (Stern, 2018)": 2923,
+    "Godzilla (Pro) (Stern, 2021)": 3415
+   },
+   "kind": "condition",
+   "status": "green",
+   "rank": 6,
+   "date": "2026-10-22",
+   "machine": "Godzilla (Pro) (Stern, 2021)",
+   "comment": "Machine playfield cleaned! Still not connected to wifi or updated.",
+   "user": "Jamestb0060",
+   "by": [
+    "Jamestb0060"
+   ],
+   "flags": {}
+  }
+ ],
+ "confirmations": 1
+}

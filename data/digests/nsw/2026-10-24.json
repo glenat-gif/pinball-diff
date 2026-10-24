@@ -1,0 +1,168 @@
+{
+ "items": [
+  {
+   "location_id": 30751,
+   "location_name": "Newcastle United Sports Club",
+   "city": "Adamstown",
+   "link": "https://pinballmap.com/map?by_location_id=30751",
+   "lat": -32.93305,
+   "lon": 151.729484,
+   "ids": {
+    "No Fear: Dangerous Sports (Williams, 1995)": 675
+   },
+   "kind": "new_venue",
+   "rank": 0,
+   "date": "2026-10-22",
+   "machines": [
+    "No Fear: Dangerous Sports (Williams, 1995)"
+   ],
+   "by": [
+    "sartana66"
+   ],
+   "flags": {}
+  },
+  {
+   "location_id": 11216,
+   "location_name": "Tattersalls Hotel",
+   "city": "Penrith",
+   "link": "https://pinballmap.com/map?by_location_id=11216",
+   "lat": -33.753351992739,
+   "lon": 150.694679953273,
+   "ids": {
+    "Transformers: More Than Meets the Eye (Premium) (Stern, 2026)": 4626,
+    "Attack From Mars (Remake LE) (Chicago Gaming, 2017)": 2835,
+    "Aerosmith (LE) (Stern, 2017)": 2773,
+    "Star Wars: Fall of the Empire (Premium) (Stern, 2025)": 4548,
+    "John Wick (Premium) (Stern, 2024)": 3846
+   },
+   "kind": "rotation",
+   "rank": 2.6500000000000004,
+   "date": "2026-10-18",
+   "machines": [
+    "Transformers: More Than Meets the Eye (Premium) (Stern, 2026)",
+    "Attack From Mars (Remake LE) (Chicago Gaming, 2017)",
+    "John Wick (Premium) (Stern, 2024)"
+   ],
+   "out": [
+    "Aerosmith (LE) (Stern, 2017)",
+    "Star Wars: Fall of the Empire (Premium) (Stern, 2025)"
+   ],
+   "by": [
+    "JediPimp"
+   ],
+   "flags": {
+    "Transformers: More Than Meets the Eye (Premium) (Stern, 2026)": [
+     "Premium",
+     "New release"
+    ],
+    "John Wick (Premium) (Stern, 2024)": [
+     "Premium"
+    ]
+   }
+  },
+  {
+   "location_id": 25330,
+   "location_name": "Nambucca Heads RSL Club",
+   "city": "Nambucca Heads",
+   "link": "https://pinballmap.com/map?by_location_id=25330",
+   "lat": -30.6454941,
+   "lon": 153.0031622,
+   "ids": {
+    "Led Zeppelin (Premium) (Stern, 2020)": 3280,
+    "Stranger Things (Premium) (Stern, 2019)": 3227
+   },
+   "kind": "rotation",
+   "rank": 2.85,
+   "date": "2026-10-24",
+   "machines": [
+    "Stranger Things (Premium) (Stern, 2019)"
+   ],
+   "out": [
+    "Led Zeppelin (Premium) (Stern, 2020)"
+   ],
+   "by": [
+    "bogandhi"
+   ],
+   "flags": {
+    "Stranger Things (Premium) (Stern, 2019)": [
+     "Premium"
+    ]
+   }
+  },
+  {
+   "location_id": 20102,
+   "location_name": "White Cockatoo Hotel",
+   "city": "Petersham",
+   "link": "https://pinballmap.com/map?by_location_id=20102",
+   "lat": -33.8933268,
+   "lon": 151.1557268,
+   "ids": {
+    "Jurassic Park (Pro) (Stern, 2019)": 3167,
+    "Iron Maiden: Legacy of the Beast (Premium) (Stern, 2018)": 2924
+   },
+   "kind": "rotation",
+   "rank": 2.85,
+   "date": "2026-10-20",
+   "machines": [
+    "Iron Maiden: Legacy of the Beast (Premium) (Stern, 2018)"
+   ],
+   "out": [
+    "Jurassic Park (Pro) (Stern, 2019)"
+   ],
+   "by": [
+    "Bruce007"
+   ],
+   "flags": {
+    "Iron Maiden: Legacy of the Beast (Premium) (Stern, 2018)": [
+     "Premium"
+    ]
+   }
+  },
+  {
+   "location_id": 14587,
+   "location_name": "Public House Petersham",
+   "city": "Petersham",
+   "link": "https://pinballmap.com/map?by_location_id=14587",
+   "lat": -33.8966608,
+   "lon": 151.1594821,
+   "ids": {
+    "Iron Maiden: Legacy of the Beast (Premium) (Stern, 2018)": 2924,
+    "Kiss (Stern, 2015)": 2353
+   },
+   "kind": "removed",
+   "rank": 4,
+   "date": "2026-10-20",
+   "machines": [
+    "Iron Maiden: Legacy of the Beast (Premium) (Stern, 2018)",
+    "Kiss (Stern, 2015)"
+   ],
+   "by": [
+    "Bruce007"
+   ],
+   "flags": {}
+  },
+  {
+   "location_id": 30751,
+   "location_name": "Newcastle United Sports Club",
+   "city": "Adamstown",
+   "link": "https://pinballmap.com/map?by_location_id=30751",
+   "lat": -32.93305,
+   "lon": 151.729484,
+   "ids": {
+    "No Fear: Dangerous Sports (Williams, 1995)": 675
+   },
+   "kind": "condition",
+   "status": "amber",
+   "rank": 5,
+   "date": "2026-10-22",
+   "machine": "No Fear: Dangerous Sports (Williams, 1995)",
+   "comment": "Machine is currently sitting in a corner unplugged.",
+   "user": "sartana66",
+   "by": [
+    "sartana66"
+   ],
+   "flags": {}
+  }
+ ],
+ "confirmations": 7
+}
