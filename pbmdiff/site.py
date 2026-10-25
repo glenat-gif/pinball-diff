@@ -151,9 +151,8 @@ def zone_block(z, heading_link=True, when=True, more=False):
         body = '<ul class="changes">' + "".join(change(i) for i in z["items"]) + "</ul>"
     else:
         body = '<p class="quiet">Nothing changed on the map.</p>'
-    n = z["confirmations"]
-    conf = (f'<p class="confirmed">Lineups confirmed unchanged at {n} venue{"s" if n != 1 else ""}.</p>' if n else "")
-    more_html = (f'<p class="more"><a href="{u("/zone/" + z["zone"] + "/")}">Earlier weeks in {e(short(z["zone"]))}</a></p>'
+    conf = ""                                   # confirmations are counted in the data, not shown: a line about nothing happening
+    more_html = (f'<p class="more"><a href="{u("/zone/" + z["zone"] + "/")}">The last four weeks in {e(short(z["zone"]))}</a></p>'
                  if more else "")
     return (f'<section class="zone" id="{e(z["zone"])}"><header><h2>{title}</h2>{when_html}</header>'
             f"{body}{conf}{more_html}</section>")
