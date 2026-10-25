@@ -175,6 +175,31 @@ class MachineTests(Built):
         self.assertIn("opacity:.45", row)                                    # Taxi is leaving
         self.assertLess(row.index("img.example/a"), row.index("img.example/b"))
         self.assertIn("by_machine_id=5&amp;by_country=AU", row)
+        # The arrival's tile sits in the left column where the label used to be; the label becomes a pill.
+        self.assertLess(row.index("img.example/a"), row.index("Rotation"))
+        self.assertIn('width="96" height="60"', row)
+        self.assertIn("border-radius:9px", row)
+        # Without art the label stays in the left column.
+        mail._CATALOGUE = {}
+        self.assertIn("&#9679; Rotation", mail._h_item(item))
+        mail._CATALOGUE = None
+
+    def test_email_leads_with_a_hero_when_the_best_item_has_art(self):
+        from pbmdiff import mail
+        iss = issue.ensure_latest(self.events, on=ON)
+        self.assertIsNone(mail.hero(iss))                                     # no catalogue: no hero
+        lead = iss["zones"][0]["items"][0]
+        self.assertEqual(lead["kind"], "swap")
+        lead["ids"] = {lead["in"]: 5}
+        mail._CATALOGUE = {"5": {"img": "https://img.example/cc", "w": 600, "h": 600}}
+        site.SITE["machine_art"] = True
+        text, item = mail.hero(iss)
+        self.assertIs(item, lead)
+        self.assertTrue(text.startswith("Cactus Canyon (Remake Special) lands at"))
+        page = mail.html(iss)
+        self.assertEqual(page.count("img.example/cc"), 1)                     # in the hero, not repeated in the list
+        self.assertIn('width="360" height="360"', page)                        # a square backglass fills the height
+        self.assertLess(page.index("img.example/cc"), page.index(">Victoria<"))
         mail._CATALOGUE = None
 
     def test_change_rows_carry_machine_art(self):

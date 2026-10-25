@@ -56,8 +56,8 @@ def _headline(item, zone, local):
     return None
 
 
-def subject(iss):
-    """Lead with the best thing that happened, never with a count."""
+def ranked(iss):
+    """The week's items as (headline, score, item), best first."""
     heads, home = [], issue.home_zone()
     for z in iss["zones"]:
         if z["zone"] not in SITE["email_zones"]:
@@ -65,8 +65,15 @@ def subject(iss):
         for item in z["items"]:
             h = _headline(item, z["zone"], z["zone"] == home)
             if h and h[1] > 0:
-                heads.append(h)
-    for c in issue.email_comps(iss, home)[:2]:
+                heads.append((h[0], h[1], item))
+    heads.sort(key=lambda h: -h[1])
+    return heads
+
+
+def subject(iss):
+    """Lead with the best thing that happened, never with a count."""
+    heads = [(t, sc) for t, sc, _ in ranked(iss)]
+    for c in issue.email_comps(iss, issue.home_zone())[:2]:
         when = render.day(c["start"]).split(" ", 1)[0]       # Thu
         heads.append((f"{c['venue'] or c['name']} comp {when}", 4))
     heads.sort(key=lambda h: -h[1])
@@ -79,6 +86,14 @@ def subject(iss):
         if len(both) <= 100:
             return both
     return heads[0][0]
+
+
+def hero(iss):
+    """The item to lead the email with: the best-ranked arrival or venue that has artwork."""
+    for text, score, item in ranked(iss):
+        if score >= 9 and art_for(item):
+            return text, item
+    return None
 
 
 def _machines(names, item=None):
@@ -199,10 +214,11 @@ def _catalogue():
     return _CATALOGUE
 
 
-def _h_art(item, limit=6):
-    """Backglass tiles for the machines a change mentions, arrivals first, the ones leaving dimmed."""
+def art_for(item, limit=6):
+    """[(machine id, image url, name, leaving, width, height)] for the machines a change mentions,
+    arrivals first."""
     if not SITE.get("machine_art"):
-        return ""
+        return []
     cat = _catalogue()
     k = item["kind"]
     if k == "swap":
@@ -213,21 +229,36 @@ def _h_art(item, limit=6):
         gone = k == "removed"
         names = [(n, gone) for n in item.get("machines") or []] + [(n, True) for n in item.get("out") or []]
     ids = item.get("ids") or {}
-    tiles, seen = [], set()
+    out, seen = [], set()
     for name, leaving in names:
         mid = ids.get(name)
-        img = (cat.get(str(mid)) or {}).get("img") if mid else None
+        m = cat.get(str(mid)) if mid else None
+        img = (m or {}).get("img")
         if not img or img in seen:
             continue
         seen.add(img)
-        dim = "opacity:.45;" if leaving else ""
-        tiles.append(f'<a href="https://pinballmap.com/map?by_machine_id={mid}&amp;by_country=AU" title="{_e(name)}">'
-                     f'<img src="{_e(img)}" alt="{_e(name)}" width="72" height="45" '
-                     f'style="display:inline-block;width:72px;height:45px;object-fit:cover;border-radius:4px;'
-                     f'margin:7px 6px 0 0;border:0;{dim}"></a>')
-        if len(tiles) == limit:
+        out.append((mid, img, name, leaving, int(m.get("w") or 640), int(m.get("h") or 400)))
+        if len(out) == limit:
             break
-    return f'<div>{"".join(tiles)}</div>' if tiles else ""
+    return out
+
+
+def _tile(t, w, h, margin="0"):
+    mid, img, name, leaving, _, _ = t
+    dim = "opacity:.45;" if leaving else ""
+    return (f'<a href="https://pinballmap.com/map?by_machine_id={mid}&amp;by_country=AU" title="{_e(name)}" style="text-decoration:none">'
+            f'<img src="{_e(img)}" alt="{_e(name)}" width="{w}" height="{h}" '
+            f'style="display:inline-block;width:{w}px;height:{h}px;object-fit:cover;border-radius:5px;margin:{margin};border:0;{dim}"></a>')
+
+
+def _h_art(item, skip_first=False):
+    tiles = art_for(item)[1 if skip_first else 0:]
+    return f'<div>{"".join(_tile(t, 72, 45, "7px 6px 0 0") for t in tiles)}</div>' if tiles else ""
+
+
+def _pill(label, colour):
+    return (f'<span style="display:inline-block;font:800 10px/1.7 Arial,sans-serif;letter-spacing:1px;text-transform:uppercase;'
+            f'color:{colour};border:1px solid {colour};border-radius:9px;padding:0 7px;margin-bottom:4px">{_e(label)}</span>')
 
 
 def _h_row(label, colour, body, meta=""):
@@ -246,7 +277,43 @@ def _h_item(item, state=""):
     venue += f' <span style="color:#b84c00;font-size:12px;font-weight:700">&nbsp;{_e(state)}</span>' if state else ""
     by = item.get("by") or []
     meta = _e(render.day(item["date"])) + (f" · via {_e(render.join(by))}" if by else "")
-    return _h_row(render.label(item), TONE[render.tone(item)], f"{venue}<br>{_h_what(item)}{_h_art(item)}", meta)
+    label, colour = render.label(item), TONE[render.tone(item)]
+    tiles = art_for(item)
+    if not tiles:
+        return _h_row(label, colour, f"{venue}<br>{_h_what(item)}", meta)
+    left = _tile(tiles[0], 96, 60)
+    body = f"{_pill(label, colour)}<br>{venue}<br>{_h_what(item)}{_h_art(item, skip_first=True)}"
+    meta_html = f'<div style="color:#655e6e;font-size:13px;margin-top:3px">{meta}</div>'
+    return (f'<tr><td style="padding:12px 0;border-bottom:1px solid #e2dccf;vertical-align:top;width:104px">{left}</td>'
+            f'<td style="padding:12px 0 12px 10px;border-bottom:1px solid #e2dccf;vertical-align:top;font:15px/1.5 Arial,sans-serif;color:#1b1720">'
+            f'{body}{meta_html}</td></tr>')
+
+
+def _h_hero(text, item, zone):
+    """The week's lead: the backglass large on a dark panel, then the headline and the change."""
+    t = art_for(item)[0]
+    _, img, name, _, w, h = t
+    if w / h >= 640 / 360:            # wide: fill the width
+        iw, ih = 640, round(640 * h / w)
+    else:                             # square or tall: fill the height
+        iw, ih = round(360 * w / h), 360
+    city = render.where(item)
+    venue = f'<a href="{_e(item["link"])}" style="color:#1b1720;font-weight:700">{_e(item["location_name"])}</a>'
+    venue += f' <span style="color:#655e6e">{_e(city)}</span>' if city else ""
+    by = item.get("by") or []
+    meta = _e(render.day(item["date"])) + (f" · via {_e(render.join(by))}" if by else "")
+    return (f'<table role="presentation" cellpadding="0" cellspacing="0" width="100%" style="margin-top:18px">'
+            f'<tr><td align="center" style="background:#120e18;border-radius:10px;padding:16px 0">'
+            f'<a href="https://pinballmap.com/map?by_machine_id={t[0]}&amp;by_country=AU" style="text-decoration:none">'
+            f'<img src="{_e(img)}" alt="{_e(name)}" width="{iw}" height="{ih}" '
+            f'style="display:block;width:{iw}px;max-width:100%;height:auto;border:0;border-radius:6px"></a></td></tr></table>'
+            f'<div style="margin:12px 0 0">{_pill(render.label(item), TONE[render.tone(item)])} '
+            f'<span style="font:800 10px/1.7 Arial,sans-serif;letter-spacing:1px;text-transform:uppercase;color:#655e6e">&nbsp;{_e(areas.SHORT[zone])}</span>'
+            f'<div style="font:800 22px/1.25 Arial,sans-serif;margin-top:4px">'
+            f'<a href="{_e(item["link"])}" style="color:#1b1720;text-decoration:none">{_e(text)}</a></div>'
+            f'<div style="font:15px/1.5 Arial,sans-serif;color:#1b1720;margin-top:6px">'
+            f'{"" if item["kind"] == "new_venue" else venue + "<br>"}{_h_what(item)}</div>'
+            f'<div style="color:#655e6e;font-size:13px;margin-top:3px">{meta}</div></div>')
 
 
 def _h_comp(c):
@@ -279,9 +346,15 @@ def html(iss):
     """The email as its own page: the backbox header, then the week."""
     zones = issue.email_zones(iss)
     active, quiet = sections(iss)
+    lead = hero(iss)
     parts = []
+    if lead:
+        zone = next(z["zone"] for z in zones if any(i is lead[1] for i in z["items"]))
+        parts.append(_h_hero(lead[0], lead[1], zone))
     for z, items, comps in active:
-        rows = [_h_item(i) for i in items]
+        rows = [_h_item(i) for i in items if not (lead and i is lead[1])]
+        if not rows and not comps:
+            continue
         if comps:
             rows.append(_h_sub(f"Comps this week in {areas.SHORT[z['zone']]}"))
             rows += [_h_comp(c) for c in comps]
@@ -305,13 +378,11 @@ def html(iss):
         parts.append(_h_section("On the podcasts", rows))
     span = render.span(iss["since"], iss["until"])
     n = render.count_changes(zones)
-    # The wordmark is an image so dark-mode mail apps cannot invert it; everything else is plain text.
-    head = (f'<a href="{_e(site_url("/"))}" style="display:block"><img src="{_e(site_url("/email-head.png"))}" width="600" height="110" '
-            f'alt="PINBALL THIS WEEK" style="display:block;width:100%;max-width:600px;height:auto;border:0;border-radius:10px"></a>'
-            f'<div style="font:16px/1.5 Arial,sans-serif;color:#1b1720;margin:14px 0 0">What changed in pinball this week, across Australia.</div>'
-            f'<div style="font:700 13px/1.6 \'Courier New\',Courier,monospace;letter-spacing:1px;color:#b84c00;margin-top:6px">'
-            f'{_e(span.upper())} &middot; {n} CHANGE{"" if n == 1 else "S"} &middot; '
-            f'<a href="{_e(site_url("/"))}" style="color:#b84c00">NEAR YOU ON THE WEBSITE</a></div>')
+    # The wordmark is an image so dark-mode mail apps cannot invert it; under it, one quiet line.
+    head = (f'<a href="{_e(site_url("/"))}" style="display:block"><img src="{_e(site_url("/email-head.png"))}" width="640" height="117" '
+            f'alt="PINBALL THIS WEEK" style="display:block;width:100%;max-width:640px;height:auto;border:0;border-radius:10px"></a>'
+            f'<div style="font:14px/1.5 Arial,sans-serif;color:#655e6e;margin:10px 0 0">{_e(span)} &middot; '
+            f'{n} change{"" if n == 1 else "s"} across Australia</div>')
     foot = (f'<p style="font:13px/1.5 Arial,sans-serif;color:#655e6e;margin:30px 0 0;padding-top:14px;border-top:1px solid #e2dccf">'
             f'Every venue links to its Pinball Map listing. If something is wrong, or you played something new, '
             f'update it there and it will be in next week\'s email.<br>'
@@ -321,7 +392,7 @@ def html(iss):
             f'<a href="{_e(site_url("/issues/"))}" style="color:#655e6e">Past emails</a> &middot; '
             f'<a href="{_e(site_url("/about/"))}" style="color:#655e6e">About</a></p>')
     return ('<!-- buttondown-editor-mode: fancy -->'
-            f'<div style="max-width:600px;margin:0 auto;padding:8px 12px;background:#f6f3ec">{head}{"".join(parts)}{foot}</div>')
+            f'<div style="max-width:640px;margin:0 auto;padding:8px 12px;background:#f6f3ec">{head}{"".join(parts)}{foot}</div>')
 
 
 def keep_copy(iss):
