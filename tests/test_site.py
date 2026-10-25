@@ -187,6 +187,7 @@ class MachineTests(Built):
     def test_email_leads_with_a_hero_when_the_best_item_has_art(self):
         from pbmdiff import mail
         iss = issue.ensure_latest(self.events, on=ON)
+        mail._CATALOGUE = {}
         self.assertIsNone(mail.hero(iss))                                     # no catalogue: no hero
         lead = iss["zones"][0]["items"][0]
         self.assertEqual(lead["kind"], "swap")
