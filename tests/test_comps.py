@@ -103,7 +103,7 @@ class CompTests(unittest.TestCase):
         ifpa.fetch(key="k", today=TODAY, get=fake_get, sleep=lambda s: None)
         dist = site.build(on=TODAY)
         home = (dist / "index.html").read_text()
-        self.assertIn("Comps in Victoria this week", home)
+        self.assertIn("Comps in Victoria", home)
         self.assertIn("Parlour Monthly", home)
         self.assertNotIn("NSW Open", home)                              # not Victoria
         self.assertNotIn("Secret Squirrel", home)

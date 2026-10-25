@@ -24,7 +24,7 @@ DIST = ROOT / "dist"
 CSS_VERSION = __import__("hashlib").sha1((ROOT / "static" / "style.css").read_bytes()).hexdigest()[:8]
 e = html.escape
 FONTS = ("https://fonts.googleapis.com/css2?family=Doto:wght@900"
-         "&family=Instrument+Sans:wght@400;600;700&display=swap")
+         "&family=Instrument+Sans:wght@400;600;700&family=Barlow+Condensed:wght@600;700&display=swap")
 FAVICON = ("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E"
            "%3Ccircle cx='16' cy='16' r='13' fill='%23ff7a1a'/%3E%3Ccircle cx='11.5' cy='11.5' r='3.5' "
            "fill='%23fff' fill-opacity='.75'/%3E%3C/svg%3E")
@@ -363,8 +363,7 @@ def signup():
                        for k, _ in areas.STATES))
     return (f'<form class="signup" action="https://buttondown.com/api/emails/embed-subscribe/{e(user)}" method="post">'
             '<h2>The weekly email</h2>'
-            '<p>Every Thursday, the week\'s changes in every state, in time to plan the weekend. '
-            'Free. One click to leave.</p>'
+            '<p>Every state, Victoria first, in time to plan the weekend. Free. One click to leave.</p>'
             '<div class="row"><label class="sr" for="em" hidden>Email address</label>'
             '<input id="em" type="email" name="email" required placeholder="you@example.com" autocomplete="email">'
             '<button type="submit">Subscribe</button></div>'
@@ -385,7 +384,7 @@ def short(label):
 
 def chips(current, counts):
     here = ' aria-current="page"'
-    links = [f'<a href="{u("/")}"{here if current == "home" else ""}>This week</a>']
+    links = [f'<a href="{u("/")}"{here if current == "home" else ""}>All states</a>']
     for z in issue.zone_order():
         n = counts.get(z, 0)
         if n == 0 and z not in SITE["email_zones"] and current != z:
@@ -393,17 +392,20 @@ def chips(current, counts):
         cur = ' aria-current="page"' if current == z else ""
         links.append(f'<a href="{u("/zone/" + z + "/")}"{cur}>{e(short(z))}'
                      f'<span class="n">{n}</span></a>')
-    return ('<nav class="chips" aria-label="Zones">' + "".join(links) + "</nav>"
+    return ('<nav class="states" aria-label="Zones">' + "".join(links) + "</nav>"
             # On a desktop the strip must be one line: shave the type a little, only if it does not fit.
-            '<script>(function(){var c=document.querySelector(".chips");function fit(){if(window.innerWidth<760)'
+            '<script>(function(){var c=document.querySelector(".states");function fit(){if(window.innerWidth<760)'
             '{c.style.fontSize="";return}var s=13;c.style.fontSize=s+"px";while(c.scrollWidth>c.clientWidth&&s>10)'
             '{s-=0.5;c.style.fontSize=s+"px"}}fit();addEventListener("resize",fit);'
             'if(document.fonts)document.fonts.ready.then(fit)})();</script>')
 
 
-def page(title, body, *, path, description, box_extra="", nav="", current=None):
+def page(title, body, *, path, description, box_extra="", nav="", current=None, dmd=""):
     full = f"{title} · {SITE['name']}" if title else SITE["name"]
     cur = lambda key: ' aria-current="page"' if current == key else ""
+    wm = (f'<h1 class="wm"><a href="{u("/")}">{e(SITE["name"])}</a></h1>' if current == "home"
+          else f'<a class="wm" href="{u("/")}">{e(SITE["name"])}</a>')
+    intro = f'<div class="intro">{box_extra}</div>' if box_extra else ""
     return f"""<!doctype html>
 <html lang="en-AU">
 <head>
@@ -428,12 +430,12 @@ def page(title, body, *, path, description, box_extra="", nav="", current=None):
 <link rel="stylesheet" href="{u('/style.css')}?v={CSS_VERSION}">
 </head>
 <body>
-<header class="box"><div class="wrap">
-<nav class="topnav" aria-label="Site"><a class="home" href="{u('/')}">{e(SITE['name'])}</a>
-<a href="{u('/comps/')}"{cur('comps')}>Comps</a><a href="{u('/machines/')}"{cur('machines')}>Machines</a><a href="{u('/podcasts/')}"{cur('podcasts')}>Podcasts</a><a href="{u('/issues/')}"{cur('issues')}>Emails</a><a href="{u('/about/')}"{cur('about')}>About</a></nav>
-{box_extra}
+<header class="mast"><div class="wrap">
+<div class="dmd-panel{" big" if current == "home" else ""}">{wm}{dmd}</div>
+<nav class="sections" aria-label="Site"><a href="{u('/')}"{cur('home')}>This week</a><a href="{u('/comps/')}"{cur('comps')}>Comps</a><a href="{u('/machines/')}"{cur('machines')}>Machines</a><a href="{u('/podcasts/')}"{cur('podcasts')}>Podcasts</a><a href="{u('/issues/')}"{cur('issues')}>Emails</a><a href="{u('/about/')}"{cur('about')}>About</a></nav>
 </div></header>
 <main><div class="wrap">
+{intro}
 {nav}
 {body}
 </div></main>
@@ -553,18 +555,18 @@ def home(weeks, counts, built_on, comps=()):
     active = [z for z in weeks if z["items"]]
     quiet = [z for z in weeks if not z["items"]]
     short_span = render.short_span(weeks[0]["since"], weeks[0]["until"])
-    box = (f'<h1 class="wordmark"><a href="{u("/")}">{e(SITE["name"])}</a></h1>'
-           f'<p class="lede">{e(SITE["tagline"])}'
-           f'<small>New venues, machines landing and leaving, and which machines need a tech. '
-           f'Updated every morning from <a href="https://pinballmap.com">Pinball Map</a>.</small></p>'
-           f'<div class="dmd-panel"><p class="score"><b>{total}</b> change{"s" if total != 1 else ""} · {e(short_span)}</p>'
-           f'<p class="dmd" id="dmd" aria-hidden="true" hidden><span id="dmd-text"></span></p></div>'
-           f"{signup()}")
+    dmd = (f'<p class="score"><b>{total}</b> change{"s" if total != 1 else ""} · {e(short_span)}</p>'
+           f'<p class="dmd" id="dmd" aria-hidden="true" hidden><span id="dmd-text"></span></p>')
+    box = (highlights_strip(weeks)
+           + '<section class="card"><p>New venues, machines landing and leaving, swaps, and which machines need a tech, '
+           'across Australia. Every venue links to its <a href="https://pinballmap.com">Pinball Map</a> listing, '
+           'so you can fix it or add to it. Updated every morning.</p></section>'
+           + signup())
     soon_until = (built_on + dt.timedelta(days=7)).isoformat()
     home = issue.home_zone()
     soon = ifpa.between(list(comps), built_on.isoformat(), soon_until, {home})
     blocks = near_box()
-    blocks += comps_block(soon, built_on.isoformat(), soon_until, f"Comps in {areas.SHORT[home]} this week",
+    blocks += comps_block(soon, built_on.isoformat(), soon_until, f"Comps in {areas.SHORT[home]}",
                           f"No IFPA comps listed in {areas.SHORT[home]} in the next seven days.") if comps else ""
     pods = podcasts.load()
     fresh = podcasts.between(pods, (built_on - dt.timedelta(days=14)).isoformat(), built_on.isoformat())
@@ -576,7 +578,7 @@ def home(weeks, counts, built_on, comps=()):
     blocks += "".join(zone_block(z, when=False, more=True) for z in active)
     if quiet:
         names = render.join(f'<a href="{u("/zone/" + z["zone"] + "/")}">{e(short(z["label"]))}</a>' for z in quiet)
-        blocks += f'<p class="allquiet"><strong>Quiet on the map this week:</strong> {names}.</p>'
+        blocks += f'<p class="allquiet"><strong>Quiet on the map:</strong> {names}.</p>'
     blocks += (f'<script>var NEAR_URL={json.dumps(u("/near.json"))},SUBURBS_URL={json.dumps(u("/suburbs.json"))};</script>'
                + NEAR_SCRIPT)
     lines = []
@@ -591,8 +593,36 @@ def home(weeks, counts, built_on, comps=()):
         show = {sh["key"]: sh for sh in pods.get("shows", [])}.get(ep["show"], {}).get("name", "")
         lines.append(f"{show.upper()}  NEW EPISODE  {ep['title'].upper()}")
     attract = f'<script>var ATTRACT={json.dumps(lines[:40], ensure_ascii=False)};</script>' + ATTRACT_SCRIPT
-    return page("", blocks, path="/", description=SITE["tagline"], box_extra=box + attract,
-                nav=chips("home", counts), current="home")
+    return page("", blocks, path="/", description=SITE["tagline"], box_extra=box,
+                nav=chips("home", counts), current="home", dmd=dmd + attract)
+
+
+def highlights_strip(weeks, limit=8):
+    """The week's best changes with artwork, as cards under the masthead: the same ranking the
+    email subject uses. Four show at a time on a desktop and rotate; a phone swipes through all."""
+    from . import mail
+    cards = []
+    for text, score, item in mail.ranked({"zones": weeks}):
+        art = mail.art_for(item)
+        if not art:
+            continue
+        mid, img, name, _, _, _ = art[0]
+        cards.append(f'<a class="hl" href="{e(item["link"])}"><img src="{e(img)}" alt="{e(name)}" loading="lazy" decoding="async">'
+                     f'<span class="hl-tag"><span class="tag {render.tone(item)}">{e(render.label(item))}</span></span>'
+                     f'<strong>{e(text)}</strong><span class="hl-state">{e(areas.SHORT[item["zone"]])}</span></a>')
+        if len(cards) == limit:
+            break
+    if not cards:
+        return ""
+    return ('<section class="hls"><h2>Across Australia</h2>'
+            f'<div class="hl-row" id="hl-row">{"".join(cards)}</div></section>' + HL_SCRIPT)
+
+
+HL_SCRIPT = r"""<script>(function(){var row=document.getElementById("hl-row");if(!row||row.children.length<5)return;
+if(matchMedia("(max-width: 700px)").matches||matchMedia("(prefers-reduced-motion: reduce)").matches)return;
+var paused=false;row.addEventListener("mouseenter",function(){paused=true});row.addEventListener("mouseleave",function(){paused=false});
+setInterval(function(){if(paused||document.hidden)return;var first=row.firstElementChild;first.classList.remove("in");row.appendChild(first);
+var fresh=row.children[3];fresh.classList.add("in")},7000)})();</script>"""
 
 
 def attract_line(i, zone):
