@@ -944,8 +944,9 @@ def play_page():
     body = ('<div class="table-wrap"><canvas id="table" width="400" height="700" aria-label="A pinball table"></canvas></div>'
             '<p class="keys"><b>Flippers</b> left and right arrows, Z and /, or the shift keys. <b>Launch</b> space. '
             'On a phone, tap the left or right half of the table, and tap the lane to launch.</p>'
-            '<p class="muted">Two flippers, three pops, two slings, an orbit and two ramps. Three balls. '
+            '<p class="muted">Two flippers, three pops, two slings, an orbit and two ramps. Three balls, with a ball saver on each. '
             'Your best score stays in this browser. Nothing is sent anywhere.</p>'
+            '<script src="https://cdnjs.cloudflare.com/ajax/libs/matter-js/0.19.0/matter.min.js"></script>'
             f'<script src="{u("/pinball.js")}?v={CSS_VERSION}"></script>')
     return page("Play", body, path="/play/", description="A small pinball table. Two flippers, three pops, two ramps.",
                 box_extra='<p class="wordmark">Play</p><p class="lede">A quick game while the ball is being fixed.</p>',
