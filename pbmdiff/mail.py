@@ -53,6 +53,8 @@ def _headline(item, zone, local):
         return (f"{title(item['machines'][0])} leaves {item['location_name']}", 2 if local else 1)
     if k == "condition" and item.get("status") == "green":
         return (f"{title(item['machine'])} fixed at {item['location_name']}", 2 if local else 1)
+    if k == "condition" and item.get("status") == "amber":
+        return (f"{title(item['machine'])} needs a tech at {item['location_name']}", 1)
     return None
 
 
@@ -65,6 +67,7 @@ def ranked(iss):
         for item in z["items"]:
             h = _headline(item, z["zone"], z["zone"] == home)
             if h and h[1] > 0:
+                item.setdefault("zone", z["zone"])
                 heads.append((h[0], h[1], item))
     heads.sort(key=lambda h: -h[1])
     return heads
@@ -88,12 +91,42 @@ def subject(iss):
     return heads[0][0]
 
 
-def hero(iss):
-    """The item to lead the email with: the best-ranked arrival or venue that has artwork."""
+def hero(iss, zone=None):
+    """The item to lead the email with. Nationally, the best-ranked arrival or venue that has
+    artwork. For one state, the best thing there with artwork, even a machine needing a tech."""
     for text, score, item in ranked(iss):
-        if score >= 9 and art_for(item):
+        if zone is None and score < 9:
+            break
+        if zone is not None and item.get("zone") != zone:
+            continue
+        if art_for(item):
             return text, item
     return None
+
+
+def _tagged(zone):
+    return f"'{zone}' in subscriber.tags"
+
+
+def hero_branches(iss):
+    """[(zone or None, condition, not-condition, (text, item))]: one hero per state that has one,
+    in email order, then the national pick. Rendered as a Buttondown if/elif chain so each reader
+    sees the lead for the first state they ticked, and the national lead if theirs is quiet."""
+    out, earlier = [], []
+    for z in SITE["email_zones"]:
+        h = hero(iss, z)
+        if not h:
+            continue
+        cond = " and ".join([_tagged(z)] + [f"'{e}' not in subscriber.tags" for e in earlier])
+        anti = " or ".join([f"'{z}' not in subscriber.tags"] + [_tagged(e) for e in earlier])
+        out.append((z, cond, anti, h))
+        earlier.append(z)
+    nat = hero(iss)
+    if nat:
+        cond = " and ".join(f"'{e}' not in subscriber.tags" for e in earlier) or "True"
+        anti = " or ".join(_tagged(e) for e in earlier) or "False"
+        out.append((None, cond, anti, nat))
+    return out
 
 
 def _machines(names, item=None):
@@ -275,18 +308,15 @@ def _h_item(item, state=""):
     venue = f'<a href="{_e(item["link"])}" style="color:#1b1720;font-weight:700">{_e(item["location_name"])}</a>'
     venue += f' <span style="color:#655e6e">{_e(city)}</span>' if city else ""
     venue += f' <span style="color:#b84c00;font-size:12px;font-weight:700">&nbsp;{_e(state)}</span>' if state else ""
-    by = item.get("by") or []
-    meta = _e(render.day(item["date"])) + (f" · via {_e(render.join(by))}" if by else "")
     label, colour = render.label(item), TONE[render.tone(item)]
     tiles = art_for(item)
     if not tiles:
-        return _h_row(label, colour, f"{venue}<br>{_h_what(item)}", meta)
+        return _h_row(label, colour, f"{venue}<br>{_h_what(item)}")
     left = _tile(tiles[0], 96, 60)
     body = f"{_pill(label, colour)}<br>{venue}<br>{_h_what(item)}{_h_art(item, skip_first=True)}"
-    meta_html = f'<div style="color:#655e6e;font-size:13px;margin-top:3px">{meta}</div>'
     return (f'<tr><td style="padding:12px 0;border-bottom:1px solid #e2dccf;vertical-align:top;width:104px">{left}</td>'
             f'<td style="padding:12px 0 12px 10px;border-bottom:1px solid #e2dccf;vertical-align:top;font:15px/1.5 Arial,sans-serif;color:#1b1720">'
-            f'{body}{meta_html}</td></tr>')
+            f'{body}</td></tr>')
 
 
 def _h_hero(text, item, zone):
@@ -300,8 +330,6 @@ def _h_hero(text, item, zone):
     city = render.where(item)
     venue = f'<a href="{_e(item["link"])}" style="color:#1b1720;font-weight:700">{_e(item["location_name"])}</a>'
     venue += f' <span style="color:#655e6e">{_e(city)}</span>' if city else ""
-    by = item.get("by") or []
-    meta = _e(render.day(item["date"])) + (f" · via {_e(render.join(by))}" if by else "")
     return (f'<table role="presentation" cellpadding="0" cellspacing="0" width="100%" style="margin-top:18px">'
             f'<tr><td align="center" style="background:#120e18;border-radius:10px;padding:16px 0">'
             f'<a href="https://pinballmap.com/map?by_machine_id={t[0]}&amp;by_country=AU" style="text-decoration:none">'
@@ -312,8 +340,7 @@ def _h_hero(text, item, zone):
             f'<div style="font:800 22px/1.25 Arial,sans-serif;margin-top:4px">'
             f'<a href="{_e(item["link"])}" style="color:#1b1720;text-decoration:none">{_e(text)}</a></div>'
             f'<div style="font:15px/1.5 Arial,sans-serif;color:#1b1720;margin-top:6px">'
-            f'{"" if item["kind"] == "new_venue" else venue + "<br>"}{_h_what(item)}</div>'
-            f'<div style="color:#655e6e;font-size:13px;margin-top:3px">{meta}</div></div>')
+            f'{"" if item["kind"] == "new_venue" else venue + "<br>"}{_h_what(item)}</div></div>')
 
 
 def _h_comp(c):
@@ -346,13 +373,24 @@ def html(iss):
     """The email as its own page: the backbox header, then the week."""
     zones = issue.email_zones(iss)
     active, quiet = sections(iss)
-    lead = hero(iss)
+    branches = hero_branches(iss)
     parts = []
-    if lead:
-        zone = next(z["zone"] for z in zones if any(i is lead[1] for i in z["items"]))
-        parts.append(_h_hero(lead[0], lead[1], zone))
+    if branches:
+        chain = ""
+        for i, (zone, cond, _, (text, item)) in enumerate(branches):
+            zone_of = item["zone"]
+            chain += ("{% if " if i == 0 else "{% elif ") + cond + " %}" + _h_hero(text, item, zone_of)
+        parts.append(chain + "{% endif %}")
+    shown = {}                                   # item -> the conditions under which a reader did NOT see it as the hero
+    for _, _, anti, (_, item) in branches:
+        shown.setdefault(id(item), []).append(anti)
     for z, items, comps in active:
-        rows = [_h_item(i) for i in items if not (lead and i is lead[1])]
+        rows = []
+        for i in items:
+            row = _h_item(i)
+            for anti in shown.get(id(i), []):    # nested ifs: Django templates have no parentheses
+                row = "{% if " + anti + " %}" + row + "{% endif %}"
+            rows.append(row)
         if not rows and not comps:
             continue
         if comps:

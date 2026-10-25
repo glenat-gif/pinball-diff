@@ -198,9 +198,28 @@ class MachineTests(Built):
         self.assertIs(item, lead)
         self.assertTrue(text.startswith("Cactus Canyon (Remake Special) lands at"))
         page = mail.html(iss)
-        self.assertEqual(page.count("img.example/cc"), 1)                     # in the hero, not repeated in the list
         self.assertIn('width="360" height="360"', page)                        # a square backglass fills the height
         self.assertLess(page.index("img.example/cc"), page.index(">Victoria<"))
+        # One hero per state in a Buttondown if/elif chain on the reader's tags, then the national pick,
+        # and the hero's own row is hidden from the readers who saw it up top.
+        self.assertIn("{% if 'vic' in subscriber.tags %}", page)
+        self.assertIn("{% elif 'vic' not in subscriber.tags %}", page)         # the national fallback
+        self.assertEqual(page.count("{% endif %}"), 3)                          # the chain, and the row hidden twice over
+        self.assertIn("{% if 'vic' in subscriber.tags %}{% if 'vic' not in subscriber.tags %}<tr>", page)   # i.e. never: every reader saw it
+        self.assertNotIn("via dolphin61", page)                                 # no date or credit line in the email
+        mail._CATALOGUE = None
+
+    def test_a_state_hero_can_be_a_machine_needing_a_tech(self):
+        from pbmdiff import mail
+        iss = issue.ensure_latest(self.events, on=ON)
+        vic = iss["zones"][0]
+        vic["items"] = [i for i in vic["items"] if i["kind"] == "condition" and i["status"] == "amber"][:1]
+        vic["items"][0]["ids"] = {vic["items"][0]["machine"]: 7}
+        mail._CATALOGUE = {"7": {"img": "https://img.example/x", "w": 600, "h": 600}}
+        site.SITE["machine_art"] = True
+        self.assertIsNone(mail.hero(iss))                                     # not a national lead
+        text, item = mail.hero(iss, "vic")                                    # but the best thing in Victoria
+        self.assertIn("needs a tech at", text)
         mail._CATALOGUE = None
 
     def test_change_rows_carry_machine_art(self):
