@@ -557,15 +557,20 @@ def home(weeks, counts, built_on, comps=()):
     short_span = render.short_span(weeks[0]["since"], weeks[0]["until"])
     dmd = (f'<p class="score"><b>{total}</b> change{"s" if total != 1 else ""} · {e(short_span)}</p>'
            f'<p class="dmd" id="dmd" aria-hidden="true" hidden><span id="dmd-text"></span></p>')
-    box = (highlights_strip(weeks)
-           + '<section class="card"><p>New venues, machines landing and leaving, swaps, and which machines need a tech, '
+    box = ('<section class="card"><p>New venues, machines landing and leaving, swaps, and which machines need a tech, '
            'across Australia. Every venue links to its <a href="https://pinballmap.com">Pinball Map</a> listing, '
            'so you can fix it or add to it. Updated every morning.</p></section>'
+           + highlights_strip(weeks)
            + signup())
     soon_until = (built_on + dt.timedelta(days=7)).isoformat()
     home = issue.home_zone()
     soon = ifpa.between(list(comps), built_on.isoformat(), soon_until, {home})
+    # The machine moves are the point of the page: states first, then the comps, then the podcasts.
     blocks = near_box()
+    blocks += "".join(zone_block(z, when=False, more=True) for z in active)
+    if quiet:
+        names = render.join(f'<a href="{u("/zone/" + z["zone"] + "/")}">{e(short(z["label"]))}</a>' for z in quiet)
+        blocks += f'<p class="allquiet"><strong>Quiet on the map:</strong> {names}.</p>'
     blocks += comps_block(soon, built_on.isoformat(), soon_until, f"Comps in {areas.SHORT[home]}",
                           f"No IFPA comps listed in {areas.SHORT[home]} in the next seven days.") if comps else ""
     pods = podcasts.load()
@@ -575,10 +580,6 @@ def home(weeks, counts, built_on, comps=()):
         blocks += (f'<section class="zone pods-zone"><header><h2>New on the podcasts</h2></header>'
                    f'<ul class="eps">{"".join(episode_row(ep, shows) for ep in fresh)}</ul>'
                    f'<p class="more"><a href="{u("/podcasts/")}">Every Australian pinball podcast</a></p></section>')
-    blocks += "".join(zone_block(z, when=False, more=True) for z in active)
-    if quiet:
-        names = render.join(f'<a href="{u("/zone/" + z["zone"] + "/")}">{e(short(z["label"]))}</a>' for z in quiet)
-        blocks += f'<p class="allquiet"><strong>Quiet on the map:</strong> {names}.</p>'
     blocks += (f'<script>var NEAR_URL={json.dumps(u("/near.json"))},SUBURBS_URL={json.dumps(u("/suburbs.json"))};</script>'
                + NEAR_SCRIPT)
     lines = []
@@ -607,22 +608,31 @@ def highlights_strip(weeks, limit=8):
         if not art:
             continue
         mid, img, name, _, _, _ = art[0]
+        label, tone = mail.headline_label(text)
         cards.append(f'<a class="hl" href="{e(item["link"])}"><img src="{e(img)}" alt="{e(name)}" loading="lazy" decoding="async">'
-                     f'<span class="hl-tag"><span class="tag {render.tone(item)}">{e(render.label(item))}</span></span>'
+                     f'<span class="hl-tag"><span class="tag {tone}">{e(label)}</span></span>'
                      f'<strong>{e(text)}</strong><span class="hl-state">{e(areas.SHORT[item["zone"]])}</span></a>')
         if len(cards) == limit:
             break
     if not cards:
         return ""
-    return ('<section class="hls"><h2>Across Australia</h2>'
+    arrows = ('<span class="hl-nav"><button type="button" id="hl-prev" aria-label="Previous">&#8249;</button>'
+              '<button type="button" id="hl-next" aria-label="Next">&#8250;</button></span>' if len(cards) > 4 else "")
+    return (f'<section class="hls"><div class="hls-head"><h2>Across Australia</h2>{arrows}</div>'
             f'<div class="hl-row" id="hl-row">{"".join(cards)}</div></section>' + HL_SCRIPT)
 
 
 HL_SCRIPT = r"""<script>(function(){var row=document.getElementById("hl-row");if(!row||row.children.length<5)return;
-if(matchMedia("(max-width: 700px)").matches||matchMedia("(prefers-reduced-motion: reduce)").matches)return;
-var paused=false;row.addEventListener("mouseenter",function(){paused=true});row.addEventListener("mouseleave",function(){paused=false});
-setInterval(function(){if(paused||document.hidden)return;var first=row.firstElementChild;first.classList.remove("in");row.appendChild(first);
-var fresh=row.children[3];fresh.classList.add("in")},7000)})();</script>"""
+if(matchMedia("(max-width: 700px)").matches)return;
+var paused=false,timer=null;row.addEventListener("mouseenter",function(){paused=true});row.addEventListener("mouseleave",function(){paused=false});
+function clean(){for(var i=0;i<row.children.length;i++)row.children[i].classList.remove("in")}
+function next(){clean();row.appendChild(row.firstElementChild);row.children[3].classList.add("in")}
+function prev(){clean();row.insertBefore(row.lastElementChild,row.firstElementChild);row.children[0].classList.add("in")}
+function arm(){clearInterval(timer);if(matchMedia("(prefers-reduced-motion: reduce)").matches)return;
+timer=setInterval(function(){if(!paused&&!document.hidden)next()},7000)}
+document.getElementById("hl-next").addEventListener("click",function(){next();arm()});
+document.getElementById("hl-prev").addEventListener("click",function(){prev();arm()});
+arm()})();</script>"""
 
 
 def attract_line(i, zone):

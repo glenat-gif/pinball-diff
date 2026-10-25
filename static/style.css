@@ -96,7 +96,12 @@ a:hover { text-decoration-thickness: 2px; }
 @media (max-width: 420px) { .score { font-size: 0.8rem; gap: 0.45rem; } .score b { font-size: 1.8rem; } }
 /* Highlights: the week's best, with the art */
 .hls { margin-top: 1.5rem; }
-.hls h2 { font: 700 1.15rem/1 var(--head); text-transform: uppercase; letter-spacing: 0.05em; margin: 0 0 0.6rem; }
+.hls-head { display: flex; align-items: center; justify-content: space-between; margin: 0 0 0.6rem; }
+.hls h2 { font: 700 1.15rem/1 var(--head); text-transform: uppercase; letter-spacing: 0.05em; margin: 0; }
+.hl-nav { display: none; gap: 0.3rem; }
+.hl-nav button { width: 1.9rem; height: 1.9rem; border-radius: 50%; border: 1.5px solid var(--ink); background: var(--surface); color: var(--ink); font: 700 1.2rem/1 var(--body); cursor: pointer; padding: 0 0 2px; }
+.hl-nav button:hover { background: var(--ink); color: var(--paper); }
+@media (min-width: 701px) { .hl-nav { display: flex; } }
 .hl-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.8rem; }
 .hl { display: flex; flex-direction: column; text-decoration: none; background: var(--surface); border: 1px solid var(--line); border-radius: 6px; overflow: hidden; }
 .hl img { display: block; width: 100%; aspect-ratio: 16 / 10; object-fit: cover; background: #0d0604; }
@@ -112,7 +117,7 @@ a:hover { text-decoration-thickness: 2px; }
   .hl { flex: 0 0 72%; }
 }
 /* The instruction card */
-.card { margin-top: 1.5rem; border: 1.5px solid var(--ink); border-radius: 4px; padding: 0.9rem 1.1rem 1rem; background: var(--surface); box-shadow: 3px 3px 0 var(--line); }
+.card { margin-top: 1.4rem; border: 1.5px solid var(--ink); border-radius: 4px; padding: 0.9rem 1.1rem 1rem; background: var(--surface); box-shadow: 3px 3px 0 var(--line); }
 .card::before { content: ""; display: block; width: 3.5rem; height: 4px; background: var(--red); margin: 0 0 0.6rem; }
 .card p { margin: 0; font-size: 0.98rem; }
 .dmd {

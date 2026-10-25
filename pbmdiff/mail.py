@@ -58,6 +58,22 @@ def _headline(item, zone, local):
     return None
 
 
+def headline_label(text):
+    """(label, tone) for the thing a headline is about. A rotation's headline is about the machine
+    that landed, so its card says Landed; the machine that left is detail for the row below."""
+    if text.startswith("New venue"):
+        return "New venue", "new"
+    if " lands " in text:
+        return "Landed", "new"
+    if " leaves " in text:
+        return "Gone", "gone"
+    if " fixed at " in text:
+        return "Good news", "good"
+    if " needs a tech " in text:
+        return "Needs a tech", "trouble"
+    return "Changed", "swap"
+
+
 def ranked(iss):
     """The week's items as (headline, score, item), best first."""
     heads, home = [], issue.home_zone()
@@ -319,6 +335,11 @@ def _h_item(item, state=""):
             f'{body}</td></tr>')
 
 
+def _hero_pill(text):
+    label, tone = headline_label(text)
+    return label, TONE[tone]
+
+
 def _h_hero(text, item, zone):
     """The week's lead: the backglass large on a dark panel, then the headline and the change."""
     t = art_for(item)[0]
@@ -335,7 +356,7 @@ def _h_hero(text, item, zone):
             f'<a href="https://pinballmap.com/map?by_machine_id={t[0]}&amp;by_country=AU" style="text-decoration:none">'
             f'<img src="{_e(img)}" alt="{_e(name)}" width="{iw}" height="{ih}" '
             f'style="display:block;width:{iw}px;max-width:100%;height:auto;border:0;border-radius:6px"></a></td></tr></table>'
-            f'<div style="margin:12px 0 0">{_pill(render.label(item), TONE[render.tone(item)])} '
+            f'<div style="margin:12px 0 0">{_pill(*_hero_pill(text))} '
             f'<span style="font:800 10px/1.7 Arial,sans-serif;letter-spacing:1px;text-transform:uppercase;color:#655e6e">&nbsp;{_e(areas.SHORT[zone])}</span>'
             f'<div style="font:800 22px/1.25 Arial,sans-serif;margin-top:4px">'
             f'<a href="{_e(item["link"])}" style="color:#1b1720;text-decoration:none">{_e(text)}</a></div>'
