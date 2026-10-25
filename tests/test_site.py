@@ -246,6 +246,13 @@ class MachineTests(Built):
         site.CATALOGUE.clear()
         self.assertNotIn('class="art"', site.change(item))  # no catalogue, no tiles
 
+    def test_play_page_exists_with_the_table(self):
+        dist = site.build(on=ON)
+        play = (dist / "play" / "index.html").read_text()
+        self.assertIn('<canvas id="table"', play)
+        self.assertTrue((dist / "pinball.js").exists())
+        self.assertIn('href="/play/"', (dist / "index.html").read_text())
+
     def test_slugs_drop_accents(self):
         self.assertEqual(site.slug("Pokémon"), "pokemon")
         self.assertEqual(site.slug("Elvira's House of Horrors"), "elvira-s-house-of-horrors")

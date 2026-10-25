@@ -345,7 +345,7 @@ def podcasts_page(data):
             f'<h2 class="eps-h">Latest episodes</h2>{picks}<ul class="eps">{eps}</ul>{script}'
             if shows else '<p class="quiet">No podcasts yet.</p>')
     box = ('<p class="wordmark" style="font-size:clamp(1.6rem,6vw,2.6rem)">Podcasts</p>'
-           '<p class="lede">The podcasts about pinball in Australia, with each new episode as it lands.'
+           '<p class="lede">Australia\'s pinball podcasts, as each episode lands.'
            '<small>Every episode links to the show itself, so the hosts get your listen. '
            'Making an Australian pinball podcast that is not here? Say so and it will be added.</small></p>')
     return page("Podcasts", body, path="/podcasts/", description="Australian pinball podcasts and their latest episodes.",
@@ -363,7 +363,7 @@ def signup():
                        for k, _ in areas.STATES))
     return (f'<form class="signup" action="https://buttondown.com/api/emails/embed-subscribe/{e(user)}" method="post">'
             '<h2>The weekly email</h2>'
-            '<p>Every Thursday, in time to plan the weekend. All of Australia, with the biggest news from your state up top. '
+            '<p>Every Thursday. All of Australia, with the biggest news from your state up top. '
             'Free. One click to leave.</p>'
             '<div class="row"><label class="sr" for="em" hidden>Email address</label>'
             '<input id="em" type="email" name="email" required placeholder="you@example.com" autocomplete="email">'
@@ -435,7 +435,7 @@ def page(title, body, *, path, description, box_extra="", nav="", current=None, 
 </head>
 <body>
 <header class="mast"><div class="wrap">
-<div class="dmd-panel{" big" if current == "home" else ""}">{wm}{dmd}</div>
+<div class="dmd-panel{" big" if current == "home" else ""}">{wm}{dmd}<a class="ball" href="{u('/play/')}" title="Play a game" aria-label="Play a game"></a></div>
 <nav class="sections" aria-label="Site"><a href="{u('/')}"{cur('home')}>This week</a><a href="{u('/comps/')}"{cur('comps')}>Comps</a><a href="{u('/machines/')}"{cur('machines')}>Machines</a><a href="{u('/podcasts/')}"{cur('podcasts')}>Podcasts</a><a href="{u('/issues/')}"{cur('issues')}>Emails</a><a href="{u('/about/')}"{cur('about')}>About</a></nav>
 </div></header>
 <main><div class="wrap">
@@ -447,6 +447,7 @@ def page(title, body, *, path, description, box_extra="", nav="", current=None, 
 <p>Every venue links to its listing on <a href="https://pinballmap.com">Pinball Map</a>. If something is wrong, or you played something new, update it there. That is where this comes from.</p>
 <p>Data from Pinball Map, CC BY-SA 4.0. Built from what Australian players submit; thanks to every one of them.</p>
 <p>Comps from the <a href="https://www.ifpapinball.com">IFPA</a> calendar. Machine artwork from the <a href="https://opdb.org">Open Pinball Database</a>.</p>
+<p>Waiting for a machine? <a href="{u('/play/')}">Play a quick game</a>.</p>
 </div></footer>
 </body>
 </html>
@@ -941,20 +942,27 @@ def title_page(g, catalogue=None):
                 box_extra=box, current="machines")
 
 
+def play_page():
+    body = ('<div class="table-wrap"><canvas id="table" width="400" height="700" aria-label="A pinball table"></canvas></div>'
+            '<p class="keys"><b>Flippers</b> left and right arrows, Z and /, or the shift keys. <b>Launch</b> space. '
+            'On a phone, tap the left or right half of the table, and tap the lane to launch.</p>'
+            '<p class="muted">Two flippers, three pops, two slings, an orbit and two ramps. Three balls. '
+            'Your best score stays in this browser. Nothing is sent anywhere.</p>'
+            f'<script src="{u("/pinball.js")}?v={CSS_VERSION}"></script>')
+    return page("Play", body, path="/play/", description="A small pinball table. Two flippers, three pops, two ramps.",
+                box_extra='<p class="wordmark">Play</p><p class="lede">A quick game while the ball is being fixed.</p>',
+                current="play")
+
+
 def about_page():
     body = f"""<div class="prose">
+<p class="contact">Made by a Melbourne player. Something wrong, or something to add? <a href="mailto:{e(SITE['contact'])}">{e(SITE['contact'])}</a></p>
 <h2>What this is</h2>
-<p>A weekly list of what changed in Australian pinball, as recorded on Pinball Map: new venues, machines landing and leaving, swaps, and notes from players about machines that need a tech or have been fixed. It exists so that people hear about the new game at the pub down the road, and so a Rowville player knows whether it is worth the drive to Campbellfield on Saturday.</p>
-<h2>What it is not</h2>
-<p>It is not a map and it will not help you find somewhere to play. <a href="https://pinballmap.com">Pinball Map</a> does that, and does it well. Every venue here links straight to its Pinball Map listing.</p>
+<p>A weekly list of what changed in Australian pinball: new venues, machines landing and leaving, swaps, and player notes on what needs a tech. It exists so people hear about the new game at the pub down the road, and so an Edithvale player knows whether Campbellfield is worth the drive on Saturday.</p>
 <h2>Where it comes from</h2>
-<p>Every change here was submitted to Pinball Map by a player. Once a day this site asks Pinball Map what changed around Australia, sorts it by area, and tidies it: a machine removed and a new edition of the same game added becomes a swap, and a new venue and its first machines become one line. Nothing is added by hand.</p>
-<p>That means it is only as good as what people submit. If you played somewhere and the lineup was different, or a machine was off, update the listing on Pinball Map. It will be here the next morning and in Thursday's email.</p>
-<h2>The states</h2>
-<p>Changes are grouped by state, and every line names its suburb or town. Thursday's email carries every state, Victoria first, with each state's comps under its changes.</p>
-<h2>Who</h2>
-<p class="muted">Suburbs and postcodes for the near-you search come from Matthew Proctor's public-domain <a href="https://www.matthewproctor.com/australian_postcodes">Australian Postcodes</a> list.</p>
-<p class="muted">Made by a Melbourne player. Contact: <a href="mailto:{e(SITE['contact'])}">{e(SITE['contact'])}</a>. The code is open on <a href="https://github.com/glenat-gif/pinball-diff">GitHub</a>. Data from Pinball Map under CC BY-SA 4.0.</p>
+<p>Every line was submitted to <a href="https://pinballmap.com">Pinball Map</a> by a player. Each morning this site asks what changed around Australia, sorts it by state and tidies it: a machine out and a new edition of the same game in becomes a swap, a new venue and its first machines become one line. Nothing is added by hand, so it is only as good as what people submit. If a lineup was different or a machine was off, update the listing on Pinball Map and it is here the next morning.</p>
+<p>This is not a map and will not help you find somewhere to play. Pinball Map does that, and every venue here links straight to its listing.</p>
+<p class="muted">Data from Pinball Map, CC BY-SA 4.0. Comps from the <a href="https://www.ifpapinball.com">IFPA</a> calendar. Machine artwork from the <a href="https://opdb.org">Open Pinball Database</a>. Suburbs and postcodes from Matthew Proctor's public-domain <a href="https://www.matthewproctor.com/australian_postcodes">Australian Postcodes</a> list. The code is open on <a href="https://github.com/glenat-gif/pinball-diff">GitHub</a>.</p>
 </div>"""
     box = ('<p class="wordmark" style="font-size:clamp(1.6rem,6vw,2.6rem)">About</p>'
            f'<p class="lede">{e(SITE["tagline"])}</p>')
@@ -1031,6 +1039,8 @@ def build(on=None):
         write(f"/machines/{g['slug']}/", title_page(g, catalogue))
     write("/podcasts/", podcasts_page(podcasts.load()))
     write("/about/", about_page())
+    write("/play/", play_page())
+    shutil.copy(ROOT / "static" / "pinball.js", DIST / "pinball.js")
     write("/feed.xml", feed(dates))
     (DIST / ".nojekyll").write_text("", encoding="utf-8")
     host = SITE["base_url"].split("://", 1)[1]

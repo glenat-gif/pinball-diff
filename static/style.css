@@ -73,6 +73,20 @@ a:hover { text-decoration-thickness: 2px; }
 }
 .wm a { text-decoration: none; }
 .big .wm { font-size: clamp(2.1rem, 8vw, 3.6rem); }
+.dmd-panel { position: relative; }
+.ball {
+  position: absolute; right: 1rem; top: 0.85rem; width: 22px; height: 22px; border-radius: 50%;
+  background: radial-gradient(circle at 36% 34%, #fff 0, #ffe3c8 12%, #ff7a1a 42%, #8a3a06 100%);
+  box-shadow: 0 0 14px rgba(255, 122, 26, 0.55); transition: transform 0.15s;
+}
+.ball:hover { transform: scale(1.15); }
+.big .ball { width: 30px; height: 30px; top: 1.2rem; right: 1.3rem; }
+@media (max-width: 420px) { .ball { display: none; } }
+.table-wrap { margin-top: 1.4rem; display: flex; justify-content: center; }
+#table { border-radius: 12px; box-shadow: inset 0 0 0 1px #2a1a12, 0 2px 0 #3a2a22, 0 14px 34px rgba(0,0,0,0.4); touch-action: none; display: block; }
+.keys { margin: 1rem 0 0.3rem; font-size: 0.95rem; }
+.contact { margin: 1.2rem 0 0; padding: 0.8rem 1rem; border: 1.5px solid var(--ink); border-radius: 4px; background: var(--surface); font-size: 0.98rem; }
+.keys b { font-family: var(--head); text-transform: uppercase; letter-spacing: 0.05em; font-weight: 700; }
 .sections {
   display: flex; gap: 1.4rem; margin: 0.9rem 0 0; overflow-x: auto; scrollbar-width: none;
   font: 600 1rem/1 var(--head); letter-spacing: 0.06em; text-transform: uppercase;
