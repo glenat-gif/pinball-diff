@@ -162,7 +162,11 @@ a:hover { text-decoration-thickness: 2px; }
   scrollbar-width: none;                  /* swipe on a phone, no scrollbar drawn */
 }
 .chips::-webkit-scrollbar { display: none; }
-@media (min-width: 700px) { .chips { flex-wrap: wrap; overflow: visible; margin: 0; padding-left: 0; padding-right: 0; } }
+@media (min-width: 760px) {                /* one line on a desktop: tighter chips, no bar */
+  .chips { margin: 0; padding-left: 0; padding-right: 0; gap: 0.2rem; }
+  .chips a { font-size: 0.76rem; padding: 0.28rem 0.45rem; }
+  .chips .n { margin-left: 0.2rem; }
+}
 .chips a {
   flex: none; font-size: 0.88rem; text-decoration: none; padding: 0.3rem 0.7rem; border-radius: 999px;
   border: 1px solid var(--line); background: var(--surface); white-space: nowrap;
