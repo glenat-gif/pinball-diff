@@ -367,9 +367,12 @@ def signup():
             '<div class="row"><label class="sr" for="em" hidden>Email address</label>'
             '<input id="em" type="email" name="email" required placeholder="you@example.com" autocomplete="email">'
             '<button type="submit">Subscribe</button></div>'
-            f'<fieldset><legend>Where do you play?</legend>'
+            f'<fieldset id="zones-ask" hidden><legend>Where do you play?</legend>'
             f'<div class="zones-pick">{picks}</div></fieldset>'
-            '<input type="hidden" name="embed" value="1"></form>')
+            '<input type="hidden" name="embed" value="1"></form>'
+            # The state question appears once someone starts on the form; everyone else sees one clean row.
+            '<script>(function(){var f=document.getElementById("em"),z=document.getElementById("zones-ask");'
+            'function show(){z.hidden=false}f.addEventListener("focus",show);f.addEventListener("input",show)})();</script>')
 
 
 def short(label):
