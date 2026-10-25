@@ -32,7 +32,7 @@ def tone(item):
     """A single word the page uses to colour the label."""
     if item["kind"] == "condition":
         return {"amber": "trouble", "green": "good", "note": "note"}[item["status"]]
-    return {"new_venue": "new", "added": "new", "swap": "swap", "rotation": "swap", "removed": "gone"}[item["kind"]]
+    return {"new_venue": "venue", "added": "new", "swap": "swap", "rotation": "swap", "removed": "gone"}[item["kind"]]
 
 
 def join(names):

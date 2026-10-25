@@ -62,7 +62,7 @@ def headline_label(text):
     """(label, tone) for the thing a headline is about. A rotation's headline is about the machine
     that landed, so its card says Landed; the machine that left is detail for the row below."""
     if text.startswith("New venue"):
-        return "New venue", "new"
+        return "New venue", "venue"
     if " lands " in text:
         return "Landed", "new"
     if " leaves " in text:
@@ -223,7 +223,7 @@ def markdown(iss):
 
 import html as _html
 _e = _html.escape
-TONE = {"new": "#b84c00", "swap": "#5b3fd6", "trouble": "#c0254f", "good": "#23824a", "gone": "#7a7382"}
+TONE = {"new": "#b84c00", "venue": "#1b6f8f", "swap": "#5b3fd6", "trouble": "#c0254f", "good": "#23824a", "gone": "#7a7382"}
 
 
 def _h_machine(name, item=None):

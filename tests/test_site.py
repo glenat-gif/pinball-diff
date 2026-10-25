@@ -213,7 +213,7 @@ class MachineTests(Built):
         from pbmdiff import mail
         # A rotation row says Rotation with In and Out; its headline is about the machine that landed.
         self.assertEqual(mail.headline_label("Transformers (Premium) lands in Penrith"), ("Landed", "new"))
-        self.assertEqual(mail.headline_label("New venue: AB Hotel in Glebe"), ("New venue", "new"))
+        self.assertEqual(mail.headline_label("New venue: AB Hotel in Glebe"), ("New venue", "venue"))
         self.assertEqual(mail.headline_label("Taxi leaves The Pub"), ("Gone", "gone"))
         self.assertEqual(mail.headline_label("Godzilla (Pro) needs a tech at Kingpin"), ("Needs a tech", "trouble"))
 
