@@ -361,7 +361,7 @@ def signup():
     picks = ('<label><input type="checkbox" name="tag" value="vic" checked> Victoria</label>'
              + "".join(f'<label><input type="checkbox" name="tag" value="{k}"> {e(areas.SHORT[k])}</label>'
                        for k, _ in areas.STATES))
-    return (f'<form class="signup" action="https://buttondown.com/api/emails/embed-subscribe/{e(user)}" method="post">'
+    return (f'<form class="signup" id="signup" action="https://buttondown.com/api/emails/embed-subscribe/{e(user)}" method="post" target="_blank">'
             '<h2>The weekly email</h2>'
             '<p>Every Thursday. All of Australia, with the biggest news from your state up top. '
             'Free. One click to leave.</p>'
@@ -371,9 +371,17 @@ def signup():
             f'<fieldset id="zones-ask" hidden><legend>Where do you play? <small>You get every state either way; this picks what leads your copy.</small></legend>'
             f'<div class="zones-pick">{picks}</div></fieldset>'
             '<input type="hidden" name="embed" value="1"></form>'
-            # The state question appears once someone starts on the form; everyone else sees one clean row.
-            '<script>(function(){var f=document.getElementById("em"),z=document.getElementById("zones-ask");'
-            'function show(){z.hidden=false}f.addEventListener("focus",show);f.addEventListener("input",show)})();</script>')
+            + SIGNUP_SCRIPT.replace("PLAY", u("/play/")))
+
+
+# The state question appears once someone starts on the form; everyone else sees one clean row.
+# Buttondown opens in a new tab; this tab says thanks, and once, quietly, offers the table.
+SIGNUP_SCRIPT = """<script>(function(){var f=document.getElementById("em"),z=document.getElementById("zones-ask"),form=document.getElementById("signup");
+function show(){z.hidden=false}f.addEventListener("focus",show);f.addEventListener("input",show);
+form.addEventListener("submit",function(){setTimeout(function(){var seen=false;try{seen=!!localStorage.getItem("ptw-egg")}catch(e){}
+form.innerHTML='<h2>Thanks</h2><p>Buttondown has opened in a new tab to confirm your address. The first email lands on Thursday.</p>'
++(seen?'':'<p class="egg">While you wait, there is a <a href="PLAY">machine out the back</a>.</p>');
+try{localStorage.setItem("ptw-egg","1")}catch(e){}},400)})})();</script>"""
 
 
 def short(label):
@@ -435,7 +443,7 @@ def page(title, body, *, path, description, box_extra="", nav="", current=None, 
 </head>
 <body>
 <header class="mast"><div class="wrap">
-<div class="dmd-panel{" big" if current == "home" else ""}">{wm}{dmd}<a class="ball" href="{u('/play/')}" title="Play a game" aria-label="Play a game"></a></div>
+<div class="dmd-panel{" big" if current == "home" else ""}">{wm}{dmd}</div>
 <nav class="sections" aria-label="Site"><a href="{u('/')}"{cur('home')}>This week</a><a href="{u('/comps/')}"{cur('comps')}>Comps</a><a href="{u('/machines/')}"{cur('machines')}>Machines</a><a href="{u('/podcasts/')}"{cur('podcasts')}>Podcasts</a><a href="{u('/issues/')}"{cur('issues')}>Emails</a><a href="{u('/about/')}"{cur('about')}>About</a></nav>
 </div></header>
 <main><div class="wrap">
@@ -445,7 +453,6 @@ def page(title, body, *, path, description, box_extra="", nav="", current=None, 
 </div></main>
 <footer class="foot"><div class="wrap">
 <p>Data from <a href="https://pinballmap.com">Pinball Map</a>, CC BY-SA 4.0, built from what Australian players submit. Comps from the <a href="https://www.ifpapinball.com">IFPA</a> calendar. Machine artwork from the <a href="https://opdb.org">Open Pinball Database</a>.</p>
-<p>Waiting for a machine? <a href="{u('/play/')}">Play a quick game</a>.</p>
 </div></footer>
 </body>
 </html>
@@ -558,8 +565,11 @@ def home(weeks, counts, built_on, comps=()):
     active = [z for z in weeks if z["items"]]
     quiet = [z for z in weeks if not z["items"]]
     short_span = render.short_span(weeks[0]["since"], weeks[0]["until"])
-    dmd = (f'<p class="score"><b>{total}</b> change{"s" if total != 1 else ""} · {e(short_span)}</p>'
-           f'<p class="dmd" id="dmd" aria-hidden="true" hidden><span id="dmd-text"></span></p>')
+    dmd = (f'<p class="score" id="score"><b>{total}</b> change{"s" if total != 1 else ""} · {e(short_span)}</p>'
+           f'<p class="dmd" id="dmd" aria-hidden="true" hidden><span id="dmd-text"></span></p>'
+           # an unmarked way to the table: three taps on the score
+           f'<script>(function(){{var n=0,t=0;document.getElementById("score").addEventListener("click",function(){{var now=Date.now();'
+           f'n=now-t<900?n+1:1;t=now;if(n>=3)location.href={json.dumps(u("/play/"))}}})}})();</script>')
     box = ('<section class="card"><p>New venues, machines landing and leaving, swaps, and which machines need a tech, '
            'across Australia. Every venue links to its <a href="https://pinballmap.com">Pinball Map</a> listing, '
            'so you can fix it or add to it. Updated every morning.</p></section>'

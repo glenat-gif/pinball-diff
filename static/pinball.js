@@ -31,7 +31,8 @@
   rail(arc);                                                       // the orbit round the top
   rail([[16, 190], [16, 540], [66, 604], [146, 650]]); rail([[150, 658], [162, 698]]);    // left wall and inlane into the hinge; the drain below
   rail([[352, 190], [352, 540], [334, 604], [254, 650]]); rail([[250, 658], [238, 698]]); // lane guide and inlane into the hinge; the drain below
-  rail([[384, 190], [384, 676], [352, 676], [352, 640]]);                         // shooter lane
+  rail([[384, 190], [384, 690]]); rail([[352, 640], [352, 690]]);               // shooter lane walls; the ball rests on the plunger
+  Composite.add(world, Bodies.rectangle(368, 681, 32, 8, { isStatic: true, restitution: 0.1 }));   // the plunger tip, not drawn as a rail
   [[148, 653], [252, 653]].forEach(function (c) { Composite.add(world, Bodies.circle(c[0], c[1], 7, { isStatic: true, restitution: 0.2 })); });  // flipper bases
 
   var slings = [[[88, 478], [128, 584], [88, 584]], [[312, 478], [272, 584], [312, 584]]];   // clear of the walls, so nothing wedges
@@ -64,12 +65,12 @@
   var flippers = [flipper(148, 653, 1), flipper(252, 653, -1)];
 
   // ---------- the ball and the game ----------
-  var ball = Bodies.circle(368, 630, R, { restitution: 0.3, friction: 0.01, frictionAir: 0.0012, density: 0.004, label: "ball" });
+  var ball = Bodies.circle(368, 668, R, { restitution: 0.3, friction: 0.01, frictionAir: 0.0012, density: 0.004, label: "ball" });
   Composite.add(world, ball);
   var state = "attract", score = 0, best = 0, ballsLeft = 0, ride = null, combo = 0, lastRamp = null, saver = 0, msg = "", msgUntil = 0, orbitCool = 0;
   try { best = +localStorage.getItem("ptw-best") || 0; } catch (e) {}
   function say(t, secs) { msg = t; msgUntil = performance.now() + secs * 1000; }
-  function toLane() { Body.setPosition(ball, { x: 368, y: 630 }); Body.setVelocity(ball, { x: 0, y: 0 }); Body.setAngularVelocity(ball, 0); ride = null; ball.collisionFilter.mask = -1; }
+  function toLane() { Body.setPosition(ball, { x: 368, y: 668 }); Body.setVelocity(ball, { x: 0, y: 0 }); Body.setAngularVelocity(ball, 0); ride = null; ball.collisionFilter.mask = -1; }
   function newBall() { toLane(); saver = 20 * 60; }
   function start() { score = 0; ballsLeft = 3; combo = 0; lastRamp = null; state = "play"; newBall(); say("HOLD TO PULL, LET GO TO LAUNCH", 3); }
   var pull = 0, pulling = false;
@@ -202,11 +203,11 @@
       a.beginPath(); a.moveTo(f.px / PX, f.py / PX); a.lineTo(tx / PX, ty / PX); a.strokeStyle = INK; a.lineWidth = 1; a.stroke();
       a.lineCap = "butt"; disc(f.px, f.py, 7, BG, INK); disc(f.px, f.py, 2.5, INK);
     });
-    var head = 652 + pull * 22, hx = 368 / PX;                       // the plunger below the ball
+    var head = 677 + pull * 16, hx = 368 / PX;                       // the plunger: the ball sits on its tip, which drops as you pull
     a.strokeStyle = DIM; a.lineWidth = 1; a.beginPath();
-    for (var k = 0; k < 6; k++) { var yy = (head + 6 + k * 4) / PX; a.moveTo(hx - 4, yy); a.lineTo(hx + 4, yy + 1); }
+    for (var k = 0; k < 4; k++) { var yy = (head + 5 + k * 3) / PX; a.moveTo(hx - 4, yy); a.lineTo(hx + 4, yy + 1); }
     a.stroke();
-    a.fillStyle = INK; a.fillRect(hx - 5, head / PX, 10, 3); a.fillRect(hx - 1, head / PX + 3, 2, 10);
+    a.fillStyle = INK; a.fillRect(hx - 5, head / PX, 10, 2); a.fillRect(hx - 1, head / PX + 2, 2, 12);
     if (state !== "attract") { disc(ball.position.x, ball.position.y, R, INK); disc(ball.position.x - 2, ball.position.y - 2, 2.5, "#ffd9b5"); }
   }
   function dots(txt, x, y, size, colour) {
