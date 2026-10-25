@@ -393,7 +393,12 @@ def chips(current, counts):
         cur = ' aria-current="page"' if current == z else ""
         links.append(f'<a href="{u("/zone/" + z + "/")}"{cur}>{e(short(z))}'
                      f'<span class="n">{n}</span></a>')
-    return '<nav class="chips" aria-label="Zones">' + "".join(links) + "</nav>"
+    return ('<nav class="chips" aria-label="Zones">' + "".join(links) + "</nav>"
+            # On a desktop the strip must be one line: shave the type a little, only if it does not fit.
+            '<script>(function(){var c=document.querySelector(".chips");function fit(){if(window.innerWidth<760)'
+            '{c.style.fontSize="";return}var s=13;c.style.fontSize=s+"px";while(c.scrollWidth>c.clientWidth&&s>10)'
+            '{s-=0.5;c.style.fontSize=s+"px"}}fit();addEventListener("resize",fit);'
+            'if(document.fonts)document.fonts.ready.then(fit)})();</script>')
 
 
 def page(title, body, *, path, description, box_extra="", nav="", current=None):

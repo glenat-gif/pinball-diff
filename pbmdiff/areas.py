@@ -89,7 +89,7 @@ STATES = [("nsw", "New South Wales and the ACT"), ("qld", "Queensland"), ("sa", 
           ("wa", "Western Australia"), ("tas", "Tasmania"), ("nt", "Northern Territory")]
 ZONES += [(key, label, (lambda k: lambda lat, lon: _state(lat, lon) == k)(key)) for key, label in STATES]
 LABELS = {key: label for key, label, _ in ZONES}
-SHORT = {"vic": "Victoria", "nsw": "NSW and ACT", "qld": "Queensland", "sa": "SA", "wa": "WA",
+SHORT = {"vic": "Victoria", "nsw": "NSW & ACT", "qld": "Queensland", "sa": "SA", "wa": "WA",
          "tas": "Tasmania", "nt": "NT"}
 
 
