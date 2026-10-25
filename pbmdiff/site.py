@@ -182,7 +182,8 @@ def comp_row(c, show_zone=True):
         strip = f'<div class="landed"><span class="lbl">Landed here lately</span><div class="tiles">{tiles}</div></div>'
     photo = (f'<img class="cphoto" src="{e(c["photo"])}" alt="" width="72" height="72" loading="lazy">'
              if c.get("photo") else "")
-    return (f'<li class="comp{" has-photo" if photo else ""}" data-state="{e(st)}">'
+    state_attr = f' data-state="{e(st)}"' if show_zone else ""   # the colour strip only where states mix
+    return (f'<li class="comp{" has-photo" if photo else ""}"{state_attr}>'
             f'<span class="when">{e(render.comp_when(c))}</span>{photo}<div>'
             f'<a class="cname" href="{e(c["link"])}">{e(c["name"])}</a>{kind_html}{sub}'
             f'<div class="cwhere">{where}{zone}{more}</div>{fmt}{strip}</div></li>')

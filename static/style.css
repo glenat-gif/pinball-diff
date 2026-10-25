@@ -249,7 +249,7 @@ blockquote.said { margin: 0.35rem 0 0; padding-left: 0.75rem; border-left: 3px s
 .comp .cname { font-weight: 650; }
 .cwhere { color: var(--muted); font-size: 0.95rem; }
 .comp .d { display: block; color: var(--muted); font-size: 0.86rem; }
-.comps-zone > header { border-bottom-color: var(--plasma); }
+.comps-zone > header { border-bottom-color: var(--ink); }
 @media (max-width: 560px) { .comp { grid-template-columns: 1fr; } }
 
 /* States: one colour each, always paired with the state's name */
@@ -361,7 +361,7 @@ blockquote.said { margin: 0.35rem 0 0; padding-left: 0.75rem; border-left: 3px s
 .ep .etitle { font-weight: 650; font-size: 1.05rem; }
 .ep .d { display: block; color: var(--muted); font-size: 0.86rem; margin-top: 0.1rem; }
 .ep .sum { margin: 0.35rem 0 0; color: var(--muted); font-size: 0.95rem; }
-.pods-zone > header { border-bottom-color: var(--plasma); }
+.pods-zone > header { border-bottom-color: var(--ink); }
 
 /* Machines */
 .finder { margin-top: 1.8rem; }
