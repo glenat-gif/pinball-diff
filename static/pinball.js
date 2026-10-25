@@ -29,11 +29,11 @@
   }
   var arc = []; for (var i = 0; i <= 28; i++) { var t = Math.PI + Math.PI * i / 28; arc.push([200 + 184 * Math.cos(t), 190 + 184 * Math.sin(t)]); }
   rail(arc);                                                       // the orbit round the top
-  rail([[16, 190], [16, 540], [66, 604], [137, 650]]); rail([[141, 658], [156, 698]]);    // left wall and inlane into the hinge; the drain below
-  rail([[352, 190], [352, 540], [334, 604], [263, 650]]); rail([[259, 658], [244, 698]]); // lane guide and inlane into the hinge; the drain below
+  rail([[16, 190], [16, 540], [66, 604], [132, 650]]); rail([[136, 658], [152, 698]]);    // left wall and inlane into the hinge; the drain below
+  rail([[352, 190], [352, 540], [334, 604], [268, 650]]); rail([[264, 658], [248, 698]]); // lane guide and inlane into the hinge; the drain below
   rail([[384, 190], [384, 690]]); rail([[352, 640], [352, 690]]);               // shooter lane walls; the ball rests on the plunger
   Composite.add(world, Bodies.rectangle(368, 681, 32, 8, { isStatic: true, restitution: 0.1 }));   // the plunger tip, not drawn as a rail
-  [[139, 653], [261, 653]].forEach(function (c) { Composite.add(world, Bodies.circle(c[0], c[1], 7, { isStatic: true, restitution: 0.2 })); });  // flipper bases
+  [[134, 653], [266, 653]].forEach(function (c) { Composite.add(world, Bodies.circle(c[0], c[1], 7, { isStatic: true, restitution: 0.2 })); });  // flipper bases
 
   var slings = [[[88, 478], [128, 584], [88, 584]], [[312, 478], [272, 584], [312, 584]]];   // clear of the walls, so nothing wedges
   var slingBodies = slings.map(function (t) {
@@ -46,8 +46,8 @@
   });
   // each ramp is a hairpin: up its own side, round at the top, back down to the inlane beside it
   var ramps = [
-    { name: "LEFT LOOP", mouth: { x: 118, y: 440, r: 24 }, path: [[118, 440], [118, 330], [122, 230], [112, 180], [88, 166], [66, 190], [58, 260], [56, 400], [58, 520], [74, 566]], exit: { x: 3, y: 4 } },
-    { name: "RIGHT LOOP", mouth: { x: 282, y: 458, r: 24 }, path: [[282, 458], [282, 340], [278, 240], [288, 190], [312, 176], [334, 200], [342, 270], [344, 400], [342, 520], [328, 566]], exit: { x: -3, y: 4 } }
+    { name: "LEFT LOOP", mouth: { x: 118, y: 400, r: 12 }, path: [[118, 400], [118, 330], [122, 230], [112, 180], [88, 166], [66, 190], [58, 260], [56, 400], [58, 520], [74, 566]], exit: { x: 3, y: 4 } },
+    { name: "RIGHT LOOP", mouth: { x: 282, y: 412, r: 12 }, path: [[282, 412], [282, 340], [278, 240], [288, 190], [312, 176], [334, 200], [342, 270], [344, 400], [342, 520], [328, 566]], exit: { x: -3, y: 4 } }
   ];
   var orbitZone = { x: 200, y: 36, r: 30 };
 
@@ -62,7 +62,7 @@
     Body.setPosition(f.body, { x: f.px + f.len / 2 * Math.cos(a), y: f.py + f.len / 2 * Math.sin(a) });
     Body.setAngle(f.body, a); Body.setAngularVelocity(f.body, w); Body.setVelocity(f.body, { x: 0, y: 0 }); f.a = a;
   }
-  var flippers = [flipper(139, 653, 1), flipper(261, 653, -1)];   // tips about 27 apart at rest
+  var flippers = [flipper(134, 653, 1), flipper(266, 653, -1)];   // tips about 37 apart at rest
 
   // ---------- the ball and the game ----------
   var ball = Bodies.circle(368, 668, R, { restitution: 0.3, friction: 0.01, frictionAir: 0.0012, density: 0.004, label: "ball" });
@@ -71,7 +71,7 @@
   try { best = +localStorage.getItem("ptw-best") || 0; } catch (e) {}
   function say(t, secs) { msg = t; msgUntil = performance.now() + secs * 1000; }
   function toLane() { Body.setPosition(ball, { x: 368, y: 668 }); Body.setVelocity(ball, { x: 0, y: 0 }); Body.setAngularVelocity(ball, 0); ride = null; ball.collisionFilter.mask = -1; }
-  function newBall() { toLane(); saver = 20 * 60; }
+  function newBall() { toLane(); saver = 0; }
   function start() { score = 0; ballsLeft = 3; combo = 0; lastRamp = null; state = "play"; newBall(); say("HOLD TO PULL, LET GO TO LAUNCH", 3); }
   var pull = 0, pulling = false;
   function inLane() { return ball.position.x > 352 && ball.position.y > 560 && Math.abs(ball.velocity.y) < 1; }
@@ -137,7 +137,7 @@
       Engine.update(engine, 1000 / 60 / SUB);
     }
     ramps.forEach(function (r) {
-      if (!ride && ball.velocity.y < -1 && Math.hypot(ball.position.x - r.mouth.x, ball.position.y - r.mouth.y) < r.mouth.r + R) {
+      if (!ride && ball.velocity.y < -4 && Math.abs(ball.velocity.x) < -ball.velocity.y && Math.hypot(ball.position.x - r.mouth.x, ball.position.y - r.mouth.y) < r.mouth.r) {
         ride = { ramp: r, t: 0 }; ball.collisionFilter.mask = 0;
         combo = lastRamp && lastRamp !== r ? Math.min(combo + 1, 3) : 1; lastRamp = r;
         var pts = 1000 * combo; score += pts; say(r.name + (combo > 1 ? "  COMBO X" + combo : "") + "  " + pts, 1.6);
@@ -220,7 +220,7 @@
     ctx.imageSmoothingEnabled = false;
     ctx.drawImage(art, 0, 0, W, H);
     dots(String(score).padStart(6, "0"), 200, 62, 36);
-    dots(state === "play" ? "BALL " + (4 - ballsLeft) + " OF 3" + (saver ? "   SAVER ON" : "") + "   BEST " + best : "BEST " + best, 200, 86, 13, DIM);
+    dots(state === "play" ? "BALL " + (4 - ballsLeft) + " OF 3" + "   BEST " + best : "BEST " + best, 200, 86, 13, DIM);
     if (performance.now() < msgUntil) dots(msg, 200, 110, 14);
   }
   function frame() { tick(); draw(); requestAnimationFrame(frame); }
