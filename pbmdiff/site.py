@@ -22,6 +22,7 @@ from .config import ROOT, SITE
 
 DIST = ROOT / "dist"
 CSS_VERSION = __import__("hashlib").sha1((ROOT / "static" / "style.css").read_bytes()).hexdigest()[:8]
+JS_VERSION = __import__("hashlib").sha1((ROOT / "static" / "pinball.js").read_bytes()).hexdigest()[:8]
 e = html.escape
 FONTS = ("https://fonts.googleapis.com/css2?family=Doto:wght@900"
          "&family=Instrument+Sans:wght@400;600;700&family=Barlow+Condensed:wght@600;700&display=swap")
@@ -956,7 +957,7 @@ def play_page():
             'On a phone, tap the left or right half of the table, and tap the lane to launch.</p>'
             '<p class="muted">Two flippers, three pops, two slings, an orbit and two loops. A ball saver on every ball. Nothing is sent anywhere.</p>'
             '<script src="https://cdnjs.cloudflare.com/ajax/libs/matter-js/0.19.0/matter.min.js"></script>'
-            f'<script src="{u("/pinball.js")}?v={CSS_VERSION}"></script>')
+            f'<script src="{u("/pinball.js")}?v={JS_VERSION}"></script>')
     return page("Out the back", body, path="/play/", description="A small pinball table. Two flippers, three pops, two loops.",
                 box_extra='<p class="wordmark">Out the back</p><p class="lede">You found the machine. Three balls, and your best score stays in this browser.</p>',
                 current="play")
