@@ -71,7 +71,7 @@
   function say(t, secs) { msg = t; msgUntil = performance.now() + secs * 1000; }
   function toLane() { Body.setPosition(ball, { x: 368, y: 630 }); Body.setVelocity(ball, { x: 0, y: 0 }); Body.setAngularVelocity(ball, 0); ride = null; ball.collisionFilter.mask = -1; }
   function newBall() { toLane(); saver = 20 * 60; }
-  function start() { score = 0; ballsLeft = 3; combo = 0; lastRamp = null; state = "play"; newBall(); say("HOLD SPACE OR THE LANE, LET GO TO LAUNCH", 3); }
+  function start() { score = 0; ballsLeft = 3; combo = 0; lastRamp = null; state = "play"; newBall(); say("HOLD TO PULL, LET GO TO LAUNCH", 3); }
   var pull = 0, pulling = false;
   function inLane() { return ball.position.x > 352 && ball.position.y > 560 && Math.abs(ball.velocity.y) < 1; }
   function pullStart() { if (state !== "play") { start(); return; } if (inLane()) pulling = true; }
