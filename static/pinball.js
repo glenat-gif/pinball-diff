@@ -29,12 +29,12 @@
   }
   var arc = []; for (var i = 0; i <= 28; i++) { var t = Math.PI + Math.PI * i / 28; arc.push([200 + 184 * Math.cos(t), 190 + 184 * Math.sin(t)]); }
   rail(arc);                                                       // the orbit round the top
-  rail([[16, 190], [16, 540], [62, 602], [134, 654]]);             // left wall into the left inlane
-  rail([[352, 190], [352, 540], [338, 602], [266, 654]]);          // lane guide into the right inlane
-  rail([[384, 190], [384, 676], [352, 676], [352, 640]]);          // shooter lane
-  rail([[150, 696], [134, 654]]); rail([[250, 696], [266, 654]]);  // the drain below the flippers
+  rail([[16, 190], [16, 540], [66, 604], [146, 650]]); rail([[150, 658], [162, 698]]);    // left wall and inlane into the hinge; the drain below
+  rail([[352, 190], [352, 540], [334, 604], [254, 650]]); rail([[250, 658], [238, 698]]); // lane guide and inlane into the hinge; the drain below
+  rail([[384, 190], [384, 676], [352, 676], [352, 640]]);                         // shooter lane
+  [[148, 653], [252, 653]].forEach(function (c) { Composite.add(world, Bodies.circle(c[0], c[1], 7, { isStatic: true, restitution: 0.2 })); });  // flipper bases
 
-  var slings = [[[72, 482], [114, 584], [72, 584]], [[328, 482], [286, 584], [328, 584]]];
+  var slings = [[[88, 478], [128, 584], [88, 584]], [[312, 478], [272, 584], [312, 584]]];   // clear of the walls, so nothing wedges
   var slingBodies = slings.map(function (t) {
     var cx = (t[0][0] + t[1][0] + t[2][0]) / 3, cy = (t[0][1] + t[1][1] + t[2][1]) / 3;
     var b = Bodies.fromVertices(cx, cy, [t.map(function (p) { return { x: p[0], y: p[1] }; })], { isStatic: true, restitution: 0.2, label: "sling" });
@@ -45,23 +45,23 @@
   });
   // each ramp is a hairpin: up its own side, round at the top, back down to the inlane beside it
   var ramps = [
-    { name: "LEFT LOOP", mouth: { x: 118, y: 440, r: 15 }, path: [[118, 440], [118, 330], [122, 230], [112, 180], [88, 166], [66, 190], [58, 260], [56, 400], [58, 520], [74, 566]], exit: { x: 3, y: 4 } },
-    { name: "RIGHT LOOP", mouth: { x: 282, y: 458, r: 15 }, path: [[282, 458], [282, 340], [278, 240], [288, 190], [312, 176], [334, 200], [342, 270], [344, 400], [342, 520], [328, 566]], exit: { x: -3, y: 4 } }
+    { name: "LEFT LOOP", mouth: { x: 118, y: 440, r: 24 }, path: [[118, 440], [118, 330], [122, 230], [112, 180], [88, 166], [66, 190], [58, 260], [56, 400], [58, 520], [74, 566]], exit: { x: 3, y: 4 } },
+    { name: "RIGHT LOOP", mouth: { x: 282, y: 458, r: 24 }, path: [[282, 458], [282, 340], [278, 240], [288, 190], [312, 176], [334, 200], [342, 270], [344, 400], [342, 520], [328, 566]], exit: { x: -3, y: 4 } }
   ];
   var orbitZone = { x: 200, y: 36, r: 30 };
 
   // flippers: bodies the game places each tick; the engine resolves the ball against them
   function flipper(px, py, dir) {
-    var len = 60, body = Bodies.rectangle(px, py, len, 15, { chamfer: { radius: 7 }, density: 1, restitution: 0.1, friction: 0.05, label: "flipper", collisionFilter: { group: -1 } });
+    var len = 54, body = Bodies.rectangle(px, py, len, 12, { chamfer: { radius: 5 }, density: 1, restitution: 0.1, friction: 0.05, label: "flipper", collisionFilter: { group: -1 } });
     Composite.add(world, body);
-    var f = { body: body, px: px, py: py, len: len, rest: dir > 0 ? 0.5 : Math.PI - 0.5, up: dir > 0 ? -0.62 : Math.PI + 0.62, a: 0, key: false };
+    var f = { body: body, px: px, py: py, len: len, dir: dir, rest: dir > 0 ? 0.5 : Math.PI - 0.5, up: dir > 0 ? -0.62 : Math.PI + 0.62, a: 0, key: false, rising: false };
     place(f, f.rest, 0); return f;
   }
   function place(f, a, w) {
     Body.setPosition(f.body, { x: f.px + f.len / 2 * Math.cos(a), y: f.py + f.len / 2 * Math.sin(a) });
     Body.setAngle(f.body, a); Body.setAngularVelocity(f.body, w); Body.setVelocity(f.body, { x: 0, y: 0 }); f.a = a;
   }
-  var flippers = [flipper(136, 652, 1), flipper(264, 652, -1)];
+  var flippers = [flipper(148, 653, 1), flipper(252, 653, -1)];
 
   // ---------- the ball and the game ----------
   var ball = Bodies.circle(368, 630, R, { restitution: 0.3, friction: 0.01, frictionAir: 0.0012, density: 0.004, label: "ball" });
@@ -71,11 +71,17 @@
   function say(t, secs) { msg = t; msgUntil = performance.now() + secs * 1000; }
   function toLane() { Body.setPosition(ball, { x: 368, y: 630 }); Body.setVelocity(ball, { x: 0, y: 0 }); Body.setAngularVelocity(ball, 0); ride = null; ball.collisionFilter.mask = -1; }
   function newBall() { toLane(); saver = 20 * 60; }
-  function start() { score = 0; ballsLeft = 3; combo = 0; lastRamp = null; state = "play"; newBall(); say("SPACE OR TAP TO LAUNCH", 3); }
-  function launch() {
-    if (state !== "play") { start(); return; }
-    if (ball.position.x > 352 && ball.position.y > 560 && Math.abs(ball.velocity.y) < 1) Body.setVelocity(ball, { x: 0, y: -(21 + Math.random() * 1.5) });
+  function start() { score = 0; ballsLeft = 3; combo = 0; lastRamp = null; state = "play"; newBall(); say("HOLD SPACE OR THE LANE, LET GO TO LAUNCH", 3); }
+  var pull = 0, pulling = false;
+  function inLane() { return ball.position.x > 352 && ball.position.y > 560 && Math.abs(ball.velocity.y) < 1; }
+  function pullStart() { if (state !== "play") { start(); return; } if (inLane()) pulling = true; }
+  function pullEnd() {
+    if (!pulling) return;
+    pulling = false;
+    if (inLane()) Body.setVelocity(ball, { x: 0, y: -(10 + 12.5 * pull) });     // a full pull clears the orbit, a tap does not
+    pull = 0;
   }
+  function launch() { pullStart(); pull = 1; pullEnd(); }                       // a straight launch, for the test hook
   say("PRESS SPACE OR TAP TO PLAY", 1e9);
 
   Events.on(engine, "collisionStart", function (ev) {
@@ -92,26 +98,45 @@
     });
   });
 
-  function tick() {
+  var SUB = 3;                                                     // physics substeps per frame
+  function swing() {
     flippers.forEach(function (f) {
-      var target = f.key ? f.up : f.rest, rate = 0.42, a = f.a;
+      var target = f.key ? f.up : f.rest, rate = 0.11, a = f.a;     // about six frames hinge to tip
       if (a < target) a = Math.min(target, a + rate); else a = Math.max(target, a - rate);
-      place(f, a, (a - f.a) * 0.9);
+      f.rising = f.key && a !== f.a; place(f, a, (a - f.a) * SUB);
     });
-    if (state !== "play") { Engine.update(engine, 1000 / 60); return; }
+  }
+  function kick() {
+    // a rising flipper always sends the ball off its face, however the engine resolved the contact
+    flippers.forEach(function (f) {
+      if (!f.rising) return;
+      var dx = ball.position.x - f.px, dy = ball.position.y - f.py, along = dx * Math.cos(f.a) + dy * Math.sin(f.a);
+      var up = f.dir > 0 ? { x: Math.sin(f.a), y: -Math.cos(f.a) } : { x: -Math.sin(f.a), y: Math.cos(f.a) };
+      var h = dx * up.x + dy * up.y;                                 // height of the ball above the face
+      if (along < 3 || along > f.len + R || h < -2 || h > R + 12) return;
+      var speed = Math.min(22, 7 + along * 0.28);
+      Body.setVelocity(ball, { x: up.x * speed + ball.velocity.x * 0.2, y: up.y * speed });
+    });
+  }
+  function tick() {
+    if (pulling) pull = Math.min(1, pull + 1 / 36); else pull = Math.max(0, pull - 0.2);
+    if (state !== "play") { for (var k = 0; k < SUB; k++) { swing(); Engine.update(engine, 1000 / 60 / SUB); } return; }
     if (ride) {
       ride.t += 1 / 50;
       var p = ride.ramp.path, n = p.length - 1, i = Math.min(n - 1, Math.floor(ride.t * n)), u = ride.t * n - i;
       Body.setPosition(ball, { x: p[i][0] + (p[i + 1][0] - p[i][0]) * u, y: p[i][1] + (p[i + 1][1] - p[i][1]) * u });
       Body.setVelocity(ball, { x: 0, y: 0 });
       if (ride.t >= 1) { ball.collisionFilter.mask = -1; Body.setVelocity(ball, ride.ramp.exit); ride = null; }
-      Engine.update(engine, 1000 / 60); return;
+      for (var j = 0; j < SUB; j++) { swing(); Engine.update(engine, 1000 / 60 / SUB); } return;
     }
-    var v = ball.velocity, sp = Math.hypot(v.x, v.y);
-    if (sp > 24) Body.setVelocity(ball, { x: v.x / sp * 24, y: v.y / sp * 24 });
-    Engine.update(engine, 1000 / 60);
+    for (var k = 0; k < SUB; k++) {
+      swing(); kick();
+      var v = ball.velocity, sp = Math.hypot(v.x, v.y);
+      if (sp > 24) Body.setVelocity(ball, { x: v.x / sp * 24, y: v.y / sp * 24 });
+      Engine.update(engine, 1000 / 60 / SUB);
+    }
     ramps.forEach(function (r) {
-      if (!ride && ball.velocity.y < -2 && Math.hypot(ball.position.x - r.mouth.x, ball.position.y - r.mouth.y) < r.mouth.r + R) {
+      if (!ride && ball.velocity.y < -1 && Math.hypot(ball.position.x - r.mouth.x, ball.position.y - r.mouth.y) < r.mouth.r + R) {
         ride = { ramp: r, t: 0 }; ball.collisionFilter.mask = 0;
         combo = lastRamp && lastRamp !== r ? Math.min(combo + 1, 3) : 1; lastRamp = r;
         var pts = 1000 * combo; score += pts; say(r.name + (combo > 1 ? "  COMBO X" + combo : "") + "  " + pts, 1.6);
@@ -158,8 +183,10 @@
       curve(r.path); a.strokeStyle = DIM; a.lineWidth = 7; a.stroke();
       curve(r.path); a.strokeStyle = BG; a.lineWidth = 5; a.stroke();
       curve(r.path); a.strokeStyle = DIM; a.lineWidth = 1; a.stroke();
-      var lit = performance.now() % 900 < 450, mx = r.mouth.x / PX, my = r.mouth.y / PX;   // a chevron at the mouth
-      a.strokeStyle = lit ? INK : DIM; a.lineWidth = 2; a.beginPath(); a.moveTo(mx - 5, my + 2); a.lineTo(mx, my - 4); a.lineTo(mx + 5, my + 2); a.stroke();
+      var lit = performance.now() % 900 < 450, mx = r.mouth.x / PX, my = r.mouth.y / PX;
+      a.strokeStyle = DIM; a.lineWidth = 1; a.beginPath();                                 // the mouth flares open
+      a.moveTo(mx - 3, my - 14); a.lineTo(mx - 11, my + 8); a.moveTo(mx + 3, my - 14); a.lineTo(mx + 11, my + 8); a.stroke();
+      a.strokeStyle = lit ? INK : DIM; a.lineWidth = 2; a.beginPath(); a.moveTo(mx - 5, my + 4); a.lineTo(mx, my - 2); a.lineTo(mx + 5, my + 4); a.stroke();   // a chevron
     });
     rails.forEach(function (pts) { path(pts); a.strokeStyle = INK; a.lineWidth = 2; a.stroke(); });
     slings.forEach(function (t, i) { var b = slingBodies[i]; path(t, true); a.fillStyle = b.flash > 0.5 ? INK : DIM; a.fill(); a.strokeStyle = INK; a.lineWidth = 1; a.stroke(); b.flash = Math.max(0, b.flash - 0.1); });
@@ -170,11 +197,16 @@
     });
     flippers.forEach(function (f) {
       var tx = f.px + f.len * Math.cos(f.a), ty = f.py + f.len * Math.sin(f.a);
-      a.lineCap = "round"; a.beginPath(); a.moveTo(f.px / PX, f.py / PX); a.lineTo(tx / PX, ty / PX); a.strokeStyle = INK; a.lineWidth = 8; a.stroke();
-      a.beginPath(); a.moveTo(f.px / PX, f.py / PX); a.lineTo(tx / PX, ty / PX); a.strokeStyle = BG; a.lineWidth = 5; a.stroke();
-      a.beginPath(); a.moveTo(f.px / PX, f.py / PX); a.lineTo(tx / PX, ty / PX); a.strokeStyle = INK; a.lineWidth = 2; a.stroke();
-      a.lineCap = "butt";
+      a.lineCap = "round"; a.beginPath(); a.moveTo(f.px / PX, f.py / PX); a.lineTo(tx / PX, ty / PX); a.strokeStyle = INK; a.lineWidth = 6; a.stroke();
+      a.beginPath(); a.moveTo(f.px / PX, f.py / PX); a.lineTo(tx / PX, ty / PX); a.strokeStyle = BG; a.lineWidth = 3; a.stroke();
+      a.beginPath(); a.moveTo(f.px / PX, f.py / PX); a.lineTo(tx / PX, ty / PX); a.strokeStyle = INK; a.lineWidth = 1; a.stroke();
+      a.lineCap = "butt"; disc(f.px, f.py, 7, BG, INK); disc(f.px, f.py, 2.5, INK);
     });
+    var head = 652 + pull * 22, hx = 368 / PX;                       // the plunger below the ball
+    a.strokeStyle = DIM; a.lineWidth = 1; a.beginPath();
+    for (var k = 0; k < 6; k++) { var yy = (head + 6 + k * 4) / PX; a.moveTo(hx - 4, yy); a.lineTo(hx + 4, yy + 1); }
+    a.stroke();
+    a.fillStyle = INK; a.fillRect(hx - 5, head / PX, 10, 3); a.fillRect(hx - 1, head / PX + 3, 2, 10);
     if (state !== "attract") { disc(ball.position.x, ball.position.y, R, INK); disc(ball.position.x - 2, ball.position.y - 2, 2.5, "#ffd9b5"); }
   }
   function dots(txt, x, y, size, colour) {
@@ -198,14 +230,17 @@
   document.addEventListener("keydown", function (ev) {
     if (LEFT[ev.code]) { flippers[0].key = true; ev.preventDefault(); }
     if (RIGHT[ev.code]) { flippers[1].key = true; ev.preventDefault(); }
-    if (ev.code === "Space" || ev.code === "ArrowDown" || ev.code === "Enter") { launch(); ev.preventDefault(); }
+    if (ev.code === "Space" || ev.code === "ArrowDown" || ev.code === "Enter") { if (!ev.repeat) pullStart(); ev.preventDefault(); }
   });
-  document.addEventListener("keyup", function (ev) { if (LEFT[ev.code]) flippers[0].key = false; if (RIGHT[ev.code]) flippers[1].key = false; });
+  document.addEventListener("keyup", function (ev) {
+    if (LEFT[ev.code]) flippers[0].key = false; if (RIGHT[ev.code]) flippers[1].key = false;
+    if (ev.code === "Space" || ev.code === "ArrowDown" || ev.code === "Enter") pullEnd();
+  });
   function at(cx, cy) { var box = canvas.getBoundingClientRect(); return { x: (cx - box.left) / scale, y: (cy - box.top) / scale }; }
   function touch(ev, down) {
     for (var i = 0; i < ev.changedTouches.length; i++) {
       var t = ev.changedTouches[i], p = at(t.clientX, t.clientY);
-      if (down && (state !== "play" || (p.x > 340 && p.y > 400))) { launch(); continue; }
+      if (state !== "play" || (p.x > 340 && p.y > 400)) { if (down) pullStart(); else pullEnd(); continue; }
       flippers[p.x < W / 2 ? 0 : 1].key = down;
     }
     ev.preventDefault();
@@ -213,10 +248,10 @@
   canvas.addEventListener("touchstart", function (ev) { touch(ev, true); }, { passive: false });
   canvas.addEventListener("touchend", function (ev) { touch(ev, false); }, { passive: false });
   canvas.addEventListener("touchcancel", function (ev) { touch(ev, false); }, { passive: false });
-  canvas.addEventListener("mousedown", function (ev) { var p = at(ev.clientX, ev.clientY); if (state !== "play" || (p.x > 340 && p.y > 400)) launch(); else flippers[p.x < W / 2 ? 0 : 1].key = true; });
-  document.addEventListener("mouseup", function () { flippers[0].key = flippers[1].key = false; });
+  canvas.addEventListener("mousedown", function (ev) { var p = at(ev.clientX, ev.clientY); if (state !== "play" || (p.x > 340 && p.y > 400)) pullStart(); else flippers[p.x < W / 2 ? 0 : 1].key = true; });
+  document.addEventListener("mouseup", function () { flippers[0].key = flippers[1].key = false; pullEnd(); });
 
   // a hook so the table can be driven in a headless test
-  window.PTW = { get: function () { return { state: state, score: score, balls: ballsLeft, x: ball.position.x, y: ball.position.y, vy: ball.velocity.y, saver: saver, ride: !!ride }; }, launch: launch, flip: function (i, on) { flippers[i].key = on; },
+  window.PTW = { get: function () { return { state: state, score: score, balls: ballsLeft, x: ball.position.x, y: ball.position.y, vy: ball.velocity.y, saver: saver, ride: !!ride, pull: pull }; }, launch: launch, pullStart: pullStart, pullEnd: pullEnd, flip: function (i, on) { flippers[i].key = on; },
                 put: function (x, y, vx, vy) { Body.setPosition(ball, { x: x, y: y }); Body.setVelocity(ball, { x: vx, y: vy }); } };
 })();
