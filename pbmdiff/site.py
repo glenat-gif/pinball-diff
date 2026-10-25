@@ -444,9 +444,7 @@ def page(title, body, *, path, description, box_extra="", nav="", current=None, 
 {body}
 </div></main>
 <footer class="foot"><div class="wrap">
-<p>Every venue links to its listing on <a href="https://pinballmap.com">Pinball Map</a>. If something is wrong, or you played something new, update it there. That is where this comes from.</p>
-<p>Data from Pinball Map, CC BY-SA 4.0. Built from what Australian players submit; thanks to every one of them.</p>
-<p>Comps from the <a href="https://www.ifpapinball.com">IFPA</a> calendar. Machine artwork from the <a href="https://opdb.org">Open Pinball Database</a>.</p>
+<p>Data from <a href="https://pinballmap.com">Pinball Map</a>, CC BY-SA 4.0, built from what Australian players submit. Comps from the <a href="https://www.ifpapinball.com">IFPA</a> calendar. Machine artwork from the <a href="https://opdb.org">Open Pinball Database</a>.</p>
 <p>Waiting for a machine? <a href="{u('/play/')}">Play a quick game</a>.</p>
 </div></footer>
 </body>
@@ -962,7 +960,7 @@ def about_page():
 <h2>Where it comes from</h2>
 <p>Every line was submitted to <a href="https://pinballmap.com">Pinball Map</a> by a player. Each morning this site asks what changed around Australia, sorts it by state and tidies it: a machine out and a new edition of the same game in becomes a swap, a new venue and its first machines become one line. Nothing is added by hand, so it is only as good as what people submit. If a lineup was different or a machine was off, update the listing on Pinball Map and it is here the next morning.</p>
 <p>This is not a map and will not help you find somewhere to play. Pinball Map does that, and every venue here links straight to its listing.</p>
-<p class="muted">Data from Pinball Map, CC BY-SA 4.0. Comps from the <a href="https://www.ifpapinball.com">IFPA</a> calendar. Machine artwork from the <a href="https://opdb.org">Open Pinball Database</a>. Suburbs and postcodes from Matthew Proctor's public-domain <a href="https://www.matthewproctor.com/australian_postcodes">Australian Postcodes</a> list. The code is open on <a href="https://github.com/glenat-gif/pinball-diff">GitHub</a>.</p>
+<p class="muted">Suburbs and postcodes for the near-you search come from Matthew Proctor's public-domain <a href="https://www.matthewproctor.com/australian_postcodes">Australian Postcodes</a> list. The code is open on <a href="https://github.com/glenat-gif/pinball-diff">GitHub</a>.</p>
 </div>"""
     box = ('<p class="wordmark" style="font-size:clamp(1.6rem,6vw,2.6rem)">About</p>'
            f'<p class="lede">{e(SITE["tagline"])}</p>')
