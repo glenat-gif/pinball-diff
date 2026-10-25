@@ -1,0 +1,154 @@
+{
+ "items": [
+  {
+   "location_id": 30751,
+   "location_name": "Newcastle United Sports Club",
+   "city": "Adamstown",
+   "link": "https://pinballmap.com/map?by_location_id=30751",
+   "lat": -32.93305,
+   "lon": 151.729484,
+   "ids": {
+    "No Fear: Dangerous Sports (Williams, 1995)": 675
+   },
+   "kind": "new_venue",
+   "rank": 0,
+   "date": "2026-10-22",
+   "machines": [
+    "No Fear: Dangerous Sports (Williams, 1995)"
+   ],
+   "by": [
+    "sartana66"
+   ],
+   "flags": {}
+  },
+  {
+   "location_id": 25330,
+   "location_name": "Nambucca Heads RSL Club",
+   "city": "Nambucca Heads",
+   "link": "https://pinballmap.com/map?by_location_id=25330",
+   "lat": -30.6454941,
+   "lon": 153.0031622,
+   "ids": {
+    "Led Zeppelin (Premium) (Stern, 2020)": 3280,
+    "Stranger Things (Premium) (Stern, 2019)": 3227
+   },
+   "kind": "rotation",
+   "rank": 2.85,
+   "date": "2026-10-24",
+   "machines": [
+    "Stranger Things (Premium) (Stern, 2019)"
+   ],
+   "out": [
+    "Led Zeppelin (Premium) (Stern, 2020)"
+   ],
+   "by": [
+    "bogandhi"
+   ],
+   "flags": {
+    "Stranger Things (Premium) (Stern, 2019)": [
+     "Premium"
+    ]
+   }
+  },
+  {
+   "location_id": 20102,
+   "location_name": "White Cockatoo Hotel",
+   "city": "Petersham",
+   "link": "https://pinballmap.com/map?by_location_id=20102",
+   "lat": -33.8933268,
+   "lon": 151.1557268,
+   "ids": {
+    "Jurassic Park (Pro) (Stern, 2019)": 3167,
+    "Iron Maiden: Legacy of the Beast (Premium) (Stern, 2018)": 2924
+   },
+   "kind": "rotation",
+   "rank": 2.85,
+   "date": "2026-10-20",
+   "machines": [
+    "Iron Maiden: Legacy of the Beast (Premium) (Stern, 2018)"
+   ],
+   "out": [
+    "Jurassic Park (Pro) (Stern, 2019)"
+   ],
+   "by": [
+    "Bruce007"
+   ],
+   "flags": {
+    "Iron Maiden: Legacy of the Beast (Premium) (Stern, 2018)": [
+     "Premium"
+    ]
+   }
+  },
+  {
+   "location_id": 21718,
+   "location_name": "Mountain Goat Newtown",
+   "city": "Newtown",
+   "link": "https://pinballmap.com/map?by_location_id=21718",
+   "lat": -33.9009069,
+   "lon": 151.1783505,
+   "ids": {
+    "Black Knight: Sword of Rage (LE) (Stern, 2019)": 3128,
+    "Lord of the Rings (Stern, 2003)": 662,
+    "Spider-Man (Vault Edition) (Stern, 2016)": 2565
+   },
+   "kind": "removed",
+   "rank": 4,
+   "date": "2026-10-25",
+   "machines": [
+    "Black Knight: Sword of Rage (LE) (Stern, 2019)",
+    "Lord of the Rings (Stern, 2003)",
+    "Spider-Man (Vault Edition) (Stern, 2016)"
+   ],
+   "by": [
+    "Bruce007"
+   ],
+   "flags": {}
+  },
+  {
+   "location_id": 14587,
+   "location_name": "Public House Petersham",
+   "city": "Petersham",
+   "link": "https://pinballmap.com/map?by_location_id=14587",
+   "lat": -33.8966608,
+   "lon": 151.1594821,
+   "ids": {
+    "Iron Maiden: Legacy of the Beast (Premium) (Stern, 2018)": 2924,
+    "Kiss (Stern, 2015)": 2353
+   },
+   "kind": "removed",
+   "rank": 4,
+   "date": "2026-10-20",
+   "machines": [
+    "Iron Maiden: Legacy of the Beast (Premium) (Stern, 2018)",
+    "Kiss (Stern, 2015)"
+   ],
+   "by": [
+    "Bruce007"
+   ],
+   "flags": {}
+  },
+  {
+   "location_id": 30751,
+   "location_name": "Newcastle United Sports Club",
+   "city": "Adamstown",
+   "link": "https://pinballmap.com/map?by_location_id=30751",
+   "lat": -32.93305,
+   "lon": 151.729484,
+   "ids": {
+    "No Fear: Dangerous Sports (Williams, 1995)": 675
+   },
+   "kind": "condition",
+   "status": "amber",
+   "rank": 5,
+   "date": "2026-10-22",
+   "machine": "No Fear: Dangerous Sports (Williams, 1995)",
+   "comment": "Machine is currently sitting in a corner unplugged.",
+   "user": "sartana66",
+   "by": [
+    "sartana66"
+   ],
+   "flags": {}
+  }
+ ],
+ "confirmations": 7
+}

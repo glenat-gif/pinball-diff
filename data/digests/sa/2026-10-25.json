@@ -1,0 +1,26 @@
+{
+ "items": [
+  {
+   "location_id": 26314,
+   "location_name": "Hectorville Sports and Community Club",
+   "city": "Magill",
+   "link": "https://pinballmap.com/map?by_location_id=26314",
+   "lat": -34.9010023,
+   "lon": 138.6688124,
+   "ids": {
+    "Pirates of the Caribbean (Stern, 2006)": 676
+   },
+   "kind": "removed",
+   "rank": 4,
+   "date": "2026-10-23",
+   "machines": [
+    "Pirates of the Caribbean (Stern, 2006)"
+   ],
+   "by": [
+    "imczr"
+   ],
+   "flags": {}
+  }
+ ],
+ "confirmations": 0
+}
