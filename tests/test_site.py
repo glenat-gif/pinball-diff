@@ -296,7 +296,7 @@ class IssueTests(Built):
         self.assertIn("CC BY-SA 4.0", md)
         self.assertTrue(md.startswith("<!-- buttondown-editor-mode: plaintext -->"))
         self.assertNotIn("\n---\n", md.split("\n", 1)[0])   # Buttondown rejects a body that opens with ---
-        self.assertEqual(mail.subject(iss), "Cactus Canyon (Remake Special) lands at Railway Hotel South Melbourne")
+        self.assertEqual(mail.subject(iss), "Cactus Canyon (Remake Special) lands at Railway Hotel South Melbourne, VIC")
         page = mail.html(iss)
         self.assertTrue(page.startswith("<!-- buttondown-editor-mode: fancy -->"))
         self.assertIn("PINBALL THIS WEEK", page)
@@ -323,12 +323,12 @@ class IssueTests(Built):
         self.assertIn("Some Pub", md)                                     # plain interstate arrivals are in, not just highlights
         self.assertIn("Transformers (LE)", mail.html(iss))
         # A limited-edition new release interstate outranks a plain local swap; the home state only wins ties.
-        self.assertEqual(mail.subject(iss), "Transformers (LE) lands in Northbridge")
+        self.assertEqual(mail.subject(iss), "Transformers (LE) lands in Northbridge, NSW")
         iss["zones"][1]["items"][0]["flags"] = {}
         # ...and a second headline only rides along when the pair stays under 100 characters.
-        self.assertEqual(mail.subject(iss), "Cactus Canyon (Remake Special) lands at Railway Hotel South Melbourne")
+        self.assertEqual(mail.subject(iss), "Cactus Canyon (Remake Special) lands at Railway Hotel South Melbourne, VIC")
         iss["zones"][0]["items"] = []
-        self.assertEqual(mail.subject(iss), "Transformers (LE) lands in Northbridge, and Fish Tales lands in Glebe")
+        self.assertEqual(mail.subject(iss), "Transformers (LE) lands in Northbridge, NSW, and Fish Tales lands in Glebe, NSW")
         iss["zones"] = iss["zones"][:1]
         self.assertEqual(mail.subject(iss), "This week in Australian pinball")
 

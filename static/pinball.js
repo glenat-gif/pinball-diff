@@ -30,8 +30,10 @@
   var arc = []; for (var i = 0; i <= 28; i++) { var t = Math.PI + Math.PI * i / 28; arc.push([200 + 184 * Math.cos(t), 190 + 184 * Math.sin(t)]); }
   rail(arc);                                                       // the orbit round the top
   rail([[16, 190], [16, 540], [66, 604], [132, 650]]); rail([[136, 658], [152, 698]]);    // left wall and inlane into the hinge; the drain below
-  rail([[352, 190], [352, 540], [334, 604], [268, 650]]); rail([[264, 658], [248, 698]]); // lane guide and inlane into the hinge; the drain below
+  rail([[350, 221], [352, 540], [334, 604], [268, 650]]); rail([[264, 658], [248, 698]]); // lane guide (its top just under the gate's end) and inlane into the hinge; the drain below
   rail([[384, 190], [384, 690]]); rail([[352, 640], [352, 690]]);               // shooter lane walls; the ball rests on the plunger
+  var gate = Bodies.rectangle(366, 206, 42, 6, { isStatic: true, angle: -0.5, restitution: 0, friction: 0, frictionStatic: 0, collisionFilter: { mask: 0 } });   // one-way: shut only for a ball coming back down
+  Composite.add(world, gate);
   Composite.add(world, Bodies.rectangle(368, 681, 32, 8, { isStatic: true, restitution: 0.1 }));   // the plunger tip, not drawn as a rail
   [[134, 653], [266, 653]].forEach(function (c) { Composite.add(world, Bodies.circle(c[0], c[1], 7, { isStatic: true, restitution: 0.2 })); });  // flipper bases
 
@@ -46,8 +48,8 @@
   });
   // each ramp is a hairpin: up its own side, round at the top, back down to the inlane beside it
   var ramps = [
-    { name: "LEFT LOOP", mouth: { x: 118, y: 400, r: 12 }, path: [[118, 400], [118, 330], [122, 230], [112, 180], [88, 166], [66, 190], [58, 260], [56, 400], [58, 520], [74, 566]], exit: { x: 3, y: 4 } },
-    { name: "RIGHT LOOP", mouth: { x: 282, y: 412, r: 12 }, path: [[282, 412], [282, 340], [278, 240], [288, 190], [312, 176], [334, 200], [342, 270], [344, 400], [342, 520], [328, 566]], exit: { x: -3, y: 4 } }
+    { name: "LEFT LOOP", mouth: { x: 136, y: 416, r: 26 }, path: [[136, 416], [118, 330], [122, 230], [112, 180], [88, 166], [66, 190], [58, 260], [56, 400], [58, 520], [74, 566]], exit: { x: 3, y: 4 } },
+    { name: "RIGHT LOOP", mouth: { x: 264, y: 428, r: 26 }, path: [[264, 428], [282, 340], [278, 240], [288, 190], [312, 176], [334, 200], [342, 270], [344, 400], [342, 520], [328, 566]], exit: { x: -3, y: 4 } }
   ];
   var orbitZone = { x: 200, y: 36, r: 30 };
 
@@ -65,7 +67,7 @@
   var flippers = [flipper(134, 653, 1), flipper(266, 653, -1)];   // tips about 37 apart at rest
 
   // ---------- the ball and the game ----------
-  var ball = Bodies.circle(368, 668, R, { restitution: 0.3, friction: 0.01, frictionAir: 0.0012, density: 0.004, label: "ball" });
+  var ball = Bodies.circle(368, 668, R, { restitution: 0.3, friction: 0.01, frictionStatic: 0, frictionAir: 0.0012, density: 0.004, label: "ball" });
   Composite.add(world, ball);
   var state = "attract", score = 0, best = 0, ballsLeft = 0, ride = null, combo = 0, lastRamp = null, saver = 0, msg = "", msgUntil = 0, orbitCool = 0;
   try { best = +localStorage.getItem("ptw-best") || 0; } catch (e) {}
@@ -121,6 +123,7 @@
   }
   function tick() {
     if (pulling) pull = Math.min(1, pull + 1 / 36); else pull = Math.max(0, pull - 0.2);
+    gate.collisionFilter.mask = (ball.position.x > 336 && ball.position.y < 217 - (ball.position.x - 345) * 22 / 42) ? -1 : 0;   // solid while the ball is above the gate's line
     if (state !== "play") { for (var k = 0; k < SUB; k++) { swing(); Engine.update(engine, 1000 / 60 / SUB); } return; }
     if (ride) {
       ride.t += 1 / 50;
@@ -137,7 +140,7 @@
       Engine.update(engine, 1000 / 60 / SUB);
     }
     ramps.forEach(function (r) {
-      if (!ride && ball.velocity.y < -4 && Math.abs(ball.velocity.x) < -ball.velocity.y && Math.hypot(ball.position.x - r.mouth.x, ball.position.y - r.mouth.y) < r.mouth.r) {
+      if (!ride && ball.velocity.y < -2 && Math.abs(ball.velocity.x) < -1.9 * ball.velocity.y && Math.hypot(ball.position.x - r.mouth.x, ball.position.y - r.mouth.y) < r.mouth.r) {
         ride = { ramp: r, t: 0 }; ball.collisionFilter.mask = 0;
         combo = lastRamp && lastRamp !== r ? Math.min(combo + 1, 3) : 1; lastRamp = r;
         var pts = 1000 * combo; score += pts; say(r.name + (combo > 1 ? "  COMBO X" + combo : "") + "  " + pts, 1.6);
@@ -151,7 +154,7 @@
       ballsLeft--;
       if (ballsLeft > 0) { newBall(); say("BALL " + (4 - ballsLeft), 2); }
       else {
-        state = "over";
+        state = "over"; toLane();
         if (score > best) { best = score; try { localStorage.setItem("ptw-best", best); } catch (e) {} say("GAME OVER   NEW BEST " + score, 1e9); }
         else say("GAME OVER   " + score, 1e9);
       }
@@ -163,7 +166,7 @@
   var a = art.getContext("2d");
   var scale = 1;
   function fit() {
-    var box = canvas.parentElement.getBoundingClientRect(), w = Math.min(box.width, (window.innerHeight - 40) * W / H);
+    var box = canvas.parentElement.getBoundingClientRect(), w = Math.min(box.width, (window.innerHeight - 40) * W / H, window.innerWidth > 700 ? 400 : 1e9);
     scale = w / W; canvas.width = Math.round(W * scale * devicePixelRatio); canvas.height = Math.round(H * scale * devicePixelRatio);
     canvas.style.width = Math.round(W * scale) + "px"; canvas.style.height = Math.round(H * scale) + "px";
   }
@@ -190,6 +193,7 @@
       a.strokeStyle = lit ? INK : DIM; a.lineWidth = 2; a.beginPath(); a.moveTo(mx - 5, my + 4); a.lineTo(mx, my - 2); a.lineTo(mx + 5, my + 4); a.stroke();   // a chevron
     });
     rails.forEach(function (pts) { path(pts); a.strokeStyle = INK; a.lineWidth = 2; a.stroke(); });
+    a.strokeStyle = DIM; a.lineWidth = 1; a.beginPath(); a.moveTo(345 / PX, 217 / PX); a.lineTo(387 / PX, 195 / PX); a.stroke();   // the lane gate
     slings.forEach(function (t, i) { var b = slingBodies[i]; path(t, true); a.fillStyle = b.flash > 0.5 ? INK : DIM; a.fill(); a.strokeStyle = INK; a.lineWidth = 1; a.stroke(); b.flash = Math.max(0, b.flash - 0.1); });
     pops.forEach(function (p) {
       var x = p.position.x, y = p.position.y;

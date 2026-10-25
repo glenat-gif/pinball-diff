@@ -29,32 +29,36 @@ def site_url(path=""):
     return SITE["base_url"] + path
 
 
+STATE_CODE = {"vic": "VIC", "nsw": "NSW", "qld": "QLD", "sa": "SA", "wa": "WA", "tas": "TAS", "nt": "NT"}
+
+
 def _headline(item, zone, local):
-    """A short phrase and a score. Venue first for venues, machine first for arrivals."""
+    """A short phrase and a score. Venue first for venues, machine first for arrivals, and the
+    state after the place every time, so a reader anywhere knows where it is."""
     title = lambda n: render.split_machine(n)[0]
-    where = item.get("city") or item["location_name"]
+    st = STATE_CODE.get(zone, "")
+    where = (item.get("city") or item["location_name"]) + (f", {st}" if st else "")
+    venue = item["location_name"] + (f", {st}" if st else "")
     flags = item.get("flags") or {}
     weight = lambda n: sum(issue.HIGHLIGHT_WEIGHT.get(f, 0) for f in flags.get(n, []))
     flagged = sorted((n for n in flags if flags[n]), key=weight, reverse=True)   # rarest first
     k = item["kind"]
     if k == "new_venue":
-        if local:
-            first = f", with {title(item['machines'][0])}" if item.get("machines") else ""
-            return (f"New venue: {item['location_name']}{first}", 12)
-        return (f"New venue: {item['location_name']}" + (f" in {item['city']}" if item.get("city") else ""), 11)
+        place = f"{item['location_name']} in {where}" if item.get("city") else venue
+        return (f"New venue: {place}", 12 if local else 11)
     if k in ("added", "rotation", "swap"):
         names = flagged or item.get("machines") or [item.get("in")]
         name = title(names[0]) if names and names[0] else None
         if not name:
             return None
         score = (10 if local else 9) + (weight(names[0]) if flagged else 0)   # home state wins a tie, no more
-        return (f"{name} lands at {item['location_name']}" if local else f"{name} lands in {where}", score)
+        return (f"{name} lands at {venue}" if local else f"{name} lands in {where}", score)
     if k == "removed":
-        return (f"{title(item['machines'][0])} leaves {item['location_name']}", 2 if local else 1)
+        return (f"{title(item['machines'][0])} leaves {venue}", 2 if local else 1)
     if k == "condition" and item.get("status") == "green":
-        return (f"{title(item['machine'])} fixed at {item['location_name']}", 2 if local else 1)
+        return (f"{title(item['machine'])} fixed at {venue}", 2 if local else 1)
     if k == "condition" and item.get("status") == "amber":
-        return (f"{title(item['machine'])} needs a tech at {item['location_name']}", 1)
+        return (f"{title(item['machine'])} needs a tech at {venue}", 1)
     return None
 
 
