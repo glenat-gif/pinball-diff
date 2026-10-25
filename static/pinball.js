@@ -29,11 +29,11 @@
   }
   var arc = []; for (var i = 0; i <= 28; i++) { var t = Math.PI + Math.PI * i / 28; arc.push([200 + 184 * Math.cos(t), 190 + 184 * Math.sin(t)]); }
   rail(arc);                                                       // the orbit round the top
-  rail([[16, 190], [16, 540], [66, 604], [146, 650]]); rail([[150, 658], [162, 698]]);    // left wall and inlane into the hinge; the drain below
-  rail([[352, 190], [352, 540], [334, 604], [254, 650]]); rail([[250, 658], [238, 698]]); // lane guide and inlane into the hinge; the drain below
+  rail([[16, 190], [16, 540], [66, 604], [140, 650]]); rail([[144, 658], [158, 698]]);    // left wall and inlane into the hinge; the drain below
+  rail([[352, 190], [352, 540], [334, 604], [260, 650]]); rail([[256, 658], [242, 698]]); // lane guide and inlane into the hinge; the drain below
   rail([[384, 190], [384, 690]]); rail([[352, 640], [352, 690]]);               // shooter lane walls; the ball rests on the plunger
   Composite.add(world, Bodies.rectangle(368, 681, 32, 8, { isStatic: true, restitution: 0.1 }));   // the plunger tip, not drawn as a rail
-  [[148, 653], [252, 653]].forEach(function (c) { Composite.add(world, Bodies.circle(c[0], c[1], 7, { isStatic: true, restitution: 0.2 })); });  // flipper bases
+  [[142, 653], [258, 653]].forEach(function (c) { Composite.add(world, Bodies.circle(c[0], c[1], 7, { isStatic: true, restitution: 0.2 })); });  // flipper bases
 
   var slings = [[[88, 478], [128, 584], [88, 584]], [[312, 478], [272, 584], [312, 584]]];   // clear of the walls, so nothing wedges
   var slingBodies = slings.map(function (t) {
@@ -62,7 +62,7 @@
     Body.setPosition(f.body, { x: f.px + f.len / 2 * Math.cos(a), y: f.py + f.len / 2 * Math.sin(a) });
     Body.setAngle(f.body, a); Body.setAngularVelocity(f.body, w); Body.setVelocity(f.body, { x: 0, y: 0 }); f.a = a;
   }
-  var flippers = [flipper(148, 653, 1), flipper(252, 653, -1)];
+  var flippers = [flipper(142, 653, 1), flipper(258, 653, -1)];   // tips about 21 apart at rest: a ball can get through, just
 
   // ---------- the ball and the game ----------
   var ball = Bodies.circle(368, 668, R, { restitution: 0.3, friction: 0.01, frictionAir: 0.0012, density: 0.004, label: "ball" });
