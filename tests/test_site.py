@@ -287,7 +287,7 @@ class IssueTests(Built):
         self.assertIn("PINBALL THIS WEEK", page)
         self.assertIn("Railway Hotel South Melbourne", page)
         self.assertIn("Needs a tech", page)
-        self.assertIn("What changed near you", page)
+        self.assertIn("Pinball near you", page)
         self.assertIn("across Australia", page)
         self.assertNotIn("<script", page)
 

@@ -159,8 +159,10 @@ a:hover { text-decoration-thickness: 2px; }
 /* Zone chips */
 .chips {
   display: flex; gap: 0.4rem; overflow-x: auto; padding: 1rem 0 0.2rem; margin: 0 -16px; padding-left: 16px; padding-right: 16px;
-  scrollbar-width: thin;
+  scrollbar-width: none;                  /* swipe on a phone, no scrollbar drawn */
 }
+.chips::-webkit-scrollbar { display: none; }
+@media (min-width: 700px) { .chips { flex-wrap: wrap; overflow: visible; margin: 0; padding-left: 0; padding-right: 0; } }
 .chips a {
   flex: none; font-size: 0.88rem; text-decoration: none; padding: 0.3rem 0.7rem; border-radius: 999px;
   border: 1px solid var(--line); background: var(--surface); white-space: nowrap;

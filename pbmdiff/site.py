@@ -474,7 +474,7 @@ def near_box():
             '<option value="60">two months</option></select></label></div>'
             '<div id="near-body"></div></section>'
             '<section class="near-ask" id="near-ask">'
-            '<h2>What changed near you?</h2>'
+            '<h2>Pinball near you</h2>'
             '<p>Pick your suburb, or use your location. Nothing leaves your browser; this page just does the sums.</p>'
             '<form class="row" id="near-form" autocomplete="off">'
             '<div class="ac"><input type="text" id="near-q" placeholder="Suburb or postcode" aria-label="Suburb or postcode" '

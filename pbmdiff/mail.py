@@ -191,7 +191,7 @@ def markdown(iss):
     hi = issue.highlights(iss)
     if hi:
         out += ["## Around Australia", ""] + [line(h) + f" _{areas.SHORT[h['zone']]}_" for h in hi] + [""]
-    out += [f"**[What changed near you]({site_url('/')})**: type your suburb on the site for changes and comps within 50 km.", ""]
+    out += [f"**[Pinball near you]({site_url('/')})**: type your suburb on the site for changes and comps within 50 km.", ""]
     eps = iss.get("episodes") or []
     if eps:
         out += ["## On the podcasts", ""] + [f"- **{ep['show_name']}:** [{ep['title']}]({ep['link']})" for ep in eps] + [""]
@@ -406,7 +406,7 @@ def html(iss):
     parts.append(
         f'<table role="presentation" cellpadding="0" cellspacing="0" style="margin:22px auto 0"><tr><td style="background:#ff7a1a;border-radius:6px">'
         f'<a href="{_e(site_url("/"))}" style="display:inline-block;padding:11px 20px;font:700 15px Arial,sans-serif;color:#1b0c00;text-decoration:none">'
-        f'<span style="color:#1b0c00">What changed near you &rarr;</span></a></td></tr></table>'
+        f'<span style="color:#1b0c00">Pinball near you &rarr;</span></a></td></tr></table>'
         f'<p style="font:13px/1.5 Arial,sans-serif;color:#655e6e;text-align:center;margin:8px 0 0">'
         f'Type your suburb on the site for changes and comps within 50 km.</p>')
     eps = iss.get("episodes") or []
