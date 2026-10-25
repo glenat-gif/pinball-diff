@@ -345,7 +345,7 @@ def podcasts_page(data):
             f'<h2 class="eps-h">Latest episodes</h2>{picks}<ul class="eps">{eps}</ul>{script}'
             if shows else '<p class="quiet">No podcasts yet.</p>')
     box = ('<p class="wordmark" style="font-size:clamp(1.6rem,6vw,2.6rem)">Podcasts</p>'
-           '<p class="lede">Australian pinball, talked about by Australians.'
+           '<p class="lede">The podcasts about pinball in Australia, with each new episode as it lands.'
            '<small>Every episode links to the show itself, so the hosts get your listen. '
            'Making an Australian pinball podcast that is not here? Say so and it will be added.</small></p>')
     return page("Podcasts", body, path="/podcasts/", description="Australian pinball podcasts and their latest episodes.",
@@ -363,11 +363,12 @@ def signup():
                        for k, _ in areas.STATES))
     return (f'<form class="signup" action="https://buttondown.com/api/emails/embed-subscribe/{e(user)}" method="post">'
             '<h2>The weekly email</h2>'
-            '<p>Every state, Victoria first, in time to plan the weekend. Free. One click to leave.</p>'
+            '<p>Every Thursday, in time to plan the weekend. All of Australia, with the biggest news from your state up top. '
+            'Free. One click to leave.</p>'
             '<div class="row"><label class="sr" for="em" hidden>Email address</label>'
             '<input id="em" type="email" name="email" required placeholder="you@example.com" autocomplete="email">'
             '<button type="submit">Subscribe</button></div>'
-            f'<fieldset id="zones-ask" hidden><legend>Where do you play?</legend>'
+            f'<fieldset id="zones-ask" hidden><legend>Where do you play? <small>You get every state either way; this picks what leads your copy.</small></legend>'
             f'<div class="zones-pick">{picks}</div></fieldset>'
             '<input type="hidden" name="embed" value="1"></form>'
             # The state question appears once someone starts on the form; everyone else sees one clean row.

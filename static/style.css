@@ -144,7 +144,8 @@ a:hover { text-decoration-thickness: 2px; }
 }
 .signup button:hover { filter: brightness(1.06); }
 .signup fieldset { border: 0; padding: 0; margin: 0.8rem 0 0; }
-.signup legend { font-size: 0.88rem; color: var(--muted); margin-bottom: 0.3rem; padding: 0; }
+.signup legend { font-size: 0.88rem; color: var(--ink); margin-bottom: 0.3rem; padding: 0; }
+.signup legend small { display: block; font-size: 0.82rem; color: var(--muted); }
 .zones-pick { display: flex; flex-wrap: wrap; gap: 0.3rem 1rem; font-size: 0.93rem; }
 .zones-pick label { display: inline-flex; gap: 0.35rem; align-items: center; cursor: pointer; }
 .zones-pick input { accent-color: var(--plasma); }
