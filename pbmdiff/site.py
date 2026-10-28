@@ -46,6 +46,7 @@ MACHINE_PAGES = {"ids": {}, "names": {}}
 # Pinball Map venue id -> [(machine name, image, slug)] for machines that landed there in the last year
 # and have not left since; filled in by build()
 VENUE_ARRIVALS = {}
+MASTHEAD = {"dmd": ""}   # the score and ticker under the wordmark, the same on every page
 # Pinball Map machine id (as a string) -> catalogue record with the OPDB image; filled in by build()
 CATALOGUE = {}
 
@@ -293,8 +294,9 @@ def comps_page(comps, on):
            '<p class="lede">Every IFPA-sanctioned tournament and league in Australia for the next two months.'
            '<small>From the IFPA calendar, updated every morning, with venues matched to Pinball Map so you can see '
            'what you\'ll be playing. Running a comp that is not here? Add it to the IFPA calendar and it appears the next day.</small></p>')
+    dmd = display(len(comps), plural(len(comps), "comp"), "next two months", [comp_line(c) for c in comps])
     return page("Pinball comps in Australia", body, path="/comps/", structured=comps_ld(comps), description="Upcoming pinball tournaments and leagues across Australia, by month and state.",
-                box_extra=box, current="comps")
+                box_extra=box, current="comps", dmd=dmd)
 
 
 def _mins(m):
@@ -348,8 +350,12 @@ def podcasts_page(data):
            '<p class="lede">Australia\'s pinball podcasts, as each episode lands.'
            '<small>Every episode links to the show itself, so the hosts get your listen. '
            'Making an Australian pinball podcast that is not here? Tell me and I\'ll add it.</small></p>')
+    episodes = sorted(data.get("episodes", []), key=lambda ep: ep["date"], reverse=True)
+    dmd = display(len(shows), plural(len(shows), "show"), f"latest {render.day(episodes[0]['date'])}" if episodes else "no episodes yet",
+                  [f"{shows.get(ep['show'], {}).get('name', '').upper()}  {render.day(ep['date']).upper()}  {ep['title'].upper()}"
+                   for ep in episodes])
     return page("Australian pinball podcasts", body, path="/podcasts/", description="Australian pinball podcasts and their latest episodes.",
-                box_extra=box, current="podcasts")
+                box_extra=box, current="podcasts", dmd=dmd)
 
 
 def signup():
@@ -428,6 +434,7 @@ def verification_tags():
 
 def page(title, body, *, path, description, box_extra="", nav="", current=None, dmd="", structured=None):
     full = f"{title} · {SITE['name']}" if title else SITE["name"]
+    dmd = dmd or MASTHEAD["dmd"]
     cur = lambda key: ' aria-current="page"' if current == key else ""
     wm = (f'<h1 class="wm"><a href="{u("/")}">{e(SITE["name"])}</a></h1>' if current == "home"
           else f'<a class="wm" href="{u("/")}">{e(SITE["name"])}</a>')
@@ -459,7 +466,7 @@ def page(title, body, *, path, description, box_extra="", nav="", current=None, 
 </head>
 <body>
 <header class="mast"><div class="wrap">
-<div class="dmd-panel{" big" if current == "home" else ""}">{wm}{dmd}</div>
+<div class="dmd-panel{" big" if dmd else ""}">{wm}{dmd}</div>
 <nav class="sections" aria-label="Site"><a href="{u('/')}"{cur('home')}>This week</a><a href="{u('/comps/')}"{cur('comps')}>Comps</a><a href="{u('/machines/')}"{cur('machines')}>Machines</a><a href="{u('/podcasts/')}"{cur('podcasts')}>Podcasts</a><a href="{u('/issues/')}"{cur('issues')}>Emails</a><a href="{u('/about/')}"{cur('about')}>About</a></nav>
 </div></header>
 <main><div class="wrap">
@@ -581,11 +588,6 @@ def home(weeks, counts, built_on, comps=()):
     active = [z for z in weeks if z["items"]]
     quiet = [z for z in weeks if not z["items"]]
     short_span = render.short_span(weeks[0]["since"], weeks[0]["until"])
-    dmd = (f'<p class="score" id="score"><b>{total}</b> change{"s" if total != 1 else ""} · {e(short_span)}</p>'
-           f'<p class="dmd" id="dmd" aria-hidden="true" hidden><span id="dmd-text"></span></p>'
-           # an unmarked way to the table: three taps on the score
-           f'<script>(function(){{var n=0,t=0;document.getElementById("score").addEventListener("click",function(){{var now=Date.now();'
-           f'n=now-t<900?n+1:1;t=now;if(n>=3)location.href={json.dumps(u("/play/"))}}})}})();</script>')
     box = ('<section class="card"><p>New venues, machines landing and leaving, swaps, and what needs a tech, '
            'across Australia. Every venue links to its <a href="https://pinballmap.com">Pinball Map</a> listing, '
            'so you can fix it or add to it. Updated every morning.</p></section>'
@@ -609,20 +611,16 @@ def home(weeks, counts, built_on, comps=()):
                    f'<p class="more"><a href="{u("/podcasts/")}">Every Australian pinball podcast</a></p></section>')
     blocks += (f'<script>var NEAR_URL={json.dumps(u("/near.json"))},SUBURBS_URL={json.dumps(u("/suburbs.json"))};</script>'
                + NEAR_SCRIPT)
-    lines = []
-    for c in soon[:6]:
-        when = render.day(c["start"]).upper()
-        where = ", ".join(x for x in (c["venue"], c["city"]) if x).upper()
-        lines.append((f"{where}  COMP {when}  " if where else f"COMP {when}  ") + c["name"].upper())
+    lines = [comp_line(c) for c in soon[:6]]
     for z in active:
         for i in z["items"]:
             lines.append(attract_line(i, z["zone"]))
     for ep in fresh[:4]:
         show = {sh["key"]: sh for sh in pods.get("shows", [])}.get(ep["show"], {}).get("name", "")
         lines.append(f"{show.upper()}  NEW EPISODE  {ep['title'].upper()}")
-    attract = f'<script>var ATTRACT={json.dumps(lines[:40], ensure_ascii=False)};</script>' + ATTRACT_SCRIPT
+    MASTHEAD["dmd"] = display(total, plural(total, "change"), short_span, lines, egg=True)
     return page("", blocks, path="/", description=SITE["tagline"], box_extra=box,
-                nav=nav, current="home", dmd=dmd + attract, structured=site_ld())
+                nav=nav, current="home", structured=site_ld())
 
 
 def site_ld():
@@ -696,6 +694,35 @@ document.getElementById("hl-prev").addEventListener("click",function(){prev();ar
 arm()})();</script>"""
 
 
+def display(n, what, span, lines, egg=False):
+    """The score and ticker under the wordmark: one number, what it counts, a span, and the lines the ticker types.
+    Every page uses the same shape, so the panel never changes height between pages."""
+    sid = ' id="score"' if egg else ""
+    score = (f'<p class="score"{sid}><b>{n}</b> {e(what)} · {e(span)}</p>'
+             '<p class="dmd" id="dmd" aria-hidden="true" hidden><span id="dmd-text"></span></p>')
+    if egg:                                     # an unmarked way to the table: three taps on the score
+        score += (f'<script>(function(){{var n=0,t=0;document.getElementById("score").addEventListener("click",function(){{var now=Date.now();'
+                  f'n=now-t<900?n+1:1;t=now;if(n>=3)location.href={json.dumps(u("/play/"))}}})}})();</script>')
+    return score + f'<script>var ATTRACT={json.dumps(list(lines)[:40], ensure_ascii=False)};</script>' + ATTRACT_SCRIPT
+
+
+def plural(n, word):
+    return f"{word}s" if n != 1 else word
+
+
+def comp_line(c):
+    when = render.day(c["start"]).upper()
+    where = ", ".join(x for x in (c["venue"], c["city"]) if x).upper()
+    return (f"{where}  COMP {when}  " if where else f"COMP {when}  ") + c["name"].upper()
+
+
+def move_line(ev):
+    title = render.split_machine(ev["machine"])[0].upper()
+    verb = "LANDED AT" if ev["type"] == "machine_added" else "LEFT"
+    where = ", ".join(x for x in (ev["location_name"], ev.get("city")) if x).upper()
+    return f"{title}  {verb} {where}"
+
+
 def attract_line(i, zone):
     """One DMD line per change, venue first: the venue is the news, the machine is the detail."""
     where = (i["location_name"] + (" IN " + i["city"] if render.where(i) else "")).upper()
@@ -741,8 +768,11 @@ def zone_page(z, events, until, counts):
     box = (f'<p class="wordmark" style="font-size:clamp(1.6rem,6vw,2.6rem)">{e(short(z))}</p>'
            f'<p class="lede">The last four weeks of changes on Pinball Map in {e(label)}.</p>')
     body = "".join(zone_block({**w, "label": "Week to " + render.day(w["until"])}, heading_link=False) for w in weeks)
+    n = len(weeks[0]["items"])
+    dmd = display(n, plural(n, "change"), render.short_span(weeks[0]["since"], weeks[0]["until"]),
+                  [attract_line(i, z) for w in weeks for i in w["items"]])
     return page(f"Pinball in {short(z)} this week", body, path=f"/zone/{z}/", description=f"What changed in pinball in {label}.",
-                box_extra=box, nav=chips(z, counts), current=z)
+                box_extra=box, nav=chips(z, counts), current=z, dmd=dmd)
 
 
 def issue_page(iss):
@@ -760,24 +790,26 @@ def issue_page(iss):
     if quiet:
         body += (f'<p class="allquiet"><strong>Quiet on the map:</strong> '
                  f'{render.join(e(short(z["label"])) for z in quiet)}.</p>')
-    dmd = (f'<p class="score"><b>{n}</b> change{"s" if n != 1 else ""} · '
-           f'{e(render.short_span(iss["since"], iss["until"]))}</p>')
+    dmd = display(n, plural(n, "change"), render.short_span(iss["since"], iss["until"]),
+                  [attract_line(i, z["zone"]) for z, items, _ in active for i in items])
     return page(render.long_day(iss["date"]), body, path=f"/issues/{iss['date']}/", structured=issue_ld(iss),
                 description=f"{SITE['name']} for {render.long_day(iss['date'])}.", box_extra=box, current="issues", dmd=dmd)
 
 
 def issues_page(dates):
-    rows = []
+    rows, lines = [], []
     for d in dates:
         iss = issue.load(d)
         n = render.count_changes(issue.email_zones(iss))
         rows.append(f'<li><a href="{u("/issues/" + d + "/")}">{e(render.long_day(d))}</a>'
                     f'<span class="n">{n} change{"s" if n != 1 else ""}</span></li>')
+        lines.append(f"{render.long_day(d).upper()}  {n} {plural(n, 'CHANGE')}")
     body = ('<div class="prose">' + ('<ul class="issues">' + "".join(rows) + "</ul>" if rows else
             '<p class="muted">The first email goes out on the next Thursday.</p>') + "</div>")
     box = ('<p class="wordmark" style="font-size:clamp(1.6rem,6vw,2.6rem)">Emails</p>'
            '<p class="lede">Every Thursday email, as it went out.</p>')
-    return page("Emails", body, path="/issues/", description="Every Thursday email, as it went out.", box_extra=box, current="issues")
+    dmd = display(len(dates), plural(len(dates), "email"), f"since {render.day(min(dates))}" if dates else "none yet", lines) if dates else ""
+    return page("Emails", body, path="/issues/", description="Every Thursday email, as it went out.", box_extra=box, current="issues", dmd=dmd)
 
 
 import re as _re
@@ -940,8 +972,11 @@ def machines_page(groups, catalogue=None):
            '<p class="lede">Every machine that has landed somewhere or left, across Australia. '
            'Pro, Premium and LE together, so you can follow where each edition went.'
            '<small>For where a machine is right now, each title links to Pinball Map.</small></p>')
+    recent = sorted((ev for g in groups for ev in g["events"]), key=lambda ev: ev["date"], reverse=True)
+    dmd = display(len(groups), plural(len(groups), "title"), f"since {render.month(first)}" if first else "so far",
+                  [move_line(ev) for ev in recent[:40]])
     return page("Pinball machines across Australia", body, path="/machines/", description="Which pinball machines have landed and left around Australia.",
-                box_extra=box, current="machines")
+                box_extra=box, current="machines", dmd=dmd)
 
 
 def title_page(g, catalogue=None):
@@ -1003,9 +1038,12 @@ def title_page(g, catalogue=None):
                   'var s0="";try{s0=localStorage.getItem("comps-state")||""}catch(e){}'
                   'if(s0&&sb.some(function(x){return x.dataset.st===s0})){st=s0;show()}})();</script>')
     body = f'<p class="more"><a href="{u("/machines/")}">All machines</a></p>{gallery}{picker}{years}{script}'
+    first, last = render.month(g["first"]), render.month(g["latest"])
+    dmd = display(n, plural(n, "move"), first if first == last else f"{first} to {last}",
+                  [move_line(ev) for ev in sorted(g["events"], key=lambda ev: ev["date"], reverse=True)])
     return page(g["title"], body, path=f"/machines/{g['slug']}/",
                 description=f"Where {g['title']} has landed and left in Australia, edition by edition.",
-                box_extra=box, current="machines")
+                box_extra=box, current="machines", dmd=dmd)
 
 
 def play_page():
@@ -1138,6 +1176,7 @@ def build(on=None):
         shutil.rmtree(DIST)
     DIST.mkdir()
     PAGES.clear()
+    MASTHEAD["dmd"] = ""
     shutil.copy(ROOT / "static" / "style.css", DIST / "style.css")
     for name in ("icon.png", "share.png", "email-head.png"):
         shutil.copy(ROOT / "static" / name, DIST / name)
