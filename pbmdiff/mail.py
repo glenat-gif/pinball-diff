@@ -473,6 +473,41 @@ def keep_copy(iss):
     return path
 
 
+SUBSCRIBERS = "https://api.buttondown.com/v1/subscribers"
+
+
+def _req(url, key, method="GET", payload=None, opener=urllib.request.urlopen):
+    data = json.dumps(payload).encode("utf-8") if payload is not None else None
+    req = urllib.request.Request(url, data=data, method=method, headers={
+        "Authorization": f"Token {key}", "Content-Type": "application/json", "User-Agent": "pinball-diff/0.3"})
+    with opener(req, timeout=60) as resp:
+        return json.load(resp)
+
+
+def subscribers(key, opener=urllib.request.urlopen):
+    """Every subscriber's id, a masked address and tags. Addresses are masked because the
+    repository, and so its workflow logs, are public."""
+    out, url = [], SUBSCRIBERS + "?page_size=100"
+    while url:
+        page = _req(url, key, opener=opener)
+        for sub in page.get("results", []):
+            em = sub.get("email_address") or sub.get("email") or ""
+            out.append({"id": sub["id"], "email": em[:2] + "***" + em[em.find("@"):] if "@" in em else "***",
+                        "tags": sub.get("tags") or [], "status": sub.get("subscriber_type") or sub.get("type", "")})
+        url = page.get("next")
+    return out
+
+
+def tag_subscriber(sub_id, tags, key, opener=urllib.request.urlopen):
+    """Add tags to one subscriber, keeping the ones they have."""
+    sub = _req(f"{SUBSCRIBERS}/{sub_id}", key, opener=opener)
+    have = list(sub.get("tags") or [])
+    want = have + [t for t in tags if t not in have]
+    if want != have:
+        _req(f"{SUBSCRIBERS}/{sub_id}", key, "PATCH", {"tags": want}, opener=opener)
+    return want
+
+
 def post(payload, key, opener=urllib.request.urlopen):
     req = urllib.request.Request(API, data=json.dumps(payload).encode("utf-8"), method="POST", headers={
         "Authorization": f"Token {key}", "Content-Type": "application/json",

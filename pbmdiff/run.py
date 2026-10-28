@@ -154,6 +154,18 @@ def cmd_issue(args):
     print(mail.deliver(iss))
 
 
+def cmd_subscribers(args):
+    """List subscribers (masked) with their tags, and optionally tag one by id."""
+    key = os.environ.get("BUTTONDOWN_API_KEY")
+    if not key:
+        print("no BUTTONDOWN_API_KEY"); return
+    if args.tag_id:
+        tags = [t.strip() for t in args.tag.split(",") if t.strip()]
+        print(f"{args.tag_id}: tags now {mail.tag_subscriber(args.tag_id, tags, key)}")
+    for s in mail.subscribers(key):
+        print(f"{s['id']}  {s['email']:<24} {s['status']:<10} tags={s['tags']}")
+
+
 def cmd_build(args):
     print(f"built {site.build()}")
 
@@ -177,6 +189,8 @@ def main(argv=None):
     i.add_argument("--preview", action="store_true", help="draft next Thursday's email from today's data, without saving an issue")
     i.set_defaults(fn=cmd_issue)
     sub.add_parser("build").set_defaults(fn=cmd_build)
+    t = sub.add_parser("subscribers"); t.add_argument("--tag-id", default="", help="subscriber id to tag"); t.add_argument("--tag", default="vic")
+    t.set_defaults(fn=cmd_subscribers)
     args = p.parse_args(argv)
     args.fn(args)
 
