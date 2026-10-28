@@ -492,6 +492,8 @@ def subscribers(key, opener=urllib.request.urlopen):
         page = _req(url, key, opener=opener)
         for sub in page.get("results", []):
             em = sub.get("email_address") or sub.get("email") or ""
+            if not sub.get("tags") and len(out) < 200:           # the list leaves tags out; one fetch each fills them in
+                sub = _req(f"{SUBSCRIBERS}/{sub['id']}", key, opener=opener)
             out.append({"id": sub["id"], "email": em[:2] + "***" + em[em.find("@"):] if "@" in em else "***",
                         "tags": sub.get("tags") or [], "status": sub.get("subscriber_type") or sub.get("type", "")})
         url = page.get("next")
