@@ -200,12 +200,11 @@ class MachineTests(Built):
         page = mail.html(iss)
         self.assertIn('width="360" height="360"', page)                        # a square backglass fills the height
         self.assertLess(page.index("img.example/cc"), page.index(">Victoria<"))
-        # One hero per state in a Buttondown if/elif chain on the reader's tags, then the national pick,
-        # and the hero's own row is hidden from the readers who saw it up top.
-        self.assertIn("{% if 'vic' in subscriber.tags %}", page)
-        self.assertIn("{% elif 'vic' not in subscriber.tags %}", page)         # the national fallback
-        self.assertEqual(page.count("{% endif %}"), 3)                          # the chain, and the row hidden twice over
-        self.assertIn("{% if 'vic' in subscriber.tags %}{% if 'vic' not in subscriber.tags %}<tr>", page)   # i.e. never: every reader saw it
+        # One national hero, shown once and left out of its state's list; the reader's state block is lifted
+        # to the top by a Buttondown condition and skipped in its usual place.
+        self.assertEqual(page.count("img.example/cc"), 1)
+        self.assertIn("{% if 'vic' in subscriber.tags %}", page)                # Victoria lifted when tagged
+        self.assertIn("{% if 'vic' not in subscriber.tags %}", page)            # and skipped below when it was
         self.assertNotIn("via dolphin61", page)                                 # no date or credit line in the email
         mail._CATALOGUE = None
 
@@ -237,17 +236,19 @@ class MachineTests(Built):
         self.assertEqual(mail.headline_label("Taxi leaves The Pub"), ("Gone", "gone"))
         self.assertEqual(mail.headline_label("Godzilla (Pro) needs a tech at Kingpin"), ("Needs a tech", "trouble"))
 
-    def test_a_state_hero_can_be_a_machine_needing_a_tech(self):
+    def test_the_readers_state_is_lifted_and_the_order_is_otherwise_site_order(self):
         from pbmdiff import mail
         iss = issue.ensure_latest(self.events, on=ON)
-        vic = iss["zones"][0]
-        vic["items"] = [i for i in vic["items"] if i["kind"] == "condition" and i["status"] == "amber"][:1]
-        vic["items"][0]["ids"] = {vic["items"][0]["machine"]: 7}
-        mail._CATALOGUE = {"7": {"img": "https://img.example/x", "w": 600, "h": 600}}
-        site.SITE["machine_art"] = True
-        self.assertIsNone(mail.hero(iss))                                     # not a national lead
-        text, item = mail.hero(iss, "vic")                                    # but the best thing in Victoria
-        self.assertIn("needs a tech at", text)
+        nsw = {"zone": "nsw", "label": "New South Wales and the ACT", "since": iss["since"], "until": iss["until"], "confirmations": 0,
+               "items": [{"kind": "added", "rank": 2.9, "date": "2026-09-28", "location_id": 8, "location_name": "Some Pub", "city": "Glebe",
+                          "link": "https://pinballmap.com/map?by_location_id=8", "machines": ["Fish Tales (Williams, 1992)"], "flags": {}, "by": [], "ids": {}}]}
+        iss["zones"] = [z for z in iss["zones"] if z["zone"] == "vic"] + [nsw]
+        mail._CATALOGUE = {}
+        page = mail.html(iss)
+        lifted = page.index("{% if 'vic' in subscriber.tags %}")
+        self.assertLess(lifted, page.index("{% elif 'nsw' in subscriber.tags %}"))          # the lift chain, in site order
+        self.assertIn("{% if 'nsw' not in subscriber.tags or 'vic' in subscriber.tags %}", page)   # NSW skipped below only when it was lifted
+        self.assertLess(page.index(">Victoria<"), page.index(">New South Wales and the ACT<"))   # usual order underneath
         mail._CATALOGUE = None
 
     def test_change_rows_carry_machine_art(self):

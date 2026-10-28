@@ -128,27 +128,6 @@ def _tagged(zone):
     return f"'{zone}' in subscriber.tags"
 
 
-def hero_branches(iss):
-    """[(zone or None, condition, not-condition, (text, item))]: one hero per state that has one,
-    in email order, then the national pick. Rendered as a Buttondown if/elif chain so each reader
-    sees the lead for the first state they ticked, and the national lead if theirs is quiet."""
-    out, earlier = [], []
-    for z in SITE["email_zones"]:
-        h = hero(iss, z)
-        if not h:
-            continue
-        cond = " and ".join([_tagged(z)] + [f"'{e}' not in subscriber.tags" for e in earlier])
-        anti = " or ".join([f"'{z}' not in subscriber.tags"] + [_tagged(e) for e in earlier])
-        out.append((z, cond, anti, h))
-        earlier.append(z)
-    nat = hero(iss)
-    if nat:
-        cond = " and ".join(f"'{e}' not in subscriber.tags" for e in earlier) or "True"
-        anti = " or ".join(_tagged(e) for e in earlier) or "False"
-        out.append((None, cond, anti, nat))
-    return out
-
-
 def _machines(names, item=None):
     return render.join(_machine(n, item) for n in names)
 
@@ -407,30 +386,30 @@ def html(iss):
     """The email as its own page: the backbox header, then the week."""
     zones = issue.email_zones(iss)
     active, quiet = sections(iss)
-    branches = hero_branches(iss)
+    lead = hero(iss)                             # one national hero for everyone: the week's best arrival
     parts = []
-    if branches:
-        chain = ""
-        for i, (zone, cond, _, (text, item)) in enumerate(branches):
-            zone_of = item["zone"]
-            chain += ("{% if " if i == 0 else "{% elif ") + cond + " %}" + _h_hero(text, item, zone_of)
-        parts.append(chain + "{% endif %}")
-    shown = {}                                   # item -> the conditions under which a reader did NOT see it as the hero
-    for _, _, anti, (_, item) in branches:
-        shown.setdefault(id(item), []).append(anti)
+    if lead:
+        parts.append(_h_hero(lead[0], lead[1], lead[1]["zone"]))
+    # one block per state, in site order; the reader's own state is lifted to the top of the list
+    blocks = []
     for z, items, comps in active:
-        rows = []
-        for i in items:
-            row = _h_item(i)
-            for anti in shown.get(id(i), []):    # nested ifs: Django templates have no parentheses
-                row = "{% if " + anti + " %}" + row + "{% endif %}"
-            rows.append(row)
+        rows = [_h_item(i) for i in items if not (lead and i is lead[1])]
         if not rows and not comps:
             continue
         if comps:
             rows.append(_h_sub(f"Comps this week in {areas.SHORT[z['zone']]}"))
             rows += [_h_comp(c) for c in comps]
-        parts.append(_h_section(z["label"], rows))
+        blocks.append((z["zone"], _h_section(z["label"], rows)))
+    if blocks:
+        # Buttondown renders per reader: the first tagged state (in site order) comes first, and is
+        # left out of its usual place. Django conditions cannot nest brackets, so each test is spelt out.
+        lifted = "".join(("{% if " if i == 0 else "{% elif ") + _tagged(z) + " %}" + html_ for i, (z, html_) in enumerate(blocks)) + "{% endif %}"
+        usual, earlier = [], []
+        for z, html_ in blocks:
+            skip = " or ".join([f"'{z}' not in subscriber.tags"] + [_tagged(e) for e in earlier])   # not the lifted one
+            usual.append("{% if " + skip + " %}" + html_ + "{% endif %}")
+            earlier.append(z)
+        parts.append(lifted + "".join(usual))
     if quiet:
         parts.append(f'<p style="font:15px/1.5 Arial,sans-serif;color:#655e6e;margin:18px 0 0">Quiet on the map in '
                      f'{_e(render.join(areas.SHORT[z["zone"]] for z in quiet))}: nothing changed this week.</p>')
