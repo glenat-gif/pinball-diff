@@ -510,6 +510,25 @@ def tag_subscriber(sub_id, tags, key, opener=urllib.request.urlopen):
     return want
 
 
+def probe_tags(sub_id, key, opener=urllib.request.urlopen):
+    """Send one subscriber a throwaway draft whose body says whether the template saw their tags.
+    Tells us whether per-reader conditions work on this plan. Returns a short status."""
+    sub = _req(f"{SUBSCRIBERS}/{sub_id}", key, opener=opener)
+    email = sub.get("email_address") or sub.get("email")
+    body = ("<!-- buttondown-editor-mode: fancy -->"
+            "<p>Tag probe from Pinball This Week.</p>"
+            "<p>Tags the template can see: {% if subscriber.tags %}{{ subscriber.tags|join:', ' }}{% else %}none{% endif %}</p>"
+            "<p>Victoria branch: {% if 'vic' in subscriber.tags %}YES, you would get the Victorian hero{% else %}NO, you would get the national hero{% endif %}</p>")
+    draft = post({"subject": "[PROBE] Do tags reach the template?", "body": body, "status": "draft"}, key, opener)
+    for payload in ({"subscribers": [email]}, {"recipients": [email]}):
+        try:
+            _req(f"{API}/{draft['id']}/send-draft", key, "POST", payload, opener=opener)
+            return f"probe {draft['id']} sent to the subscriber (delete the draft in Buttondown when done)"
+        except urllib.error.HTTPError as err:
+            last = f"{err.code} {err.read()[:200]!r}"
+    return f"probe {draft['id']} created but send-draft refused: {last}"
+
+
 def post(payload, key, opener=urllib.request.urlopen):
     req = urllib.request.Request(API, data=json.dumps(payload).encode("utf-8"), method="POST", headers={
         "Authorization": f"Token {key}", "Content-Type": "application/json",

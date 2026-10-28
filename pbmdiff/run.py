@@ -159,6 +159,8 @@ def cmd_subscribers(args):
     key = os.environ.get("BUTTONDOWN_API_KEY")
     if not key:
         print("no BUTTONDOWN_API_KEY"); return
+    if args.probe:
+        print(mail.probe_tags(args.probe, key)); return
     if args.tag_id and args.tag_id != "list":          # "list" just lists
         tags = [t.strip() for t in args.tag.split(",") if t.strip()]
         print(f"{args.tag_id}: tags now {mail.tag_subscriber(args.tag_id, tags, key)}")
@@ -190,6 +192,7 @@ def main(argv=None):
     i.set_defaults(fn=cmd_issue)
     sub.add_parser("build").set_defaults(fn=cmd_build)
     t = sub.add_parser("subscribers"); t.add_argument("--tag-id", default="", help="subscriber id to tag"); t.add_argument("--tag", default="vic")
+    t.add_argument("--probe", default="", help="subscriber id to send a tag probe to")
     t.set_defaults(fn=cmd_subscribers)
     args = p.parse_args(argv)
     args.fn(args)
