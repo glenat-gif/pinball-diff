@@ -269,6 +269,7 @@ def comps_page(comps, on):
                 'They appear here as directors add them to the IFPA calendar.</p>')
     else:
         body = (f'<div class="state-pick" role="group" aria-label="Show comps in">{chips}</div>'
+                '<p class="cal-hint">One dot per comp, coloured by state. Tap a day.</p>'
                 f'<div class="months dots">{"".join(months)}</div>'
                 f'<div class="agenda">{"".join(days)}</div>'
                 '<p class="quiet" id="none-here" hidden>No IFPA comps listed here in the next two months.</p>'
@@ -289,9 +290,9 @@ def comps_page(comps, on):
                 'var q=(location.search.match(/state=(\\w+)/)||[])[1],s0=q;if(s0===undefined){try{s0=localStorage.getItem("comps-state")}catch(e){}}'
                 'if(s0&&bs.some(function(b){return b.dataset.pick===s0}))pick(s0);})();</script>')
     box = ('<p class="wordmark" style="font-size:clamp(1.6rem,6vw,2.6rem)">Comps</p>'
-           f'<p class="lede">Every IFPA-sanctioned tournament and league in Australia, from today to {e(render.day(until.isoformat()))}.'
+           '<p class="lede">Every IFPA-sanctioned tournament and league in Australia for the next two months.'
            '<small>From the IFPA calendar, updated every morning, with venues matched to Pinball Map so you can see '
-           'what you will be playing on. Running a comp that is not here? Add it to the IFPA calendar and it appears the next day.</small></p>')
+           'what you\'ll be playing. Running a comp that is not here? Add it to the IFPA calendar and it appears the next day.</small></p>')
     return page("Pinball comps in Australia", body, path="/comps/", structured=comps_ld(comps), description="Upcoming pinball tournaments and leagues across Australia, by month and state.",
                 box_extra=box, current="comps")
 
@@ -346,7 +347,7 @@ def podcasts_page(data):
     box = ('<p class="wordmark" style="font-size:clamp(1.6rem,6vw,2.6rem)">Podcasts</p>'
            '<p class="lede">Australia\'s pinball podcasts, as each episode lands.'
            '<small>Every episode links to the show itself, so the hosts get your listen. '
-           'Making an Australian pinball podcast that is not here? Say so and it will be added.</small></p>')
+           'Making an Australian pinball podcast that is not here? Tell me and I\'ll add it.</small></p>')
     return page("Australian pinball podcasts", body, path="/podcasts/", description="Australian pinball podcasts and their latest episodes.",
                 box_extra=box, current="podcasts")
 
@@ -354,14 +355,14 @@ def podcasts_page(data):
 def signup():
     user = SITE.get("buttondown_username")
     if not user:
-        return ('<div class="signup"><h2>The weekly email</h2>'
+        return ('<div class="signup"><h2>The Thursday email</h2>'
                 '<p class="soon">Sign-ups open soon. Every Thursday, the week\'s changes in every state, '
                 'in time to plan the weekend.</p></div>')
     picks = ('<label><input type="checkbox" name="tag" value="vic" checked> Victoria</label>'
              + "".join(f'<label><input type="checkbox" name="tag" value="{k}"> {e(areas.SHORT[k])}</label>'
                        for k, _ in areas.STATES))
     return (f'<form class="signup" id="signup" action="https://buttondown.com/api/emails/embed-subscribe/{e(user)}" method="post" target="_blank">'
-            '<h2>The weekly email</h2>'
+            '<h2>The Thursday email</h2>'
             '<p>Every Thursday. All of Australia, with the biggest news from your state up top. '
             'Free. One click to leave.</p>'
             '<div class="row"><label class="sr" for="em" hidden>Email address</label>'
@@ -596,9 +597,10 @@ def home(weeks, counts, built_on, comps=()):
     # The machine moves are the point of the page: states first, then the comps, then the podcasts.
     blocks = near_box()
     blocks += "".join(zone_block(z, when=False, more=True) for z in active)
+    nav = chips("home", counts)
     if quiet:
         names = render.join(f'<a href="{u("/zone/" + z["zone"] + "/")}">{e(short(z["label"]))}</a>' for z in quiet)
-        blocks += f'<p class="allquiet"><strong>Quiet on the map:</strong> {names}.</p>'
+        nav += f'<p class="allquiet"><strong>Quiet on the map:</strong> {names}.</p>'
     blocks += comps_block(soon, built_on.isoformat(), soon_until, f"Comps in {areas.SHORT[home]}",
                           f"No IFPA comps listed in {areas.SHORT[home]} in the next seven days.") if comps else ""
     pods = podcasts.load()
@@ -623,7 +625,7 @@ def home(weeks, counts, built_on, comps=()):
         lines.append(f"{show.upper()}  NEW EPISODE  {ep['title'].upper()}")
     attract = f'<script>var ATTRACT={json.dumps(lines[:40], ensure_ascii=False)};</script>' + ATTRACT_SCRIPT
     return page("", blocks, path="/", description=SITE["tagline"], box_extra=box,
-                nav=chips("home", counts), current="home", dmd=dmd + attract, structured=site_ld())
+                nav=nav, current="home", dmd=dmd + attract, structured=site_ld())
 
 
 def site_ld():
@@ -740,7 +742,7 @@ def zone_page(z, events, until, counts):
         weeks.append(issue.week(events, z, (end - dt.timedelta(days=7 * n)).isoformat()))
     label = areas.LABELS[z]
     box = (f'<p class="wordmark" style="font-size:clamp(1.6rem,6vw,2.6rem)">{e(short(z))}</p>'
-           f'<p class="lede">{e(label) + ". " if label != short(z) else ""}The last four weeks of changes on Pinball Map.</p>')
+           f'<p class="lede">The last four weeks of changes on Pinball Map in {e(label)}.</p>')
     body = "".join(zone_block({**w, "label": "Week to " + render.day(w["until"])}, heading_link=False) for w in weeks)
     return page(f"Pinball in {short(z)} this week", body, path=f"/zone/{z}/", description=f"What changed in pinball in {label}.",
                 box_extra=box, nav=chips(z, counts), current=z)
@@ -755,14 +757,16 @@ def issue_page(iss):
     active, quiet = mail.sections(iss)
     body = ""
     for z, items, ic in active:
-        body += zone_block(z, when=False) if items else ""
+        body += zone_block(z, when=False)
         body += comps_block(ic, iss["date"], iss.get("comps_until", iss["date"]), f"Comps this week in {areas.SHORT[z['zone']]}",
                             "", link=False) if ic else ""
     if quiet:
         body += (f'<p class="allquiet"><strong>Quiet on the map:</strong> '
                  f'{render.join(e(short(z["label"])) for z in quiet)}.</p>')
+    dmd = (f'<p class="score"><b>{n}</b> change{"s" if n != 1 else ""} · '
+           f'{e(render.short_span(iss["since"], iss["until"]))}</p>')
     return page(render.long_day(iss["date"]), body, path=f"/issues/{iss['date']}/", structured=issue_ld(iss),
-                description=f"{SITE['name']} for {render.long_day(iss['date'])}.", box_extra=box, current="issues")
+                description=f"{SITE['name']} for {render.long_day(iss['date'])}.", box_extra=box, current="issues", dmd=dmd)
 
 
 def issues_page(dates):
@@ -774,9 +778,9 @@ def issues_page(dates):
                     f'<span class="n">{n} change{"s" if n != 1 else ""}</span></li>')
     body = ('<div class="prose">' + ('<ul class="issues">' + "".join(rows) + "</ul>" if rows else
             '<p class="muted">The first email goes out on the next Thursday.</p>') + "</div>")
-    box = ('<p class="wordmark" style="font-size:clamp(1.6rem,6vw,2.6rem)">Past emails</p>'
+    box = ('<p class="wordmark" style="font-size:clamp(1.6rem,6vw,2.6rem)">Emails</p>'
            '<p class="lede">Every Thursday email, as it went out.</p>')
-    return page("Past emails", body, path="/issues/", description="Every past email.", box_extra=box, current="issues")
+    return page("Emails", body, path="/issues/", description="Every Thursday email, as it went out.", box_extra=box, current="issues")
 
 
 import re as _re
@@ -891,6 +895,15 @@ def _art(g, catalogue):
     return out
 
 
+def _moves_text(g):
+    n = len(g["events"])
+    first, last = render.month(g["first"]), render.month(g["latest"])
+    if n == 1:
+        return f"One move in Australia on Pinball Map: it {'landed' if g['ins'] else 'left'} in {first}."
+    span = f"all in {first}" if first == last else f"from {first} to {last}"
+    return f"{n} moves in Australia on Pinball Map, {g['ins']} in and {n - g['ins']} out, {span}."
+
+
 def _now_link(g):
     """Pinball Map filtered to Australia: every edition when the machine has a group."""
     if g.get("group_id"):
@@ -916,7 +929,7 @@ def machines_page(groups, catalogue=None):
     since = f" since {render.month(first)}" if first else ""
     body = ('<div class="finder"><label for="q">Find a machine</label>'
             '<input id="q" type="search" placeholder="Godzilla, Pokémon, Twilight Zone" autocomplete="off"></div>'
-            f'<p class="count" id="count">{len(groups)} titles have landed or left{e(since)}. Most recent first.</p>'
+            f'<p class="count" id="count">{len(groups)} titles have landed or left somewhere in Australia{e(since)}. Most recent first.</p>'
             f'<ul class="title-list">{"".join(rows)}</ul>'
             '<p class="quiet" id="none" hidden>Nothing by that name has moved on Pinball Map in Australia. '
             '<a href="https://pinballmap.com">Pinball Map</a> can tell you where it is now.</p>'
@@ -927,7 +940,7 @@ def machines_page(groups, catalogue=None):
             'var t=f(q.value.trim()),s=0;c.forEach(function(x){var h=!t||x._n.indexOf(t)>-1;x.hidden=!h;if(h)s++;});'
             'n.hidden=s>0;k.textContent=t?s+" title"+(s==1?"":"s")+" match.":k0;});})();</script>')
     box = ('<p class="wordmark" style="font-size:clamp(1.6rem,6vw,2.6rem)">Machines</p>'
-           '<p class="lede">Every machine that has landed somewhere or left, across Australia, as recorded on Pinball Map. '
+           '<p class="lede">Every machine that has landed somewhere or left, across Australia. '
            'Pro, Premium and LE together, so you can follow where each edition went.'
            '<small>For where a machine is right now, each title links to Pinball Map.</small></p>')
     return page("Pinball machines across Australia", body, path="/machines/", description="Which pinball machines have landed and left around Australia.",
@@ -942,9 +955,8 @@ def title_page(g, catalogue=None):
                     for y, evs in by_year.items())
     n = len(g["events"])
     box = (f'<p class="wordmark" style="font-size:clamp(1.5rem,6vw,2.6rem)">{e(g["title"])}</p>'
-           f'<p class="lede">{e(_makers_text(g))}. Editions seen: {e(_editions_text(g))}.'
-           f'<small>{n} move{"s" if n != 1 else ""} in Australia on Pinball Map, '
-           f'{g["ins"]} in and {n - g["ins"]} out, from {e(render.month(g["first"]))} to {e(render.month(g["latest"]))}.</small></p>'
+           f'<p class="lede">{e(_makers_text(g))}.{" Editions seen: " + e(_editions_text(g)) + "." if len(g["editions"]) > 1 else ""}'
+           f'<small>{e(_moves_text(g))}</small></p>'
            f'<p><a class="cta" href="{e(_now_link(g))}">Where it is now, on Pinball Map</a></p>')
     art = _art(g, catalogue)
     counts = {}
@@ -958,7 +970,7 @@ def title_page(g, catalogue=None):
                        f'title="Show only the {e(ed)}"><img src="{e(src)}" alt="{e(g["title"])} {e(ed)} artwork" '
                        f'width="{w}" height="{h}" loading="lazy" decoding="async"><span class="cap">{e(ed)}</span></button>'
                        for ed, src, w, h in art)
-        gallery = f'<div class="art">{figs}</div>'
+        gallery = f'<div class="art gallery">{figs}</div>'
     st_counts = {}
     for ev in g["events"]:
         z = areas.zone_of(ev["lat"], ev["lon"]) or "other"
@@ -1007,13 +1019,13 @@ def play_page():
             '<script src="https://cdnjs.cloudflare.com/ajax/libs/matter-js/0.19.0/matter.min.js"></script>'
             f'<script src="{u("/pinball.js")}?v={JS_VERSION}"></script>')
     return page("Out the back", body, path="/play/", description="A small pinball table. Two flippers, three pops, two loops.",
-                box_extra='<p class="wordmark">Out the back</p><p class="lede">You found the machine. Three balls, and your best score stays in this browser.</p>',
+                box_extra='<p class="wordmark">Out the back</p><p class="lede">You found the machine. Three balls. Your best score stays in this browser.</p>',
                 current="play")
 
 
 def about_page():
     body = f"""<div class="prose">
-<p class="contact">Made by a Melbourne player. Something wrong, or something to add? <a href="mailto:{e(SITE['contact'])}">{e(SITE['contact'])}</a></p>
+<p class="contact">Something wrong, or something to add? Tell me: <a href="mailto:{e(SITE['contact'])}">{e(SITE['contact'])}</a></p>
 <h2>What this is</h2>
 <p>A weekly list of what changed in Australian pinball: new venues, machines landing and leaving, swaps, and player notes on what needs a tech. It exists so people hear about the new game at the pub down the road, and so an Edithvale player knows whether Campbellfield is worth the drive on Saturday.</p>
 <h2>Where it comes from</h2>
@@ -1022,7 +1034,7 @@ def about_page():
 <p class="muted">Suburbs and postcodes for the near-you search come from Matthew Proctor's public-domain <a href="https://www.matthewproctor.com/australian_postcodes">Australian Postcodes</a> list. The code is open on <a href="https://github.com/glenat-gif/pinball-diff">GitHub</a>.</p>
 </div>"""
     box = ('<p class="wordmark" style="font-size:clamp(1.6rem,6vw,2.6rem)">About</p>'
-           f'<p class="lede">{e(SITE["tagline"])}</p>')
+           '<p class="lede">Made by one Melbourne player from what Australian players put on Pinball Map.</p>')
     return page("About", body, path="/about/", description="What this is and where the data comes from.",
                 box_extra=box, current="about")
 
