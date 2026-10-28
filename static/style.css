@@ -256,8 +256,6 @@ blockquote.said { margin: 0.35rem 0 0; padding-left: 0.75rem; border-left: 3px s
 .confirmed { color: var(--muted); font-size: 0.9rem; margin: 0.6rem 0 0; }
 .more { margin: 0.7rem 0 0; font-size: 0.95rem; }
 .allquiet { margin-top: 2.4rem; color: var(--muted); }
-.states + .allquiet { margin: 0.7rem 0 0; font-size: 0.9rem; }
-.states + .allquiet + .near-ask { margin-top: 1.3rem; }
 .allquiet strong { color: var(--ink); }
 
 /* Comps */

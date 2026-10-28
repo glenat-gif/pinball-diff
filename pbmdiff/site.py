@@ -407,7 +407,7 @@ def chips(current, counts):
     return ('<nav class="states" aria-label="Zones">' + "".join(links) + "</nav>"
             # On a desktop the strip must be one line: shave the type a little, only if it does not fit.
             '<script>(function(){var c=document.querySelector(".states");function fit(){if(window.innerWidth<760)'
-            '{c.style.fontSize="";return}var s=13;c.style.fontSize=s+"px";while(c.scrollWidth>c.clientWidth&&s>10)'
+            '{c.style.fontSize="";return}var s=15;c.style.fontSize=s+"px";while(c.scrollWidth>c.clientWidth&&s>10)'
             '{s-=0.5;c.style.fontSize=s+"px"}}fit();addEventListener("resize",fit);'
             'if(document.fonts)document.fonts.ready.then(fit)})();</script>')
 
@@ -597,10 +597,7 @@ def home(weeks, counts, built_on, comps=()):
     # The machine moves are the point of the page: states first, then the comps, then the podcasts.
     blocks = near_box()
     blocks += "".join(zone_block(z, when=False, more=True) for z in active)
-    nav = chips("home", counts)
-    if quiet:
-        names = render.join(f'<a href="{u("/zone/" + z["zone"] + "/")}">{e(short(z["label"]))}</a>' for z in quiet)
-        nav += f'<p class="allquiet"><strong>Quiet on the map:</strong> {names}.</p>'
+    nav = chips("home", counts)               # a quiet state shows as 0 on the strip; no second line about it
     blocks += comps_block(soon, built_on.isoformat(), soon_until, f"Comps in {areas.SHORT[home]}",
                           f"No IFPA comps listed in {areas.SHORT[home]} in the next seven days.") if comps else ""
     pods = podcasts.load()
