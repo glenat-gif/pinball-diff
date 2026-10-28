@@ -363,7 +363,7 @@ def signup():
                        for k, _ in areas.STATES))
     return (f'<form class="signup" id="signup" action="https://buttondown.com/api/emails/embed-subscribe/{e(user)}" method="post" target="_blank">'
             '<h2>The Thursday email</h2>'
-            '<p>Every Thursday. All of Australia, with the biggest news from your state up top. '
+            '<p>All of Australia, with the biggest news from your state up top. '
             'Free. One click to leave.</p>'
             '<div class="row"><label class="sr" for="em" hidden>Email address</label>'
             '<input id="em" type="email" name="email" required placeholder="you@example.com" autocomplete="email">'
