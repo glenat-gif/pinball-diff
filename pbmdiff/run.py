@@ -124,6 +124,11 @@ def cmd_issue(args):
         created = mail.post({"subject": subject, "body": mail.html(iss), "status": "draft"}, key)
         print(f"drafted in Buttondown: {created.get('id')} (delete it there when done)")
         return
+    if args.send_now:
+        latest = issue.latest_issue_date().isoformat()
+        if not issue.path(latest).exists():
+            print(f"nothing to send: no issue for {latest}"); return
+        print(mail.send_now(issue.load(latest))); return
     if args.redraft:
         latest = issue.latest_issue_date().isoformat()
         if not issue.path(latest).exists():
@@ -190,6 +195,7 @@ def main(argv=None):
     i = sub.add_parser("issue"); i.add_argument("--date")
     i.add_argument("--redraft", action="store_true", help="rebuild this week's issue and rewrite its Buttondown draft")
     i.add_argument("--preview", action="store_true", help="draft next Thursday's email from today's data, without saving an issue")
+    i.add_argument("--send-now", action="store_true", help="send this week's Buttondown draft to the list now")
     i.set_defaults(fn=cmd_issue)
     sub.add_parser("build").set_defaults(fn=cmd_build)
     t = sub.add_parser("subscribers"); t.add_argument("--tag-id", default="", help="subscriber id to tag"); t.add_argument("--tag", default="vic")

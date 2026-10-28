@@ -539,6 +539,21 @@ def redraft(iss, key=None, opener=urllib.request.urlopen):
     return f"redrafted in Buttondown: {em['id']}"
 
 
+def send_now(iss, key=None, opener=urllib.request.urlopen):
+    """Send this issue's Buttondown draft to the list now. Drafts only."""
+    key = key or os.environ.get("BUTTONDOWN_API_KEY")
+    em = iss.get("email") or {}
+    if em.get("status") != "draft" or not em.get("id"):
+        return f"not sent: email is {em.get('status') or 'not created'}"
+    if not key:
+        return "not sent: no BUTTONDOWN_API_KEY"
+    patch(em["id"], {"status": "about_to_send"}, key, opener)
+    iss["email"]["status"] = "about_to_send"
+    iss["email"]["sent_at"] = dt.datetime.now(dt.timezone.utc).isoformat(timespec="seconds")
+    issue.save(iss)
+    return f"sent to the list: {em['id']}"
+
+
 def deliver(iss, key=None, opener=urllib.request.urlopen):
     """Create the email in Buttondown if it is due. Returns a short status line."""
     if iss.get("email"):
