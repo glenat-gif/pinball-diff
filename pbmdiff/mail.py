@@ -154,8 +154,7 @@ def _machines(names, item=None):
 
 
 def _machine(name, item=None):
-    flags = (item or {}).get("flags", {}).get(name, [])
-    return name + (f" **[{', '.join(flags)}]**" if flags else "")
+    return name
 
 
 def line(item):
@@ -232,11 +231,20 @@ TONE = {"new": "#b84c00", "venue": "#1b6f8f", "swap": "#5b3fd6", "trouble": "#c0
 
 def _h_machine(name, item=None):
     title, maker = render.split_machine(name)
-    flags = (item or {}).get("flags", {}).get(name, [])
-    pills = "".join(f' <span style="font:700 10px/1.6 Arial,sans-serif;color:#b84c00;border:1px solid #b84c00;'
-                    f'border-radius:9px;padding:0 6px;white-space:nowrap">{_e(f).upper()}</span>' for f in flags)
     tail = f' <span style="color:#655e6e">({_e(maker)})</span>' if maker else ""
-    return f'<b>{_e(title)}</b>{tail}{pills}'
+    return f'<b>{_e(title)}</b>{tail}'
+
+
+def notable(item):
+    """The one flag worth saying about a change, for the hero and the highlight cards: a new
+    release or a rare edition. The edition itself is already in the machine's name."""
+    best, score = "", 0
+    for flags in (item.get("flags") or {}).values():
+        for f in flags:
+            w = issue.HIGHLIGHT_WEIGHT.get(f, 0)
+            if w > score and f != "Premium":
+                best, score = f, w
+    return best
 
 
 def _h_what(item):
@@ -361,7 +369,8 @@ def _h_hero(text, item, zone):
             f'<img src="{_e(img)}" alt="{_e(name)}" width="{iw}" height="{ih}" '
             f'style="display:block;width:{iw}px;max-width:100%;height:auto;border:0;border-radius:6px"></a></td></tr></table>'
             f'<div style="margin:12px 0 0">{_pill(*_hero_pill(text))} '
-            f'<span style="font:800 10px/1.7 Arial,sans-serif;letter-spacing:1px;text-transform:uppercase;color:#655e6e">&nbsp;{_e(areas.SHORT[zone])}</span>'
+            f'<span style="font:800 10px/1.7 Arial,sans-serif;letter-spacing:1px;text-transform:uppercase;color:#655e6e">&nbsp;{_e(areas.SHORT[zone])}'
+            f'{" &middot; " + _e(notable(item)) if notable(item) else ""}</span>'
             f'<div style="font:800 22px/1.25 Arial,sans-serif;margin-top:4px">'
             f'<a href="{_e(item["link"])}" style="color:#1b1720;text-decoration:none">{_e(text)}</a></div>'
             f'<div style="font:15px/1.5 Arial,sans-serif;color:#1b1720;margin-top:6px">'

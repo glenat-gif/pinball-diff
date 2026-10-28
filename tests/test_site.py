@@ -209,6 +209,18 @@ class MachineTests(Built):
         self.assertNotIn("via dolphin61", page)                                 # no date or credit line in the email
         mail._CATALOGUE = None
 
+    def test_flags_leave_the_text_and_sit_by_the_label(self):
+        from pbmdiff import mail
+        item = {"kind": "added", "date": "2026-10-27", "location_name": "Surly's Newcastle", "city": "Newcastle", "zone": "nsw",
+                "link": "https://pinballmap.com/map?by_location_id=1", "machines": ["Pokémon (Pro) (Stern, 2026)"],
+                "flags": {"Pokémon (Pro) (Stern, 2026)": ["New release"]}, "ids": {}}
+        row = mail._h_item(item)
+        self.assertNotIn("NEW RELEASE", row)                       # not in the sentence any more
+        self.assertEqual(mail.notable(item), "New release")       # but the hero and cards can say it once
+        item["flags"] = {"Godzilla (Premium) (Stern, 2021)": ["Premium"]}
+        self.assertEqual(mail.notable(item), "")                  # the edition is already in the name
+        self.assertNotIn('class="pill"', site.change(item))
+
     def test_a_plain_player_note_renders_in_the_email(self):
         from pbmdiff import mail
         item = {"kind": "condition", "status": "note", "date": "2026-10-27", "location_name": "Koko Amusement", "city": "Sydney",

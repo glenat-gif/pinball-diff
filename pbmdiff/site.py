@@ -75,12 +75,10 @@ def machine_page_for(name, item=None):
 def machine(name, item=None):
     title, maker = render.split_machine(name)
     tail = f' <span class="mk">({e(maker)})</span>' if maker else ""
-    flags = (item or {}).get("flags", {}).get(name, [])
-    pills = "".join(f' <span class="pill">{e(f)}</span>' for f in flags)
     slug = machine_page_for(name, item)
     label = (f'<a class="m" href="{u("/machines/" + slug + "/")}">{e(title)}</a>' if slug
              else f'<span class="m">{e(title)}</span>')
-    return f'{label}{tail}{pills}'
+    return f'{label}{tail}'
 
 
 def machines(names, item=None):
@@ -674,7 +672,8 @@ def highlights_strip(weeks, limit=8):
         label, tone = mail.headline_label(text)
         cards.append(f'<a class="hl" href="{e(item["link"])}"><img src="{e(img)}" alt="{e(name)}" loading="lazy" decoding="async">'
                      f'<span class="hl-tag"><span class="tag {tone}">{e(label)}</span></span>'
-                     f'<strong>{e(text)}</strong><span class="hl-state">{e(areas.SHORT[item["zone"]])}</span></a>')
+                     f'<strong>{e(text)}</strong><span class="hl-state">{e(areas.SHORT[item["zone"]])}'
+                     f'{" · " + e(mail.notable(item)) if mail.notable(item) else ""}</span></a>')
         if len(cards) == limit:
             break
     if not cards:
