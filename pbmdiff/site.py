@@ -586,7 +586,7 @@ def home(weeks, counts, built_on, comps=()):
            # an unmarked way to the table: three taps on the score
            f'<script>(function(){{var n=0,t=0;document.getElementById("score").addEventListener("click",function(){{var now=Date.now();'
            f'n=now-t<900?n+1:1;t=now;if(n>=3)location.href={json.dumps(u("/play/"))}}})}})();</script>')
-    box = ('<section class="card"><p>New venues, machines landing and leaving, swaps, and which machines need a tech, '
+    box = ('<section class="card"><p>New venues, machines landing and leaving, swaps, and what needs a tech, '
            'across Australia. Every venue links to its <a href="https://pinballmap.com">Pinball Map</a> listing, '
            'so you can fix it or add to it. Updated every morning.</p></section>'
            + highlights_strip(weeks)
