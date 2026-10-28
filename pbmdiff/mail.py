@@ -227,7 +227,7 @@ def markdown(iss):
 
 import html as _html
 _e = _html.escape
-TONE = {"new": "#b84c00", "venue": "#1b6f8f", "swap": "#5b3fd6", "trouble": "#c0254f", "good": "#23824a", "gone": "#7a7382"}
+TONE = {"new": "#b84c00", "venue": "#1b6f8f", "swap": "#5b3fd6", "trouble": "#c0254f", "good": "#23824a", "gone": "#7a7382", "note": "#655e6e"}
 
 
 def _h_machine(name, item=None):

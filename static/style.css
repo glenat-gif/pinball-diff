@@ -231,6 +231,7 @@ a:hover { text-decoration-thickness: 2px; }
 .tag.trouble { color: var(--trouble); }
 .tag.good { color: var(--good); }
 .tag.gone { color: var(--gone); }
+.tag.note { color: var(--muted); }
 .venue { font-weight: 650; }
 .venue a { text-decoration-color: color-mix(in srgb, currentColor 35%, transparent); }
 .city { color: var(--muted); }

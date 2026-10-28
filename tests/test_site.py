@@ -209,6 +209,14 @@ class MachineTests(Built):
         self.assertNotIn("via dolphin61", page)                                 # no date or credit line in the email
         mail._CATALOGUE = None
 
+    def test_a_plain_player_note_renders_in_the_email(self):
+        from pbmdiff import mail
+        item = {"kind": "condition", "status": "note", "date": "2026-10-27", "location_name": "Koko Amusement", "city": "Sydney",
+                "link": "https://pinballmap.com/map?by_location_id=15747", "machine": "King Kong (Premium) (Stern, 2025)",
+                "comment": "Ball gets stuck in the right lane", "ids": {}, "zone": "nsw"}
+        row = mail._h_item(item)                       # used to raise KeyError: 'note' and sink the Thursday draft
+        self.assertIn("Koko Amusement", row); self.assertIn("Ball gets stuck", row)
+
     def test_a_headline_about_a_landing_is_labelled_landed(self):
         from pbmdiff import mail
         # A rotation row says Rotation with In and Out; its headline is about the machine that landed.
