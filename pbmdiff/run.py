@@ -159,7 +159,7 @@ def cmd_subscribers(args):
     key = os.environ.get("BUTTONDOWN_API_KEY")
     if not key:
         print("no BUTTONDOWN_API_KEY"); return
-    if args.tag_id:
+    if args.tag_id and args.tag_id != "list":          # "list" just lists
         tags = [t.strip() for t in args.tag.split(",") if t.strip()]
         print(f"{args.tag_id}: tags now {mail.tag_subscriber(args.tag_id, tags, key)}")
     for s in mail.subscribers(key):
