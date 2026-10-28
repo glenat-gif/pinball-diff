@@ -481,7 +481,8 @@ def _req(url, key, method="GET", payload=None, opener=urllib.request.urlopen):
     req = urllib.request.Request(url, data=data, method=method, headers={
         "Authorization": f"Token {key}", "Content-Type": "application/json", "User-Agent": "pinball-diff/0.3"})
     with opener(req, timeout=60) as resp:
-        return json.load(resp)
+        raw = resp.read()
+        return json.loads(raw) if raw.strip() else {}          # a send returns an empty body
 
 
 def subscribers(key, opener=urllib.request.urlopen):
