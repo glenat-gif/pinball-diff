@@ -294,7 +294,7 @@ def comps_page(comps, on):
            f'<p class="lede">Every IFPA-sanctioned tournament and league in Australia, from today to {e(render.day(until.isoformat()))}.'
            '<small>From the IFPA calendar, updated every morning, with venues matched to Pinball Map so you can see '
            'what you will be playing on. Running a comp that is not here? Add it to the IFPA calendar and it appears the next day.</small></p>')
-    return page("Comps", body, path="/comps/", description="Upcoming pinball tournaments and leagues across Australia, by month and state.",
+    return page("Pinball comps in Australia", body, path="/comps/", structured=comps_ld(comps), description="Upcoming pinball tournaments and leagues across Australia, by month and state.",
                 box_extra=box, current="comps")
 
 
@@ -349,7 +349,7 @@ def podcasts_page(data):
            '<p class="lede">Australia\'s pinball podcasts, as each episode lands.'
            '<small>Every episode links to the show itself, so the hosts get your listen. '
            'Making an Australian pinball podcast that is not here? Say so and it will be added.</small></p>')
-    return page("Podcasts", body, path="/podcasts/", description="Australian pinball podcasts and their latest episodes.",
+    return page("Australian pinball podcasts", body, path="/podcasts/", description="Australian pinball podcasts and their latest episodes.",
                 box_extra=box, current="podcasts")
 
 
@@ -413,7 +413,21 @@ def chips(current, counts):
             'if(document.fonts)document.fonts.ready.then(fit)})();</script>')
 
 
-def page(title, body, *, path, description, box_extra="", nav="", current=None, dmd=""):
+def ld(obj):
+    """Structured data for search engines, as a JSON-LD block."""
+    return f'<script type="application/ld+json">{json.dumps(obj, ensure_ascii=False)}</script>'
+
+
+def verification_tags():
+    tags = []
+    if SITE.get("google_site_verification"):
+        tags.append(f'<meta name="google-site-verification" content="{e(SITE["google_site_verification"])}">')
+    if SITE.get("bing_verification"):
+        tags.append(f'<meta name="msvalidate.01" content="{e(SITE["bing_verification"])}">')
+    return "\n".join(tags)
+
+
+def page(title, body, *, path, description, box_extra="", nav="", current=None, dmd="", structured=None):
     full = f"{title} · {SITE['name']}" if title else SITE["name"]
     cur = lambda key: ' aria-current="page"' if current == key else ""
     wm = (f'<h1 class="wm"><a href="{u("/")}">{e(SITE["name"])}</a></h1>' if current == "home"
@@ -441,6 +455,8 @@ def page(title, body, *, path, description, box_extra="", nav="", current=None, 
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="{FONTS}">
 <link rel="stylesheet" href="{u('/style.css')}?v={CSS_VERSION}">
+{verification_tags()}
+{ld(structured) if structured else ""}
 </head>
 <body>
 <header class="mast"><div class="wrap">
@@ -609,7 +625,40 @@ def home(weeks, counts, built_on, comps=()):
         lines.append(f"{show.upper()}  NEW EPISODE  {ep['title'].upper()}")
     attract = f'<script>var ATTRACT={json.dumps(lines[:40], ensure_ascii=False)};</script>' + ATTRACT_SCRIPT
     return page("", blocks, path="/", description=SITE["tagline"], box_extra=box,
-                nav=chips("home", counts), current="home", dmd=dmd + attract)
+                nav=chips("home", counts), current="home", dmd=dmd + attract, structured=site_ld())
+
+
+def site_ld():
+    org = {"@type": "Organization", "name": SITE["name"], "url": absolute("/"), "logo": absolute("/icon.png")}
+    return {"@context": "https://schema.org", "@type": "WebSite", "name": SITE["name"], "url": absolute("/"),
+            "description": SITE["tagline"], "inLanguage": "en-AU", "publisher": org}
+
+
+def comps_ld(comps, limit=100):
+    """Each upcoming comp as a schema.org Event, so a date and place can show in search results."""
+    from .mail import STATE_CODE
+    out = []
+    for c in comps[:limit]:
+        place = {"@type": "Place", "name": c["venue"] or c["city"] or c["name"],
+                 "address": {"@type": "PostalAddress", "addressLocality": c["city"], "addressRegion": STATE_CODE.get(c["zone"], ""), "addressCountry": "AU"}}
+        ev = {"@context": "https://schema.org", "@type": "Event", "name": c["name"], "startDate": c["start"], "endDate": c["end"] or c["start"],
+              "eventStatus": "https://schema.org/EventScheduled", "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
+              "location": place, "url": c["website"] or c["link"]}
+        if c.get("format"):
+            ev["description"] = c["format"]
+        if c.get("director"):
+            ev["organizer"] = {"@type": "Person", "name": c["director"]}
+        out.append(ev)
+    return out
+
+
+def issue_ld(iss):
+    from . import mail
+    org = {"@type": "Organization", "name": SITE["name"], "url": absolute("/"), "logo": {"@type": "ImageObject", "url": absolute("/icon.png")}}
+    return {"@context": "https://schema.org", "@type": "Article", "headline": mail.subject(iss),
+            "datePublished": f"{iss['date']}T07:00:00+10:00", "dateModified": f"{iss['date']}T07:00:00+10:00",
+            "author": org, "publisher": org, "image": absolute("/share.png"), "mainEntityOfPage": absolute(f"/issues/{iss['date']}/"),
+            "description": f"What changed in pinball across Australia, {render.span(iss['since'], iss['until'])}."}
 
 
 def highlights_strip(weeks, limit=8):
@@ -694,7 +743,7 @@ def zone_page(z, events, until, counts):
     box = (f'<p class="wordmark" style="font-size:clamp(1.6rem,6vw,2.6rem)">{e(short(z))}</p>'
            f'<p class="lede">{e(label) + ". " if label != short(z) else ""}The last four weeks of changes on Pinball Map.</p>')
     body = "".join(zone_block({**w, "label": "Week to " + render.day(w["until"])}, heading_link=False) for w in weeks)
-    return page(short(z), body, path=f"/zone/{z}/", description=f"What changed in pinball in {label}.",
+    return page(f"Pinball in {short(z)} this week", body, path=f"/zone/{z}/", description=f"What changed in pinball in {label}.",
                 box_extra=box, nav=chips(z, counts), current=z)
 
 
@@ -713,7 +762,7 @@ def issue_page(iss):
     if quiet:
         body += (f'<p class="allquiet"><strong>Quiet on the map:</strong> '
                  f'{render.join(e(short(z["label"])) for z in quiet)}.</p>')
-    return page(render.long_day(iss["date"]), body, path=f"/issues/{iss['date']}/",
+    return page(render.long_day(iss["date"]), body, path=f"/issues/{iss['date']}/", structured=issue_ld(iss),
                 description=f"{SITE['name']} for {render.long_day(iss['date'])}.", box_extra=box, current="issues")
 
 
@@ -882,7 +931,7 @@ def machines_page(groups, catalogue=None):
            '<p class="lede">Every machine that has landed somewhere or left, across Australia, as recorded on Pinball Map. '
            'Pro, Premium and LE together, so you can follow where each edition went.'
            '<small>For where a machine is right now, each title links to Pinball Map.</small></p>')
-    return page("Machines", body, path="/machines/", description="Which pinball machines have landed and left around Australia.",
+    return page("Pinball machines across Australia", body, path="/machines/", description="Which pinball machines have landed and left around Australia.",
                 box_extra=box, current="machines")
 
 
@@ -994,12 +1043,69 @@ def feed(dates):
             f"<updated>{updated}</updated>{''.join(entries)}</feed>\n")
 
 
-def write(rel, text):
+PAGES = {}        # path -> lastmod, for the sitemap; filled by write()
+
+
+def write(rel, text, lastmod=None):
     path = DIST / rel.lstrip("/")
     if rel.endswith("/"):
         path = path / "index.html"
+        PAGES[rel] = lastmod
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(text, encoding="utf-8")
+
+
+def sitemap(on):
+    today = on.isoformat()
+    rows = "".join(f"<url><loc>{e(absolute(p))}</loc><lastmod>{PAGES[p] or today}</lastmod></url>" for p in PAGES)
+    return f'<?xml version="1.0" encoding="utf-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">{rows}</urlset>\n'
+
+
+ROBOTS = """# Everyone is welcome, search engines and assistants alike. The data is CC BY-SA 4.0 from Pinball Map.
+User-agent: *
+Allow: /
+
+Sitemap: SITEMAP
+"""
+
+
+def llms_txt():
+    lines = [f"# {SITE['name']}", "", f"> {SITE['tagline']} New venues, machines landing and leaving, swaps, and player notes on",
+             "> machines that need a tech, grouped by state, with the week's IFPA comps and the Australian pinball podcasts.",
+             "> Built each morning from what players submit to Pinball Map. Not a venue finder: every venue links to its Pinball Map listing.", "",
+             "## Pages", "",
+             f"- [This week]({absolute('/')}): every change across Australia in the last week, by state, plus a suburb search",
+             f"- [Comps]({absolute('/comps/')}): upcoming IFPA tournaments and leagues, with calendar feeds",
+             f"- [Machines]({absolute('/machines/')}): every machine that has landed somewhere or left, with where it is now",
+             f"- [Podcasts]({absolute('/podcasts/')}): Australian pinball podcasts and their latest episodes",
+             f"- [Emails]({absolute('/issues/')}): the Thursday email, every issue",
+             f"- [About]({absolute('/about/')})", "",
+             "## Data", "",
+             f"- [This week in full]({absolute('/llms-full.txt')}): the current week's changes and comps as plain text",
+             f"- [Feed]({absolute('/feed.xml')}): Atom feed of issues",
+             f"- [Comps calendar]({absolute('/comps/all.ics')}): iCalendar of upcoming comps", "",
+             "Data from Pinball Map (https://pinballmap.com), CC BY-SA 4.0. Comps from the IFPA calendar. Machine artwork from the Open Pinball Database.", ""]
+    return "\n".join(lines)
+
+
+def llms_full(weeks, comps, on):
+    from . import mail
+    soon_until = (on + dt.timedelta(days=7)).isoformat()
+    out = [f"# {SITE['name']}: {render.span(weeks[0]['since'], weeks[0]['until'])}", "",
+           SITE["tagline"], "", "Every venue below links to its Pinball Map listing, which is the place to check hours and the current lineup.", ""]
+    for z in weeks:
+        if not z["items"]:
+            continue
+        out += [f"## {z['label']}", ""] + [mail.line(i) for i in z["items"]] + [""]
+    soon = ifpa.between(list(comps), on.isoformat(), soon_until)
+    if soon:
+        out += ["## Comps in the next seven days", ""] + [mail.comp_line(c) + f" _{areas.SHORT[c['zone']]}_" for c in soon] + [""]
+    quiet = [areas.SHORT[z["zone"]] for z in weeks if not z["items"]]
+    if quiet:
+        out += [f"Quiet on the map: {render.join(quiet)}.", ""]
+    out += ["---", "", "Data from Pinball Map (https://pinballmap.com), CC BY-SA 4.0, submitted by Australian players. Comps from the IFPA calendar.",
+            f"Site: {absolute('/')}", ""]
+    return "\n".join(out)
 
 
 def build(on=None):
@@ -1023,6 +1129,7 @@ def build(on=None):
     if DIST.exists():
         shutil.rmtree(DIST)
     DIST.mkdir()
+    PAGES.clear()
     shutil.copy(ROOT / "static" / "style.css", DIST / "style.css")
     for name in ("icon.png", "share.png", "email-head.png"):
         shutil.copy(ROOT / "static" / name, DIST / name)
@@ -1041,7 +1148,7 @@ def build(on=None):
         write(f"/zone/{z}/", zone_page(z, events, until, counts))
     dates = issue.published_dates()
     for d in dates:
-        write(f"/issues/{d}/", issue_page(issue.load(d)))
+        write(f"/issues/{d}/", issue_page(issue.load(d)), lastmod=d)
     write("/issues/", issues_page(dates))
     write("/machines/", machines_page(groups, catalogue))
     for g in groups:
@@ -1051,6 +1158,10 @@ def build(on=None):
     write("/play/", play_page())
     shutil.copy(ROOT / "static" / "pinball.js", DIST / "pinball.js")
     write("/feed.xml", feed(dates))
+    write("/sitemap.xml", sitemap(on))
+    write("/robots.txt", ROBOTS.replace("SITEMAP", absolute("/sitemap.xml")))
+    write("/llms.txt", llms_txt())
+    write("/llms-full.txt", llms_full(weeks, comps, on))
     (DIST / ".nojekyll").write_text("", encoding="utf-8")
     host = SITE["base_url"].split("://", 1)[1]
     if "github.io" not in host:

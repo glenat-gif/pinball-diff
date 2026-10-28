@@ -4,7 +4,15 @@
   "base_url": "https://pinballthisweek.au",
   "base_path": "",
   "buttondown_username": "pinballthisweek",
-  "email_zones": ["vic", "nsw", "qld", "sa", "wa", "tas", "nt"],
+  "email_zones": [
+    "vic",
+    "nsw",
+    "qld",
+    "sa",
+    "wa",
+    "tas",
+    "nt"
+  ],
   "email_mode": "draft",
   "issue_weekday": 3,
   "contact": "pinballthisweek@gmail.com",
@@ -26,5 +34,7 @@
       "spotify": "",
       "strip": ""
     }
-  ]
+  ],
+  "google_site_verification": "",
+  "bing_verification": ""
 }

@@ -246,6 +246,30 @@ class MachineTests(Built):
         site.CATALOGUE.clear()
         self.assertNotIn('class="art"', site.change(item))  # no catalogue, no tiles
 
+    def test_search_and_assistant_files(self):
+        import xml.etree.ElementTree as ET
+        iss = issue.ensure_latest(self.events, on=ON)
+        iss["email"] = {"status": "draft", "id": "em_1"}; issue.save(iss)        # a published issue, so its page exists
+        dist = site.build(on=ON)
+        sm = ET.fromstring((dist / "sitemap.xml").read_text())
+        locs = [u.find("{http://www.sitemaps.org/schemas/sitemap/0.9}loc").text for u in sm]
+        self.assertIn("https://pinballthisweek.au/", locs)
+        self.assertIn("https://pinballthisweek.au/comps/", locs)
+        self.assertTrue(any("/issues/2026-10-01/" in l for l in locs))
+        self.assertNotIn("https://pinballthisweek.au/near.json", locs)
+        self.assertIn("Sitemap: https://pinballthisweek.au/sitemap.xml", (dist / "robots.txt").read_text())
+        self.assertIn("# Pinball This Week", (dist / "llms.txt").read_text())
+        full = (dist / "llms-full.txt").read_text()
+        self.assertIn("## Victoria", full); self.assertIn("Railway Hotel South Melbourne", full); self.assertIn("CC BY-SA", full)
+        home = (dist / "index.html").read_text()
+        import json as _json
+        ld = _json.loads(home.split('<script type="application/ld+json">')[1].split("</script>")[0])
+        self.assertEqual(ld["@type"], "WebSite")
+        issue_page = (dist / "issues" / "2026-10-01" / "index.html").read_text()
+        art = _json.loads(issue_page.split('<script type="application/ld+json">')[1].split("</script>")[0])
+        self.assertEqual(art["@type"], "Article"); self.assertIn("2026-10-01", art["datePublished"])
+        self.assertIn("<title>Pinball in Victoria this week", (dist / "zone" / "vic" / "index.html").read_text())
+
     def test_play_page_exists_with_the_table(self):
         dist = site.build(on=ON)
         play = (dist / "play" / "index.html").read_text()
