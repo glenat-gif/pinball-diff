@@ -682,7 +682,7 @@ def highlights_strip(weeks, limit=8):
         return ""
     arrows = ('<span class="hl-nav"><button type="button" id="hl-prev" aria-label="Previous">&#8249;</button>'
               '<button type="button" id="hl-next" aria-label="Next">&#8250;</button></span>' if len(cards) > 4 else "")
-    return (f'<section class="hls"><div class="hls-head"><h2>Across Australia</h2>{arrows}</div>'
+    return (f'<section class="hls"><div class="hls-head"><h2>Latest changes across Australia</h2>{arrows}</div>'
             f'<div class="hl-row" id="hl-row">{"".join(cards)}</div></section>' + HL_SCRIPT)
 
 
