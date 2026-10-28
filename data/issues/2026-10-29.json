@@ -1610,9 +1610,10 @@
  "comps_until": "2026-11-05",
  "episodes": [],
  "email": {
-  "status": "draft",
+  "status": "about_to_send",
   "id": "em_5ep2xa15xm9fsbgkekvdvf8tv4",
   "at": "2026-10-28T20:59:39+00:00",
-  "redrafted_at": "2026-10-28T22:46:07+00:00"
+  "redrafted_at": "2026-10-28T22:46:07+00:00",
+  "sent_at": "2026-10-28T22:53:53+00:00"
  }
 }
