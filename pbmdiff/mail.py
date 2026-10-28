@@ -480,11 +480,11 @@ def subscribers(key, opener=urllib.request.urlopen):
     return out
 
 
-def tag_subscriber(sub_id, tags, key, opener=urllib.request.urlopen):
-    """Add tags to one subscriber, keeping the ones they have."""
+def tag_subscriber(sub_id, tags, key, opener=urllib.request.urlopen, replace=False):
+    """Add tags to one subscriber, keeping the ones they have; or replace the lot."""
     sub = _req(f"{SUBSCRIBERS}/{sub_id}", key, opener=opener)
     have = list(sub.get("tags") or [])
-    want = have + [t for t in tags if t not in have]
+    want = list(tags) if replace else have + [t for t in tags if t not in have]
     if want != have:
         _req(f"{SUBSCRIBERS}/{sub_id}", key, "PATCH", {"tags": want}, opener=opener)
     return want

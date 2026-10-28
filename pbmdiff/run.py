@@ -162,8 +162,9 @@ def cmd_subscribers(args):
     if args.probe:
         print(mail.probe_tags(args.probe, key)); return
     if args.tag_id and args.tag_id != "list":          # "list" just lists
-        tags = [t.strip() for t in args.tag.split(",") if t.strip()]
-        print(f"{args.tag_id}: tags now {mail.tag_subscriber(args.tag_id, tags, key)}")
+        replace = args.tag.startswith("=")                 # "=nsw" replaces every tag; "nsw" adds
+        tags = [t.strip() for t in args.tag.lstrip("=").split(",") if t.strip()]
+        print(f"{args.tag_id}: tags now {mail.tag_subscriber(args.tag_id, tags, key, replace=replace)}")
     for s in mail.subscribers(key):
         print(f"{s['id']}  {s['email']:<24} {s['status']:<10} tags={s['tags']}")
 
