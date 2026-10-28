@@ -942,14 +942,18 @@ def _now_link(g):
     return "https://pinballmap.com/map?by_country=AU"
 
 
+FOLD_TITLES = 40      # the machines list shows this many before a button unrolls the rest
+
+
 def machines_page(groups, catalogue=None):
     rows = []
-    for g in groups:
+    for i, g in enumerate(groups):
         n = len(g["events"])
         art = _art(g, catalogue)
         thumb = (f'<img class="thumb" src="{e(art[0][1])}" alt="" width="96" height="{round(96 * art[0][3] / art[0][2])}" '
                  f'loading="lazy" decoding="async">' if art else "")
-        rows.append(f'<li class="title-row{" has-art" if art else ""}" data-name="{e(g["title"].lower())} {e(_makers_text(g).lower())}">{thumb}'
+        rows.append(f'<li class="title-row{" has-art" if art else ""}{" fold" if i >= FOLD_TITLES else ""}"{" hidden" if i >= FOLD_TITLES else ""} '
+                    f'data-name="{e(g["title"].lower())} {e(_makers_text(g).lower())}">{thumb}'
                     f'<a href="{u("/machines/" + g["slug"] + "/")}"><span class="t">{e(g["title"])}</span></a>'
                     f'<span class="mk">{e(_makers_text(g))}</span>'
                     f'<span class="sub">{e(_editions_text(g))} · {n} move{"s" if n != 1 else ""} · '
@@ -960,14 +964,18 @@ def machines_page(groups, catalogue=None):
             '<input id="q" type="search" placeholder="Godzilla, Pokémon, Twilight Zone" autocomplete="off"></div>'
             f'<p class="count" id="count">{len(groups)} titles have landed or left somewhere in Australia{e(since)}. Most recent first.</p>'
             f'<ul class="title-list">{"".join(rows)}</ul>'
-            '<p class="quiet" id="none" hidden>Nothing by that name has moved on Pinball Map in Australia. '
+            + (f'<button type="button" class="near-more" id="unfold">Show all {len(groups)} titles</button>' if len(groups) > FOLD_TITLES else "")
+            + '<p class="quiet" id="none" hidden>Nothing by that name has moved on Pinball Map in Australia. '
             '<a href="https://pinballmap.com">Pinball Map</a> can tell you where it is now.</p>'
             '<script>(function(){var f=function(x){return x.toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g,"")};'
             'var q=document.getElementById("q"),c=[].slice.call(document.querySelectorAll(".title-row")),'
-            'n=document.getElementById("none"),k=document.getElementById("count"),k0=k.textContent;'
-            'c.forEach(function(x){x._n=f(x.dataset.name)});q.addEventListener("input",function(){'
-            'var t=f(q.value.trim()),s=0;c.forEach(function(x){var h=!t||x._n.indexOf(t)>-1;x.hidden=!h;if(h)s++;});'
-            'n.hidden=s>0;k.textContent=t?s+" title"+(s==1?"":"s")+" match.":k0;});})();</script>')
+            'n=document.getElementById("none"),k=document.getElementById("count"),k0=k.textContent,'
+            'u=document.getElementById("unfold"),open=false;'
+            'c.forEach(function(x){x._n=f(x.dataset.name)});function show(){'
+            'var t=f(q.value.trim()),s=0;c.forEach(function(x){var h=!t||x._n.indexOf(t)>-1;'
+            'x.hidden=!h||(!t&&!open&&x.classList.contains("fold"));if(h)s++;});'
+            'n.hidden=s>0;k.textContent=t?s+" title"+(s==1?"":"s")+" match.":k0;if(u)u.hidden=open||!!t;}'
+            'q.addEventListener("input",show);if(u)u.addEventListener("click",function(){open=true;show()});})();</script>')
     box = ('<p class="wordmark" style="font-size:clamp(1.6rem,6vw,2.6rem)">Machines</p>'
            '<p class="lede">Every machine that has landed somewhere or left, across Australia. '
            'Pro, Premium and LE together, so you can follow where each edition went.'
