@@ -1,0 +1,159 @@
+{
+ "items": [
+  {
+   "location_id": 24848,
+   "location_name": "Shapeshifter Brewing Co",
+   "city": "Findon",
+   "link": "https://pinballmap.com/map?by_location_id=24848",
+   "lat": -34.9015029,
+   "lon": 138.5425509,
+   "ids": {
+    "Deadpool (Pro) (Stern, 2018)": 3022,
+    "The Mandalorian (LE) (Stern, 2021)": 3290
+   },
+   "kind": "rotation",
+   "rank": 2.85,
+   "date": "2026-10-28",
+   "machines": [
+    "The Mandalorian (LE) (Stern, 2021)"
+   ],
+   "out": [
+    "Deadpool (Pro) (Stern, 2018)"
+   ],
+   "by": [
+    "imczr"
+   ],
+   "flags": {
+    "The Mandalorian (LE) (Stern, 2021)": [
+     "Limited Edition"
+    ]
+   }
+  },
+  {
+   "location_id": 26312,
+   "location_name": "X-Golf West Lakes",
+   "city": "West Lakes",
+   "link": "https://pinballmap.com/map?by_location_id=26312",
+   "lat": -34.8798761,
+   "lon": 138.4938639,
+   "ids": {
+    "Jurassic Park (Premium) (Stern, 2019)": 3169
+   },
+   "kind": "added",
+   "rank": 2.85,
+   "date": "2026-10-27",
+   "machines": [
+    "Jurassic Park (Premium) (Stern, 2019)"
+   ],
+   "by": [
+    "imczr"
+   ],
+   "flags": {
+    "Jurassic Park (Premium) (Stern, 2019)": [
+     "Premium"
+    ]
+   }
+  },
+  {
+   "location_id": 27706,
+   "location_name": "X-Golf Windsor Gardens",
+   "city": "Windsor Gardens",
+   "link": "https://pinballmap.com/map?by_location_id=27706",
+   "lat": -34.8647423,
+   "lon": 138.6467973,
+   "ids": {
+    "Star Wars (LE) (Stern, 2017)": 2845,
+    "Teenage Mutant Ninja Turtles (LE) (Stern, 2020)": 3253
+   },
+   "kind": "rotation",
+   "rank": 2.85,
+   "date": "2026-10-26",
+   "machines": [
+    "Teenage Mutant Ninja Turtles (LE) (Stern, 2020)"
+   ],
+   "out": [
+    "Star Wars (LE) (Stern, 2017)"
+   ],
+   "by": [
+    "imczr"
+   ],
+   "flags": {
+    "Teenage Mutant Ninja Turtles (LE) (Stern, 2020)": [
+     "Limited Edition"
+    ]
+   }
+  },
+  {
+   "location_id": 24847,
+   "location_name": "Finsbury Hotel",
+   "city": "Woodville North",
+   "link": "https://pinballmap.com/map?by_location_id=24847",
+   "lat": -34.869249,
+   "lon": 138.5475607,
+   "ids": {
+    "Lord of the Rings (Stern, 2003)": 662,
+    "Pirates of the Caribbean (Stern, 2006)": 676
+   },
+   "kind": "rotation",
+   "rank": 2.9,
+   "date": "2026-10-26",
+   "machines": [
+    "Pirates of the Caribbean (Stern, 2006)"
+   ],
+   "out": [
+    "Lord of the Rings (Stern, 2003)"
+   ],
+   "by": [
+    "imczr"
+   ],
+   "flags": {}
+  },
+  {
+   "location_id": 21983,
+   "location_name": "Little Bang Brewing Company",
+   "city": "Stepney",
+   "link": "https://pinballmap.com/map?by_location_id=21983",
+   "lat": -34.9146958,
+   "lon": 138.6255042,
+   "ids": {
+    "King Kong: Myth of Terror Island (Pro) (Stern, 2025)": 4533,
+    "Stranger Things (Pro) (Stern, 2019)": 3226
+   },
+   "kind": "rotation",
+   "rank": 2.9,
+   "date": "2026-10-28",
+   "machines": [
+    "Stranger Things (Pro) (Stern, 2019)"
+   ],
+   "out": [
+    "King Kong: Myth of Terror Island (Pro) (Stern, 2025)"
+   ],
+   "by": [
+    "waughtorn1"
+   ],
+   "flags": {}
+  },
+  {
+   "location_id": 26314,
+   "location_name": "Hectorville Sports and Community Club",
+   "city": "Magill",
+   "link": "https://pinballmap.com/map?by_location_id=26314",
+   "lat": -34.9010023,
+   "lon": 138.6688124,
+   "ids": {
+    "Pirates of the Caribbean (Stern, 2006)": 676
+   },
+   "kind": "removed",
+   "rank": 4,
+   "date": "2026-10-23",
+   "machines": [
+    "Pirates of the Caribbean (Stern, 2006)"
+   ],
+   "by": [
+    "imczr"
+   ],
+   "flags": {}
+  }
+ ],
+ "confirmations": 7
+}
