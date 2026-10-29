@@ -1,0 +1,120 @@
+{
+ "items": [
+  {
+   "location_id": 30855,
+   "location_name": "Waxy's Irish Pub",
+   "city": "Surfers Paradise",
+   "link": "https://pinballmap.com/map?by_location_id=30855",
+   "lat": -28.0006337,
+   "lon": 153.4278405,
+   "ids": {
+    "Jurassic Park (Home Edition) (Stern, 2021)": 3419
+   },
+   "kind": "new_venue",
+   "rank": 0,
+   "date": "2026-10-29",
+   "machines": [
+    "Jurassic Park (Home Edition) (Stern, 2021)"
+   ],
+   "by": [
+    "txt11"
+   ],
+   "flags": {}
+  },
+  {
+   "location_id": 23979,
+   "location_name": "Archive Beer Boutique",
+   "city": "West End",
+   "link": "https://pinballmap.com/map?by_location_id=23979",
+   "lat": -27.4790786,
+   "lon": 153.0126292,
+   "ids": {
+    "The Addams Family (Bally, 1992)": 687,
+    "Scared Stiff (Bally, 1996)": 648,
+    "AC/DC (Pro) (Stern, 2012)": 1219
+   },
+   "kind": "rotation",
+   "rank": 2.9,
+   "date": "2026-10-29",
+   "machines": [
+    "AC/DC (Pro) (Stern, 2012)"
+   ],
+   "out": [
+    "The Addams Family (Bally, 1992)",
+    "Scared Stiff (Bally, 1996)"
+   ],
+   "by": [
+    "bt"
+   ],
+   "flags": {}
+  },
+  {
+   "location_id": 9885,
+   "location_name": "Netherworld",
+   "city": "Fortitude Valley",
+   "link": "https://pinballmap.com/map?by_location_id=9885",
+   "lat": -27.4558148,
+   "lon": 153.0321039,
+   "ids": {
+    "Scared Stiff (Bally, 1996)": 648,
+    "Funhouse (Williams, 1990)": 703
+   },
+   "kind": "rotation",
+   "rank": 2.9,
+   "date": "2026-10-25",
+   "machines": [
+    "Funhouse (Williams, 1990)"
+   ],
+   "out": [
+    "Scared Stiff (Bally, 1996)"
+   ],
+   "by": [
+    "jimmynails"
+   ],
+   "flags": {}
+  },
+  {
+   "location_id": 17389,
+   "location_name": "The Clubhouse Moorooka",
+   "city": "Moorooka",
+   "link": "https://pinballmap.com/map?by_location_id=17389",
+   "lat": -27.5310871,
+   "lon": 153.0277733,
+   "ids": {
+    "Magic Castle (Zaccaria, 1984)": 2025
+   },
+   "kind": "added",
+   "rank": 2.9,
+   "date": "2026-10-23",
+   "machines": [
+    "Magic Castle (Zaccaria, 1984)"
+   ],
+   "by": [
+    "rexeverything"
+   ],
+   "flags": {}
+  },
+  {
+   "location_id": 30761,
+   "location_name": "Wellers Hill Bowls Club",
+   "city": "Tarragindi",
+   "link": "https://pinballmap.com/map?by_location_id=30761",
+   "lat": -27.5180274,
+   "lon": 153.048043,
+   "ids": {
+    "Judge Dredd (Bally, 1993)": 815
+   },
+   "kind": "added",
+   "rank": 2.9,
+   "date": "2026-10-28",
+   "machines": [
+    "Judge Dredd (Bally, 1993)"
+   ],
+   "by": [
+    "rexeverything"
+   ],
+   "flags": {}
+  }
+ ],
+ "confirmations": 0
+}

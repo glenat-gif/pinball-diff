@@ -1,0 +1,69 @@
+{
+ "items": [
+  {
+   "location_id": 25629,
+   "location_name": "Bendigo Cinemas",
+   "city": "Bendigo",
+   "link": "https://pinballmap.com/map?by_location_id=25629",
+   "lat": -36.763959,
+   "lon": 144.277009,
+   "ids": {
+    "The Walking Dead (Pro) (Stern, 2014)": 2203
+   },
+   "kind": "removed",
+   "rank": 4,
+   "date": "2026-10-26",
+   "machines": [
+    "The Walking Dead (Pro) (Stern, 2014)"
+   ],
+   "by": [
+    "Pinerang"
+   ],
+   "flags": {}
+  },
+  {
+   "location_id": 18887,
+   "location_name": "The Pinball Parlour",
+   "city": "Campbellfield",
+   "link": "https://pinballmap.com/map?by_location_id=18887",
+   "lat": -37.6668223,
+   "lon": 144.9558168,
+   "ids": {
+    "Dr. Dude (Bally, 1990)": 738
+   },
+   "kind": "removed",
+   "rank": 4,
+   "date": "2026-10-24",
+   "machines": [
+    "Dr. Dude (Bally, 1990)"
+   ],
+   "by": [
+    "trd"
+   ],
+   "flags": {}
+  },
+  {
+   "location_id": 28236,
+   "location_name": "Kingpin Melbourne",
+   "city": "Melbourne",
+   "link": "https://pinballmap.com/map?by_location_id=28236",
+   "lat": -37.8152725,
+   "lon": 144.9650986,
+   "ids": {
+    "Pok\u00e9mon (Pro) (Stern, 2026)": 4615
+   },
+   "kind": "condition",
+   "status": "green",
+   "rank": 6,
+   "date": "2026-10-28",
+   "machine": "Pok\u00e9mon (Pro) (Stern, 2026)",
+   "comment": "Issues fixed.",
+   "user": "gommy",
+   "by": [
+    "gommy"
+   ],
+   "flags": {}
+  }
+ ],
+ "confirmations": 1
+}
