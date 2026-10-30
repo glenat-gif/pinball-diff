@@ -1,0 +1,310 @@
+{
+ "items": [
+  {
+   "location_id": 24939,
+   "location_name": "Crown Hotel Motel",
+   "city": "Grafton",
+   "link": "https://pinballmap.com/map?by_location_id=24939",
+   "lat": -29.6929825,
+   "lon": 152.9315557,
+   "ids": {
+    "Jurassic Park (Premium) (Stern, 2019)": 3169
+   },
+   "kind": "added",
+   "rank": 2.85,
+   "date": "2026-10-29",
+   "machines": [
+    "Jurassic Park (Premium) (Stern, 2019)"
+   ],
+   "by": [
+    "parazio"
+   ],
+   "flags": {
+    "Jurassic Park (Premium) (Stern, 2019)": [
+     "Premium"
+    ]
+   }
+  },
+  {
+   "location_id": 25330,
+   "location_name": "Nambucca Heads RSL Club",
+   "city": "Nambucca Heads",
+   "link": "https://pinballmap.com/map?by_location_id=25330",
+   "lat": -30.6454941,
+   "lon": 153.0031622,
+   "ids": {
+    "Led Zeppelin (Premium) (Stern, 2020)": 3280,
+    "Stranger Things (Premium) (Stern, 2019)": 3227
+   },
+   "kind": "rotation",
+   "rank": 2.85,
+   "date": "2026-10-24",
+   "machines": [
+    "Stranger Things (Premium) (Stern, 2019)"
+   ],
+   "out": [
+    "Led Zeppelin (Premium) (Stern, 2020)"
+   ],
+   "by": [
+    "bogandhi"
+   ],
+   "flags": {
+    "Stranger Things (Premium) (Stern, 2019)": [
+     "Premium"
+    ]
+   }
+  },
+  {
+   "location_id": 30338,
+   "location_name": "Surly's Newcastle",
+   "city": "Newcastle",
+   "link": "https://pinballmap.com/map?by_location_id=30338",
+   "lat": -32.9266648,
+   "lon": 151.7774169,
+   "ids": {
+    "Beatles (Gold) (Stern, 2018)": 3086,
+    "Pok\u00e9mon (Pro) (Stern, 2026)": 4615
+   },
+   "kind": "rotation",
+   "rank": 2.85,
+   "date": "2026-10-28",
+   "machines": [
+    "Pok\u00e9mon (Pro) (Stern, 2026)"
+   ],
+   "out": [
+    "Beatles (Gold) (Stern, 2018)"
+   ],
+   "by": [
+    "Cohen"
+   ],
+   "flags": {
+    "Pok\u00e9mon (Pro) (Stern, 2026)": [
+     "New release"
+    ]
+   }
+  },
+  {
+   "location_id": 25166,
+   "location_name": "Great Northern Hotel",
+   "city": "West Kempsey",
+   "link": "https://pinballmap.com/map?by_location_id=25166",
+   "lat": -31.0800716,
+   "lon": 152.830374,
+   "ids": {
+    "Godzilla (Premium) (Stern, 2021)": 3416,
+    "Deadpool (Pro) (Stern, 2018)": 3022
+   },
+   "kind": "rotation",
+   "rank": 2.9,
+   "date": "2026-10-29",
+   "machines": [
+    "Deadpool (Pro) (Stern, 2018)"
+   ],
+   "out": [
+    "Godzilla (Premium) (Stern, 2021)"
+   ],
+   "by": [
+    "parazio"
+   ],
+   "flags": {}
+  },
+  {
+   "location_id": 27524,
+   "location_name": "Thirsty Crow Brewery",
+   "city": "Wagga Wagga",
+   "link": "https://pinballmap.com/map?by_location_id=27524",
+   "lat": -35.1029782,
+   "lon": 147.3686747,
+   "ids": {
+    "Deadpool (Pro) (Stern, 2018)": 3022
+   },
+   "kind": "added",
+   "rank": 2.9,
+   "date": "2026-10-28",
+   "machines": [
+    "Deadpool (Pro) (Stern, 2018)"
+   ],
+   "by": [
+    "daddyo"
+   ],
+   "flags": {}
+  },
+  {
+   "location_id": 27699,
+   "location_name": "Capital Pinball",
+   "city": "Mitchell",
+   "link": "https://pinballmap.com/map?by_location_id=27699",
+   "lat": -35.2102492,
+   "lon": 149.1396038,
+   "ids": {
+    "Judge Dredd (Bally, 1993)": 815
+   },
+   "kind": "removed",
+   "rank": 4,
+   "date": "2026-10-27",
+   "machines": [
+    "Judge Dredd (Bally, 1993)"
+   ],
+   "by": [
+    "s_croz88"
+   ],
+   "flags": {}
+  },
+  {
+   "location_id": 21718,
+   "location_name": "Mountain Goat Newtown",
+   "city": "Newtown",
+   "link": "https://pinballmap.com/map?by_location_id=21718",
+   "lat": -33.9009069,
+   "lon": 151.1783505,
+   "ids": {
+    "Black Knight: Sword of Rage (LE) (Stern, 2019)": 3128,
+    "Lord of the Rings (Stern, 2003)": 662,
+    "Spider-Man (Vault Edition) (Stern, 2016)": 2565
+   },
+   "kind": "removed",
+   "rank": 4,
+   "date": "2026-10-25",
+   "machines": [
+    "Black Knight: Sword of Rage (LE) (Stern, 2019)",
+    "Lord of the Rings (Stern, 2003)",
+    "Spider-Man (Vault Edition) (Stern, 2016)"
+   ],
+   "by": [
+    "Bruce007"
+   ],
+   "flags": {}
+  },
+  {
+   "location_id": 27851,
+   "location_name": "N-Less Washing Laundromat Braddon",
+   "city": "Braddon",
+   "link": "https://pinballmap.com/map?by_location_id=27851",
+   "lat": -35.2725021,
+   "lon": 149.1306939,
+   "ids": {
+    "Spider-Man (Stern, 2007)": 663
+   },
+   "kind": "removed",
+   "rank": 4,
+   "date": "2026-10-27",
+   "machines": [
+    "Spider-Man (Stern, 2007)"
+   ],
+   "by": [
+    "s_croz88"
+   ],
+   "flags": {}
+  },
+  {
+   "location_id": 22476,
+   "location_name": "The Newtown Hotel",
+   "city": "Newtown",
+   "link": "https://pinballmap.com/map?by_location_id=22476",
+   "lat": -33.8942653,
+   "lon": 151.182874,
+   "ids": {
+    "Batman: The Dark Knight (Stern, 2008)": 652
+   },
+   "kind": "removed",
+   "rank": 4,
+   "date": "2026-10-27",
+   "machines": [
+    "Batman: The Dark Knight (Stern, 2008)"
+   ],
+   "by": [
+    "Bruce007"
+   ],
+   "flags": {}
+  },
+  {
+   "location_id": 21048,
+   "location_name": "iPlay Belconnen",
+   "city": "Belconnen",
+   "link": "https://pinballmap.com/map?by_location_id=21048",
+   "lat": -35.238553744166,
+   "lon": 149.064955310736,
+   "ids": {
+    "World Poker Tour (Stern, 2006)": 699
+   },
+   "kind": "removed",
+   "rank": 4,
+   "date": "2026-10-27",
+   "machines": [
+    "World Poker Tour (Stern, 2006)"
+   ],
+   "by": [
+    "s_croz88"
+   ],
+   "flags": {}
+  },
+  {
+   "location_id": 15747,
+   "location_name": "Koko Amusement",
+   "city": "Sydney",
+   "link": "https://pinballmap.com/map?by_location_id=15747",
+   "lat": -33.875580498245,
+   "lon": 151.206816352683,
+   "ids": {
+    "King Kong: Myth of Terror Island (Premium) (Stern, 2025)": 4534
+   },
+   "kind": "condition",
+   "status": "amber",
+   "rank": 5,
+   "date": "2026-10-26",
+   "machine": "King Kong: Myth of Terror Island (Premium) (Stern, 2025)",
+   "comment": "Ball gets stuck in right flipper lane. Just keep pressing right flipper and the vibrations eventually shake it loose.",
+   "user": "Pinerang",
+   "by": [
+    "Pinerang"
+   ],
+   "flags": {}
+  },
+  {
+   "location_id": 30338,
+   "location_name": "Surly's Newcastle",
+   "city": "Newcastle",
+   "link": "https://pinballmap.com/map?by_location_id=30338",
+   "lat": -32.9266648,
+   "lon": 151.7774169,
+   "ids": {
+    "Beatles (Gold) (Stern, 2018)": 3086,
+    "Pok\u00e9mon (Pro) (Stern, 2026)": 4615
+   },
+   "kind": "condition",
+   "status": "note",
+   "rank": 6,
+   "date": "2026-10-28",
+   "machine": "Pok\u00e9mon (Pro) (Stern, 2026)",
+   "comment": "Has Pokemon Card Printer",
+   "user": "Cohen",
+   "by": [
+    "Cohen"
+   ],
+   "flags": {}
+  },
+  {
+   "location_id": 30481,
+   "location_name": "Wynter Tavern",
+   "city": "Taree",
+   "link": "https://pinballmap.com/map?by_location_id=30481",
+   "lat": -31.8905622,
+   "lon": 152.4615101,
+   "ids": {
+    "Rush (Pro) (Stern, 2022)": 3431
+   },
+   "kind": "condition",
+   "status": "green",
+   "rank": 6,
+   "date": "2026-10-26",
+   "machine": "Rush (Pro) (Stern, 2022)",
+   "comment": "Good machine and plays well,Can take a while to score big points,Unless you have researched the game play,it\u2019s $2 a game for 3 balls,But should be a 5 ball game for the same price,This game is fun to play.",
+   "user": "RadioRanger",
+   "by": [
+    "RadioRanger"
+   ],
+   "flags": {}
+  }
+ ],
+ "confirmations": 5
+}

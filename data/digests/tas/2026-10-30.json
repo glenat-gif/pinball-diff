@@ -1,0 +1,30 @@
+{
+ "items": [
+  {
+   "location_id": 30808,
+   "location_name": "Bush Inn Brewhouse",
+   "city": "Deloraine",
+   "link": "https://pinballmap.com/map?by_location_id=30808",
+   "lat": -41.5247488,
+   "lon": 146.661132,
+   "ids": {
+    "Jurassic Park (Premium) (Stern, 2019)": 3169
+   },
+   "kind": "new_venue",
+   "rank": -0.05,
+   "date": "2026-10-28",
+   "machines": [
+    "Jurassic Park (Premium) (Stern, 2019)"
+   ],
+   "by": [
+    "FlipperWizard87"
+   ],
+   "flags": {
+    "Jurassic Park (Premium) (Stern, 2019)": [
+     "Premium"
+    ]
+   }
+  }
+ ],
+ "confirmations": 0
+}
