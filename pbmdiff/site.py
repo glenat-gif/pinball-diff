@@ -608,7 +608,7 @@ def home(weeks, counts, built_on, comps=()):
     quiet = [z for z in weeks if not z["items"]]
     short_span = render.short_span(weeks[0]["since"], weeks[0]["until"])
     box = ('<section class="card"><p>New venues, machines landing and leaving, swaps, and what needs a tech, '
-           'across Australia. Plus every IFPA comp, the local podcasts, and what is near you. '
+           'across Australia. Plus every IFPA comp, the local podcasts, and what changed near you. '
            'Updated every morning.</p></section>'
            + highlights_strip(weeks)
            + signup())
