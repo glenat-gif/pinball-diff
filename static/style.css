@@ -210,6 +210,11 @@ a:hover { text-decoration-thickness: 2px; }
 .states a:hover { border-bottom-color: var(--ink); }
 .states a[aria-current] { border-bottom-color: var(--red); }
 .states .n { color: var(--muted); margin-left: 0.3rem; }
+.states.picks { margin-top: 1rem; }
+.states.picks button { all: unset; cursor: pointer; flex: none; padding: 0.5rem 0 0.55rem; border-bottom: 3px solid transparent; margin-bottom: -1px; white-space: nowrap; }
+.states.picks button:hover { border-bottom-color: var(--ink); }
+.states.picks button[aria-pressed="true"] { border-bottom-color: var(--red); }
+.states.picks button:focus-visible { outline: 3px solid var(--plasma); outline-offset: 2px; }
 @media (min-width: 760px) { .states { margin-left: 0; margin-right: 0; padding-left: 0; padding-right: 0; font-size: 0.95rem; } }
 .zone { margin-top: 2.4rem; }
 .zone > header { display: flex; align-items: baseline; gap: 0.8rem; flex-wrap: wrap; border-bottom: 2px solid var(--ink); padding-bottom: 0.4rem; }

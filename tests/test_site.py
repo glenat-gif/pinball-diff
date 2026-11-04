@@ -98,6 +98,19 @@ class MachineTests(Built):
         self.assertRegex(page, r"https://pinballmap\.com/map\?by_machine_(group_)?id=\d+&amp;by_country=AU")
         self.assertIn("<h2>2026</h2>", page)
 
+    def test_machines_index_shows_the_latest_move_and_a_state_pick(self):
+        dist = site.build(on=dt.date(2026, 10, 3))
+        index = (dist / "machines" / "index.html").read_text()
+        self.assertRegex(index, r'<span class="sub">[^<]+ (landed at|left) [^<]+ · \w{3} \d+ \w{3}</span>')
+        self.assertIn('data-slug="cactus-canyon"', index)
+        self.assertIn('class="states picks"', index)
+        self.assertIn('data-st="vic"', index)
+        data = json.loads(index.split("var MACHINES=", 1)[1].split(";</script>", 1)[0].replace("<\\/", "</"))
+        moves = data["moves"]["cactus-canyon"]
+        self.assertIn("", moves)                          # the latest move anywhere
+        self.assertTrue(any(k for k in moves if k), moves)  # and one per state it moved in
+        self.assertIn("Most recent move first.", index)
+
     def test_machine_art_only_when_switched_on(self):
         from pbmdiff import digest
         cat = {str(s["machine_id"]): {"img": "https://img.opdb.org/x-medium.jpg", "w": 640, "h": 400,

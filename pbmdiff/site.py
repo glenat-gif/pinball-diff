@@ -702,7 +702,7 @@ def display(n, what, span, lines, egg=False):
     """The score and ticker under the wordmark: one number, what it counts, a span, and the lines the ticker types.
     Every page uses the same shape, so the panel never changes height between pages."""
     sid = ' id="score"' if egg else ""
-    score = (f'<p class="score"{sid}><b>{n}</b> {e(what)} · {e(span)}</p>'
+    score = (f'<p class="score"{sid}><b>{n}</b> <span class="what">{e(what)}</span> · <span class="span">{e(span)}</span></p>'
              '<p class="dmd" id="dmd" aria-hidden="true" hidden><span id="dmd-text"></span></p>')
     if egg:                                     # an unmarked way to the table: three taps on the score
         score += (f'<script>(function(){{var n=0,t=0;document.getElementById("score").addEventListener("click",function(){{var now=Date.now();'
@@ -949,37 +949,55 @@ def _now_link(g):
 FOLD_TITLES = 40      # the machines list shows this many before a button unrolls the rest
 
 
+def _move_text(ev):
+    """One move as a line: 'Pro landed at Thirsty Crow Brewery, Wagga Wagga, NSW · Tue 3 Nov'."""
+    from .mail import STATE_CODE
+    zone = areas.zone_of(ev["lat"], ev["lon"])
+    where = ", ".join(x for x in (ev["location_name"], ev.get("city"), STATE_CODE.get(zone, "")) if x)
+    verb = "landed at" if ev["type"] == "machine_added" else "left"
+    return f'{e(_edition(ev["machine"]))} {verb} {e(where)} · {e(render.day(ev["date"]))}'
+
+
+def _latest_moves(g):
+    """The latest move anywhere (key "") and the latest in each state, as [date, line]."""
+    out = {}
+    for ev in g["events"]:                      # newest first already
+        zone = areas.zone_of(ev["lat"], ev["lon"]) or "other"
+        for key in ("", zone):
+            if key not in out:
+                out[key] = [ev["date"], _move_text(ev)]
+    return out
+
+
 def machines_page(groups, catalogue=None):
-    rows = []
+    rows, moves = [], {}
     for i, g in enumerate(groups):
-        n = len(g["events"])
         art = _art(g, catalogue)
         thumb = (f'<img class="thumb" src="{e(art[0][1])}" alt="" width="96" height="{round(96 * art[0][3] / art[0][2])}" '
                  f'loading="lazy" decoding="async">' if art else "")
+        moves[g["slug"]] = _latest_moves(g)
         rows.append(f'<li class="title-row{" has-art" if art else ""}{" fold" if i >= FOLD_TITLES else ""}"{" hidden" if i >= FOLD_TITLES else ""} '
-                    f'data-name="{e(g["title"].lower())} {e(_makers_text(g).lower())}">{thumb}'
+                    f'data-slug="{e(g["slug"])}" data-name="{e(g["title"].lower())} {e(_makers_text(g).lower())}">{thumb}'
                     f'<a href="{u("/machines/" + g["slug"] + "/")}"><span class="t">{e(g["title"])}</span></a>'
                     f'<span class="mk">{e(_makers_text(g))}</span>'
-                    f'<span class="sub">{e(_editions_text(g))} · {n} move{"s" if n != 1 else ""} · '
-                    f'last {e(render.month(g["latest"]))}</span></li>')
+                    f'<span class="sub">{moves[g["slug"]][""][1]}</span></li>')
     first = min((g["first"] for g in groups), default=None)
     since = f" since {render.month(first)}" if first else ""
+    zones = [z for z in issue.zone_order()]
+    picks = ('<nav class="states picks" aria-label="State"><button type="button" data-st="" aria-pressed="true">All states</button>'
+             + "".join(f'<button type="button" data-st="{z}" aria-pressed="false">{e(short(z))}</button>' for z in zones) + "</nav>")
+    labels = {z: areas.LABELS[z] for z in zones}
+    data = json.dumps({"moves": moves, "labels": labels, "fold": FOLD_TITLES}, ensure_ascii=False, separators=(",", ":")).replace("</", "<\\/")
     body = ('<div class="finder"><label for="q">Find a machine</label>'
             '<input id="q" type="search" placeholder="Godzilla, Pokémon, Twilight Zone" autocomplete="off"></div>'
-            f'<p class="count" id="count">{len(groups)} titles have landed or left somewhere in Australia{e(since)}. Most recent first.</p>'
-            f'<ul class="title-list">{"".join(rows)}</ul>'
+            + picks +
+            f'<p class="count" id="count">{len(groups)} titles have landed or left somewhere in Australia{e(since)}. Most recent move first.</p>'
+            f'<ul class="title-list" id="titles">{"".join(rows)}</ul>'
             + (f'<button type="button" class="near-more" id="unfold">Show all {len(groups)} titles</button>' if len(groups) > FOLD_TITLES else "")
             + '<p class="quiet" id="none" hidden>Nothing by that name has moved on Pinball Map in Australia. '
             '<a href="https://pinballmap.com">Pinball Map</a> can tell you where it is now.</p>'
-            '<script>(function(){var f=function(x){return x.toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g,"")};'
-            'var q=document.getElementById("q"),c=[].slice.call(document.querySelectorAll(".title-row")),'
-            'n=document.getElementById("none"),k=document.getElementById("count"),k0=k.textContent,'
-            'u=document.getElementById("unfold"),open=false;'
-            'c.forEach(function(x){x._n=f(x.dataset.name)});function show(){'
-            'var t=f(q.value.trim()),s=0;c.forEach(function(x){var h=!t||x._n.indexOf(t)>-1;'
-            'x.hidden=!h||(!t&&!open&&x.classList.contains("fold"));if(h)s++;});'
-            'n.hidden=s>0;k.textContent=t?s+" title"+(s==1?"":"s")+" match.":k0;if(u)u.hidden=open||!!t;}'
-            'q.addEventListener("input",show);if(u)u.addEventListener("click",function(){open=true;show()});})();</script>')
+            f'<script>var MACHINES={data};</script>'
+            + MACHINES_SCRIPT)
     box = ('<p class="wordmark" style="font-size:clamp(1.6rem,6vw,2.6rem)">Machines</p>'
            '<p class="lede">Every machine that has landed somewhere or left, across Australia. '
            'Pro, Premium and LE together, so you can follow where each edition went.'
@@ -989,6 +1007,34 @@ def machines_page(groups, catalogue=None):
                   [move_line(ev) for ev in recent[:40]])
     return page("Pinball machines across Australia", body, path="/machines/", description="Which pinball machines have landed and left around Australia.",
                 box_extra=box, current="machines", dmd=dmd)
+
+
+MACHINES_SCRIPT = r"""<script>(function(){
+var f=function(x){return x.toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g,"")};
+var M=MACHINES.moves,L=MACHINES.labels,FOLD=MACHINES.fold,st="",open=false;
+var q=document.getElementById("q"),ul=document.getElementById("titles"),c=[].slice.call(ul.children),
+n=document.getElementById("none"),k=document.getElementById("count"),k0=k.textContent,u=document.getElementById("unfold"),
+sb=[].slice.call(document.querySelectorAll(".picks button")),score=document.querySelector(".score"),
+sn=score&&score.querySelector("b"),ss=score&&score.querySelector(".span"),s0=ss&&ss.textContent;
+c.forEach(function(x,i){x._n=f(x.dataset.name);x._i=i});
+function show(){
+  var t=f(q.value.trim()),list=[];
+  c.forEach(function(x){var mv=(M[x.dataset.slug]||{})[st];var h=!!mv&&(!t||x._n.indexOf(t)>-1);
+    x.hidden=!h;if(h){x.querySelector(".sub").innerHTML=mv[1];list.push([mv[0],x])}});
+  list.sort(function(a,b){return a[0]<b[0]?1:a[0]>b[0]?-1:a[1]._i-b[1]._i});
+  list.forEach(function(p,i){ul.appendChild(p[1]);if(!t&&!open&&i>=FOLD)p[1].hidden=true});
+  var all=list.length;n.hidden=all>0;
+  k.textContent=t?(all==1?"1 title matches.":all+" titles match."):st?all+" title"+(all==1?"":"s")+" have moved in "+L[st]+". Most recent move first.":k0;
+  if(u){u.hidden=open||!!t||all<=FOLD;u.textContent="Show all "+all+" titles"}
+  if(sn&&!t){sn.textContent=all;ss.textContent=st?L[st]:s0}
+}
+sb.forEach(function(b){b.addEventListener("click",function(){st=b.dataset.st;
+  sb.forEach(function(y){y.setAttribute("aria-pressed",String(y===b))});
+  try{localStorage.setItem("comps-state",st)}catch(e){}show()})});
+q.addEventListener("input",show);if(u)u.addEventListener("click",function(){open=true;show()});
+var q0=(location.search.match(/state=(\w+)/)||[])[1],s1=q0;if(s1===undefined){try{s1=localStorage.getItem("comps-state")||""}catch(e){s1=""}}
+var b0=sb.filter(function(b){return b.dataset.st===s1})[0];if(b0&&s1){b0.click()}
+})();</script>"""
 
 
 def title_page(g, catalogue=None):
