@@ -608,8 +608,8 @@ def home(weeks, counts, built_on, comps=()):
     quiet = [z for z in weeks if not z["items"]]
     short_span = render.short_span(weeks[0]["since"], weeks[0]["until"])
     box = ('<section class="card"><p>New venues, machines landing and leaving, swaps, and what needs a tech, '
-           'across Australia. Every venue links to its <a href="https://pinballmap.com">Pinball Map</a> listing, '
-           'so you can fix it or add to it. Updated every morning.</p></section>'
+           'across Australia. Plus every IFPA comp, the Aussie podcasts, and what is near you. '
+           'Updated every morning.</p></section>'
            + highlights_strip(weeks)
            + signup())
     soon_until = (built_on + dt.timedelta(days=7)).isoformat()
