@@ -85,6 +85,19 @@ class SiteTests(Built):
         self.assertIn('name="tag" value="vic" checked', home)
 
 
+class LinkTests(Built):
+    def test_every_link_off_the_site_opens_in_a_new_tab(self):
+        import re
+        dist = site.build(on=dt.date(2026, 10, 3))
+        for html in dist.rglob("*.html"):
+            for m in re.finditer(r'<a [^>]*href="https?://[^"]+"[^>]*>', html.read_text()):
+                tag = m.group(0)
+                if site.SITE["base_url"] in tag:
+                    continue
+                self.assertIn('target="_blank"', tag, (html.name, tag[:120]))
+                self.assertIn('rel="noopener"', tag, (html.name, tag[:120]))
+
+
 class MachineTests(Built):
     def test_machines_index_and_title_pages(self):
         dist = site.build(on=dt.date(2026, 10, 3))

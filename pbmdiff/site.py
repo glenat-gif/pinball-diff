@@ -14,6 +14,7 @@ look and to update.
 import datetime as dt
 import html
 import json
+import re
 import pathlib
 import shutil
 
@@ -436,8 +437,22 @@ def verification_tags():
     return "\n".join(tags)
 
 
+_EXTERNAL = re.compile(r'<a (?![^>]*\btarget=)([^>]*?\bhref="(https?://[^"]+)"[^>]*)>')
+
+
+def new_tab(html):
+    """Every link off this site opens in a new tab, so the reader keeps their place here."""
+    own = SITE["base_url"].rstrip("/")
+    def fix(m):
+        if m.group(2).startswith(own):
+            return m.group(0)
+        return f'<a {m.group(1)} target="_blank" rel="noopener">'
+    return _EXTERNAL.sub(fix, html)
+
+
 def page(title, body, *, path, description, box_extra="", nav="", current=None, dmd="", structured=None):
     full = f"{title} · {SITE['name']}" if title else SITE["name"]
+    body, box_extra, nav, dmd = (new_tab(x) for x in (body, box_extra, nav, dmd))
     dmd = dmd or MASTHEAD["dmd"]
     cur = lambda key: ' aria-current="page"' if current == key else ""
     wm = (f'<h1 class="wm"><a href="{u("/")}">{e(SITE["name"])}</a></h1>' if current == "home"
@@ -479,7 +494,7 @@ def page(title, body, *, path, description, box_extra="", nav="", current=None, 
 {body}
 </div></main>
 <footer class="foot"><div class="wrap">
-<p>Data from <a href="https://pinballmap.com">Pinball Map</a>, CC BY-SA 4.0, built from what Australian players submit. Comps from the <a href="https://www.ifpapinball.com">IFPA</a> calendar. Machine artwork from the <a href="https://opdb.org">Open Pinball Database</a>.</p>
+<p>Data from <a href="https://pinballmap.com" target="_blank" rel="noopener">Pinball Map</a>, CC BY-SA 4.0, built from what Australian players submit. Comps from the <a href="https://www.ifpapinball.com" target="_blank" rel="noopener">IFPA</a> calendar. Machine artwork from the <a href="https://opdb.org" target="_blank" rel="noopener">Open Pinball Database</a>.</p>
 </div></footer>
 </body>
 </html>
