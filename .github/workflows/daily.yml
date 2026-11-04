@@ -7,8 +7,12 @@ name: Daily pinball digest
 
 on:
   schedule:
-    - cron: "17 20 * * *"      # about 6 or 7 am in Melbourne; GitHub often runs it later
-    - cron: "17 23 * * *"      # a second go mid-morning, in case GitHub cancelled the first in its queue
+    # GitHub runs these late, sometimes by hours, so four chances through the Melbourne morning:
+    # about 5-6, 7-8, 8-9 and 10-11 am depending on daylight saving. A run that finds nothing new commits nothing.
+    - cron: "17 19 * * *"
+    - cron: "47 20 * * *"
+    - cron: "17 22 * * *"
+    - cron: "47 23 * * *"
   workflow_dispatch:
     inputs:
       redraft:

@@ -217,7 +217,7 @@ def _month_grid(year, month, comps_by_day, today):
                             f'href="#d-{iso}" title="{e(c["name"])}"><span>{e(c["name"])}</span></a>' for c in todays)
             extra = '<span class="more-ev"></span>' if todays else ""
             num = (f'<a class="num" href="#d-{iso}">{d.day}</a>' if todays else f'<span class="num">{d.day}</span>')
-            cells.append(f'<td class="day{cls}{" has" if todays else ""}">{num}<div class="evs">{marks}{extra}</div></td>')
+            cells.append(f'<td class="day{cls}{" has" if todays else ""}" data-iso="{iso}">{num}<div class="evs">{marks}{extra}</div></td>')
         rows.append("<tr>" + "".join(cells) + "</tr>")
     head = "".join(f'<th scope="col"><span class="long">{n}</span><span class="short">{n[0]}</span></th>'
                    for n in ("Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"))
@@ -275,6 +275,10 @@ def comps_page(comps, on):
                 f'<div class="agenda">{"".join(days)}</div>'
                 '<p class="quiet" id="none-here" hidden>No IFPA comps listed here in the next two months.</p>'
                 f'{feeds}'
+                '<script>(function(){var d=new Date(),iso=d.getFullYear()+"-"+("0"+(d.getMonth()+1)).slice(-2)+"-"+("0"+d.getDate()).slice(-2);'
+                'document.querySelectorAll("td.day[data-iso]").forEach(function(td){var i=td.dataset.iso;'
+                'td.classList.toggle("past",i<iso);td.classList.toggle("today",i===iso)});'
+                'document.querySelectorAll(".dayblock").forEach(function(b){if(b.id.slice(2)<iso)b.remove()});})();</script>'
                 '<script>(function(){var bs=[].slice.call(document.querySelectorAll("[data-pick]"));'
                 'function pick(s){bs.forEach(function(b){b.setAttribute("aria-pressed",String(b.dataset.pick===s))});'
                 'document.querySelectorAll(".comp[data-state],.ev[data-state]").forEach(function(x){x.hidden=!!s&&x.dataset.state!==s});'
