@@ -671,7 +671,9 @@ def highlights_strip(weeks, limit=8):
             continue
         mid, img, name, _, _, _ = art[0]
         label, tone = mail.headline_label(text)
-        cards.append(f'<a class="hl" href="{e(item["link"])}"><img src="{e(img)}" alt="{e(name)}" loading="lazy" decoding="async">'
+        slug = machine_page_for(name, item)       # the card is the machine, so it opens the machine's page
+        href = u("/machines/" + slug + "/") if slug else item["link"]
+        cards.append(f'<a class="hl" href="{e(href)}"><img src="{e(img)}" alt="{e(name)}" loading="lazy" decoding="async">'
                      f'<span class="hl-tag"><span class="tag {tone}">{e(label)}</span></span>'
                      f'<strong>{e(text)}</strong><span class="hl-state">{e(areas.SHORT[item["zone"]])}'
                      f'{" · " + e(mail.notable(item)) if mail.notable(item) else ""}</span></a>')
