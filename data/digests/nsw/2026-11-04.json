@@ -1,0 +1,97 @@
+{
+ "items": [
+  {
+   "location_id": 30889,
+   "location_name": "Three Tails Brewery",
+   "city": "Mudgee",
+   "link": "https://pinballmap.com/map?by_location_id=30889",
+   "lat": -32.5926836,
+   "lon": 149.5910523,
+   "ids": {
+    "The Rolling Stones (Stern, 2011)": 1089
+   },
+   "kind": "new_venue",
+   "rank": 0,
+   "date": "2026-11-02",
+   "machines": [
+    "The Rolling Stones (Stern, 2011)"
+   ],
+   "by": [
+    "sartana66"
+   ],
+   "flags": {}
+  },
+  {
+   "location_id": 24939,
+   "location_name": "Crown Hotel Motel",
+   "city": "Grafton",
+   "link": "https://pinballmap.com/map?by_location_id=24939",
+   "lat": -29.6929825,
+   "lon": 152.9315557,
+   "ids": {
+    "Jurassic Park (Premium) (Stern, 2019)": 3169
+   },
+   "kind": "added",
+   "rank": 2.85,
+   "date": "2026-10-29",
+   "machines": [
+    "Jurassic Park (Premium) (Stern, 2019)"
+   ],
+   "by": [
+    "parazio"
+   ],
+   "flags": {
+    "Jurassic Park (Premium) (Stern, 2019)": [
+     "Premium"
+    ]
+   }
+  },
+  {
+   "location_id": 25166,
+   "location_name": "Great Northern Hotel",
+   "city": "West Kempsey",
+   "link": "https://pinballmap.com/map?by_location_id=25166",
+   "lat": -31.0800716,
+   "lon": 152.830374,
+   "ids": {
+    "Godzilla (Premium) (Stern, 2021)": 3416,
+    "Deadpool (Pro) (Stern, 2018)": 3022
+   },
+   "kind": "rotation",
+   "rank": 2.9,
+   "date": "2026-10-29",
+   "machines": [
+    "Deadpool (Pro) (Stern, 2018)"
+   ],
+   "out": [
+    "Godzilla (Premium) (Stern, 2021)"
+   ],
+   "by": [
+    "parazio"
+   ],
+   "flags": {}
+  },
+  {
+   "location_id": 23409,
+   "location_name": "The Clubhouse Kaleen",
+   "city": "Kaleen",
+   "link": "https://pinballmap.com/map?by_location_id=23409",
+   "lat": -35.2212605,
+   "lon": 149.1021129,
+   "ids": {
+    "The Adventures of Rocky and Bullwinkle and Friends (Data East, 1993)": 755
+   },
+   "kind": "removed",
+   "rank": 4,
+   "date": "2026-11-04",
+   "machines": [
+    "The Adventures of Rocky and Bullwinkle and Friends (Data East, 1993)"
+   ],
+   "by": [
+    "s_croz88"
+   ],
+   "flags": {}
+  }
+ ],
+ "confirmations": 5
+}
