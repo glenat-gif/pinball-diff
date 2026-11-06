@@ -1,0 +1,109 @@
+{
+ "items": [
+  {
+   "location_id": 16450,
+   "location_name": "Felons Barrell Hall",
+   "city": "Brisbane City",
+   "link": "https://pinballmap.com/map?by_location_id=16450",
+   "lat": -27.4624165,
+   "lon": 153.0351093,
+   "ids": {
+    "Abra Ca Dabra (Gottlieb, 1975)": 1263,
+    "Pok\u00e9mon (Pro) (Stern, 2026)": 4615
+   },
+   "kind": "rotation",
+   "rank": 2.85,
+   "date": "2026-10-30",
+   "machines": [
+    "Pok\u00e9mon (Pro) (Stern, 2026)"
+   ],
+   "out": [
+    "Abra Ca Dabra (Gottlieb, 1975)"
+   ],
+   "by": [
+    "jimmynails"
+   ],
+   "flags": {
+    "Pok\u00e9mon (Pro) (Stern, 2026)": [
+     "New release"
+    ]
+   }
+  },
+  {
+   "location_id": 27131,
+   "location_name": "Grove Social",
+   "city": "Ashgrove",
+   "link": "https://pinballmap.com/map?by_location_id=27131",
+   "lat": -27.4450333,
+   "lon": 152.9930324,
+   "ids": {
+    "Star Wars Trilogy (Sega, 1997)": 710,
+    "Godzilla (Pro) (Stern, 2021)": 3415
+   },
+   "kind": "rotation",
+   "rank": 2.9,
+   "date": "2026-10-31",
+   "machines": [
+    "Godzilla (Pro) (Stern, 2021)"
+   ],
+   "out": [
+    "Star Wars Trilogy (Sega, 1997)"
+   ],
+   "by": [
+    "bt"
+   ],
+   "flags": {}
+  },
+  {
+   "location_id": 9885,
+   "location_name": "Netherworld",
+   "city": "Fortitude Valley",
+   "link": "https://pinballmap.com/map?by_location_id=9885",
+   "lat": -27.4558148,
+   "lon": 153.0321039,
+   "ids": {
+    "Elvira's House of Horrors (Premium) (Stern, 2019)": 3179,
+    "Mary Shelley's Frankenstein (Sega, 1995)": 803,
+    "The Party Zone (Bally, 1991)": 719
+   },
+   "kind": "rotation",
+   "rank": 2.9,
+   "date": "2026-11-02",
+   "machines": [
+    "The Party Zone (Bally, 1991)"
+   ],
+   "out": [
+    "Elvira's House of Horrors (Premium) (Stern, 2019)",
+    "Mary Shelley's Frankenstein (Sega, 1995)"
+   ],
+   "by": [
+    "rexeverything"
+   ],
+   "flags": {}
+  },
+  {
+   "location_id": 17389,
+   "location_name": "The Clubhouse Moorooka",
+   "city": "Moorooka",
+   "link": "https://pinballmap.com/map?by_location_id=17389",
+   "lat": -27.5310871,
+   "lon": 153.0277733,
+   "ids": {
+    "Class of 1812 (Gottlieb, 1991)": 1242,
+    "Eye of the Tiger (Gottlieb, 1978)": 2081
+   },
+   "kind": "removed",
+   "rank": 4,
+   "date": "2026-10-30",
+   "machines": [
+    "Class of 1812 (Gottlieb, 1991)",
+    "Eye of the Tiger (Gottlieb, 1978)"
+   ],
+   "by": [
+    "rexeverything"
+   ],
+   "flags": {}
+  }
+ ],
+ "confirmations": 2
+}

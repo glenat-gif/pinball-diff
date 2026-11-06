@@ -1,0 +1,47 @@
+{
+ "items": [
+  {
+   "location_id": 30889,
+   "location_name": "Three Tails Brewery",
+   "city": "Mudgee",
+   "link": "https://pinballmap.com/map?by_location_id=30889",
+   "lat": -32.5926836,
+   "lon": 149.5910523,
+   "ids": {
+    "The Rolling Stones (Stern, 2011)": 1089
+   },
+   "kind": "new_venue",
+   "rank": 0,
+   "date": "2026-11-02",
+   "machines": [
+    "The Rolling Stones (Stern, 2011)"
+   ],
+   "by": [
+    "sartana66"
+   ],
+   "flags": {}
+  },
+  {
+   "location_id": 23409,
+   "location_name": "The Clubhouse Kaleen",
+   "city": "Kaleen",
+   "link": "https://pinballmap.com/map?by_location_id=23409",
+   "lat": -35.2212605,
+   "lon": 149.1021129,
+   "ids": {
+    "The Adventures of Rocky and Bullwinkle and Friends (Data East, 1993)": 755
+   },
+   "kind": "removed",
+   "rank": 4,
+   "date": "2026-11-04",
+   "machines": [
+    "The Adventures of Rocky and Bullwinkle and Friends (Data East, 1993)"
+   ],
+   "by": [
+    "s_croz88"
+   ],
+   "flags": {}
+  }
+ ],
+ "confirmations": 5
+}
