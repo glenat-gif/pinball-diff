@@ -1,0 +1,69 @@
+{
+ "items": [
+  {
+   "location_id": 30889,
+   "location_name": "Three Tails Brewery",
+   "city": "Mudgee",
+   "link": "https://pinballmap.com/map?by_location_id=30889",
+   "lat": -32.5926836,
+   "lon": 149.5910523,
+   "ids": {
+    "The Rolling Stones (Stern, 2011)": 1089
+   },
+   "kind": "new_venue",
+   "rank": 0,
+   "date": "2026-11-02",
+   "machines": [
+    "The Rolling Stones (Stern, 2011)"
+   ],
+   "by": [
+    "sartana66"
+   ],
+   "flags": {}
+  },
+  {
+   "location_id": 23409,
+   "location_name": "The Clubhouse Kaleen",
+   "city": "Kaleen",
+   "link": "https://pinballmap.com/map?by_location_id=23409",
+   "lat": -35.2212605,
+   "lon": 149.1021129,
+   "ids": {
+    "The Adventures of Rocky and Bullwinkle and Friends (Data East, 1993)": 755
+   },
+   "kind": "removed",
+   "rank": 4,
+   "date": "2026-11-04",
+   "machines": [
+    "The Adventures of Rocky and Bullwinkle and Friends (Data East, 1993)"
+   ],
+   "by": [
+    "s_croz88"
+   ],
+   "flags": {}
+  },
+  {
+   "location_id": 17434,
+   "location_name": "The Alby",
+   "city": "Phillip",
+   "link": "https://pinballmap.com/map?by_location_id=17434",
+   "lat": -35.3440396,
+   "lon": 149.084894,
+   "ids": {
+    "Toy Story 4 (LE) (Jersey Jack, 2022)": 3519
+   },
+   "kind": "condition",
+   "status": "note",
+   "rank": 6,
+   "date": "2026-11-07",
+   "machine": "Toy Story 4 (LE) (Jersey Jack, 2022)",
+   "comment": "This was my favourite of the 7 JJ tables they had at the venue. Willy Wonka ranking 2nd and Harry Potter 3rd.",
+   "user": "goon",
+   "by": [
+    "goon"
+   ],
+   "flags": {}
+  }
+ ],
+ "confirmations": 5
+}

@@ -1,0 +1,67 @@
+{
+ "items": [
+  {
+   "location_id": 9885,
+   "location_name": "Netherworld",
+   "city": "Fortitude Valley",
+   "link": "https://pinballmap.com/map?by_location_id=9885",
+   "lat": -27.4558148,
+   "lon": 153.0321039,
+   "ids": {
+    "Elvira's House of Horrors (Premium) (Stern, 2019)": 3179,
+    "Mary Shelley's Frankenstein (Sega, 1995)": 803,
+    "The Party Zone (Bally, 1991)": 719,
+    "Elvira and the Party Monsters (Bally, 1989)": 656,
+    "Space Shuttle (Zaccaria, 1980)": 2619,
+    "Scared Stiff (Bally, 1996)": 648
+   },
+   "kind": "rotation",
+   "rank": 2.7,
+   "date": "2026-11-06",
+   "machines": [
+    "The Party Zone (Bally, 1991)",
+    "Space Shuttle (Zaccaria, 1980)",
+    "Scared Stiff (Bally, 1996)"
+   ],
+   "out": [
+    "Elvira's House of Horrors (Premium) (Stern, 2019)",
+    "Mary Shelley's Frankenstein (Sega, 1995)",
+    "Elvira and the Party Monsters (Bally, 1989)"
+   ],
+   "by": [
+    "rexeverything"
+   ],
+   "flags": {}
+  },
+  {
+   "location_id": 17389,
+   "location_name": "The Clubhouse Moorooka",
+   "city": "Moorooka",
+   "link": "https://pinballmap.com/map?by_location_id=17389",
+   "lat": -27.5310871,
+   "lon": 153.0277733,
+   "ids": {
+    "Godzilla (Sega, 1998)": 774,
+    "The Bally Game Show (Bally, 1990)": 760,
+    "Class of 1812 (Gottlieb, 1991)": 1242,
+    "Eye of the Tiger (Gottlieb, 1978)": 2081
+   },
+   "kind": "rotation",
+   "rank": 2.7,
+   "date": "2026-11-06",
+   "machines": [
+    "The Bally Game Show (Bally, 1990)",
+    "Class of 1812 (Gottlieb, 1991)",
+    "Eye of the Tiger (Gottlieb, 1978)"
+   ],
+   "out": [
+    "Godzilla (Sega, 1998)"
+   ],
+   "by": [
+    "rexeverything"
+   ],
+   "flags": {}
+  }
+ ],
+ "confirmations": 1
+}
