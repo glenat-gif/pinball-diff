@@ -1,13 +1,13 @@
 {
- "fetched": "2026-11-08",
+ "fetched": "2026-11-09",
  "report": [
   {
    "query": {
     "country": "Australia"
    },
    "type": "Tournament",
-   "total_results": 123,
-   "rows": 123,
+   "total_results": 124,
+   "rows": 124,
    "keys": [
     "search_filter",
     "total_results",
@@ -1760,6 +1760,27 @@
    "ranking": "MAIN",
    "women": false,
    "link": "https://www.ifpapinball.com/tournaments/view.php?t=108902",
+   "photo": ""
+  },
+  {
+   "id": "123224",
+   "name": "Caltowie Pinball Group Wednesday Dec #2 '26",
+   "event": "",
+   "type": "Tournament",
+   "start": "2026-12-09",
+   "end": "2026-12-09",
+   "venue": "Cnr. South Terace and Browne Street",
+   "city": "Caltowie",
+   "state": "SA",
+   "lat": -33.1833,
+   "lon": 138.4829,
+   "zone": "sa",
+   "website": "https://app.matchplay.events/tournaments/282729",
+   "director": "Raymond Gillett",
+   "format": "Matchplay Qualifying / Fair Strike Knockout",
+   "ranking": "MAIN",
+   "women": false,
+   "link": "https://www.ifpapinball.com/tournaments/view.php?t=123224",
    "photo": ""
   },
   {

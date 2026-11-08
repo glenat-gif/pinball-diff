@@ -1,0 +1,106 @@
+{
+ "items": [
+  {
+   "location_id": 14819,
+   "location_name": "Mile End Hotel",
+   "city": "Mile End",
+   "link": "https://pinballmap.com/map?by_location_id=14819",
+   "lat": -34.9231962,
+   "lon": 138.5758783,
+   "ids": {
+    "Venom (Pro) (Stern, 2023)": 3738,
+    "Foo Fighters (Premium) (Stern, 2023)": 3674
+   },
+   "kind": "rotation",
+   "rank": 2.85,
+   "date": "2026-11-03",
+   "machines": [
+    "Foo Fighters (Premium) (Stern, 2023)"
+   ],
+   "out": [
+    "Venom (Pro) (Stern, 2023)"
+   ],
+   "by": [
+    "imczr"
+   ],
+   "flags": {
+    "Foo Fighters (Premium) (Stern, 2023)": [
+     "Premium"
+    ]
+   }
+  },
+  {
+   "location_id": 24847,
+   "location_name": "Finsbury Hotel",
+   "city": "Woodville North",
+   "link": "https://pinballmap.com/map?by_location_id=24847",
+   "lat": -34.869249,
+   "lon": 138.5475607,
+   "ids": {
+    "Jacks to Open (Gottlieb, 1984)": 982,
+    "TRON: Legacy (Stern, 2011)": 1118
+   },
+   "kind": "rotation",
+   "rank": 2.9,
+   "date": "2026-11-03",
+   "machines": [
+    "TRON: Legacy (Stern, 2011)"
+   ],
+   "out": [
+    "Jacks to Open (Gottlieb, 1984)"
+   ],
+   "by": [
+    "imczr"
+   ],
+   "flags": {}
+  },
+  {
+   "location_id": 19099,
+   "location_name": "The Suburban Brew",
+   "city": "Goodwood",
+   "link": "https://pinballmap.com/map?by_location_id=19099",
+   "lat": -34.9493054,
+   "lon": 138.5891572,
+   "ids": {
+    "James Bond 007 (Gottlieb, 1980)": 2644,
+    "Pulp Fiction (SE) (Chicago Gaming, 2023)": 3680
+   },
+   "kind": "rotation",
+   "rank": 2.9,
+   "date": "2026-11-05",
+   "machines": [
+    "Pulp Fiction (SE) (Chicago Gaming, 2023)"
+   ],
+   "out": [
+    "James Bond 007 (Gottlieb, 1980)"
+   ],
+   "by": [
+    "imczr"
+   ],
+   "flags": {}
+  },
+  {
+   "location_id": 25979,
+   "location_name": "Slug and Lettuce",
+   "city": "Parafield Gardens",
+   "link": "https://pinballmap.com/map?by_location_id=25979",
+   "lat": -34.7746396,
+   "lon": 138.6152333,
+   "ids": {
+    "Dungeons & Dragons: The Tyrant's Eye (Pro) (Stern, 2025)": 4516
+   },
+   "kind": "condition",
+   "status": "note",
+   "rank": 6,
+   "date": "2026-11-08",
+   "machine": "Dungeons & Dragons: The Tyrant's Eye (Pro) (Stern, 2025)",
+   "comment": "Not connected to insider",
+   "user": "sammijamhalen",
+   "by": [
+    "sammijamhalen"
+   ],
+   "flags": {}
+  }
+ ],
+ "confirmations": 1
+}
