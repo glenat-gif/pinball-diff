@@ -143,6 +143,19 @@ class DigestTests(unittest.TestCase):
         md = digest.to_markdown(d, "x", "y")
         self.assertIn("brought in Metallica (Premium) (Stern, 2024) and moved out Deadpool (Pro) (Stern, 2018)", md)
 
+    def test_same_machine_off_and_back_on_is_not_a_swap(self):
+        base = {"date": "2026-11-09", "location_id": 3, "location_name": "Netherworld", "city": "Fortitude Valley",
+                "lat": -27.45, "lon": 153.03, "comment": "", "user": "rexeverything"}
+        same = [{**base, "id": 1, "type": "machine_removed", "machine_id": 7, "machine": "Space Shuttle (Zaccaria, 1980)"},
+                {**base, "id": 2, "type": "machine_added", "machine_id": 7, "machine": "Space Shuttle (Zaccaria, 1980)"}]
+        self.assertEqual(digest.build(same)["items"], [])
+        # a different edition of the same title is still a swap, and a re-listing beside it does not steal the pairing
+        mixed = same + [{**base, "id": 3, "type": "machine_removed", "machine_id": 8, "machine": "Godzilla (Pro) (Stern, 2021)"},
+                        {**base, "id": 4, "type": "machine_added", "machine_id": 9, "machine": "Godzilla (Premium) (Stern, 2021)"}]
+        items = digest.build(mixed)["items"]
+        self.assertEqual([i["kind"] for i in items], ["swap"])
+        self.assertEqual((items[0]["out"], items[0]["in"]), ("Godzilla (Pro) (Stern, 2021)", "Godzilla (Premium) (Stern, 2021)"))
+
     def test_grouped_additions_credit_contributors(self):
         extra = [{"id": 9001 + n, "type": "machine_added", "date": "2026-10-01", "location_id": 1, "location_name": "Test Bar",
                   "city": "Fitzroy", "lat": -37.8, "lon": 144.98, "machine_id": n, "machine": f"Game {n} (Stern, 2025)",

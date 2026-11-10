@@ -50,6 +50,13 @@ def _label(e):
     return e["machine"]
 
 
+def _same_machine(a, b):
+    """The very same listing: one Pinball Map machine id, or failing that one full name, edition and all."""
+    if a.get("machine_id") and b.get("machine_id"):
+        return a["machine_id"] == b["machine_id"]
+    return a["machine"] == b["machine"]
+
+
 _FLAG = [(re.compile(r"\((?:LE|Limited Edition)\b", re.I), "Limited Edition"),
          (re.compile(r"\((?:CE|Collector'?s Edition)\b", re.I), "Collector's Edition"),
          (re.compile(r"\(Premium\b", re.I), "Premium")]
@@ -94,6 +101,12 @@ def build(events):
                           "by": sorted({e["user"] for e in kinds["venue_added"] + kinds["machine_added"] if e["user"]})})
             kinds["machine_added"] = []
         added, removed = list(kinds["machine_added"]), list(kinds["machine_removed"])
+        for r in list(removed):                # the same machine taken off and put back is a listing fix, not news
+            for a in list(added):
+                if _same_machine(r, a):
+                    removed.remove(r)
+                    added.remove(a)
+                    break
         for r in list(removed):
             for a in list(added):
                 if base_title(r["machine"]) == base_title(a["machine"]):
