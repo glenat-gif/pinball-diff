@@ -534,7 +534,7 @@ def near_box():
             '<div id="near-body"></div></section>'
             '<section class="near-ask" id="near-ask">'
             '<h2>Pinball near you</h2>'
-            '<p>Pick your suburb, or use your location. Nothing leaves your browser; this page just does the sums.</p>'
+            '<p>Pick your suburb, or use your location.</p>'
             '<form class="row" id="near-form" autocomplete="off">'
             '<div class="ac"><input type="text" id="near-q" placeholder="Suburb or postcode" aria-label="Suburb or postcode" '
             'role="combobox" aria-expanded="false" aria-controls="near-list" aria-autocomplete="list" inputmode="search">'
