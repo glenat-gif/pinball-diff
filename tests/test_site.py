@@ -88,6 +88,20 @@ class SiteTests(Built):
         self.assertLess(home.index('id="near-ask"'), home.index('class="states"'))   # the state strip leads the state sections
 
 
+class HomeStatesTests(Built):
+    def test_state_chips_reorder_the_home_page_and_stay_links(self):
+        dist = site.build(on=dt.date(2026, 10, 3))
+        home = (dist / "index.html").read_text()
+        self.assertIn('<div id="zones">', home)
+        self.assertIn('href="/zone/nsw/" data-z="nsw"', home)             # still a link to the state page
+        self.assertIn('data-z=""', home)                                    # "All states" restores the order
+        self.assertIn("The past month in ", home)                           # the way to a state's own page
+        zones = home.split('<div id="zones">', 1)[1]
+        for z in site.issue.zone_order():                                   # every state has a section to bring up
+            self.assertIn(f'<section class="zone" id="{z}"', zones, z)
+        self.assertIn("data-quiet hidden", zones)                           # quiet ones wait until picked
+
+
 class AnalyticsTests(Built):
     def test_page_counts_only_when_an_account_is_named(self):
         with mock.patch.dict(site.SITE, {"goatcounter": ""}):

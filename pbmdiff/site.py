@@ -145,7 +145,7 @@ def change(item):
             f'<div class="meta">{e(render.day(item["date"]))}{credit}</div></li>')
 
 
-def zone_block(z, heading_link=True, when=True, more=False):
+def zone_block(z, heading_link=True, when=True, more=False, tucked=False):
     title = (f'<a href="{u("/zone/" + z["zone"] + "/")}">{e(z["label"])}</a>' if heading_link else e(z["label"]))
     when_html = f'<span class="when">{e(render.span(z["since"], z["until"]))}</span>' if when else ""
     if z["items"]:
@@ -153,9 +153,10 @@ def zone_block(z, heading_link=True, when=True, more=False):
     else:
         body = '<p class="quiet">Nothing changed on the map.</p>'
     conf = ""                                   # confirmations are counted in the data, not shown: a line about nothing happening
-    more_html = (f'<p class="more"><a href="{u("/zone/" + z["zone"] + "/")}">The last four weeks in {e(short(z["zone"]))}</a></p>'
+    more_html = (f'<p class="more"><a href="{u("/zone/" + z["zone"] + "/")}">The past month in {e(short(z["zone"]))}</a></p>'
                  if more else "")
-    return (f'<section class="zone" id="{e(z["zone"])}"><header><h2>{title}</h2>{when_html}</header>'
+    tuck = " data-quiet hidden" if tucked else ""     # a quiet state on the home page: there, but only shown when picked
+    return (f'<section class="zone" id="{e(z["zone"])}"{tuck}><header><h2>{title}</h2>{when_html}</header>'
             f"{body}{conf}{more_html}</section>")
 
 
@@ -406,13 +407,13 @@ def short(label):
 
 def chips(current, counts):
     here = ' aria-current="page"'
-    links = [f'<a href="{u("/")}"{here if current == "home" else ""}>All states</a>']
+    links = [f'<a href="{u("/")}" data-z=""{here if current == "home" else ""}>All states</a>']
     for z in issue.zone_order():
         n = counts.get(z, 0)
         if n == 0 and z not in SITE["email_zones"] and current != z:
             continue                              # quiet zones elsewhere stay off the strip
         cur = ' aria-current="page"' if current == z else ""
-        links.append(f'<a href="{u("/zone/" + z + "/")}"{cur}>{e(short(z))}'
+        links.append(f'<a href="{u("/zone/" + z + "/")}" data-z="{z}"{cur}>{e(short(z))}'
                      f'<span class="n">{n}</span></a>')
     return ('<nav class="states" aria-label="Zones">' + "".join(links) + "</nav>"
             # On a desktop the strip must be one line: shave the type a little, only if it does not fit.
@@ -626,8 +627,10 @@ def home(weeks, counts, built_on, comps=()):
     soon = ifpa.between(list(comps), built_on.isoformat(), soon_until, {home})
     # The machine moves are the point of the page: states first, then the comps, then the podcasts.
     # The state strip sits right above the state sections it leads to; a quiet state shows as 0 on it.
+    # On this page a state chip brings that state to the top rather than leaving; its own page is one link further.
     blocks = near_box() + chips("home", counts)
-    blocks += "".join(zone_block(z, when=False, more=True) for z in active)
+    blocks += ('<div id="zones">' + "".join(zone_block(z, when=False, more=True) for z in active)
+               + "".join(zone_block(z, when=False, more=True, tucked=True) for z in quiet) + "</div>" + HOME_STATES_SCRIPT)
     blocks += comps_block(soon, built_on.isoformat(), soon_until, f"Comps in {areas.SHORT[home]}",
                           f"No IFPA comps listed in {areas.SHORT[home]} in the next seven days.") if comps else ""
     pods = podcasts.load()
@@ -649,6 +652,20 @@ def home(weeks, counts, built_on, comps=()):
     MASTHEAD["dmd"] = display(total, plural(total, "change"), short_span, lines, egg=True)
     return page("", blocks, path="/", description=SITE["tagline"], box_extra=box,
                 current="home", structured=site_ld())
+
+
+# The chips stay real links to the state pages (for search engines, and a modified click still follows them);
+# a plain click reorders this page instead, and the pick is remembered with the comps and machines pages.
+HOME_STATES_SCRIPT = r"""<script>(function(){var box=document.getElementById("zones"),nav=document.querySelector(".states");
+if(!box||!nav)return;var links=[].slice.call(nav.querySelectorAll("a[data-z]")),order=[].slice.call(box.children);
+function pick(z,save){links.forEach(function(a){if(a.dataset.z===z)a.setAttribute("aria-current","page");else a.removeAttribute("aria-current")});
+order.forEach(function(s){box.appendChild(s);s.hidden=s.hasAttribute("data-quiet")});
+var s=z&&document.getElementById(z);if(s&&s.parentNode===box){box.insertBefore(s,box.firstChild);s.hidden=false}
+if(save){try{localStorage.setItem("comps-state",z)}catch(e){}}}
+links.forEach(function(a){a.addEventListener("click",function(ev){if(ev.metaKey||ev.ctrlKey||ev.shiftKey||ev.button)return;
+ev.preventDefault();pick(a.dataset.z,true)})});
+var z0="";try{z0=localStorage.getItem("comps-state")||""}catch(e){}
+if(z0&&links.some(function(a){return a.dataset.z===z0}))pick(z0,false)})();</script>"""
 
 
 def site_ld():
