@@ -1,0 +1,188 @@
+{
+ "items": [
+  {
+   "location_id": 9885,
+   "location_name": "Netherworld",
+   "city": "Fortitude Valley",
+   "link": "https://pinballmap.com/map?by_location_id=9885",
+   "lat": -27.4558148,
+   "lon": 153.0321039,
+   "ids": {
+    "Elvira and the Party Monsters (Bally, 1989)": 656,
+    "Space Shuttle (Zaccaria, 1980)": 2619,
+    "Scared Stiff (Bally, 1996)": 648,
+    "Portal (Standard) (Multimorphic, 2025)": 4526,
+    "The Addams Family (Bally, 1992)": 687
+   },
+   "kind": "swap",
+   "rank": 2,
+   "date": "2026-11-09",
+   "out": "Elvira and the Party Monsters (Bally, 1989)",
+   "in": "Elvira and the Party Monsters (Bally, 1989)",
+   "by": [
+    "rexeverything"
+   ],
+   "flags": {}
+  },
+  {
+   "location_id": 9885,
+   "location_name": "Netherworld",
+   "city": "Fortitude Valley",
+   "link": "https://pinballmap.com/map?by_location_id=9885",
+   "lat": -27.4558148,
+   "lon": 153.0321039,
+   "ids": {
+    "Elvira and the Party Monsters (Bally, 1989)": 656,
+    "Space Shuttle (Zaccaria, 1980)": 2619,
+    "Scared Stiff (Bally, 1996)": 648,
+    "Portal (Standard) (Multimorphic, 2025)": 4526,
+    "The Addams Family (Bally, 1992)": 687
+   },
+   "kind": "swap",
+   "rank": 2,
+   "date": "2026-11-06",
+   "out": "Space Shuttle (Zaccaria, 1980)",
+   "in": "Space Shuttle (Zaccaria, 1980)",
+   "by": [
+    "rexeverything"
+   ],
+   "flags": {}
+  },
+  {
+   "location_id": 17389,
+   "location_name": "The Clubhouse Moorooka",
+   "city": "Moorooka",
+   "link": "https://pinballmap.com/map?by_location_id=17389",
+   "lat": -27.5310871,
+   "lon": 153.0277733,
+   "ids": {
+    "Godzilla (Sega, 1998)": 774,
+    "The Bally Game Show (Bally, 1990)": 760,
+    "Class of 1812 (Gottlieb, 1991)": 1242,
+    "Eye of the Tiger (Gottlieb, 1978)": 2081
+   },
+   "kind": "rotation",
+   "rank": 2.7,
+   "date": "2026-11-06",
+   "machines": [
+    "The Bally Game Show (Bally, 1990)",
+    "Class of 1812 (Gottlieb, 1991)",
+    "Eye of the Tiger (Gottlieb, 1978)"
+   ],
+   "out": [
+    "Godzilla (Sega, 1998)"
+   ],
+   "by": [
+    "rexeverything"
+   ],
+   "flags": {}
+  },
+  {
+   "location_id": 14333,
+   "location_name": "BrewDog DogTap Brisbane",
+   "city": "Brisbane City",
+   "link": "https://pinballmap.com/map?by_location_id=14333",
+   "lat": -27.4484924,
+   "lon": 153.0998284,
+   "ids": {
+    "Godzilla (Premium) (Stern, 2021)": 3416,
+    "Abra Ca Dabra (Gottlieb, 1975)": 1263
+   },
+   "kind": "added",
+   "rank": 2.75,
+   "date": "2026-11-09",
+   "machines": [
+    "Godzilla (Premium) (Stern, 2021)",
+    "Abra Ca Dabra (Gottlieb, 1975)"
+   ],
+   "by": [
+    "rwolf15"
+   ],
+   "flags": {
+    "Godzilla (Premium) (Stern, 2021)": [
+     "Premium"
+    ]
+   }
+  },
+  {
+   "location_id": 9885,
+   "location_name": "Netherworld",
+   "city": "Fortitude Valley",
+   "link": "https://pinballmap.com/map?by_location_id=9885",
+   "lat": -27.4558148,
+   "lon": 153.0321039,
+   "ids": {
+    "Elvira and the Party Monsters (Bally, 1989)": 656,
+    "Space Shuttle (Zaccaria, 1980)": 2619,
+    "Scared Stiff (Bally, 1996)": 648,
+    "Portal (Standard) (Multimorphic, 2025)": 4526,
+    "The Addams Family (Bally, 1992)": 687
+   },
+   "kind": "rotation",
+   "rank": 2.8,
+   "date": "2026-11-09",
+   "machines": [
+    "Scared Stiff (Bally, 1996)",
+    "The Addams Family (Bally, 1992)"
+   ],
+   "out": [
+    "Portal (Standard) (Multimorphic, 2025)"
+   ],
+   "by": [
+    "rexeverything"
+   ],
+   "flags": {}
+  },
+  {
+   "location_id": 19757,
+   "location_name": "Working Title Brew Co.",
+   "city": "Newstead",
+   "link": "https://pinballmap.com/map?by_location_id=19757",
+   "lat": -27.4516679,
+   "lon": 153.0440553,
+   "ids": {
+    "Godzilla (Premium) (Stern, 2021)": 3416,
+    "Elvira's House of Horrors (Premium) (Stern, 2019)": 3179
+   },
+   "kind": "rotation",
+   "rank": 2.85,
+   "date": "2026-11-09",
+   "machines": [
+    "Elvira's House of Horrors (Premium) (Stern, 2019)"
+   ],
+   "out": [
+    "Godzilla (Premium) (Stern, 2021)"
+   ],
+   "by": [
+    "rwolf15"
+   ],
+   "flags": {
+    "Elvira's House of Horrors (Premium) (Stern, 2019)": [
+     "Premium"
+    ]
+   }
+  },
+  {
+   "location_id": 18785,
+   "location_name": "BrewDog Fortitude Valley",
+   "city": "Fortitude Valley",
+   "link": "https://pinballmap.com/map?by_location_id=18785",
+   "lat": -27.4569133,
+   "lon": 153.0325943,
+   "ids": {
+    "Mary Shelley's Frankenstein (Sega, 1995)": 803
+   },
+   "kind": "added",
+   "rank": 2.9,
+   "date": "2026-11-09",
+   "machines": [
+    "Mary Shelley's Frankenstein (Sega, 1995)"
+   ],
+   "by": [
+    "rwolf15"
+   ],
+   "flags": {}
+  }
+ ],
+ "confirmations": 0
+}
