@@ -85,6 +85,19 @@ class SiteTests(Built):
         self.assertIn('name="tag" value="vic" checked', home)
 
 
+class AnalyticsTests(Built):
+    def test_page_counts_only_when_an_account_is_named(self):
+        with mock.patch.dict(site.SITE, {"goatcounter": ""}):
+            dist = site.build(on=dt.date(2026, 10, 3))
+            self.assertNotIn("goatcounter", (dist / "index.html").read_text())
+            self.assertNotIn("goatcounter", (dist / "about" / "index.html").read_text().lower())
+        with mock.patch.dict(site.SITE, {"goatcounter": "example"}):
+            dist = site.build(on=dt.date(2026, 10, 3))
+            for rel in ("index.html", "comps/index.html", "machines/index.html", "about/index.html"):
+                self.assertIn('data-goatcounter="https://example.goatcounter.com/count"', (dist / rel).read_text(), rel)
+            self.assertIn("no cookies", (dist / "about" / "index.html").read_text())
+
+
 class LinkTests(Built):
     def test_every_link_off_the_site_opens_in_a_new_tab(self):
         import re

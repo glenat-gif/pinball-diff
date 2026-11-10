@@ -428,6 +428,15 @@ def ld(obj):
     return f'<script type="application/ld+json">{json.dumps(obj, ensure_ascii=False)}</script>'
 
 
+def analytics_tag():
+    """Page counts with GoatCounter when site.json names an account: no cookies, nothing that identifies a reader."""
+    code = SITE.get("goatcounter")
+    if not code:
+        return ""
+    return (f'<script data-goatcounter="https://{e(code)}.goatcounter.com/count" async '
+            f'src="https://gc.zgo.at/count.js"></script>')
+
+
 def verification_tags():
     tags = []
     if SITE.get("google_site_verification"):
@@ -496,6 +505,7 @@ def page(title, body, *, path, description, box_extra="", nav="", current=None, 
 <footer class="foot"><div class="wrap">
 <p>Data from <a href="https://pinballmap.com" target="_blank" rel="noopener">Pinball Map</a>, CC BY-SA 4.0, built from what Australian players submit. Comps from the <a href="https://www.ifpapinball.com" target="_blank" rel="noopener">IFPA</a> calendar. Machine artwork from the <a href="https://opdb.org" target="_blank" rel="noopener">Open Pinball Database</a>.</p>
 </div></footer>
+{analytics_tag()}
 </body>
 </html>
 """
@@ -1125,7 +1135,7 @@ def play_page():
     body = ('<div class="table-wrap"><canvas id="table" width="400" height="700" aria-label="A pinball table"></canvas></div>'
             '<p class="keys"><b>Flippers</b> left and right arrows, Z and /, or the shift keys. <b>Launch</b> space. '
             'On a phone, tap the left or right half of the table, and tap the lane to launch.</p>'
-            '<p class="muted">Two flippers, three pops, two slings, an orbit and two loops. Three balls, no saver. Nothing is sent anywhere.</p>'
+            '<p class="muted">Two flippers, three pops, two slings, an orbit and two loops. Three balls, no saver.</p>'
             '<script src="https://cdnjs.cloudflare.com/ajax/libs/matter-js/0.19.0/matter.min.js"></script>'
             f'<script src="{u("/pinball.js")}?v={JS_VERSION}"></script>')
     return page("Out the back", body, path="/play/", description="A small pinball table. Two flippers, three pops, two loops.",
@@ -1134,6 +1144,8 @@ def play_page():
 
 
 def about_page():
+    counted = (' Page views are counted with <a href="https://www.goatcounter.com">GoatCounter</a>: no cookies, '
+               'and nothing that identifies you.' if SITE.get("goatcounter") else "")
     body = f"""<div class="prose">
 <p class="contact">Something wrong, or something to add? Tell me: <a href="mailto:{e(SITE['contact'])}">{e(SITE['contact'])}</a></p>
 <h2>What this is</h2>
@@ -1141,7 +1153,7 @@ def about_page():
 <h2>Where it comes from</h2>
 <p>Every line was submitted to <a href="https://pinballmap.com">Pinball Map</a> by a player. Each morning this site asks what changed around Australia, sorts it by state and tidies it: a machine out and a new edition of the same game in becomes a swap, a new venue and its first machines become one line. Nothing is added by hand, so it is only as good as what people submit. If a lineup was different or a machine was off, update the listing on Pinball Map and it is here the next morning.</p>
 <p>This is not a map and will not help you find somewhere to play. Pinball Map does that, and every venue here links straight to its listing.</p>
-<p class="muted">Suburbs and postcodes for the near-you search come from Matthew Proctor's public-domain <a href="https://www.matthewproctor.com/australian_postcodes">Australian Postcodes</a> list. The code is open on <a href="https://github.com/glenat-gif/pinball-diff">GitHub</a>.</p>
+<p class="muted">Suburbs and postcodes for the near-you search come from Matthew Proctor's public-domain <a href="https://www.matthewproctor.com/australian_postcodes">Australian Postcodes</a> list. The code is open on <a href="https://github.com/glenat-gif/pinball-diff">GitHub</a>.{counted}</p>
 </div>"""
     box = ('<p class="wordmark" style="font-size:clamp(1.6rem,6vw,2.6rem)">About</p>'
            '<p class="lede">Made by one Melbourne player from what Australian players put on Pinball Map.</p>')
