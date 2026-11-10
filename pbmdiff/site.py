@@ -1172,7 +1172,7 @@ def about_page():
 <p class="muted">Suburbs and postcodes for the near-you search come from Matthew Proctor's public-domain <a href="https://www.matthewproctor.com/australian_postcodes">Australian Postcodes</a> list. The code is open on <a href="https://github.com/glenat-gif/pinball-diff">GitHub</a>.{counted}</p>
 </div>"""
     box = ('<p class="wordmark" style="font-size:clamp(1.6rem,6vw,2.6rem)">About</p>'
-           '<p class="lede">Made by one Melbourne player from what Australian players put on Pinball Map.</p>')
+           '<p class="lede">Made by Glen, a Melbourne player, from what Australian players put on Pinball Map.</p>')
     return page("About", body, path="/about/", description="What this is and where the data comes from.",
                 box_extra=box, current="about")
 
