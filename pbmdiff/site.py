@@ -369,9 +369,9 @@ def signup():
         return ('<div class="signup"><h2>The Thursday email</h2>'
                 '<p class="soon">Sign-ups open soon. Every Thursday, the week\'s changes in every state, '
                 'in time to plan the weekend.</p></div>')
-    picks = ('<label><input type="checkbox" name="tag" value="vic" checked> Victoria</label>'
-             + "".join(f'<label><input type="checkbox" name="tag" value="{k}"> {e(areas.SHORT[k])}</label>'
-                       for k, _ in areas.STATES))
+    # Nothing is ticked for the reader: a pre-ticked Victoria stayed ticked for people who play elsewhere.
+    picks = "".join(f'<label><input type="checkbox" name="tag" value="{k}"> {e(areas.SHORT[k])}</label>'
+                    for k in ["vic"] + [k for k, _ in areas.STATES])
     return (f'<form class="signup" id="signup" action="https://buttondown.com/api/emails/embed-subscribe/{e(user)}" method="post" target="_blank">'
             '<h2>The Thursday email</h2>'
             '<p>All of Australia, with the biggest news from your state up top. '
@@ -379,16 +379,15 @@ def signup():
             '<div class="row"><label class="sr" for="em" hidden>Email address</label>'
             '<input id="em" type="email" name="email" required placeholder="you@example.com" autocomplete="email">'
             '<button type="submit">Subscribe</button></div>'
-            f'<fieldset id="zones-ask" hidden><legend>Where do you play? <small>You get every state either way; this picks what leads your copy.</small></legend>'
+            f'<fieldset id="zones-ask"><legend>Where do you play? <small>You get every state either way; this picks what leads your copy.</small></legend>'
             f'<div class="zones-pick">{picks}</div></fieldset>'
             '<input type="hidden" name="embed" value="1"></form>'
             + SIGNUP_SCRIPT.replace("PLAY", u("/play/")))
 
 
-# The state question appears once someone starts on the form; everyone else sees one clean row.
+# The state question is always in view: it tells a reader the email is about where they play.
 # Buttondown opens in a new tab; this tab says thanks, and once, quietly, offers the table.
-SIGNUP_SCRIPT = """<script>(function(){var f=document.getElementById("em"),z=document.getElementById("zones-ask"),form=document.getElementById("signup");
-function show(){z.hidden=false}f.addEventListener("focus",show);f.addEventListener("input",show);
+SIGNUP_SCRIPT = """<script>(function(){var form=document.getElementById("signup");
 form.addEventListener("submit",function(){setTimeout(function(){var seen=false;try{seen=!!localStorage.getItem("ptw-egg")}catch(e){}
 form.innerHTML='<h2>Thanks</h2><p>Buttondown has opened in a new tab to confirm your address. The first email lands on Thursday.</p>'
 +(seen?'':'<p class="egg">While you wait, there is a <a href="PLAY">machine out the back</a>.</p>');
@@ -626,9 +625,9 @@ def home(weeks, counts, built_on, comps=()):
     home = issue.home_zone()
     soon = ifpa.between(list(comps), built_on.isoformat(), soon_until, {home})
     # The machine moves are the point of the page: states first, then the comps, then the podcasts.
-    blocks = near_box()
+    # The state strip sits right above the state sections it leads to; a quiet state shows as 0 on it.
+    blocks = near_box() + chips("home", counts)
     blocks += "".join(zone_block(z, when=False, more=True) for z in active)
-    nav = chips("home", counts)               # a quiet state shows as 0 on the strip; no second line about it
     blocks += comps_block(soon, built_on.isoformat(), soon_until, f"Comps in {areas.SHORT[home]}",
                           f"No IFPA comps listed in {areas.SHORT[home]} in the next seven days.") if comps else ""
     pods = podcasts.load()
@@ -649,7 +648,7 @@ def home(weeks, counts, built_on, comps=()):
         lines.append(f"{show.upper()}  NEW EPISODE  {ep['title'].upper()}")
     MASTHEAD["dmd"] = display(total, plural(total, "change"), short_span, lines, egg=True)
     return page("", blocks, path="/", description=SITE["tagline"], box_extra=box,
-                nav=nav, current="home", structured=site_ld())
+                current="home", structured=site_ld())
 
 
 def site_ld():

@@ -82,7 +82,10 @@ class SiteTests(Built):
         with mock.patch.dict(site.SITE, {"buttondown_username": "pinballthisweek"}):
             home = (site.build(on=dt.date(2026, 10, 3)) / "index.html").read_text()
         self.assertIn('action="https://buttondown.com/api/emails/embed-subscribe/pinballthisweek"', home)
-        self.assertIn('name="tag" value="vic" checked', home)
+        self.assertIn('name="tag" value="vic"> Victoria', home)          # offered first, ticked by the reader
+        self.assertNotIn(" checked", home.split('id="zones-ask"', 1)[1].split("</fieldset>", 1)[0])
+        self.assertIn('<fieldset id="zones-ask"><legend>', home)         # in view before a character is typed
+        self.assertLess(home.index('id="near-ask"'), home.index('class="states"'))   # the state strip leads the state sections
 
 
 class AnalyticsTests(Built):
