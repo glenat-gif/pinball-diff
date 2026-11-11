@@ -1031,6 +1031,7 @@
  "email": {
   "status": "draft",
   "id": "em_0ebb2prrhk9jptmxmraddms4t4",
-  "at": "2026-11-11T22:57:14+00:00"
+  "at": "2026-11-11T22:57:14+00:00",
+  "redrafted_at": "2026-11-11T22:59:11+00:00"
  }
 }
