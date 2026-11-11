@@ -1,0 +1,26 @@
+{
+ "items": [
+  {
+   "location_id": 17720,
+   "location_name": "Indian Ocean Hotel",
+   "city": "Scarborough",
+   "link": "https://pinballmap.com/map?by_location_id=17720",
+   "lat": -31.8964867,
+   "lon": 115.7595305,
+   "ids": {
+    "AC/DC (Pro) (Stern, 2012)": 1219
+   },
+   "kind": "removed",
+   "rank": 4,
+   "date": "2026-11-05",
+   "machines": [
+    "AC/DC (Pro) (Stern, 2012)"
+   ],
+   "by": [
+    "theroadtrain"
+   ],
+   "flags": {}
+  }
+ ],
+ "confirmations": 0
+}

@@ -1,0 +1,76 @@
+{
+ "items": [
+  {
+   "location_id": 19635,
+   "location_name": "BrewDog Pentridge",
+   "city": "Coburg",
+   "link": "https://pinballmap.com/map?by_location_id=19635",
+   "lat": -37.7370508,
+   "lon": 144.9677596,
+   "ids": {
+    "Teenage Mutant Ninja Turtles (Pro) (Stern, 2020)": 3255,
+    "King Kong: Myth of Terror Island (Pro) (Stern, 2025)": 4533
+   },
+   "kind": "rotation",
+   "rank": 2.9,
+   "date": "2026-11-08",
+   "machines": [
+    "Teenage Mutant Ninja Turtles (Pro) (Stern, 2020)"
+   ],
+   "out": [
+    "King Kong: Myth of Terror Island (Pro) (Stern, 2025)"
+   ],
+   "by": [
+    "gommy"
+   ],
+   "flags": {}
+  },
+  {
+   "location_id": 24929,
+   "location_name": "Moon Dog Doglands",
+   "city": "Docklands",
+   "link": "https://pinballmap.com/map?by_location_id=24929",
+   "lat": -37.8147944,
+   "lon": 144.9465503,
+   "ids": {
+    "White Water (Williams, 1993)": 689,
+    "The Shadow (Bally, 1994)": 681
+   },
+   "kind": "condition",
+   "status": "amber",
+   "rank": 5,
+   "date": "2026-11-11",
+   "machine": "White Water (Williams, 1993)",
+   "comment": "DMD was broken on this machine when we were there tonight",
+   "user": "magoo_oz",
+   "by": [
+    "magoo_oz"
+   ],
+   "flags": {}
+  },
+  {
+   "location_id": 24929,
+   "location_name": "Moon Dog Doglands",
+   "city": "Docklands",
+   "link": "https://pinballmap.com/map?by_location_id=24929",
+   "lat": -37.8147944,
+   "lon": 144.9465503,
+   "ids": {
+    "White Water (Williams, 1993)": 689,
+    "The Shadow (Bally, 1994)": 681
+   },
+   "kind": "condition",
+   "status": "note",
+   "rank": 6,
+   "date": "2026-11-11",
+   "machine": "The Shadow (Bally, 1994)",
+   "comment": "Still set to free play, but no ball came out when you pressed the credit button",
+   "user": "magoo_oz",
+   "by": [
+    "magoo_oz"
+   ],
+   "flags": {}
+  }
+ ],
+ "confirmations": 5
+}
