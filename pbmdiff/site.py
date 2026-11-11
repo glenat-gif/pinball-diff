@@ -680,7 +680,7 @@ def comps_ld(comps, limit=100):
     out = []
     for c in comps[:limit]:
         place = {"@type": "Place", "name": c["venue"] or c["city"] or c["name"],
-                 "address": {"@type": "PostalAddress", "addressLocality": c["city"], "addressRegion": STATE_CODE.get(c["zone"], ""), "addressCountry": "AU"}}
+                 "address": {"@type": "PostalAddress", "addressLocality": c["city"], "addressRegion": areas.state_code(c["zone"], c.get("lat"), c.get("lon")), "addressCountry": "AU"}}
         ev = {"@context": "https://schema.org", "@type": "Event", "name": c["name"], "startDate": c["start"], "endDate": c["end"] or c["start"],
               "eventStatus": "https://schema.org/EventScheduled", "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
               "location": place, "url": c["website"] or c["link"]}
@@ -996,7 +996,7 @@ def _move_text(ev):
     """One move as a line: 'Pro landed at Thirsty Crow Brewery, Wagga Wagga, NSW · Tue 3 Nov'."""
     from .mail import STATE_CODE
     zone = areas.zone_of(ev["lat"], ev["lon"])
-    where = ", ".join(x for x in (ev["location_name"], ev.get("city"), STATE_CODE.get(zone, "")) if x)
+    where = ", ".join(x for x in (ev["location_name"], ev.get("city"), areas.state_code(zone, ev["lat"], ev["lon"])) if x)
     verb = "landed at" if ev["type"] == "machine_added" else "left"
     return f'{e(_edition(ev["machine"]))} {verb} {e(where)} · {e(render.day(ev["date"]))}'
 

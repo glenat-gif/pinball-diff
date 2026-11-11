@@ -88,6 +88,21 @@ class SiteTests(Built):
         self.assertLess(home.index('id="near-ask"'), home.index('class="states"'))   # the state strip leads the state sections
 
 
+class StateCodeTests(unittest.TestCase):
+    def test_canberra_is_act_and_queanbeyan_is_nsw(self):
+        from pbmdiff import areas
+        self.assertEqual(areas.state_code("nsw", -35.2146, 149.1300), "ACT")     # Mitchell
+        self.assertEqual(areas.state_code("nsw", -35.3549, 149.2320), "NSW")     # Queanbeyan, across the border
+        self.assertEqual(areas.state_code("nsw", -32.9270, 151.7760), "NSW")     # Newcastle
+        self.assertEqual(areas.state_code("nsw"), "NSW")                         # no coordinates: the zone's own code
+        self.assertEqual(areas.state_code("vic", -37.8, 144.9), "VIC")
+
+    def test_headlines_name_the_act(self):
+        item = {"kind": "added", "location_name": "Capital Pinball", "city": "Mitchell", "lat": -35.2146, "lon": 149.13,
+                "machines": ["Avatar: The Battle for Pandora (CE) (Jersey Jack, 2024)"], "flags": {}}
+        self.assertIn("Mitchell, ACT", mail._headline(item, "nsw", False)[0])
+
+
 class HomeStatesTests(Built):
     def test_state_chips_reorder_the_home_page_and_stay_links(self):
         dist = site.build(on=dt.date(2026, 10, 3))

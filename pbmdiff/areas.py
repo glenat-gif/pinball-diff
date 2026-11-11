@@ -97,6 +97,38 @@ def _on_land(lat, lon):
     return -44.0 <= lat <= -9.0 and 112.0 <= lon <= 154.5
 
 
+STATE_CODE = {"vic": "VIC", "nsw": "NSW", "qld": "QLD", "sa": "SA", "wa": "WA", "tas": "TAS", "nt": "NT"}
+_ACT_BOX = (-36.0, -35.05, 148.7, 149.5)        # around the territory, Queanbeyan and Yass included
+_NEAR_ACT = None
+
+
+def _near_act():
+    """Suburb centres in and around the ACT, from the postcode list the near-you search uses."""
+    global _NEAR_ACT
+    if _NEAR_ACT is None:
+        import json, pathlib
+        path = pathlib.Path(__file__).resolve().parent.parent / "data" / "suburbs.json"
+        try:
+            rows = json.loads(path.read_text())
+        except (OSError, ValueError):
+            rows = []
+        s, n, w, e = _ACT_BOX
+        _NEAR_ACT = [(r[2], r[3], r[4]) for r in rows if s <= r[3] <= n and w <= r[4] <= e]
+    return _NEAR_ACT
+
+
+def state_code(zone, lat=None, lon=None):
+    """The state to print after a place. The NSW zone holds the ACT too, so a Canberra venue is told
+    apart by its nearest suburb: Mitchell is ACT, Queanbeyan across the border is NSW."""
+    code = STATE_CODE.get(zone, "")
+    s, n, w, e = _ACT_BOX
+    if zone == "nsw" and lat is not None and lon is not None and s <= lat <= n and w <= lon <= e:
+        near = min(_near_act(), key=lambda r: (r[1] - lat) ** 2 + ((r[2] - lon) * 0.81) ** 2, default=None)
+        if near and near[0] == "ACT":
+            return "ACT"
+    return code
+
+
 def zone_of(lat, lon):
     if lat is None or lon is None or not _on_land(lat, lon):
         return None

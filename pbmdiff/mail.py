@@ -29,14 +29,14 @@ def site_url(path=""):
     return SITE["base_url"] + path
 
 
-STATE_CODE = {"vic": "VIC", "nsw": "NSW", "qld": "QLD", "sa": "SA", "wa": "WA", "tas": "TAS", "nt": "NT"}
+STATE_CODE = areas.STATE_CODE
 
 
 def _headline(item, zone, local):
     """A short phrase and a score. Venue first for venues, machine first for arrivals, and the
     state after the place every time, so a reader anywhere knows where it is."""
     title = lambda n: render.split_machine(n)[0]
-    st = STATE_CODE.get(zone, "")
+    st = areas.state_code(zone, item.get("lat"), item.get("lon"))
     where = (item.get("city") or item["location_name"]) + (f", {st}" if st else "")
     venue = item["location_name"] + (f", {st}" if st else "")
     flags = item.get("flags") or {}
