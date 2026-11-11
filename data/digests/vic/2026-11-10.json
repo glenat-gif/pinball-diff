@@ -1,0 +1,30 @@
+{
+ "items": [
+  {
+   "location_id": 19635,
+   "location_name": "BrewDog Pentridge",
+   "city": "Coburg",
+   "link": "https://pinballmap.com/map?by_location_id=19635",
+   "lat": -37.7370508,
+   "lon": 144.9677596,
+   "ids": {
+    "Teenage Mutant Ninja Turtles (Pro) (Stern, 2020)": 3255,
+    "King Kong: Myth of Terror Island (Pro) (Stern, 2025)": 4533
+   },
+   "kind": "rotation",
+   "rank": 2.9,
+   "date": "2026-11-08",
+   "machines": [
+    "Teenage Mutant Ninja Turtles (Pro) (Stern, 2020)"
+   ],
+   "out": [
+    "King Kong: Myth of Terror Island (Pro) (Stern, 2025)"
+   ],
+   "by": [
+    "gommy"
+   ],
+   "flags": {}
+  }
+ ],
+ "confirmations": 5
+}
