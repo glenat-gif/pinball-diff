@@ -1,0 +1,171 @@
+{
+ "items": [
+  {
+   "location_id": 30923,
+   "location_name": "Timezone Erina",
+   "city": "Erina",
+   "link": "https://pinballmap.com/map?by_location_id=30923",
+   "lat": -33.4366058,
+   "lon": 151.3925412,
+   "ids": {
+    "The Munsters (Pro) (Stern, 2019)": 3099,
+    "Guardians of the Galaxy (Pro) (Stern, 2017)": 2875
+   },
+   "kind": "new_venue",
+   "rank": 0,
+   "date": "2026-11-09",
+   "machines": [
+    "The Munsters (Pro) (Stern, 2019)",
+    "Guardians of the Galaxy (Pro) (Stern, 2017)"
+   ],
+   "by": [
+    "SwedishTaxi"
+   ],
+   "flags": {}
+  },
+  {
+   "location_id": 27699,
+   "location_name": "Capital Pinball",
+   "city": "Mitchell",
+   "link": "https://pinballmap.com/map?by_location_id=27699",
+   "lat": -35.2102492,
+   "lon": 149.1396038,
+   "ids": {
+    "Avatar: The Battle for Pandora (LE) (Jersey Jack, 2024)": 4509,
+    "Avatar: The Battle for Pandora (CE) (Jersey Jack, 2024)": 4510
+   },
+   "kind": "swap",
+   "rank": 1.95,
+   "date": "2026-11-10",
+   "out": "Avatar: The Battle for Pandora (LE) (Jersey Jack, 2024)",
+   "in": "Avatar: The Battle for Pandora (CE) (Jersey Jack, 2024)",
+   "by": [
+    "j_coolstar"
+   ],
+   "flags": {
+    "Avatar: The Battle for Pandora (CE) (Jersey Jack, 2024)": [
+     "Collector's Edition"
+    ]
+   }
+  },
+  {
+   "location_id": 25330,
+   "location_name": "Nambucca Heads RSL Club",
+   "city": "Nambucca Heads",
+   "link": "https://pinballmap.com/map?by_location_id=25330",
+   "lat": -30.6454941,
+   "lon": 153.0031622,
+   "ids": {
+    "Godzilla (Premium) (Stern, 2021)": 3416
+   },
+   "kind": "added",
+   "rank": 2.85,
+   "date": "2026-11-10",
+   "machines": [
+    "Godzilla (Premium) (Stern, 2021)"
+   ],
+   "by": [
+    "parazio"
+   ],
+   "flags": {
+    "Godzilla (Premium) (Stern, 2021)": [
+     "Premium"
+    ]
+   }
+  },
+  {
+   "location_id": 25008,
+   "location_name": "Gosford City Ten Pin Bowling",
+   "city": "Wyoming",
+   "link": "https://pinballmap.com/map?by_location_id=25008",
+   "lat": -33.4010185,
+   "lon": 151.3480892,
+   "ids": {
+    "World Cup Soccer (Bally, 1994)": 707,
+    "Family Guy (Stern, 2006)": 664
+   },
+   "kind": "rotation",
+   "rank": 2.9,
+   "date": "2026-11-08",
+   "machines": [
+    "Family Guy (Stern, 2006)"
+   ],
+   "out": [
+    "World Cup Soccer (Bally, 1994)"
+   ],
+   "by": [
+    "SwedishTaxi"
+   ],
+   "flags": {}
+  },
+  {
+   "location_id": 25096,
+   "location_name": "The Ex Servos",
+   "city": "Nowra",
+   "link": "https://pinballmap.com/map?by_location_id=25096",
+   "lat": -34.8747971,
+   "lon": 150.6052146,
+   "ids": {
+    "Willy Wonka & The Chocolate Factory (LE) (Jersey Jack, 2019)": 3139,
+    "World Cup Soccer (Bally, 1994)": 707
+   },
+   "kind": "rotation",
+   "rank": 2.9,
+   "date": "2026-11-08",
+   "machines": [
+    "World Cup Soccer (Bally, 1994)"
+   ],
+   "out": [
+    "Willy Wonka & The Chocolate Factory (LE) (Jersey Jack, 2019)"
+   ],
+   "by": [
+    "ShoalhavenPinball"
+   ],
+   "flags": {}
+  },
+  {
+   "location_id": 23702,
+   "location_name": "Glenroy Hotel",
+   "city": "Alexandria",
+   "link": "https://pinballmap.com/map?by_location_id=23702",
+   "lat": -33.902389,
+   "lon": 151.2013753,
+   "ids": {
+    "Attack From Mars (Remake LE) (Chicago Gaming, 2017)": 2835
+   },
+   "kind": "removed",
+   "rank": 4,
+   "date": "2026-11-11",
+   "machines": [
+    "Attack From Mars (Remake LE) (Chicago Gaming, 2017)"
+   ],
+   "by": [
+    "Pads"
+   ],
+   "flags": {}
+  },
+  {
+   "location_id": 17434,
+   "location_name": "The Alby",
+   "city": "Phillip",
+   "link": "https://pinballmap.com/map?by_location_id=17434",
+   "lat": -35.3440396,
+   "lon": 149.084894,
+   "ids": {
+    "Toy Story 4 (LE) (Jersey Jack, 2022)": 3519
+   },
+   "kind": "condition",
+   "status": "note",
+   "rank": 6,
+   "date": "2026-11-07",
+   "machine": "Toy Story 4 (LE) (Jersey Jack, 2022)",
+   "comment": "This was my favourite of the 7 JJ tables they had at the venue. Willy Wonka ranking 2nd and Harry Potter 3rd.",
+   "user": "goon",
+   "by": [
+    "goon"
+   ],
+   "flags": {}
+  }
+ ],
+ "confirmations": 4
+}

@@ -1,0 +1,206 @@
+{
+ "items": [
+  {
+   "location_id": 19635,
+   "location_name": "BrewDog Pentridge",
+   "city": "Coburg",
+   "link": "https://pinballmap.com/map?by_location_id=19635",
+   "lat": -37.7370508,
+   "lon": 144.9677596,
+   "ids": {
+    "Teenage Mutant Ninja Turtles (Pro) (Stern, 2020)": 3255,
+    "King Kong: Myth of Terror Island (Pro) (Stern, 2025)": 4533
+   },
+   "kind": "rotation",
+   "rank": 2.9,
+   "date": "2026-11-08",
+   "machines": [
+    "Teenage Mutant Ninja Turtles (Pro) (Stern, 2020)"
+   ],
+   "out": [
+    "King Kong: Myth of Terror Island (Pro) (Stern, 2025)"
+   ],
+   "by": [
+    "gommy"
+   ],
+   "flags": {}
+  },
+  {
+   "location_id": 13439,
+   "location_name": "Karting Madness",
+   "city": "Bayswater",
+   "link": "https://pinballmap.com/map?by_location_id=13439",
+   "lat": -37.8371725,
+   "lon": 145.2751909,
+   "ids": {
+    "Attack From Mars (Bally, 1995)": 643,
+    "Deadpool (Pro) (Stern, 2018)": 3022,
+    "Batman 66 (Premium) (Stern, 2016)": 2727,
+    "Godzilla (Premium) (Stern, 2021)": 3416,
+    "Jurassic Park (Premium) (Stern, 2019)": 3169
+   },
+   "kind": "condition",
+   "status": "amber",
+   "rank": 5,
+   "date": "2026-11-12",
+   "machine": "Deadpool (Pro) (Stern, 2018)",
+   "comment": "Needs a good clean and service, but it is still playable, skill shot doesn't work due to faulty rollovers.",
+   "user": "dylmcil",
+   "by": [
+    "dylmcil"
+   ],
+   "flags": {}
+  },
+  {
+   "location_id": 13439,
+   "location_name": "Karting Madness",
+   "city": "Bayswater",
+   "link": "https://pinballmap.com/map?by_location_id=13439",
+   "lat": -37.8371725,
+   "lon": 145.2751909,
+   "ids": {
+    "Attack From Mars (Bally, 1995)": 643,
+    "Deadpool (Pro) (Stern, 2018)": 3022,
+    "Batman 66 (Premium) (Stern, 2016)": 2727,
+    "Godzilla (Premium) (Stern, 2021)": 3416,
+    "Jurassic Park (Premium) (Stern, 2019)": 3169
+   },
+   "kind": "condition",
+   "status": "amber",
+   "rank": 5,
+   "date": "2026-11-12",
+   "machine": "Batman 66 (Premium) (Stern, 2016)",
+   "comment": "Balls are still getting stuck, the facility does not own them they just rent the space out. message has been passed on to the owner.",
+   "user": "dylmcil",
+   "by": [
+    "dylmcil"
+   ],
+   "flags": {}
+  },
+  {
+   "location_id": 24929,
+   "location_name": "Moon Dog Doglands",
+   "city": "Docklands",
+   "link": "https://pinballmap.com/map?by_location_id=24929",
+   "lat": -37.8147944,
+   "lon": 144.9465503,
+   "ids": {
+    "White Water (Williams, 1993)": 689,
+    "The Shadow (Bally, 1994)": 681
+   },
+   "kind": "condition",
+   "status": "amber",
+   "rank": 5,
+   "date": "2026-11-11",
+   "machine": "White Water (Williams, 1993)",
+   "comment": "DMD was broken on this machine when we were there tonight",
+   "user": "magoo_oz",
+   "by": [
+    "magoo_oz"
+   ],
+   "flags": {}
+  },
+  {
+   "location_id": 13439,
+   "location_name": "Karting Madness",
+   "city": "Bayswater",
+   "link": "https://pinballmap.com/map?by_location_id=13439",
+   "lat": -37.8371725,
+   "lon": 145.2751909,
+   "ids": {
+    "Attack From Mars (Bally, 1995)": 643,
+    "Deadpool (Pro) (Stern, 2018)": 3022,
+    "Batman 66 (Premium) (Stern, 2016)": 2727,
+    "Godzilla (Premium) (Stern, 2021)": 3416,
+    "Jurassic Park (Premium) (Stern, 2019)": 3169
+   },
+   "kind": "condition",
+   "status": "note",
+   "rank": 6,
+   "date": "2026-11-12",
+   "machine": "Attack From Mars (Bally, 1995)",
+   "comment": "It's back up and running and freshly serviced, the sound card is playing up, but the game still works nicely.",
+   "user": "dylmcil",
+   "by": [
+    "dylmcil"
+   ],
+   "flags": {}
+  },
+  {
+   "location_id": 13439,
+   "location_name": "Karting Madness",
+   "city": "Bayswater",
+   "link": "https://pinballmap.com/map?by_location_id=13439",
+   "lat": -37.8371725,
+   "lon": 145.2751909,
+   "ids": {
+    "Attack From Mars (Bally, 1995)": 643,
+    "Deadpool (Pro) (Stern, 2018)": 3022,
+    "Batman 66 (Premium) (Stern, 2016)": 2727,
+    "Godzilla (Premium) (Stern, 2021)": 3416,
+    "Jurassic Park (Premium) (Stern, 2019)": 3169
+   },
+   "kind": "condition",
+   "status": "green",
+   "rank": 6,
+   "date": "2026-11-12",
+   "machine": "Godzilla (Premium) (Stern, 2021)",
+   "comment": "It's fixed and playing nice.",
+   "user": "dylmcil",
+   "by": [
+    "dylmcil"
+   ],
+   "flags": {}
+  },
+  {
+   "location_id": 13439,
+   "location_name": "Karting Madness",
+   "city": "Bayswater",
+   "link": "https://pinballmap.com/map?by_location_id=13439",
+   "lat": -37.8371725,
+   "lon": 145.2751909,
+   "ids": {
+    "Attack From Mars (Bally, 1995)": 643,
+    "Deadpool (Pro) (Stern, 2018)": 3022,
+    "Batman 66 (Premium) (Stern, 2016)": 2727,
+    "Godzilla (Premium) (Stern, 2021)": 3416,
+    "Jurassic Park (Premium) (Stern, 2019)": 3169
+   },
+   "kind": "condition",
+   "status": "note",
+   "rank": 6,
+   "date": "2026-11-12",
+   "machine": "Jurassic Park (Premium) (Stern, 2019)",
+   "comment": "It works and plays, but could do with a bit of maintenance",
+   "user": "dylmcil",
+   "by": [
+    "dylmcil"
+   ],
+   "flags": {}
+  },
+  {
+   "location_id": 24929,
+   "location_name": "Moon Dog Doglands",
+   "city": "Docklands",
+   "link": "https://pinballmap.com/map?by_location_id=24929",
+   "lat": -37.8147944,
+   "lon": 144.9465503,
+   "ids": {
+    "White Water (Williams, 1993)": 689,
+    "The Shadow (Bally, 1994)": 681
+   },
+   "kind": "condition",
+   "status": "note",
+   "rank": 6,
+   "date": "2026-11-11",
+   "machine": "The Shadow (Bally, 1994)",
+   "comment": "Still set to free play, but no ball came out when you pressed the credit button",
+   "user": "magoo_oz",
+   "by": [
+    "magoo_oz"
+   ],
+   "flags": {}
+  }
+ ],
+ "confirmations": 5
+}

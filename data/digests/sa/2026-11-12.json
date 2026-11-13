@@ -1,0 +1,49 @@
+{
+ "items": [
+  {
+   "location_id": 25979,
+   "location_name": "Slug and Lettuce",
+   "city": "Parafield Gardens",
+   "link": "https://pinballmap.com/map?by_location_id=25979",
+   "lat": -34.7746396,
+   "lon": 138.6152333,
+   "ids": {
+    "Dungeons & Dragons: The Tyrant's Eye (Pro) (Stern, 2025)": 4516
+   },
+   "kind": "condition",
+   "status": "note",
+   "rank": 6,
+   "date": "2026-11-08",
+   "machine": "Dungeons & Dragons: The Tyrant's Eye (Pro) (Stern, 2025)",
+   "comment": "Not connected to insider",
+   "user": "sammijamhalen",
+   "by": [
+    "sammijamhalen"
+   ],
+   "flags": {}
+  },
+  {
+   "location_id": 28384,
+   "location_name": "The Rat & Parrot Bar",
+   "city": "Findon",
+   "link": "https://pinballmap.com/map?by_location_id=28384",
+   "lat": -34.9048754,
+   "lon": 138.5358405,
+   "ids": {
+    "Foo Fighters (Pro) (Stern, 2023)": 3673
+   },
+   "kind": "condition",
+   "status": "green",
+   "rank": 6,
+   "date": "2026-11-10",
+   "machine": "Foo Fighters (Pro) (Stern, 2023)",
+   "comment": "Hopefully the Insider Connected is all working now \ud83e\udd1e\ud83c\udffb\ud83e\udd1e\ud83c\udffb\ud83e\udd1e\ud83c\udffb",
+   "user": "imczr",
+   "by": [
+    "imczr"
+   ],
+   "flags": {}
+  }
+ ],
+ "confirmations": 1
+}
