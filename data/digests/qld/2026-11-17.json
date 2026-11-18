@@ -1,0 +1,171 @@
+{
+ "items": [
+  {
+   "location_id": 14333,
+   "location_name": "BrewDog DogTap Brisbane",
+   "city": "Brisbane City",
+   "link": "https://pinballmap.com/map?by_location_id=14333",
+   "lat": -27.4484924,
+   "lon": 153.0998284,
+   "ids": {
+    "Godzilla (Premium) (Stern, 2021)": 3416,
+    "Total Nuclear Annihilation (Spooky, 2017)": 2866,
+    "The Addams Family (Bally, 1992)": 687,
+    "Centigrade 37 (Gottlieb, 1977)": 1674
+   },
+   "kind": "removed",
+   "rank": 4,
+   "date": "2026-11-13",
+   "machines": [
+    "The Addams Family (Bally, 1992)"
+   ],
+   "by": [
+    "lucidun"
+   ],
+   "flags": {}
+  },
+  {
+   "location_id": 9947,
+   "location_name": "Laserforce Brisbane",
+   "city": "Woolloongabba",
+   "link": "https://pinballmap.com/map?by_location_id=9947",
+   "lat": -27.4891685,
+   "lon": 153.0354542,
+   "ids": {
+    "Goldeneye (Sega, 1996)": 954,
+    "Indiana Jones: The Pinball Adventure (Williams, 1993)": 651
+   },
+   "kind": "removed",
+   "rank": 4,
+   "date": "2026-11-14",
+   "machines": [
+    "Indiana Jones: The Pinball Adventure (Williams, 1993)"
+   ],
+   "by": [
+    "rej"
+   ],
+   "flags": {}
+  },
+  {
+   "location_id": 14333,
+   "location_name": "BrewDog DogTap Brisbane",
+   "city": "Brisbane City",
+   "link": "https://pinballmap.com/map?by_location_id=14333",
+   "lat": -27.4484924,
+   "lon": 153.0998284,
+   "ids": {
+    "Godzilla (Premium) (Stern, 2021)": 3416,
+    "Total Nuclear Annihilation (Spooky, 2017)": 2866,
+    "The Addams Family (Bally, 1992)": 687,
+    "Centigrade 37 (Gottlieb, 1977)": 1674
+   },
+   "kind": "condition",
+   "status": "amber",
+   "rank": 5,
+   "date": "2026-11-13",
+   "machine": "Godzilla (Premium) (Stern, 2021)",
+   "comment": "Does not accept coins for some reason...",
+   "user": "lucidun",
+   "by": [
+    "lucidun"
+   ],
+   "flags": {}
+  },
+  {
+   "location_id": 14333,
+   "location_name": "BrewDog DogTap Brisbane",
+   "city": "Brisbane City",
+   "link": "https://pinballmap.com/map?by_location_id=14333",
+   "lat": -27.4484924,
+   "lon": 153.0998284,
+   "ids": {
+    "Godzilla (Premium) (Stern, 2021)": 3416,
+    "Total Nuclear Annihilation (Spooky, 2017)": 2866,
+    "The Addams Family (Bally, 1992)": 687,
+    "Centigrade 37 (Gottlieb, 1977)": 1674
+   },
+   "kind": "condition",
+   "status": "amber",
+   "rank": 5,
+   "date": "2026-11-13",
+   "machine": "Centigrade 37 (Gottlieb, 1977)",
+   "comment": "Game plays itself, turned it off",
+   "user": "lucidun",
+   "by": [
+    "lucidun"
+   ],
+   "flags": {}
+  },
+  {
+   "location_id": 9947,
+   "location_name": "Laserforce Brisbane",
+   "city": "Woolloongabba",
+   "link": "https://pinballmap.com/map?by_location_id=9947",
+   "lat": -27.4891685,
+   "lon": 153.0354542,
+   "ids": {
+    "Goldeneye (Sega, 1996)": 954,
+    "Indiana Jones: The Pinball Adventure (Williams, 1993)": 651
+   },
+   "kind": "condition",
+   "status": "amber",
+   "rank": 5,
+   "date": "2026-11-11",
+   "machine": "Goldeneye (Sega, 1996)",
+   "comment": "Machine doesn't load ball",
+   "user": "buttercup",
+   "by": [
+    "buttercup"
+   ],
+   "flags": {}
+  },
+  {
+   "location_id": 9893,
+   "location_name": "Planet Arcades",
+   "city": "Strathpine",
+   "link": "https://pinballmap.com/map?by_location_id=9893",
+   "lat": -27.3070692,
+   "lon": 152.991811,
+   "ids": {
+    "Teenage Mutant Ninja Turtles (Pro) (Stern, 2020)": 3255
+   },
+   "kind": "condition",
+   "status": "amber",
+   "rank": 5,
+   "date": "2026-11-14",
+   "machine": "Teenage Mutant Ninja Turtles (Pro) (Stern, 2020)",
+   "comment": "Machine has no faults atm. 5 ball games.",
+   "user": "bt",
+   "by": [
+    "bt"
+   ],
+   "flags": {}
+  },
+  {
+   "location_id": 14333,
+   "location_name": "BrewDog DogTap Brisbane",
+   "city": "Brisbane City",
+   "link": "https://pinballmap.com/map?by_location_id=14333",
+   "lat": -27.4484924,
+   "lon": 153.0998284,
+   "ids": {
+    "Godzilla (Premium) (Stern, 2021)": 3416,
+    "Total Nuclear Annihilation (Spooky, 2017)": 2866,
+    "The Addams Family (Bally, 1992)": 687,
+    "Centigrade 37 (Gottlieb, 1977)": 1674
+   },
+   "kind": "condition",
+   "status": "note",
+   "rank": 6,
+   "date": "2026-11-13",
+   "machine": "Total Nuclear Annihilation (Spooky, 2017)",
+   "comment": "Machine is down at the moment",
+   "user": "lucidun",
+   "by": [
+    "lucidun"
+   ],
+   "flags": {}
+  }
+ ],
+ "confirmations": 0
+}
