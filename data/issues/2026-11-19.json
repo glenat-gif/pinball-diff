@@ -1,0 +1,1231 @@
+{
+ "date": "2026-11-19",
+ "since": "2026-11-12",
+ "until": "2026-11-18",
+ "zones": [
+  {
+   "zone": "vic",
+   "label": "Victoria",
+   "since": "2026-11-12",
+   "until": "2026-11-18",
+   "items": [
+    {
+     "location_id": 28991,
+     "location_name": "The Servo Lakes Entrance",
+     "city": "Lakes Entrance",
+     "link": "https://pinballmap.com/map?by_location_id=28991",
+     "lat": -37.8789418,
+     "lon": 147.9941532,
+     "ids": {
+      "Pok\u00e9mon (Pro) (Stern, 2026)": 4615
+     },
+     "kind": "added",
+     "rank": 2.85,
+     "date": "2026-11-14",
+     "machines": [
+      "Pok\u00e9mon (Pro) (Stern, 2026)"
+     ],
+     "by": [
+      "justrebound"
+     ],
+     "flags": {
+      "Pok\u00e9mon (Pro) (Stern, 2026)": [
+       "New release"
+      ]
+     },
+     "zone": "vic"
+    },
+    {
+     "location_id": 16088,
+     "location_name": "Bendigo Bowl",
+     "city": "Bendigo",
+     "link": "https://pinballmap.com/map?by_location_id=16088",
+     "lat": -36.7570722,
+     "lon": 144.2846797,
+     "ids": {
+      "John Wick (Pro) (Stern, 2024)": 3845
+     },
+     "kind": "added",
+     "rank": 2.9,
+     "date": "2026-11-16",
+     "machines": [
+      "John Wick (Pro) (Stern, 2024)"
+     ],
+     "by": [
+      "Pinerang"
+     ],
+     "flags": {},
+     "zone": "vic"
+    },
+    {
+     "location_id": 25278,
+     "location_name": "Roller One",
+     "city": "Burwood East",
+     "link": "https://pinballmap.com/map?by_location_id=25278",
+     "lat": -37.8530342,
+     "lon": 145.1493983,
+     "ids": {
+      "The Mandalorian (Pro) (Stern, 2021)": 3288
+     },
+     "kind": "removed",
+     "rank": 4,
+     "date": "2026-11-17",
+     "machines": [
+      "The Mandalorian (Pro) (Stern, 2021)"
+     ],
+     "by": [
+      "CircusFreak77"
+     ],
+     "flags": {},
+     "zone": "vic"
+    },
+    {
+     "location_id": 13439,
+     "location_name": "Karting Madness",
+     "city": "Bayswater",
+     "link": "https://pinballmap.com/map?by_location_id=13439",
+     "lat": -37.8371725,
+     "lon": 145.2751909,
+     "ids": {
+      "Attack From Mars (Bally, 1995)": 643,
+      "Deadpool (Pro) (Stern, 2018)": 3022,
+      "Batman 66 (Premium) (Stern, 2016)": 2727,
+      "Godzilla (Premium) (Stern, 2021)": 3416,
+      "Jurassic Park (Premium) (Stern, 2019)": 3169
+     },
+     "kind": "condition",
+     "status": "amber",
+     "rank": 5,
+     "date": "2026-11-12",
+     "machine": "Deadpool (Pro) (Stern, 2018)",
+     "comment": "Needs a good clean and service, but it is still playable, skill shot doesn't work due to faulty rollovers.",
+     "user": "dylmcil",
+     "by": [
+      "dylmcil"
+     ],
+     "flags": {},
+     "zone": "vic"
+    },
+    {
+     "location_id": 13439,
+     "location_name": "Karting Madness",
+     "city": "Bayswater",
+     "link": "https://pinballmap.com/map?by_location_id=13439",
+     "lat": -37.8371725,
+     "lon": 145.2751909,
+     "ids": {
+      "Attack From Mars (Bally, 1995)": 643,
+      "Deadpool (Pro) (Stern, 2018)": 3022,
+      "Batman 66 (Premium) (Stern, 2016)": 2727,
+      "Godzilla (Premium) (Stern, 2021)": 3416,
+      "Jurassic Park (Premium) (Stern, 2019)": 3169
+     },
+     "kind": "condition",
+     "status": "amber",
+     "rank": 5,
+     "date": "2026-11-12",
+     "machine": "Batman 66 (Premium) (Stern, 2016)",
+     "comment": "Balls are still getting stuck, the facility does not own them they just rent the space out. message has been passed on to the owner.",
+     "user": "dylmcil",
+     "by": [
+      "dylmcil"
+     ],
+     "flags": {},
+     "zone": "vic"
+    },
+    {
+     "location_id": 13439,
+     "location_name": "Karting Madness",
+     "city": "Bayswater",
+     "link": "https://pinballmap.com/map?by_location_id=13439",
+     "lat": -37.8371725,
+     "lon": 145.2751909,
+     "ids": {
+      "Attack From Mars (Bally, 1995)": 643,
+      "Deadpool (Pro) (Stern, 2018)": 3022,
+      "Batman 66 (Premium) (Stern, 2016)": 2727,
+      "Godzilla (Premium) (Stern, 2021)": 3416,
+      "Jurassic Park (Premium) (Stern, 2019)": 3169
+     },
+     "kind": "condition",
+     "status": "note",
+     "rank": 6,
+     "date": "2026-11-12",
+     "machine": "Attack From Mars (Bally, 1995)",
+     "comment": "It's back up and running and freshly serviced, the sound card is playing up, but the game still works nicely.",
+     "user": "dylmcil",
+     "by": [
+      "dylmcil"
+     ],
+     "flags": {}
+    },
+    {
+     "location_id": 13439,
+     "location_name": "Karting Madness",
+     "city": "Bayswater",
+     "link": "https://pinballmap.com/map?by_location_id=13439",
+     "lat": -37.8371725,
+     "lon": 145.2751909,
+     "ids": {
+      "Attack From Mars (Bally, 1995)": 643,
+      "Deadpool (Pro) (Stern, 2018)": 3022,
+      "Batman 66 (Premium) (Stern, 2016)": 2727,
+      "Godzilla (Premium) (Stern, 2021)": 3416,
+      "Jurassic Park (Premium) (Stern, 2019)": 3169
+     },
+     "kind": "condition",
+     "status": "green",
+     "rank": 6,
+     "date": "2026-11-12",
+     "machine": "Godzilla (Premium) (Stern, 2021)",
+     "comment": "It's fixed and playing nice.",
+     "user": "dylmcil",
+     "by": [
+      "dylmcil"
+     ],
+     "flags": {},
+     "zone": "vic"
+    },
+    {
+     "location_id": 13439,
+     "location_name": "Karting Madness",
+     "city": "Bayswater",
+     "link": "https://pinballmap.com/map?by_location_id=13439",
+     "lat": -37.8371725,
+     "lon": 145.2751909,
+     "ids": {
+      "Attack From Mars (Bally, 1995)": 643,
+      "Deadpool (Pro) (Stern, 2018)": 3022,
+      "Batman 66 (Premium) (Stern, 2016)": 2727,
+      "Godzilla (Premium) (Stern, 2021)": 3416,
+      "Jurassic Park (Premium) (Stern, 2019)": 3169
+     },
+     "kind": "condition",
+     "status": "note",
+     "rank": 6,
+     "date": "2026-11-12",
+     "machine": "Jurassic Park (Premium) (Stern, 2019)",
+     "comment": "It works and plays, but could do with a bit of maintenance",
+     "user": "dylmcil",
+     "by": [
+      "dylmcil"
+     ],
+     "flags": {}
+    }
+   ],
+   "confirmations": 3
+  },
+  {
+   "zone": "nsw",
+   "label": "New South Wales and the ACT",
+   "since": "2026-11-12",
+   "until": "2026-11-18",
+   "items": [
+    {
+     "location_id": 30987,
+     "location_name": "BP Nimmitabel",
+     "city": "Nimmitabel",
+     "link": "https://pinballmap.com/map?by_location_id=30987",
+     "lat": -36.5148132,
+     "lon": 149.2832894,
+     "ids": {
+      "Metallica (Pro) (Stern, 2013)": 1591,
+      "White Water (Williams, 1993)": 689
+     },
+     "kind": "new_venue",
+     "rank": 0,
+     "date": "2026-11-17",
+     "machines": [
+      "Metallica (Pro) (Stern, 2013)",
+      "White Water (Williams, 1993)"
+     ],
+     "by": [
+      "derrick_ward"
+     ],
+     "flags": {},
+     "zone": "nsw"
+    },
+    {
+     "location_id": 17248,
+     "location_name": "Beercade Australia",
+     "city": "Redfern",
+     "link": "https://pinballmap.com/map?by_location_id=17248",
+     "lat": -33.8922008,
+     "lon": 151.20083,
+     "ids": {
+      "Black Knight: Sword of Rage (Premium) (Stern, 2019)": 3127,
+      "Foo Fighters (LE) (Stern, 2023)": 3675
+     },
+     "kind": "added",
+     "rank": 2.75,
+     "date": "2026-11-18",
+     "machines": [
+      "Black Knight: Sword of Rage (Premium) (Stern, 2019)",
+      "Foo Fighters (LE) (Stern, 2023)"
+     ],
+     "by": [
+      "kristianwithak"
+     ],
+     "flags": {
+      "Black Knight: Sword of Rage (Premium) (Stern, 2019)": [
+       "Premium"
+      ],
+      "Foo Fighters (LE) (Stern, 2023)": [
+       "Limited Edition"
+      ]
+     },
+     "zone": "nsw"
+    },
+    {
+     "location_id": 27440,
+     "location_name": "Club Central Menai",
+     "city": "Menai",
+     "link": "https://pinballmap.com/map?by_location_id=27440",
+     "lat": -34.0135563,
+     "lon": 151.0171909,
+     "ids": {
+      "Stranger Things (Premium) (Stern, 2019)": 3227,
+      "The Uncanny X-Men (Premium) (Stern, 2024)": 4507
+     },
+     "kind": "rotation",
+     "rank": 2.85,
+     "date": "2026-11-17",
+     "machines": [
+      "The Uncanny X-Men (Premium) (Stern, 2024)"
+     ],
+     "out": [
+      "Stranger Things (Premium) (Stern, 2019)"
+     ],
+     "by": [
+      "bogandhi"
+     ],
+     "flags": {
+      "The Uncanny X-Men (Premium) (Stern, 2024)": [
+       "Premium"
+      ]
+     },
+     "zone": "nsw"
+    },
+    {
+     "location_id": 20318,
+     "location_name": "Metro Theatre",
+     "city": "Sydney",
+     "link": "https://pinballmap.com/map?by_location_id=20318",
+     "lat": -33.875667793134,
+     "lon": 151.207038005396,
+     "ids": {
+      "The Rolling Stones (Stern, 2011)": 1089,
+      "AC/DC (Premium) (Stern, 2012)": 1296
+     },
+     "kind": "rotation",
+     "rank": 2.85,
+     "date": "2026-11-18",
+     "machines": [
+      "AC/DC (Premium) (Stern, 2012)"
+     ],
+     "out": [
+      "The Rolling Stones (Stern, 2011)"
+     ],
+     "by": [
+      "bogandhi"
+     ],
+     "flags": {
+      "AC/DC (Premium) (Stern, 2012)": [
+       "Premium"
+      ]
+     },
+     "zone": "nsw"
+    },
+    {
+     "location_id": 27424,
+     "location_name": "Illawarra Pinball Club",
+     "city": "Wollongong",
+     "link": "https://pinballmap.com/map?by_location_id=27424",
+     "lat": -34.4345904,
+     "lon": 150.8957631,
+     "ids": {
+      "WWF Royal Rumble (Data East, 1994)": 930,
+      "Star Trek (Pro) (Stern, 2013)": 2165,
+      "Iron Maiden: Legacy of the Beast (Pro) (Stern, 2018)": 2923,
+      "Fish Tales (Williams, 1992)": 654,
+      "Firepower (Williams, 1980)": 924,
+      "Card Whiz (Gottlieb, 1976)": 1198
+     },
+     "kind": "rotation",
+     "rank": 2.9,
+     "date": "2026-11-18",
+     "machines": [
+      "Iron Maiden: Legacy of the Beast (Pro) (Stern, 2018)"
+     ],
+     "out": [
+      "WWF Royal Rumble (Data East, 1994)",
+      "Star Trek (Pro) (Stern, 2013)",
+      "Fish Tales (Williams, 1992)",
+      "Card Whiz (Gottlieb, 1976)"
+     ],
+     "by": [
+      "jimmyp_oz"
+     ],
+     "flags": {},
+     "zone": "nsw"
+    },
+    {
+     "location_id": 28506,
+     "location_name": "The Northern",
+     "city": "Byron Bay",
+     "link": "https://pinballmap.com/map?by_location_id=28506",
+     "lat": -28.6431034,
+     "lon": 153.6124267,
+     "ids": {
+      "The Walking Dead (Pro) (Stern, 2014)": 2203
+     },
+     "kind": "added",
+     "rank": 2.9,
+     "date": "2026-11-17",
+     "machines": [
+      "The Walking Dead (Pro) (Stern, 2014)"
+     ],
+     "by": [
+      "coryelizabeth"
+     ],
+     "flags": {},
+     "zone": "nsw"
+    },
+    {
+     "location_id": 18579,
+     "location_name": "Kelly's On King",
+     "city": "Newtown",
+     "link": "https://pinballmap.com/map?by_location_id=18579",
+     "lat": -33.89628,
+     "lon": 151.1797895,
+     "ids": {
+      "Foo Fighters (Premium) (Stern, 2023)": 3674
+     },
+     "kind": "removed",
+     "rank": 4,
+     "date": "2026-11-13",
+     "machines": [
+      "Foo Fighters (Premium) (Stern, 2023)"
+     ],
+     "by": [
+      "Bruce007"
+     ],
+     "flags": {},
+     "zone": "nsw"
+    },
+    {
+     "location_id": 20318,
+     "location_name": "Metro Theatre",
+     "city": "Sydney",
+     "link": "https://pinballmap.com/map?by_location_id=20318",
+     "lat": -33.875667793134,
+     "lon": 151.207038005396,
+     "ids": {
+      "The Rolling Stones (Stern, 2011)": 1089,
+      "AC/DC (Premium) (Stern, 2012)": 1296
+     },
+     "kind": "condition",
+     "status": "note",
+     "rank": 6,
+     "date": "2026-11-18",
+     "machine": "AC/DC (Premium) (Stern, 2012)",
+     "comment": "$4.25 / game IS INSANE\n$10.25 for 3 games is STUPID",
+     "user": "bogandhi",
+     "by": [
+      "bogandhi"
+     ],
+     "flags": {}
+    }
+   ],
+   "confirmations": 4
+  },
+  {
+   "zone": "qld",
+   "label": "Queensland",
+   "since": "2026-11-12",
+   "until": "2026-11-18",
+   "items": [
+    {
+     "location_id": 14333,
+     "location_name": "BrewDog DogTap Brisbane",
+     "city": "Brisbane City",
+     "link": "https://pinballmap.com/map?by_location_id=14333",
+     "lat": -27.4484924,
+     "lon": 153.0998284,
+     "ids": {
+      "Godzilla (Premium) (Stern, 2021)": 3416,
+      "Total Nuclear Annihilation (Spooky, 2017)": 2866,
+      "The Addams Family (Bally, 1992)": 687,
+      "Centigrade 37 (Gottlieb, 1977)": 1674
+     },
+     "kind": "removed",
+     "rank": 4,
+     "date": "2026-11-13",
+     "machines": [
+      "The Addams Family (Bally, 1992)"
+     ],
+     "by": [
+      "lucidun"
+     ],
+     "flags": {},
+     "zone": "qld"
+    },
+    {
+     "location_id": 9947,
+     "location_name": "Laserforce Brisbane",
+     "city": "Woolloongabba",
+     "link": "https://pinballmap.com/map?by_location_id=9947",
+     "lat": -27.4891685,
+     "lon": 153.0354542,
+     "ids": {
+      "Indiana Jones: The Pinball Adventure (Williams, 1993)": 651
+     },
+     "kind": "removed",
+     "rank": 4,
+     "date": "2026-11-14",
+     "machines": [
+      "Indiana Jones: The Pinball Adventure (Williams, 1993)"
+     ],
+     "by": [
+      "rej"
+     ],
+     "flags": {},
+     "zone": "qld"
+    },
+    {
+     "location_id": 14333,
+     "location_name": "BrewDog DogTap Brisbane",
+     "city": "Brisbane City",
+     "link": "https://pinballmap.com/map?by_location_id=14333",
+     "lat": -27.4484924,
+     "lon": 153.0998284,
+     "ids": {
+      "Godzilla (Premium) (Stern, 2021)": 3416,
+      "Total Nuclear Annihilation (Spooky, 2017)": 2866,
+      "The Addams Family (Bally, 1992)": 687,
+      "Centigrade 37 (Gottlieb, 1977)": 1674
+     },
+     "kind": "condition",
+     "status": "amber",
+     "rank": 5,
+     "date": "2026-11-13",
+     "machine": "Godzilla (Premium) (Stern, 2021)",
+     "comment": "Does not accept coins for some reason...",
+     "user": "lucidun",
+     "by": [
+      "lucidun"
+     ],
+     "flags": {},
+     "zone": "qld"
+    },
+    {
+     "location_id": 14333,
+     "location_name": "BrewDog DogTap Brisbane",
+     "city": "Brisbane City",
+     "link": "https://pinballmap.com/map?by_location_id=14333",
+     "lat": -27.4484924,
+     "lon": 153.0998284,
+     "ids": {
+      "Godzilla (Premium) (Stern, 2021)": 3416,
+      "Total Nuclear Annihilation (Spooky, 2017)": 2866,
+      "The Addams Family (Bally, 1992)": 687,
+      "Centigrade 37 (Gottlieb, 1977)": 1674
+     },
+     "kind": "condition",
+     "status": "amber",
+     "rank": 5,
+     "date": "2026-11-13",
+     "machine": "Centigrade 37 (Gottlieb, 1977)",
+     "comment": "Game plays itself, turned it off",
+     "user": "lucidun",
+     "by": [
+      "lucidun"
+     ],
+     "flags": {},
+     "zone": "qld"
+    },
+    {
+     "location_id": 9893,
+     "location_name": "Planet Arcades",
+     "city": "Strathpine",
+     "link": "https://pinballmap.com/map?by_location_id=9893",
+     "lat": -27.3070692,
+     "lon": 152.991811,
+     "ids": {
+      "Teenage Mutant Ninja Turtles (Pro) (Stern, 2020)": 3255
+     },
+     "kind": "condition",
+     "status": "amber",
+     "rank": 5,
+     "date": "2026-11-14",
+     "machine": "Teenage Mutant Ninja Turtles (Pro) (Stern, 2020)",
+     "comment": "Machine has no faults atm. 5 ball games.",
+     "user": "bt",
+     "by": [
+      "bt"
+     ],
+     "flags": {},
+     "zone": "qld"
+    },
+    {
+     "location_id": 14333,
+     "location_name": "BrewDog DogTap Brisbane",
+     "city": "Brisbane City",
+     "link": "https://pinballmap.com/map?by_location_id=14333",
+     "lat": -27.4484924,
+     "lon": 153.0998284,
+     "ids": {
+      "Godzilla (Premium) (Stern, 2021)": 3416,
+      "Total Nuclear Annihilation (Spooky, 2017)": 2866,
+      "The Addams Family (Bally, 1992)": 687,
+      "Centigrade 37 (Gottlieb, 1977)": 1674
+     },
+     "kind": "condition",
+     "status": "note",
+     "rank": 6,
+     "date": "2026-11-13",
+     "machine": "Total Nuclear Annihilation (Spooky, 2017)",
+     "comment": "Machine is down at the moment",
+     "user": "lucidun",
+     "by": [
+      "lucidun"
+     ],
+     "flags": {}
+    }
+   ],
+   "confirmations": 0
+  },
+  {
+   "zone": "sa",
+   "label": "South Australia",
+   "since": "2026-11-12",
+   "until": "2026-11-18",
+   "items": [
+    {
+     "location_id": 27478,
+     "location_name": "Jack's Fish and Chips",
+     "city": "Taperoo",
+     "link": "https://pinballmap.com/map?by_location_id=27478",
+     "lat": -34.8079996,
+     "lon": 138.5010445,
+     "ids": {
+      "Red & Ted's Road Show (Williams, 1994)": 680,
+      "The Mandalorian (Premium) (Stern, 2021)": 3289
+     },
+     "kind": "rotation",
+     "rank": 2.85,
+     "date": "2026-11-18",
+     "machines": [
+      "The Mandalorian (Premium) (Stern, 2021)"
+     ],
+     "out": [
+      "Red & Ted's Road Show (Williams, 1994)"
+     ],
+     "by": [
+      "imczr"
+     ],
+     "flags": {
+      "The Mandalorian (Premium) (Stern, 2021)": [
+       "Premium"
+      ]
+     },
+     "zone": "sa"
+    },
+    {
+     "location_id": 26318,
+     "location_name": "Hendon Hotel",
+     "city": "Hendon",
+     "link": "https://pinballmap.com/map?by_location_id=26318",
+     "lat": -34.8743041,
+     "lon": 138.5118629,
+     "ids": {
+      "The Mandalorian (Premium) (Stern, 2021)": 3289,
+      "Venom (Pro) (Stern, 2023)": 3738
+     },
+     "kind": "rotation",
+     "rank": 2.9,
+     "date": "2026-11-13",
+     "machines": [
+      "Venom (Pro) (Stern, 2023)"
+     ],
+     "out": [
+      "The Mandalorian (Premium) (Stern, 2021)"
+     ],
+     "by": [
+      "waughtorn1"
+     ],
+     "flags": {},
+     "zone": "sa"
+    }
+   ],
+   "confirmations": 0
+  },
+  {
+   "zone": "wa",
+   "label": "Western Australia",
+   "since": "2026-11-12",
+   "until": "2026-11-18",
+   "items": [],
+   "confirmations": 0
+  },
+  {
+   "zone": "tas",
+   "label": "Tasmania",
+   "since": "2026-11-12",
+   "until": "2026-11-18",
+   "items": [],
+   "confirmations": 0
+  },
+  {
+   "zone": "nt",
+   "label": "Northern Territory",
+   "since": "2026-11-12",
+   "until": "2026-11-18",
+   "items": [],
+   "confirmations": 0
+  }
+ ],
+ "comps": [
+  {
+   "id": "112142",
+   "name": "Flipper Fellowship Flip Frenzy",
+   "event": "",
+   "type": "Tournament",
+   "start": "2026-11-19",
+   "end": "2026-11-19",
+   "venue": "Flipper Fellowship",
+   "city": "Arncliffe",
+   "state": "NSW",
+   "lat": -33.9396,
+   "lon": 151.1435,
+   "zone": "nsw",
+   "website": "https://www.aussiearcade.com/topic/104635-flipper-fellowship",
+   "director": "GEE",
+   "format": "Flip Frenzy / Double Elimination",
+   "ranking": "MAIN",
+   "women": false,
+   "link": "https://www.ifpapinball.com/tournaments/view.php?t=112142",
+   "photo": "",
+   "pbm_id": 28054
+  },
+  {
+   "id": "122204",
+   "name": "Illawarra Frenzy 1911",
+   "event": "",
+   "type": "Tournament",
+   "start": "2026-11-19",
+   "end": "2026-11-19",
+   "venue": "Illawarra Pinball Club",
+   "city": "Wollongong",
+   "state": "NSW",
+   "lat": -34.4346,
+   "lon": 150.8958,
+   "zone": "nsw",
+   "website": "https://www.facebook.com/profile.php?id=100083023758401",
+   "director": "Paul Soutter",
+   "format": "Flip Frenzy / Match Play",
+   "ranking": "MAIN",
+   "women": false,
+   "link": "https://www.ifpapinball.com/tournaments/view.php?t=122204",
+   "photo": "",
+   "pbm_id": 27424
+  },
+  {
+   "id": "121740",
+   "name": "Pincity Pinball Addicts Learners Club #17",
+   "event": "",
+   "type": "Tournament",
+   "start": "2026-11-19",
+   "end": "2026-11-19",
+   "venue": "Unit 3 10 Kiawah st Lonsdale SA 5160",
+   "city": "Lonsdale",
+   "state": "SA",
+   "lat": -35.1066,
+   "lon": 138.4937,
+   "zone": "sa",
+   "website": "https://www.facebook.com/profile.php?id=100095041283095",
+   "director": "david clark",
+   "format": "Matchplay Qualifying / Match Play",
+   "ranking": "MAIN",
+   "women": false,
+   "link": "https://www.ifpapinball.com/tournaments/view.php?t=121740",
+   "photo": ""
+  },
+  {
+   "id": "105026",
+   "name": "The Little Bang Brewing Stern Army 2026 Event # 11",
+   "event": "",
+   "type": "Tournament",
+   "start": "2026-11-19",
+   "end": "2026-11-19",
+   "venue": "Little Bang Brewing Company",
+   "city": "Stepney",
+   "state": "SA",
+   "lat": -34.9148,
+   "lon": 138.6256,
+   "zone": "sa",
+   "website": "https://pinballers.com.au/shop",
+   "director": "Cesar Federici",
+   "format": "Match Play",
+   "ranking": "MAIN",
+   "women": false,
+   "link": "https://www.ifpapinball.com/tournaments/view.php?t=105026",
+   "photo": "",
+   "pbm_id": 21983
+  },
+  {
+   "id": "122035",
+   "name": "Drain Your Balls Head to Head!",
+   "event": "",
+   "type": "Tournament",
+   "start": "2026-11-20",
+   "end": "2026-11-20",
+   "venue": "South Australia Pinball and Arcade",
+   "city": "Adelaide",
+   "state": "SA",
+   "lat": -34.7495,
+   "lon": 138.6397,
+   "zone": "sa",
+   "website": "https://sapinballandarcade.com.au/",
+   "director": "Scottie Taylor",
+   "format": "Match Play",
+   "ranking": "MAIN",
+   "women": false,
+   "link": "https://www.ifpapinball.com/tournaments/view.php?t=122035",
+   "photo": "",
+   "pbm_id": 23168
+  },
+  {
+   "id": "108887",
+   "name": "Belles & Chimes Flip Frenzy",
+   "event": "Womens Division",
+   "type": "Tournament",
+   "start": "2026-11-21",
+   "end": "2026-11-21",
+   "venue": "Netherworld",
+   "city": "Brisbane",
+   "state": "QLD",
+   "lat": -27.4558,
+   "lon": 153.0321,
+   "zone": "qld",
+   "website": "https://www.netherworldarcade.com/events/",
+   "director": "Emily Cosson",
+   "format": "Flip Frenzy / Double Elimination",
+   "ranking": "WOMEN",
+   "women": true,
+   "link": "https://www.ifpapinball.com/tournaments/view.php?t=108887",
+   "photo": "",
+   "pbm_id": 9885
+  },
+  {
+   "id": "98572",
+   "name": "Flippermania",
+   "event": "",
+   "type": "Tournament",
+   "start": "2026-11-21",
+   "end": "2026-11-21",
+   "venue": "Flipper Fellowship",
+   "city": "Arncliffe",
+   "state": "NSW",
+   "lat": -33.9396,
+   "lon": 151.1435,
+   "zone": "nsw",
+   "website": "https://www.aussiearcade.com/topic/104635-flipper-fellowship/",
+   "director": "GEE",
+   "format": "Matchplay Qualifying / Match Play",
+   "ranking": "MAIN",
+   "women": false,
+   "link": "https://www.ifpapinball.com/tournaments/view.php?t=98572",
+   "photo": "",
+   "pbm_id": 28054
+  },
+  {
+   "id": "121712",
+   "name": "Pincity Pinball Addicts FlipSquad Junior Division4",
+   "event": "",
+   "type": "Tournament",
+   "start": "2026-11-21",
+   "end": "2026-11-21",
+   "venue": "Unit 3 10 Kiawah st Lonsdale SA 5160",
+   "city": "Lonsdale",
+   "state": "SA",
+   "lat": -35.1066,
+   "lon": 138.4937,
+   "zone": "sa",
+   "website": "https://www.facebook.com/profile.php?id=100095041283095",
+   "director": "david clark",
+   "format": "Flip Frenzy",
+   "ranking": "YOUTH",
+   "women": false,
+   "link": "https://www.ifpapinball.com/tournaments/view.php?t=121712",
+   "photo": ""
+  },
+  {
+   "id": "121711",
+   "name": "Pincity Pinball Addicts SA Sapphires #3",
+   "event": "",
+   "type": "Tournament",
+   "start": "2026-11-21",
+   "end": "2026-11-21",
+   "venue": "Unit 3 10 Kiawah st Lonsdale SA 5160",
+   "city": "Lonsdale",
+   "state": "SA",
+   "lat": -35.1066,
+   "lon": 138.4937,
+   "zone": "sa",
+   "website": "https://www.facebook.com/profile.php?id=100095041283095",
+   "director": "david clark",
+   "format": "Flip Frenzy / Flip Frenzy",
+   "ranking": "WOMEN",
+   "women": true,
+   "link": "https://www.ifpapinball.com/tournaments/view.php?t=121711",
+   "photo": ""
+  },
+  {
+   "id": "121716",
+   "name": "Pincity Pinball Addicts The Big One!!",
+   "event": "",
+   "type": "Tournament",
+   "start": "2026-11-21",
+   "end": "2026-11-21",
+   "venue": "Pincity Pinball Addicts",
+   "city": "Lonsdale",
+   "state": "SA",
+   "lat": -35.1103,
+   "lon": 138.4988,
+   "zone": "sa",
+   "website": "https://www.facebook.com/profile.php?id=100095041283095",
+   "director": "david clark",
+   "format": "Matchplay Qualifying / Flip Frenzy",
+   "ranking": "MAIN",
+   "women": false,
+   "link": "https://www.ifpapinball.com/tournaments/view.php?t=121716",
+   "photo": "",
+   "pbm_id": 26712
+  },
+  {
+   "id": "114932",
+   "name": "Iron Maidens 22",
+   "event": "Womens Division",
+   "type": "Tournament",
+   "start": "2026-11-22",
+   "end": "2026-11-22",
+   "venue": "Illawarra Pinball Club",
+   "city": "Wollongong",
+   "state": "NSW",
+   "lat": -34.4346,
+   "lon": 150.8958,
+   "zone": "nsw",
+   "website": "https://www.facebook.com/profile.php?id=100083023758401",
+   "director": "Paul Soutter",
+   "format": "Max Matchplay Qualifying / Match Play",
+   "ranking": "WOMEN",
+   "women": true,
+   "link": "https://www.ifpapinball.com/tournaments/view.php?t=114932",
+   "photo": "",
+   "pbm_id": 27424
+  },
+  {
+   "id": "122356",
+   "name": "Pinball Planet Monthly (Flip Frenzy)",
+   "event": "",
+   "type": "Tournament",
+   "start": "2026-11-22",
+   "end": "2026-11-22",
+   "venue": "Pinball Planet",
+   "city": "Torquay",
+   "state": "QLD",
+   "lat": -25.2857,
+   "lon": 152.8702,
+   "zone": "qld",
+   "website": "https://www.facebook.com/pinballplanetoz/",
+   "director": "Andrew Priest",
+   "format": "Flip Frenzy / Single Elimination",
+   "ranking": "MAIN",
+   "women": false,
+   "link": "https://www.ifpapinball.com/tournaments/view.php?t=122356",
+   "photo": "",
+   "pbm_id": 23158
+  },
+  {
+   "id": "122452",
+   "name": "Transformers More Than Meets The Eye Launch Party",
+   "event": "Launch Party",
+   "type": "Tournament",
+   "start": "2026-11-22",
+   "end": "2026-11-22",
+   "venue": "The Park Shop MM7 Westfield Coomera",
+   "city": "Coomera",
+   "state": "QLD",
+   "lat": -27.8524,
+   "lon": 153.3153,
+   "zone": "qld",
+   "website": "https://www.facebook.com/profile.php?id=100057368742650",
+   "director": "Shane Parkes",
+   "format": "Matchplay Qualifying / Match Play",
+   "ranking": "MAIN",
+   "women": false,
+   "link": "https://www.ifpapinball.com/tournaments/view.php?t=122452",
+   "photo": ""
+  },
+  {
+   "id": "119710",
+   "name": "Tower Tuesdays",
+   "event": "",
+   "type": "Tournament",
+   "start": "2026-11-24",
+   "end": "2026-11-24",
+   "venue": "Five Star Tower Cinemas - Newcastle",
+   "city": "Newcastle",
+   "state": "NSW",
+   "lat": -32.9271,
+   "lon": 151.7766,
+   "zone": "nsw",
+   "website": "https://www.facebook.com/profile.php?id=61585774299291",
+   "director": "Pat Nichols",
+   "format": "Matchplay Qualifying / Match Play",
+   "ranking": "MAIN",
+   "women": false,
+   "link": "https://www.ifpapinball.com/tournaments/view.php?t=119710",
+   "photo": "",
+   "pbm_id": 28014
+  },
+  {
+   "id": "108254",
+   "name": "Tuesdays @Tatts - Stern Army",
+   "event": "",
+   "type": "Tournament",
+   "start": "2026-11-24",
+   "end": "2026-11-24",
+   "venue": "Tattersalls Hotel",
+   "city": "Sydney",
+   "state": "NSW",
+   "lat": -33.7537,
+   "lon": 150.6948,
+   "zone": "nsw",
+   "website": "https://www.aussiearcade.com/topic/106124-tuesdays-tatts-2026-last-tues-of-the-month-stern-army/",
+   "director": "Justin Withnell",
+   "format": "Matchplay Qualifying / Match Play",
+   "ranking": "MAIN",
+   "women": false,
+   "link": "https://www.ifpapinball.com/tournaments/view.php?t=108254",
+   "photo": "",
+   "pbm_id": 11216
+  },
+  {
+   "id": "121392",
+   "name": "Caltowie Pinball Hall Wednesday Nov #4 '26",
+   "event": "",
+   "type": "Tournament",
+   "start": "2026-11-25",
+   "end": "2026-11-25",
+   "venue": "",
+   "city": "Caltowie",
+   "state": "SA",
+   "lat": -33.1814,
+   "lon": 138.4811,
+   "zone": "sa",
+   "website": "https://app.matchplay.events/tournaments/274038",
+   "director": "Raymond Gillett",
+   "format": "Matchplay Qualifying / Fair Strike Knockout",
+   "ranking": "MAIN",
+   "women": false,
+   "link": "https://www.ifpapinball.com/tournaments/view.php?t=121392",
+   "photo": ""
+  },
+  {
+   "id": "113193",
+   "name": "Moon Dog World Monthly Tournament",
+   "event": "",
+   "type": "Tournament",
+   "start": "2026-11-25",
+   "end": "2026-11-25",
+   "venue": "Moon Dog World",
+   "city": "Melbourne",
+   "state": "Vic",
+   "lat": -37.7525,
+   "lon": 145.0292,
+   "zone": "vic",
+   "website": "https://www.facebook.com/groups/MelbPinball/events",
+   "director": "Ryan Cee",
+   "format": "Matchplay Qualifying / Match Play",
+   "ranking": "MAIN",
+   "women": false,
+   "link": "https://www.ifpapinball.com/tournaments/view.php?t=113193",
+   "photo": "",
+   "pbm_id": 13367
+  },
+  {
+   "id": "118956",
+   "name": "November saloon Barcade Matchplay Tournament",
+   "event": "",
+   "type": "Tournament",
+   "start": "2026-11-25",
+   "end": "2026-11-25",
+   "venue": "The Saloon Barcade",
+   "city": "Edithvale",
+   "state": "VIC",
+   "lat": -38.039,
+   "lon": 145.1085,
+   "zone": "vic",
+   "website": "https://saloonbarcade.com.au/",
+   "director": "Grant Budge",
+   "format": "Match Play",
+   "ranking": "MAIN",
+   "women": false,
+   "link": "https://www.ifpapinball.com/tournaments/view.php?t=118956",
+   "photo": "",
+   "pbm_id": 15098
+  },
+  {
+   "id": "108947",
+   "name": "Saloon Barcade Monthly Head to Head Matchplay",
+   "event": "",
+   "type": "Tournament",
+   "start": "2026-11-25",
+   "end": "2026-11-25",
+   "venue": "The Saloon Barcade",
+   "city": "Melbourne",
+   "state": "Vic",
+   "lat": -38.039,
+   "lon": 145.1085,
+   "zone": "vic",
+   "website": "https://www.facebook.com/groups/697420119229880",
+   "director": "Saloon Barcade Tournament Manager",
+   "format": "Matchplay Qualifying / Single Elimination",
+   "ranking": "MAIN",
+   "women": false,
+   "link": "https://www.ifpapinball.com/tournaments/view.php?t=108947",
+   "photo": "",
+   "pbm_id": 15098
+  },
+  {
+   "id": "121978",
+   "name": "APO Group Matchplay",
+   "event": "Side Tournament",
+   "type": "Tournament",
+   "start": "2026-11-26",
+   "end": "2026-11-26",
+   "venue": "Club Tweed  Cnr Wharf and Florence St  Tweed Heads   NSW 2485",
+   "city": "Tweed Heads",
+   "state": "NSW",
+   "lat": -28.1768,
+   "lon": 153.5427,
+   "zone": "qld",
+   "website": "https://auspinballopen.com/tournaments/",
+   "director": "John Cosson",
+   "format": "Match Play",
+   "ranking": "MAIN",
+   "women": false,
+   "link": "https://www.ifpapinball.com/tournaments/view.php?t=121978",
+   "photo": ""
+  },
+  {
+   "id": "115254",
+   "name": "Belles & Chimes Pinball Club Nov - Flip Frenzy",
+   "event": "Womens Division",
+   "type": "Tournament",
+   "start": "2026-11-26",
+   "end": "2026-11-26",
+   "venue": "BrewDog Pentridge",
+   "city": "Coburg",
+   "state": "VIC",
+   "lat": -37.7368,
+   "lon": 144.9683,
+   "zone": "vic",
+   "website": "https://www.facebook.com/groups/MelbPinball",
+   "director": "Ash Dixon",
+   "format": "Flip Frenzy / Match Play",
+   "ranking": "WOMEN",
+   "women": true,
+   "link": "https://www.ifpapinball.com/tournaments/view.php?t=115254",
+   "photo": "",
+   "pbm_id": 19635
+  },
+  {
+   "id": "112246",
+   "name": "Flipper Fellowship Group Matchplay",
+   "event": "",
+   "type": "Tournament",
+   "start": "2026-11-26",
+   "end": "2026-11-26",
+   "venue": "Flipper Fellowship",
+   "city": "Arncliffe",
+   "state": "NSW",
+   "lat": -33.9396,
+   "lon": 151.1435,
+   "zone": "nsw",
+   "website": "https://www.aussiearcade.com/topic/104635-flipper-fellowship",
+   "director": "GEE",
+   "format": "Matchplay Qualifying / Double Elimination",
+   "ranking": "MAIN",
+   "women": false,
+   "link": "https://www.ifpapinball.com/tournaments/view.php?t=112246",
+   "photo": "",
+   "pbm_id": 28054
+  },
+  {
+   "id": "116732",
+   "name": "Pinball at the Bowlo",
+   "event": "",
+   "type": "Tournament",
+   "start": "2026-11-26",
+   "end": "2026-11-26",
+   "venue": "Belconnen Bowling Club",
+   "city": "Hawker",
+   "state": "ACT",
+   "lat": -35.244,
+   "lon": 149.0404,
+   "zone": "nsw",
+   "website": "https://www.facebook.com/events/1888094578444246",
+   "director": "James Todd",
+   "format": "Matchplay Qualifying / Match Play",
+   "ranking": "MAIN",
+   "women": false,
+   "link": "https://www.ifpapinball.com/tournaments/view.php?t=116732",
+   "photo": "",
+   "pbm_id": 25205
+  },
+  {
+   "id": "104531",
+   "name": "Pretty in Pin November 2026",
+   "event": "Womens Division",
+   "type": "Tournament",
+   "start": "2026-11-26",
+   "end": "2026-11-26",
+   "venue": "The Suburban Brew",
+   "city": "Goodwood",
+   "state": "SA",
+   "lat": -34.9493,
+   "lon": 138.5893,
+   "zone": "sa",
+   "website": "https://www.facebook.com/bellespinballadelaide",
+   "director": "Amity Wells",
+   "format": "Match Play",
+   "ranking": "WOMEN",
+   "women": true,
+   "link": "https://www.ifpapinball.com/tournaments/view.php?t=104531",
+   "photo": "",
+   "pbm_id": 19099
+  }
+ ],
+ "comps_until": "2026-11-26",
+ "episodes": [
+  {
+   "show": "pinball-oz-wide",
+   "title": "Episode 26: Melbourne Pinball Walkthrough",
+   "image": "https://d3t3ozftmdmh3i.cloudfront.net/staging/podcast_uploaded_nologo/43052507/43052507-1739536407309-abb503a907dde.jpg",
+   "date": "2026-11-18",
+   "minutes": 87,
+   "summary": "This episode Jarrod and Mat do a walkthrough to interview some of the exhibitors who helped make the Melbourne Pinball Expo the best event in Melbourne!! - Lucas from ACME PINBALL - Mark from SPOOKY AUSTRALIA - George & Sonya from MPE \u2026",
+   "link": "https://podcasters.spotify.com/pod/show/pinball-oz-wide/episodes/PINBALL-OZ-WIDE---EPISODE-26--MELBOURNE-PINBALL-WALKTHROUGH-e3sjmvg",
+   "id": "89f5a8cb-6e5c-4b51-aed9-670bca1d6003",
+   "show_name": "Pinball Oz Wide"
+  }
+ ],
+ "email": {
+  "status": "draft",
+  "id": "em_5n0b5r2zex9sjrd0b4eat7kqxz",
+  "at": "2026-11-18T19:10:57+00:00"
+ }
+}
