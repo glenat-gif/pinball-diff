@@ -1,0 +1,141 @@
+{
+ "items": [
+  {
+   "location_id": 28991,
+   "location_name": "The Servo Lakes Entrance",
+   "city": "Lakes Entrance",
+   "link": "https://pinballmap.com/map?by_location_id=28991",
+   "lat": -37.8789418,
+   "lon": 147.9941532,
+   "ids": {
+    "Pok\u00e9mon (Pro) (Stern, 2026)": 4615
+   },
+   "kind": "added",
+   "rank": 2.85,
+   "date": "2026-11-14",
+   "machines": [
+    "Pok\u00e9mon (Pro) (Stern, 2026)"
+   ],
+   "by": [
+    "justrebound"
+   ],
+   "flags": {
+    "Pok\u00e9mon (Pro) (Stern, 2026)": [
+     "New release"
+    ]
+   }
+  },
+  {
+   "location_id": 20134,
+   "location_name": "Timezone Highpoint",
+   "city": "Maribyrnong",
+   "link": "https://pinballmap.com/map?by_location_id=20134",
+   "lat": -37.7728476,
+   "lon": 144.8895802,
+   "ids": {
+    "Pok\u00e9mon (Pro) (Stern, 2026)": 4615
+   },
+   "kind": "added",
+   "rank": 2.85,
+   "date": "2026-11-20",
+   "machines": [
+    "Pok\u00e9mon (Pro) (Stern, 2026)"
+   ],
+   "by": [
+    "Sakunera"
+   ],
+   "flags": {
+    "Pok\u00e9mon (Pro) (Stern, 2026)": [
+     "New release"
+    ]
+   }
+  },
+  {
+   "location_id": 16088,
+   "location_name": "Bendigo Bowl",
+   "city": "Bendigo",
+   "link": "https://pinballmap.com/map?by_location_id=16088",
+   "lat": -36.7570722,
+   "lon": 144.2846797,
+   "ids": {
+    "John Wick (Pro) (Stern, 2024)": 3845
+   },
+   "kind": "added",
+   "rank": 2.9,
+   "date": "2026-11-16",
+   "machines": [
+    "John Wick (Pro) (Stern, 2024)"
+   ],
+   "by": [
+    "Pinerang"
+   ],
+   "flags": {}
+  },
+  {
+   "location_id": 25278,
+   "location_name": "Roller One",
+   "city": "Burwood East",
+   "link": "https://pinballmap.com/map?by_location_id=25278",
+   "lat": -37.8530342,
+   "lon": 145.1493983,
+   "ids": {
+    "The Mandalorian (Pro) (Stern, 2021)": 3288
+   },
+   "kind": "removed",
+   "rank": 4,
+   "date": "2026-11-17",
+   "machines": [
+    "The Mandalorian (Pro) (Stern, 2021)"
+   ],
+   "by": [
+    "CircusFreak77"
+   ],
+   "flags": {}
+  },
+  {
+   "location_id": 22797,
+   "location_name": "Timezone Eastland",
+   "city": "Ringwood",
+   "link": "https://pinballmap.com/map?by_location_id=22797",
+   "lat": -37.8144356,
+   "lon": 145.2289714,
+   "ids": {
+    "The Munsters (Pro) (Stern, 2019)": 3099
+   },
+   "kind": "condition",
+   "status": "green",
+   "rank": 6,
+   "date": "2026-11-19",
+   "machine": "The Munsters (Pro) (Stern, 2019)",
+   "comment": "Plays well and all systems look to be working fine, nice strong flippers and slingshots",
+   "user": "dylmcil",
+   "by": [
+    "dylmcil"
+   ],
+   "flags": {}
+  },
+  {
+   "location_id": 20134,
+   "location_name": "Timezone Highpoint",
+   "city": "Maribyrnong",
+   "link": "https://pinballmap.com/map?by_location_id=20134",
+   "lat": -37.7728476,
+   "lon": 144.8895802,
+   "ids": {
+    "Pok\u00e9mon (Pro) (Stern, 2026)": 4615
+   },
+   "kind": "condition",
+   "status": "note",
+   "rank": 6,
+   "date": "2026-11-20",
+   "machine": "Pok\u00e9mon (Pro) (Stern, 2026)",
+   "comment": "Right flipper was misaligned when I used it.",
+   "user": "Sakunera",
+   "by": [
+    "Sakunera"
+   ],
+   "flags": {}
+  }
+ ],
+ "confirmations": 4
+}

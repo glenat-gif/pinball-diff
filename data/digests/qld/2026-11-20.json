@@ -1,0 +1,75 @@
+{
+ "items": [
+  {
+   "location_id": 17389,
+   "location_name": "The Clubhouse Moorooka",
+   "city": "Moorooka",
+   "link": "https://pinballmap.com/map?by_location_id=17389",
+   "lat": -27.5310871,
+   "lon": 153.0277733,
+   "ids": {
+    "Dracula (Stern Electronics, 1979)": 867,
+    "Meteor (Stern Electronics, 1979)": 851,
+    "Cosmic Princess (Allied Leisure, 1979)": 3319
+   },
+   "kind": "rotation",
+   "rank": 2.8,
+   "date": "2026-11-20",
+   "machines": [
+    "Meteor (Stern Electronics, 1979)",
+    "Cosmic Princess (Allied Leisure, 1979)"
+   ],
+   "out": [
+    "Dracula (Stern Electronics, 1979)"
+   ],
+   "by": [
+    "rexeverything"
+   ],
+   "flags": {}
+  },
+  {
+   "location_id": 9947,
+   "location_name": "Laserforce Brisbane",
+   "city": "Woolloongabba",
+   "link": "https://pinballmap.com/map?by_location_id=9947",
+   "lat": -27.4891685,
+   "lon": 153.0354542,
+   "ids": {
+    "Indiana Jones: The Pinball Adventure (Williams, 1993)": 651
+   },
+   "kind": "removed",
+   "rank": 4,
+   "date": "2026-11-14",
+   "machines": [
+    "Indiana Jones: The Pinball Adventure (Williams, 1993)"
+   ],
+   "by": [
+    "rej"
+   ],
+   "flags": {}
+  },
+  {
+   "location_id": 9893,
+   "location_name": "Planet Arcades",
+   "city": "Strathpine",
+   "link": "https://pinballmap.com/map?by_location_id=9893",
+   "lat": -27.3070692,
+   "lon": 152.991811,
+   "ids": {
+    "Teenage Mutant Ninja Turtles (Pro) (Stern, 2020)": 3255
+   },
+   "kind": "condition",
+   "status": "amber",
+   "rank": 5,
+   "date": "2026-11-14",
+   "machine": "Teenage Mutant Ninja Turtles (Pro) (Stern, 2020)",
+   "comment": "Machine has no faults atm. 5 ball games.",
+   "user": "bt",
+   "by": [
+    "bt"
+   ],
+   "flags": {}
+  }
+ ],
+ "confirmations": 1
+}
