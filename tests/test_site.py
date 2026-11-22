@@ -88,6 +88,28 @@ class SiteTests(Built):
         self.assertLess(home.index('id="near-ask"'), home.index('class="states"'))   # the state strip leads the state sections
 
 
+class LeadArtTests(unittest.TestCase):
+    ITEM = {"kind": "added", "location_name": "The Bearded Tit", "city": "Redfern", "lat": -33.892, "lon": 151.2,
+            "machines": ["Foo Fighters (Pro) (Stern, 2023)", "Black Knight: Sword of Rage (LE) (Stern, 2019)"],
+            "flags": {"Black Knight: Sword of Rage (LE) (Stern, 2019)": ["Limited Edition"]},
+            "ids": {"Foo Fighters (Pro) (Stern, 2023)": 1, "Black Knight: Sword of Rage (LE) (Stern, 2019)": 2}}
+    CAT = {"1": {"img": "https://img.opdb.org/foo-medium.jpg", "w": 640, "h": 400},
+           "2": {"img": "https://img.opdb.org/bk-medium.jpg", "w": 640, "h": 400}}
+
+    def test_the_picture_is_of_the_machine_the_headline_names(self):
+        with mock.patch.object(mail, "_catalogue", lambda: self.CAT), mock.patch.dict(mail.SITE, {"machine_art": True}):
+            self.assertIn("Black Knight: Sword of Rage", mail._headline(self.ITEM, "nsw", False)[0])
+            self.assertEqual(mail.lead_art(self.ITEM)[1], "https://img.opdb.org/bk-medium.jpg")
+            self.assertEqual([a[1] for a in mail.art_for(self.ITEM)],                      # the lead first, the rest after
+                             ["https://img.opdb.org/bk-medium.jpg", "https://img.opdb.org/foo-medium.jpg"])
+
+    def test_no_picture_beats_the_wrong_picture(self):
+        only_foo = {"1": self.CAT["1"]}
+        with mock.patch.object(mail, "_catalogue", lambda: only_foo), mock.patch.dict(mail.SITE, {"machine_art": True}):
+            self.assertIsNone(mail.lead_art(self.ITEM))                                    # Black Knight has no artwork
+            self.assertEqual(len(mail.art_for(self.ITEM)), 1)                              # the row still shows Foo Fighters
+
+
 class StateCodeTests(unittest.TestCase):
     def test_canberra_is_act_and_queanbeyan_is_nsw(self):
         from pbmdiff import areas

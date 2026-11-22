@@ -707,10 +707,10 @@ def highlights_strip(weeks, limit=8):
     from . import mail
     cards = []
     for text, score, item in mail.ranked({"zones": weeks}):
-        art = mail.art_for(item)
+        art = mail.lead_art(item)                 # the picture of the machine the headline names, or no card
         if not art:
             continue
-        mid, img, name, _, _, _ = art[0]
+        mid, img, name, _, _, _ = art
         label, tone = mail.headline_label(text)
         slug = machine_page_for(name, item)       # the card is the machine, so it opens the machine's page
         href = u("/machines/" + slug + "/") if slug else item["link"]

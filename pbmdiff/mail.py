@@ -32,6 +32,18 @@ def site_url(path=""):
 STATE_CODE = areas.STATE_CODE
 
 
+def lead_machine(item):
+    """The machine an arrival's headline names: the rarest flagged one, else the first to land.
+    The picture beside a headline has to be this machine's, so the artwork asks here too."""
+    if item["kind"] not in ("added", "rotation", "swap"):
+        return None
+    flags = item.get("flags") or {}
+    weight = lambda n: sum(issue.HIGHLIGHT_WEIGHT.get(f, 0) for f in flags.get(n, []))
+    flagged = sorted((n for n in flags if flags[n]), key=weight, reverse=True)   # rarest first
+    names = flagged or item.get("machines") or [item.get("in")]
+    return names[0] if names and names[0] else None
+
+
 def _headline(item, zone, local):
     """A short phrase and a score. Venue first for venues, machine first for arrivals, and the
     state after the place every time, so a reader anywhere knows where it is."""
@@ -47,11 +59,11 @@ def _headline(item, zone, local):
         place = f"{item['location_name']} in {where}" if item.get("city") else venue
         return (f"New venue: {place}", 12 if local else 11)
     if k in ("added", "rotation", "swap"):
-        names = flagged or item.get("machines") or [item.get("in")]
-        name = title(names[0]) if names and names[0] else None
+        lead = lead_machine(item)
+        name = title(lead) if lead else None
         if not name:
             return None
-        score = (10 if local else 9) + (weight(names[0]) if flagged else 0)   # home state wins a tie, no more
+        score = (10 if local else 9) + (weight(lead) if flagged else 0)   # home state wins a tie, no more
         return (f"{name} lands at {venue}" if local else f"{name} lands in {where}", score)
     if k == "removed":
         return (f"{title(item['machines'][0])} leaves {venue}", 2 if local else 1)
@@ -119,7 +131,7 @@ def hero(iss, zone=None):
             break
         if zone is not None and item.get("zone") != zone:
             continue
-        if art_for(item):
+        if lead_art(item):
             return text, item
     return None
 
@@ -256,7 +268,7 @@ def _catalogue():
 
 def art_for(item, limit=6):
     """[(machine id, image url, name, leaving, width, height)] for the machines a change mentions,
-    arrivals first."""
+    the one its headline names first, then the other arrivals."""
     if not SITE.get("machine_art"):
         return []
     cat = _catalogue()
@@ -268,6 +280,8 @@ def art_for(item, limit=6):
     else:
         gone = k == "removed"
         names = [(n, gone) for n in item.get("machines") or []] + [(n, True) for n in item.get("out") or []]
+    lead = lead_machine(item)
+    names.sort(key=lambda pair: not (pair[0] == lead and not pair[1]))      # stable: only the lead moves up
     ids = item.get("ids") or {}
     out, seen = [], set()
     for name, leaving in names:
@@ -281,6 +295,16 @@ def art_for(item, limit=6):
         if len(out) == limit:
             break
     return out
+
+
+def lead_art(item):
+    """The one picture to put beside an item's headline, or None when the machine the headline
+    names has no artwork: another machine's picture under its name would be wrong."""
+    tiles = art_for(item)
+    if not tiles:
+        return None
+    lead = lead_machine(item)
+    return tiles[0] if lead is None or tiles[0][2] == lead else None
 
 
 def _tile(t, w, h, margin="0"):
@@ -333,7 +357,7 @@ def _hero_pill(text):
 
 def _h_hero(text, item, zone):
     """The week's lead: the backglass large on a dark panel, then the headline and the change."""
-    t = art_for(item)[0]
+    t = lead_art(item)
     _, img, name, _, w, h = t
     if w / h >= 640 / 360:            # wide: fill the width
         iw, ih = 640, round(640 * h / w)
