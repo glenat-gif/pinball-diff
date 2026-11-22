@@ -6,8 +6,8 @@
     "country": "Australia"
    },
    "type": "Tournament",
-   "total_results": 117,
-   "rows": 117,
+   "total_results": 116,
+   "rows": 116,
    "keys": [
     "search_filter",
     "total_results",
@@ -2264,27 +2264,6 @@
    "ranking": "MAIN",
    "women": false,
    "link": "https://www.ifpapinball.com/tournaments/view.php?t=124001",
-   "photo": ""
-  },
-  {
-   "id": "124002",
-   "name": "Drain Your Balls to the Max!",
-   "event": "",
-   "type": "Tournament",
-   "start": "2027-01-08",
-   "end": "2027-01-08",
-   "venue": "",
-   "city": "Adelaide",
-   "state": "SA",
-   "lat": -34.7495,
-   "lon": 138.6397,
-   "zone": "sa",
-   "website": "https://sapinballandarcade.com.au/",
-   "director": "Scottie Taylor",
-   "format": "Max Match Play",
-   "ranking": "MAIN",
-   "women": false,
-   "link": "https://www.ifpapinball.com/tournaments/view.php?t=124002",
    "photo": ""
   },
   {
