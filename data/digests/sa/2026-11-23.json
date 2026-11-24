@@ -1,0 +1,34 @@
+{
+ "items": [
+  {
+   "location_id": 27478,
+   "location_name": "Jack's Fish and Chips",
+   "city": "Taperoo",
+   "link": "https://pinballmap.com/map?by_location_id=27478",
+   "lat": -34.8079996,
+   "lon": 138.5010445,
+   "ids": {
+    "Red & Ted's Road Show (Williams, 1994)": 680,
+    "The Mandalorian (Premium) (Stern, 2021)": 3289
+   },
+   "kind": "rotation",
+   "rank": 2.85,
+   "date": "2026-11-18",
+   "machines": [
+    "The Mandalorian (Premium) (Stern, 2021)"
+   ],
+   "out": [
+    "Red & Ted's Road Show (Williams, 1994)"
+   ],
+   "by": [
+    "imczr"
+   ],
+   "flags": {
+    "The Mandalorian (Premium) (Stern, 2021)": [
+     "Premium"
+    ]
+   }
+  }
+ ],
+ "confirmations": 0
+}

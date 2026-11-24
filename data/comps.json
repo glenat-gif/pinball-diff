@@ -1,13 +1,13 @@
 {
- "fetched": "2026-11-23",
+ "fetched": "2026-11-24",
  "report": [
   {
    "query": {
     "country": "Australia"
    },
    "type": "Tournament",
-   "total_results": 116,
-   "rows": 116,
+   "total_results": 117,
+   "rows": 117,
    "keys": [
     "search_filter",
     "total_results",
@@ -2369,6 +2369,27 @@
    "ranking": "MAIN",
    "women": false,
    "link": "https://www.ifpapinball.com/tournaments/view.php?t=120681",
+   "photo": ""
+  },
+  {
+   "id": "120683",
+   "name": "Flipper Fellowship Silver Belle Grand Prix",
+   "event": "",
+   "type": "Tournament",
+   "start": "2027-01-23",
+   "end": "2027-01-23",
+   "venue": "Bayside Anglican Church Hall  Pitt-Owen Street",
+   "city": "Arncliffe",
+   "state": "NSW",
+   "lat": -33.9396,
+   "lon": 151.1435,
+   "zone": "nsw",
+   "website": "https://flipperfellowship.com/",
+   "director": "GEE",
+   "format": "Matchplay Qualifying / Match Play",
+   "ranking": "MAIN",
+   "women": false,
+   "link": "https://www.ifpapinball.com/tournaments/view.php?t=120683",
    "photo": ""
   }
  ]
