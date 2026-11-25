@@ -1,0 +1,82 @@
+{
+ "items": [
+  {
+   "location_id": 17389,
+   "location_name": "The Clubhouse Moorooka",
+   "city": "Moorooka",
+   "link": "https://pinballmap.com/map?by_location_id=17389",
+   "lat": -27.5310871,
+   "lon": 153.0277733,
+   "ids": {
+    "Dracula (Stern Electronics, 1979)": 867,
+    "Meteor (Stern Electronics, 1979)": 851,
+    "Cosmic Princess (Allied Leisure, 1979)": 3319
+   },
+   "kind": "rotation",
+   "rank": 2.8,
+   "date": "2026-11-20",
+   "machines": [
+    "Meteor (Stern Electronics, 1979)",
+    "Cosmic Princess (Allied Leisure, 1979)"
+   ],
+   "out": [
+    "Dracula (Stern Electronics, 1979)"
+   ],
+   "by": [
+    "rexeverything"
+   ],
+   "flags": {}
+  },
+  {
+   "location_id": 14333,
+   "location_name": "BrewDog DogTap Brisbane",
+   "city": "Brisbane City",
+   "link": "https://pinballmap.com/map?by_location_id=14333",
+   "lat": -27.4484924,
+   "lon": 153.0998284,
+   "ids": {
+    "Abra Ca Dabra (Gottlieb, 1975)": 1263,
+    "Centigrade 37 (Gottlieb, 1977)": 1674,
+    "Cosmic Princess (Allied Leisure, 1979)": 3319,
+    "Meteor (Stern Electronics, 1979)": 851,
+    "Stars (Stern Electronics, 1978)": 855
+   },
+   "kind": "removed",
+   "rank": 4,
+   "date": "2026-11-25",
+   "machines": [
+    "Abra Ca Dabra (Gottlieb, 1975)",
+    "Centigrade 37 (Gottlieb, 1977)",
+    "Cosmic Princess (Allied Leisure, 1979)",
+    "Meteor (Stern Electronics, 1979)",
+    "Stars (Stern Electronics, 1978)"
+   ],
+   "by": [
+    "rwolf15"
+   ],
+   "flags": {}
+  },
+  {
+   "location_id": 16450,
+   "location_name": "Felons Barrell Hall",
+   "city": "Brisbane City",
+   "link": "https://pinballmap.com/map?by_location_id=16450",
+   "lat": -27.4624165,
+   "lon": 153.0351093,
+   "ids": {
+    "Spider-Man (Vault Edition) (Stern, 2016)": 2565
+   },
+   "kind": "removed",
+   "rank": 4,
+   "date": "2026-11-25",
+   "machines": [
+    "Spider-Man (Vault Edition) (Stern, 2016)"
+   ],
+   "by": [
+    "rwolf15"
+   ],
+   "flags": {}
+  }
+ ],
+ "confirmations": 1
+}
