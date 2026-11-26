@@ -706,8 +706,14 @@ def highlights_strip(weeks, limit=8):
     email subject uses. Four show at a time on a desktop and rotate; a phone swipes through all."""
     from . import mail
     cards = []
-    for text, score, item in mail.ranked({"zones": weeks}):
+    order = mail.ranked({"zones": weeks})
+    # A new venue has several machines to be pictured by; an arrival has one. So the venue's card
+    # steps aside: it takes the first of its pictures that no arrival's card is already showing.
+    taken = {a[1] for a in (mail.lead_art(i) for _, _, i in order if i["kind"] != "new_venue") if a}
+    for text, score, item in order:
         art = mail.lead_art(item)                 # the picture of the machine the headline names, or no card
+        if art and item["kind"] == "new_venue":
+            art = next((t for t in mail.art_for(item) if not t[3] and t[1] not in taken), art)
         if not art:
             continue
         mid, img, name, _, _, _ = art
