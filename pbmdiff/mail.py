@@ -32,15 +32,20 @@ def site_url(path=""):
 STATE_CODE = areas.STATE_CODE
 
 
+def _star(item):
+    """The rarest flagged machine in a change, or None: a new release or a limited edition."""
+    flags = item.get("flags") or {}
+    weight = lambda n: sum(issue.HIGHLIGHT_WEIGHT.get(f, 0) for f in flags.get(n, []))
+    flagged = sorted((n for n in flags if flags[n]), key=weight, reverse=True)   # rarest first
+    return flagged[0] if flagged else None
+
+
 def lead_machine(item):
     """The machine an arrival's headline names: the rarest flagged one, else the first to land.
     The picture beside a headline has to be this machine's, so the artwork asks here too."""
     if item["kind"] not in ("added", "rotation", "swap"):
         return None
-    flags = item.get("flags") or {}
-    weight = lambda n: sum(issue.HIGHLIGHT_WEIGHT.get(f, 0) for f in flags.get(n, []))
-    flagged = sorted((n for n in flags if flags[n]), key=weight, reverse=True)   # rarest first
-    names = flagged or item.get("machines") or [item.get("in")]
+    names = [_star(item)] if _star(item) else (item.get("machines") or [item.get("in")])
     return names[0] if names and names[0] else None
 
 
@@ -56,8 +61,10 @@ def _headline(item, zone, local):
     flagged = sorted((n for n in flags if flags[n]), key=weight, reverse=True)   # rarest first
     k = item["kind"]
     if k == "new_venue":
+        # Somewhere new to play is the biggest news there is: above any single arrival, and above
+        # another new venue when it opens with something rare on the floor.
         place = f"{item['location_name']} in {where}" if item.get("city") else venue
-        return (f"New venue: {place}", 12 if local else 11)
+        return (f"New venue: {place}", (14 if local else 13) + (weight(flagged[0]) if flagged else 0))
     if k in ("added", "rotation", "swap"):
         lead = lead_machine(item)
         name = title(lead) if lead else None
@@ -280,7 +287,7 @@ def art_for(item, limit=6):
     else:
         gone = k == "removed"
         names = [(n, gone) for n in item.get("machines") or []] + [(n, True) for n in item.get("out") or []]
-    lead = lead_machine(item)
+    lead = lead_machine(item) or (_star(item) if k == "new_venue" else None)   # a new venue shows off its rarest machine
     names.sort(key=lambda pair: not (pair[0] == lead and not pair[1]))      # stable: only the lead moves up
     ids = item.get("ids") or {}
     out, seen = [], set()

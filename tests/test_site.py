@@ -110,6 +110,30 @@ class LeadArtTests(unittest.TestCase):
             self.assertEqual(len(mail.art_for(self.ITEM)), 1)                              # the row still shows Foo Fighters
 
 
+class NewVenueRankTests(unittest.TestCase):
+    VENUE = {"kind": "new_venue", "location_name": "Varsity Ringwood", "city": "Ringwood", "lat": -37.816, "lon": 145.225,
+             "machines": ["Godzilla (Pro) (Stern, 2021)", "Pokémon (Pro) (Stern, 2026)"],
+             "flags": {"Pokémon (Pro) (Stern, 2026)": ["New release"]},
+             "ids": {"Godzilla (Pro) (Stern, 2021)": 1, "Pokémon (Pro) (Stern, 2026)": 2}}
+    LANDED = {"kind": "added", "location_name": "Timezone Highpoint", "city": "Maribyrnong", "lat": -37.77, "lon": 144.89,
+              "machines": ["Pokémon (Pro) (Stern, 2026)"], "flags": {"Pokémon (Pro) (Stern, 2026)": ["New release"]},
+              "ids": {"Pokémon (Pro) (Stern, 2026)": 2}}
+
+    def test_a_new_venue_outranks_any_single_arrival(self):
+        plain = {**self.VENUE, "flags": {}}
+        for local in (True, False):
+            self.assertGreater(mail._headline(plain, "vic", local)[1], mail._headline(self.LANDED, "vic", True)[1] - 1)
+            self.assertGreater(mail._headline(self.VENUE, "vic", local)[1], mail._headline(self.LANDED, "vic", True)[1])
+        self.assertGreater(mail._headline(self.VENUE, "vic", True)[1], mail._headline(plain, "vic", True)[1])
+
+    def test_a_new_venue_is_pictured_by_its_rarest_machine(self):
+        cat = {"1": {"img": "https://img.opdb.org/godzilla-medium.jpg", "w": 640, "h": 400},
+               "2": {"img": "https://img.opdb.org/pokemon-medium.jpg", "w": 640, "h": 400}}
+        with mock.patch.object(mail, "_catalogue", lambda: cat), mock.patch.dict(mail.SITE, {"machine_art": True}):
+            self.assertEqual(mail.lead_art(self.VENUE)[1], "https://img.opdb.org/pokemon-medium.jpg")
+            self.assertEqual(mail.lead_art({**self.VENUE, "flags": {}})[1], "https://img.opdb.org/godzilla-medium.jpg")
+
+
 class StateCodeTests(unittest.TestCase):
     def test_canberra_is_act_and_queanbeyan_is_nsw(self):
         from pbmdiff import areas
