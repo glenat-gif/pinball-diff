@@ -112,7 +112,8 @@ class LeadArtTests(unittest.TestCase):
 
 class FestivalTests(Built):
     LIST = [{"name": "Dated Fest", "venue": "The Hall", "town": "Adelaide", "state": "SA", "last": ["2026-07-03", "2026-07-05"],
-             "next": ["2027-07-08", "2027-07-11"], "expected": "", "link": "https://example.org/dated"},
+             "next": ["2027-07-08", "2027-07-11"], "expected": "", "link": "https://example.org/dated",
+             "facebook": "https://www.facebook.com/datedfest", "image": "https://example.org/logo.png"},
             {"name": "Waiting Fest", "venue": "", "town": "Newcastle", "state": "NSW", "last": ["2026-09-19", "2026-09-20"],
              "next": None, "expected": "the third weekend of September", "link": ""},
             {"name": "Gone Fest", "venue": "", "town": "Hobart", "state": "TAS", "last": None,
@@ -125,15 +126,24 @@ class FestivalTests(Built):
             html_ = site.festivals_block(dt.date(2026, 11, 27))
             self.assertIn("8 to 11 Jul 2027", html_)
             self.assertIn('href="https://example.org/dated"', html_)
+            self.assertIn('<img src="https://example.org/logo.png" alt="Dated Fest"', html_)       # the organiser's own logo
+            self.assertIn('<a href="https://www.facebook.com/datedfest">Facebook</a>', html_)
+            self.assertIn('<span class="fest-img dmdtile">Waiting Fest</span>', html_)             # no logo, no link: its name on a tile
             self.assertIn("2027 TBC", html_)
             self.assertIn("Last held 19 to 20 September 2026. Expected the third weekend of September.", html_)
             self.assertIn("Last held 1 to 2 August 2026.", html_)          # its dated edition has passed: now it waits too
             self.assertEqual([x["name"] for x in site.festivals_ld(dt.date(2026, 11, 27))], ["Dated Fest"])
 
-    def test_the_comps_page_leads_with_festivals(self):
-        page = (site.build(on=dt.date(2026, 10, 3)) / "comps" / "index.html").read_text()
-        self.assertIn("Festivals and expos", page)
-        self.assertIn("Australian Pinball Expo", page)
+    def test_festivals_have_their_own_page(self):
+        dist = site.build(on=dt.date(2026, 10, 3))
+        fests = (dist / "festivals" / "index.html").read_text()
+        self.assertIn("Australian Pinball Expo", fests)
+        self.assertIn('href="/festivals/" aria-current="page">Festivals</a>', fests)     # in the nav, and marked
+        self.assertIn('"@type": "Festival"', fests)
+        comps = (dist / "comps" / "index.html").read_text()
+        self.assertNotIn("Australian Pinball Expo", comps)                                # a different crowd
+        self.assertIn('href="/festivals/">their own page</a>', comps)
+        self.assertIn("/festivals/", (dist / "sitemap.xml").read_text())
 
 
 class NewVenueRankTests(unittest.TestCase):

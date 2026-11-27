@@ -268,11 +268,10 @@ def comps_page(comps, on):
              + "".join(f'<li><code>{e(base)}/comps/{z}.ics</code></li>' for z in states + ["all"]) +
              '</ul></details></section>')
     if not comps:
-        body = (festivals_block(on) + '<p class="quiet">No upcoming IFPA events are listed yet. '
+        body = ('<p class="quiet">No upcoming IFPA events are listed yet. '
                 'They appear here as directors add them to the IFPA calendar.</p>')
     else:
-        body = (festivals_block(on) +
-                f'<div class="state-pick" id="calendar" role="group" aria-label="Show comps in">{chips}</div>'
+        body = (f'<div class="state-pick" id="calendar" role="group" aria-label="Show comps in">{chips}</div>'
                 '<p class="cal-hint">One dot per comp, coloured by state. Tap a day.</p>'
                 f'<div class="months dots">{"".join(months)}</div>'
                 f'<div class="agenda">{"".join(days)}</div>'
@@ -298,12 +297,13 @@ def comps_page(comps, on):
                 'var q=(location.search.match(/state=(\\w+)/)||[])[1],s0=q;if(s0===undefined){try{s0=localStorage.getItem("comps-state")}catch(e){}}'
                 'if(s0&&bs.some(function(b){return b.dataset.pick===s0}))pick(s0);})();</script>')
     box = ('<p class="wordmark" style="font-size:clamp(1.6rem,6vw,2.6rem)">Comps</p>'
-           '<p class="lede">The year\'s festivals and expos, then every IFPA-sanctioned tournament and league in Australia for the next two months.'
+           '<p class="lede">Every IFPA-sanctioned tournament and league in Australia for the next two months.'
            '<small>From the IFPA calendar, updated every morning, with venues matched to Pinball Map so you can see '
-           'what you\'ll be playing. Running a comp that is not here? Add it to the IFPA calendar and it appears the next day.</small></p>')
+           'what you\'ll be playing. Running a comp that is not here? Add it to the IFPA calendar and it appears the next day. '
+           f'Festivals and expos have <a href="{u("/festivals/")}">their own page</a>.</small></p>')
     dmd = display(len(comps), plural(len(comps), "comp"), "next two months", [comp_line(c) for c in comps])
-    return page("Pinball comps and festivals in Australia", body, path="/comps/", structured=festivals_ld(on) + comps_ld(comps),
-                description="Upcoming pinball tournaments, leagues, festivals and expos across Australia.",
+    return page("Pinball comps in Australia", body, path="/comps/", structured=comps_ld(comps),
+                description="Upcoming pinball tournaments and leagues across Australia, by month and state.",
                 box_extra=box, current="comps", dmd=dmd)
 
 
@@ -497,7 +497,7 @@ def page(title, body, *, path, description, box_extra="", nav="", current=None, 
 <body>
 <header class="mast"><div class="wrap">
 <div class="dmd-panel{" big" if dmd else ""}">{wm}{dmd}</div>
-<nav class="sections" aria-label="Site"><a href="{u('/')}"{cur('home')}>This week</a><a href="{u('/comps/')}"{cur('comps')}>Comps</a><a href="{u('/machines/')}"{cur('machines')}>Machines</a><a href="{u('/podcasts/')}"{cur('podcasts')}>Podcasts</a><a href="{u('/issues/')}"{cur('issues')}>Emails</a><a href="{u('/about/')}"{cur('about')}>About</a></nav>
+<nav class="sections" aria-label="Site"><a href="{u('/')}"{cur('home')}>This week</a><a href="{u('/comps/')}"{cur('comps')}>Comps</a><a href="{u('/festivals/')}"{cur('festivals')}>Festivals</a><a href="{u('/machines/')}"{cur('machines')}>Machines</a><a href="{u('/podcasts/')}"{cur('podcasts')}>Podcasts</a><a href="{u('/issues/')}"{cur('issues')}>Emails</a><a href="{u('/about/')}"{cur('about')}>About</a></nav>
 </div></header>
 <main><div class="wrap">
 {intro}
@@ -710,24 +710,56 @@ def festivals(on):
 
 
 def festivals_block(on):
-    rows = []
+    """One card per festival: the organiser's own logo (served from their site, with the name on a
+    display tile if it ever goes missing), the dates, the place, and the way to their pages."""
+    cards = []
     for _, dated, f in festivals(on):
-        name = f'<a class="cname" href="{e(f["link"])}">{e(f["name"])}</a>' if f.get("link") else f'<span class="cname">{e(f["name"])}</span>'
+        to = f.get("link") or f.get("facebook")
+        if f.get("image"):
+            fit = "cover" if f.get("image_fit") == "cover" else "contain"
+            style = f'background:{e(f.get("image_bg") or "#ffffff")}'
+            pos = f';object-position:{e(f["image_pos"])}' if f.get("image_pos") else ""
+            inner = (f'<img src="{e(f["image"])}" alt="{e(f["name"])}" loading="lazy" decoding="async" style="object-fit:{fit}{pos}" '
+                     'onerror="var p=this.parentNode;p.className+=\' dmdtile\';p.removeAttribute(\'style\');p.textContent=this.alt">')
+            cls = f"fest-img {fit}"
+        else:
+            style, inner, cls = "", e(f["name"]), "fest-img dmdtile"
+        tile = (f'<a class="{cls}" href="{e(to)}"{" style=" + chr(34) + style + chr(34) if style else ""}>{inner}</a>' if to
+                else f'<span class="{cls}"{" style=" + chr(34) + style + chr(34) if style else ""}>{inner}</span>')
         where = ", ".join(x for x in (f.get("venue"), f.get("town"), f.get("state")) if x)
         if dated:
             when, note = _fest_span(*f["next"]), ""
         else:
             when = f'{f["due"]} TBC'
             note = f'Last held {_fest_span(*f["last"], long=True)}.' + (f' Expected {e(f["expected"])}.' if f.get("expected") else "")
-        rows.append(f'<li class="comp"><span class="when">{e(when)}</span><div>{name}'
-                    f'<div class="cwhere">{e(where)}</div>{"<span class=d>" + note + "</span>" if note else ""}</div></li>')
-    if not rows:
-        return ""
-    return ('<section class="zone fests" id="festivals"><header><h2>Festivals and expos</h2></header>'
-            '<p class="fest-note">The shows worth travelling for. This list is kept by hand from the organisers\' own pages, '
-            f'so check with them before you book. Missing one? <a href="mailto:{e(SITE["contact"])}">Tell me</a>.</p>'
-            f'<ul class="comps">{"".join(rows)}</ul>'
-            '<p class="more"><a href="#calendar">Skip to the comps calendar</a></p></section>')
+        links = " · ".join(x for x in (f'<a href="{e(f["link"])}">Website</a>' if f.get("link") else "",
+                                       f'<a href="{e(f["facebook"])}">Facebook</a>' if f.get("facebook") else "") if x)
+        cards.append(f'<li class="fest">{tile}<div class="fest-body"><span class="when">{e(when)}</span>'
+                     f'<span class="cname">{e(f["name"])}</span><span class="cwhere">{e(where)}</span>'
+                     f'{"<span class=d>" + note + "</span>" if note else ""}'
+                     f'{"<span class=fest-links>" + links + "</span>" if links else ""}</div></li>')
+    if not cards:
+        return '<p class="quiet">No festivals listed yet.</p>'
+    return f'<ul class="fest-grid">{"".join(cards)}</ul>'
+
+
+def festivals_page(on):
+    rows = festivals(on)
+    dated = [(d, f) for d, has, f in rows if has]
+    lines = [f"{f['name'].upper()}  {f['town'].upper()}, {f['state']}  "
+             + (_fest_span(*f["next"]).upper() if has else f"{f['due']} TBC") for _, has, f in rows]
+    span = f"next {render.day(dated[0][0])}" if dated else "dates to come"
+    body = (festivals_block(on)
+            + '<p class="fest-note">Playing for rankings? The tournaments and leagues are on the '
+              f'<a href="{u("/comps/")}">comps page</a>.</p>')
+    box = ('<p class="wordmark" style="font-size:clamp(1.6rem,6vw,2.6rem)">Festivals</p>'
+           '<p class="lede">Australia\'s pinball festivals and expos: the weekends worth travelling for, whether you compete or not.'
+           '<small>This is the one list here kept by hand, from the organisers\' own pages, so check with them before you book. '
+           'Logos are the organisers\' own. '
+           f'Where next year\'s dates are not out yet, it shows when the festival was last on. Missing one? <a href="mailto:{e(SITE["contact"])}">Tell me</a> and I\'ll add it.</small></p>')
+    return page("Pinball festivals and expos in Australia", body, path="/festivals/", structured=festivals_ld(on) or None,
+                description="Australia's pinball festivals and expos, with dates as the organisers announce them.",
+                box_extra=box, current="festivals", dmd=display(len(rows), plural(len(rows), "festival"), span, lines))
 
 
 def festivals_ld(on):
@@ -1243,7 +1275,7 @@ def about_page():
 <h2>What this is</h2>
 <p>A weekly list of what changed in Australian pinball: new venues, machines landing and leaving, swaps, and player notes on what needs a tech. It exists so people hear about the new game at the pub down the road, and so an Edithvale player knows whether Campbellfield is worth the drive on Saturday.</p>
 <h2>Where it comes from</h2>
-<p>Every line was submitted to <a href="https://pinballmap.com">Pinball Map</a> by a player. Each morning this site asks what changed around Australia, sorts it by state and tidies it: a machine out and a new edition of the same game in becomes a swap, a new venue and its first machines become one line. Nothing is added by hand, so it is only as good as what people submit. The one exception is the short list of festivals and expos on the comps page, which comes from the organisers' own pages. If a lineup was different or a machine was off, update the listing on Pinball Map and it is here the next morning.</p>
+<p>Every line was submitted to <a href="https://pinballmap.com">Pinball Map</a> by a player. Each morning this site asks what changed around Australia, sorts it by state and tidies it: a machine out and a new edition of the same game in becomes a swap, a new venue and its first machines become one line. Nothing is added by hand, so it is only as good as what people submit. The one exception is the <a href="{u('/festivals/')}">festivals list</a>, which comes from the organisers' own pages. If a lineup was different or a machine was off, update the listing on Pinball Map and it is here the next morning.</p>
 <p>This is not a map and will not help you find somewhere to play. Pinball Map does that, and every venue here links straight to its listing.</p>
 <p class="muted">Suburbs and postcodes for the near-you search come from Matthew Proctor's public-domain <a href="https://www.matthewproctor.com/australian_postcodes">Australian Postcodes</a> list. The code is open on <a href="https://github.com/glenat-gif/pinball-diff">GitHub</a>.{counted}</p>
 </div>"""
@@ -1300,7 +1332,8 @@ def llms_txt():
              "> Built each morning from what players submit to Pinball Map. Not a venue finder: every venue links to its Pinball Map listing.", "",
              "## Pages", "",
              f"- [This week]({absolute('/')}): every change across Australia in the last week, by state, plus a suburb search",
-             f"- [Comps]({absolute('/comps/')}): upcoming IFPA tournaments and leagues, with calendar feeds, and the year's festivals and expos",
+             f"- [Comps]({absolute('/comps/')}): upcoming IFPA tournaments and leagues, with calendar feeds",
+             f"- [Festivals]({absolute('/festivals/')}): Australia's pinball festivals and expos, with dates as organisers announce them",
              f"- [Machines]({absolute('/machines/')}): every machine that has landed somewhere or left, with where it is now",
              f"- [Podcasts]({absolute('/podcasts/')}): Australian pinball podcasts and their latest episodes",
              f"- [Emails]({absolute('/issues/')}): the Thursday email, every issue",
@@ -1365,6 +1398,7 @@ def build(on=None):
     write("/near.json", json.dumps(near_data(events, comps, on), ensure_ascii=False, separators=(",", ":")))
     upcoming = ifpa.between(comps, on.isoformat(), "9999-12-31")
     write("/comps/", comps_page(upcoming, on))
+    write("/festivals/", festivals_page(on))
     stamp = dt.datetime.now(dt.timezone.utc).strftime("%Y%m%dT%H%M%SZ")
     for z in STATE_ORDER:
         write(f"/comps/{z}.ics", ifpa.ics([c for c in upcoming if c["zone"] == z],
