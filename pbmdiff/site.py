@@ -753,9 +753,8 @@ def festivals_page(on):
             + '<p class="fest-note">Playing for rankings? The tournaments and leagues are on the '
               f'<a href="{u("/comps/")}">comps page</a>.</p>')
     box = ('<p class="wordmark" style="font-size:clamp(1.6rem,6vw,2.6rem)">Festivals</p>'
-           '<p class="lede">Australia\'s pinball festivals and expos: the weekends worth travelling for, whether you compete or not.'
+           '<p class="lede">Australia\'s pinball festivals and expos: the weekends worth travelling for.'
            '<small>This is the one list here kept by hand, from the organisers\' own pages, so check with them before you book. '
-           'Logos are the organisers\' own. '
            f'Where next year\'s dates are not out yet, it shows when the festival was last on. Missing one? <a href="mailto:{e(SITE["contact"])}">Tell me</a> and I\'ll add it.</small></p>')
     return page("Pinball festivals and expos in Australia", body, path="/festivals/", structured=festivals_ld(on) or None,
                 description="Australia's pinball festivals and expos, with dates as the organisers announce them.",
