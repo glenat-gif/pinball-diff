@@ -110,6 +110,32 @@ class LeadArtTests(unittest.TestCase):
             self.assertEqual(len(mail.art_for(self.ITEM)), 1)                              # the row still shows Foo Fighters
 
 
+class FestivalTests(Built):
+    LIST = [{"name": "Dated Fest", "venue": "The Hall", "town": "Adelaide", "state": "SA", "last": ["2026-07-03", "2026-07-05"],
+             "next": ["2027-07-08", "2027-07-11"], "expected": "", "link": "https://example.org/dated"},
+            {"name": "Waiting Fest", "venue": "", "town": "Newcastle", "state": "NSW", "last": ["2026-09-19", "2026-09-20"],
+             "next": None, "expected": "the third weekend of September", "link": ""},
+            {"name": "Gone Fest", "venue": "", "town": "Hobart", "state": "TAS", "last": None,
+             "next": ["2026-08-01", "2026-08-02"], "expected": "", "link": ""}]
+
+    def test_dated_festivals_show_dates_and_the_rest_say_tbc(self):
+        with mock.patch.object(site, "load_festivals", lambda: self.LIST):
+            rows = site.festivals(dt.date(2026, 11, 27))
+            self.assertEqual([f["name"] for _, _, f in rows], ["Dated Fest", "Gone Fest", "Waiting Fest"])   # by when they are due
+            html_ = site.festivals_block(dt.date(2026, 11, 27))
+            self.assertIn("8 to 11 Jul 2027", html_)
+            self.assertIn('href="https://example.org/dated"', html_)
+            self.assertIn("2027 TBC", html_)
+            self.assertIn("Last held 19 to 20 September 2026. Expected the third weekend of September.", html_)
+            self.assertIn("Last held 1 to 2 August 2026.", html_)          # its dated edition has passed: now it waits too
+            self.assertEqual([x["name"] for x in site.festivals_ld(dt.date(2026, 11, 27))], ["Dated Fest"])
+
+    def test_the_comps_page_leads_with_festivals(self):
+        page = (site.build(on=dt.date(2026, 10, 3)) / "comps" / "index.html").read_text()
+        self.assertIn("Festivals and expos", page)
+        self.assertIn("Australian Pinball Expo", page)
+
+
 class NewVenueRankTests(unittest.TestCase):
     VENUE = {"kind": "new_venue", "location_name": "Varsity Ringwood", "city": "Ringwood", "lat": -37.816, "lon": 145.225,
              "machines": ["Godzilla (Pro) (Stern, 2021)", "Pokémon (Pro) (Stern, 2026)"],

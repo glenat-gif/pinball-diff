@@ -271,6 +271,11 @@ blockquote.said { margin: 0.35rem 0 0; padding-left: 0.75rem; border-left: 3px s
 .cwhere { color: var(--muted); font-size: 0.95rem; }
 .comp .d { display: block; color: var(--muted); font-size: 0.86rem; }
 .comps-zone > header { border-bottom-color: var(--ink); }
+.fests { margin-top: 1.6rem; }
+.fests > header { border-bottom-color: var(--ink); }
+.fest-note { margin: 0.6rem 0 0; color: var(--muted); font-size: 0.92rem; max-width: 40rem; }
+.fests .comp .when { font-size: 0.86rem; }
+.fests span.cname { font-weight: 650; }
 @media (max-width: 560px) { .comp { grid-template-columns: 1fr; } }
 
 /* States: one colour each, always paired with the state's name */

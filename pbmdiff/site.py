@@ -268,10 +268,11 @@ def comps_page(comps, on):
              + "".join(f'<li><code>{e(base)}/comps/{z}.ics</code></li>' for z in states + ["all"]) +
              '</ul></details></section>')
     if not comps:
-        body = ('<p class="quiet">No upcoming IFPA events are listed yet. '
+        body = (festivals_block(on) + '<p class="quiet">No upcoming IFPA events are listed yet. '
                 'They appear here as directors add them to the IFPA calendar.</p>')
     else:
-        body = (f'<div class="state-pick" role="group" aria-label="Show comps in">{chips}</div>'
+        body = (festivals_block(on) +
+                f'<div class="state-pick" id="calendar" role="group" aria-label="Show comps in">{chips}</div>'
                 '<p class="cal-hint">One dot per comp, coloured by state. Tap a day.</p>'
                 f'<div class="months dots">{"".join(months)}</div>'
                 f'<div class="agenda">{"".join(days)}</div>'
@@ -297,11 +298,12 @@ def comps_page(comps, on):
                 'var q=(location.search.match(/state=(\\w+)/)||[])[1],s0=q;if(s0===undefined){try{s0=localStorage.getItem("comps-state")}catch(e){}}'
                 'if(s0&&bs.some(function(b){return b.dataset.pick===s0}))pick(s0);})();</script>')
     box = ('<p class="wordmark" style="font-size:clamp(1.6rem,6vw,2.6rem)">Comps</p>'
-           '<p class="lede">Every IFPA-sanctioned tournament and league in Australia for the next two months.'
+           '<p class="lede">The year\'s festivals and expos, then every IFPA-sanctioned tournament and league in Australia for the next two months.'
            '<small>From the IFPA calendar, updated every morning, with venues matched to Pinball Map so you can see '
            'what you\'ll be playing. Running a comp that is not here? Add it to the IFPA calendar and it appears the next day.</small></p>')
     dmd = display(len(comps), plural(len(comps), "comp"), "next two months", [comp_line(c) for c in comps])
-    return page("Pinball comps in Australia", body, path="/comps/", structured=comps_ld(comps), description="Upcoming pinball tournaments and leagues across Australia, by month and state.",
+    return page("Pinball comps and festivals in Australia", body, path="/comps/", structured=festivals_ld(on) + comps_ld(comps),
+                description="Upcoming pinball tournaments, leagues, festivals and expos across Australia.",
                 box_extra=box, current="comps", dmd=dmd)
 
 
@@ -672,6 +674,74 @@ def site_ld():
     org = {"@type": "Organization", "name": SITE["name"], "url": absolute("/"), "logo": absolute("/icon.png")}
     return {"@context": "https://schema.org", "@type": "WebSite", "name": SITE["name"], "url": absolute("/"),
             "description": SITE["tagline"], "inLanguage": "en-AU", "publisher": org}
+
+
+def load_festivals():
+    """The one hand-kept list on the site: the festivals and expos, from their organisers' pages."""
+    path = store.DATA / "festivals.json"
+    return json.loads(path.read_text()) if path.exists() else []
+
+
+def _fest_span(a, b, long=False):
+    a, b = dt.date.fromisoformat(a), dt.date.fromisoformat(b)
+    m = "%B" if long else "%b"
+    if a == b:
+        return f"{a.day} {a:{m}} {a:%Y}"
+    if a.month == b.month:
+        return f"{a.day} to {b.day} {b:{m}} {b:%Y}"
+    return f"{a.day} {a:{m}} to {b.day} {b:{m}} {b:%Y}"
+
+
+def festivals(on):
+    """Each festival as (sort date, dated?, entry). A festival with dates still ahead shows them; one
+    whose next dates are not out yet shows when it was last held and the year it is due back."""
+    out = []
+    for f in load_festivals():
+        nxt, last = f.get("next"), f.get("last")
+        if nxt and nxt[1] < on.isoformat():           # its dated edition has been and gone: it becomes the last one
+            nxt, last = None, nxt
+        if nxt:
+            out.append((nxt[0], True, {**f, "next": nxt, "last": last}))
+        elif last:
+            a = dt.date.fromisoformat(last[0])
+            due = a.replace(year=a.year + 1) if a.replace(year=a.year + 1) >= on else a.replace(year=on.year + 1)
+            out.append((due.isoformat(), False, {**f, "next": None, "last": last, "due": due.year}))
+    return sorted(out, key=lambda x: x[0])
+
+
+def festivals_block(on):
+    rows = []
+    for _, dated, f in festivals(on):
+        name = f'<a class="cname" href="{e(f["link"])}">{e(f["name"])}</a>' if f.get("link") else f'<span class="cname">{e(f["name"])}</span>'
+        where = ", ".join(x for x in (f.get("venue"), f.get("town"), f.get("state")) if x)
+        if dated:
+            when, note = _fest_span(*f["next"]), ""
+        else:
+            when = f'{f["due"]} TBC'
+            note = f'Last held {_fest_span(*f["last"], long=True)}.' + (f' Expected {e(f["expected"])}.' if f.get("expected") else "")
+        rows.append(f'<li class="comp"><span class="when">{e(when)}</span><div>{name}'
+                    f'<div class="cwhere">{e(where)}</div>{"<span class=d>" + note + "</span>" if note else ""}</div></li>')
+    if not rows:
+        return ""
+    return ('<section class="zone fests" id="festivals"><header><h2>Festivals and expos</h2></header>'
+            '<p class="fest-note">The shows worth travelling for. This list is kept by hand from the organisers\' own pages, '
+            f'so check with them before you book. Missing one? <a href="mailto:{e(SITE["contact"])}">Tell me</a>.</p>'
+            f'<ul class="comps">{"".join(rows)}</ul>'
+            '<p class="more"><a href="#calendar">Skip to the comps calendar</a></p></section>')
+
+
+def festivals_ld(on):
+    """Festivals with dates set, as schema.org Events."""
+    out = []
+    for _, dated, f in festivals(on):
+        if not dated:
+            continue
+        out.append({"@context": "https://schema.org", "@type": "Festival", "name": f["name"], "startDate": f["next"][0], "endDate": f["next"][1],
+                    "eventStatus": "https://schema.org/EventScheduled", "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
+                    "location": {"@type": "Place", "name": f.get("venue") or f["town"],
+                                 "address": {"@type": "PostalAddress", "addressLocality": f["town"], "addressRegion": f["state"], "addressCountry": "AU"}},
+                    **({"url": f["link"]} if f.get("link") else {})})
+    return out
 
 
 def comps_ld(comps, limit=100):
@@ -1173,7 +1243,7 @@ def about_page():
 <h2>What this is</h2>
 <p>A weekly list of what changed in Australian pinball: new venues, machines landing and leaving, swaps, and player notes on what needs a tech. It exists so people hear about the new game at the pub down the road, and so an Edithvale player knows whether Campbellfield is worth the drive on Saturday.</p>
 <h2>Where it comes from</h2>
-<p>Every line was submitted to <a href="https://pinballmap.com">Pinball Map</a> by a player. Each morning this site asks what changed around Australia, sorts it by state and tidies it: a machine out and a new edition of the same game in becomes a swap, a new venue and its first machines become one line. Nothing is added by hand, so it is only as good as what people submit. If a lineup was different or a machine was off, update the listing on Pinball Map and it is here the next morning.</p>
+<p>Every line was submitted to <a href="https://pinballmap.com">Pinball Map</a> by a player. Each morning this site asks what changed around Australia, sorts it by state and tidies it: a machine out and a new edition of the same game in becomes a swap, a new venue and its first machines become one line. Nothing is added by hand, so it is only as good as what people submit. The one exception is the short list of festivals and expos on the comps page, which comes from the organisers' own pages. If a lineup was different or a machine was off, update the listing on Pinball Map and it is here the next morning.</p>
 <p>This is not a map and will not help you find somewhere to play. Pinball Map does that, and every venue here links straight to its listing.</p>
 <p class="muted">Suburbs and postcodes for the near-you search come from Matthew Proctor's public-domain <a href="https://www.matthewproctor.com/australian_postcodes">Australian Postcodes</a> list. The code is open on <a href="https://github.com/glenat-gif/pinball-diff">GitHub</a>.{counted}</p>
 </div>"""
@@ -1230,7 +1300,7 @@ def llms_txt():
              "> Built each morning from what players submit to Pinball Map. Not a venue finder: every venue links to its Pinball Map listing.", "",
              "## Pages", "",
              f"- [This week]({absolute('/')}): every change across Australia in the last week, by state, plus a suburb search",
-             f"- [Comps]({absolute('/comps/')}): upcoming IFPA tournaments and leagues, with calendar feeds",
+             f"- [Comps]({absolute('/comps/')}): upcoming IFPA tournaments and leagues, with calendar feeds, and the year's festivals and expos",
              f"- [Machines]({absolute('/machines/')}): every machine that has landed somewhere or left, with where it is now",
              f"- [Podcasts]({absolute('/podcasts/')}): Australian pinball podcasts and their latest episodes",
              f"- [Emails]({absolute('/issues/')}): the Thursday email, every issue",

@@ -1,0 +1,20 @@
+[
+  {"name": "Hoey Moey Pinball Festival", "venue": "The Hoey Moey", "town": "Coffs Harbour", "state": "NSW",
+   "last": ["2026-02-28", "2026-02-28"], "next": null, "expected": "Saturday 24 April",
+   "link": "https://hoeymoey.com.au/"},
+  {"name": "Australian Pinball Expo", "venue": "", "town": "Adelaide", "state": "SA",
+   "last": ["2026-07-03", "2026-07-05"], "next": ["2027-07-08", "2027-07-11"], "expected": "",
+   "link": "https://pinballexpo.com.au/"},
+  {"name": "TazPin", "venue": "Country Club Tasmania", "town": "Launceston", "state": "TAS",
+   "last": ["2026-08-01", "2026-08-02"], "next": ["2027-07-31", "2027-08-01"], "expected": "",
+   "link": "https://www.tazpin.org/"},
+  {"name": "Newcastle Pinfest", "venue": "", "town": "Newcastle", "state": "NSW",
+   "last": ["2026-09-19", "2026-09-20"], "next": null, "expected": "the third weekend of September",
+   "link": ""},
+  {"name": "FlipOut", "venue": "Sandown Park Hotel", "town": "Noble Park", "state": "VIC",
+   "last": ["2026-10-02", "2026-10-04"], "next": null, "expected": "",
+   "link": "https://www.flipoutpinball.com.au/"},
+  {"name": "Melbourne Pinball Expo", "venue": "Matthew Flinders Hotel", "town": "Chadstone", "state": "VIC",
+   "last": ["2026-11-13", "2026-11-15"], "next": null, "expected": "",
+   "link": ""}
+]
