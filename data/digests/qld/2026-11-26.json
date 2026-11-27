@@ -1,0 +1,142 @@
+{
+ "items": [
+  {
+   "location_id": 24613,
+   "location_name": "Funhouse Carindale",
+   "city": "Carindale",
+   "link": "https://pinballmap.com/map?by_location_id=24613",
+   "lat": -27.5031743,
+   "lon": 153.1016795,
+   "ids": {
+    "Pok\u00e9mon (Pro) (Stern, 2026)": 4615,
+    "Godzilla (Pro) (Stern, 2021)": 3415,
+    "Venom (Pro) (Stern, 2023)": 3738,
+    "Avengers: Infinity Quest (Pro) (Stern, 2020)": 3267
+   },
+   "kind": "rotation",
+   "rank": 2.75,
+   "date": "2026-11-26",
+   "machines": [
+    "Pok\u00e9mon (Pro) (Stern, 2026)",
+    "Avengers: Infinity Quest (Pro) (Stern, 2020)"
+   ],
+   "out": [
+    "Godzilla (Pro) (Stern, 2021)",
+    "Venom (Pro) (Stern, 2023)"
+   ],
+   "by": [
+    "stanton70"
+   ],
+   "flags": {
+    "Pok\u00e9mon (Pro) (Stern, 2026)": [
+     "New release"
+    ]
+   }
+  },
+  {
+   "location_id": 17389,
+   "location_name": "The Clubhouse Moorooka",
+   "city": "Moorooka",
+   "link": "https://pinballmap.com/map?by_location_id=17389",
+   "lat": -27.5310871,
+   "lon": 153.0277733,
+   "ids": {
+    "Dracula (Stern Electronics, 1979)": 867,
+    "Meteor (Stern Electronics, 1979)": 851,
+    "Cosmic Princess (Allied Leisure, 1979)": 3319,
+    "Flash (Williams, 1979)": 875
+   },
+   "kind": "rotation",
+   "rank": 2.8,
+   "date": "2026-11-26",
+   "machines": [
+    "Meteor (Stern Electronics, 1979)",
+    "Cosmic Princess (Allied Leisure, 1979)"
+   ],
+   "out": [
+    "Dracula (Stern Electronics, 1979)",
+    "Flash (Williams, 1979)"
+   ],
+   "by": [
+    "rexeverything"
+   ],
+   "flags": {}
+  },
+  {
+   "location_id": 9885,
+   "location_name": "Netherworld",
+   "city": "Fortitude Valley",
+   "link": "https://pinballmap.com/map?by_location_id=9885",
+   "lat": -27.4558148,
+   "lon": 153.0321039,
+   "ids": {
+    "Transformers: More Than Meets the Eye (Pro) (Stern, 2026)": 4625,
+    "Centigrade 37 (Gottlieb, 1977)": 1674
+   },
+   "kind": "rotation",
+   "rank": 2.9,
+   "date": "2026-11-26",
+   "machines": [
+    "Centigrade 37 (Gottlieb, 1977)"
+   ],
+   "out": [
+    "Transformers: More Than Meets the Eye (Pro) (Stern, 2026)"
+   ],
+   "by": [
+    "jimmynails"
+   ],
+   "flags": {}
+  },
+  {
+   "location_id": 14333,
+   "location_name": "BrewDog DogTap Brisbane",
+   "city": "Brisbane City",
+   "link": "https://pinballmap.com/map?by_location_id=14333",
+   "lat": -27.4484924,
+   "lon": 153.0998284,
+   "ids": {
+    "Abra Ca Dabra (Gottlieb, 1975)": 1263,
+    "Centigrade 37 (Gottlieb, 1977)": 1674,
+    "Cosmic Princess (Allied Leisure, 1979)": 3319,
+    "Meteor (Stern Electronics, 1979)": 851,
+    "Stars (Stern Electronics, 1978)": 855
+   },
+   "kind": "removed",
+   "rank": 4,
+   "date": "2026-11-25",
+   "machines": [
+    "Abra Ca Dabra (Gottlieb, 1975)",
+    "Centigrade 37 (Gottlieb, 1977)",
+    "Cosmic Princess (Allied Leisure, 1979)",
+    "Meteor (Stern Electronics, 1979)",
+    "Stars (Stern Electronics, 1978)"
+   ],
+   "by": [
+    "rwolf15"
+   ],
+   "flags": {}
+  },
+  {
+   "location_id": 16450,
+   "location_name": "Felons Barrell Hall",
+   "city": "Brisbane City",
+   "link": "https://pinballmap.com/map?by_location_id=16450",
+   "lat": -27.4624165,
+   "lon": 153.0351093,
+   "ids": {
+    "Spider-Man (Vault Edition) (Stern, 2016)": 2565
+   },
+   "kind": "removed",
+   "rank": 4,
+   "date": "2026-11-25",
+   "machines": [
+    "Spider-Man (Vault Edition) (Stern, 2016)"
+   ],
+   "by": [
+    "rwolf15"
+   ],
+   "flags": {}
+  }
+ ],
+ "confirmations": 3
+}

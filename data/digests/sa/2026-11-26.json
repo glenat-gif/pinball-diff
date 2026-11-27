@@ -1,0 +1,30 @@
+{
+ "items": [
+  {
+   "location_id": 19126,
+   "location_name": "Belair Hotel",
+   "city": "Blackwood",
+   "link": "https://pinballmap.com/map?by_location_id=19126",
+   "lat": -35.0122267,
+   "lon": 138.6227125,
+   "ids": {
+    "James Bond 007 (Pro) (Stern, 2022)": 3640,
+    "Foo Fighters (Pro) (Stern, 2023)": 3673
+   },
+   "kind": "rotation",
+   "rank": 2.9,
+   "date": "2026-11-24",
+   "machines": [
+    "James Bond 007 (Pro) (Stern, 2022)"
+   ],
+   "out": [
+    "Foo Fighters (Pro) (Stern, 2023)"
+   ],
+   "by": [
+    "oldskooler"
+   ],
+   "flags": {}
+  }
+ ],
+ "confirmations": 0
+}

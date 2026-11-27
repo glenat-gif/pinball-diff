@@ -1,0 +1,30 @@
+{
+ "items": [
+  {
+   "location_id": 17248,
+   "location_name": "Beercade Australia",
+   "city": "Redfern",
+   "link": "https://pinballmap.com/map?by_location_id=17248",
+   "lat": -33.8922008,
+   "lon": 151.20083,
+   "ids": {
+    "JAWS (LE) (Stern, 2024)": 3801,
+    "Bram Stoker's Dracula (Williams, 1993)": 659,
+    "The Mandalorian (LE) (Stern, 2021)": 3290
+   },
+   "kind": "removed",
+   "rank": 4,
+   "date": "2026-11-20",
+   "machines": [
+    "JAWS (LE) (Stern, 2024)",
+    "Bram Stoker's Dracula (Williams, 1993)",
+    "The Mandalorian (LE) (Stern, 2021)"
+   ],
+   "by": [
+    "merlinsmagic"
+   ],
+   "flags": {}
+  }
+ ],
+ "confirmations": 0
+}
