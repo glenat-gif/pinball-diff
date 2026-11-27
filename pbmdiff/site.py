@@ -715,12 +715,21 @@ def festivals_block(on):
     cards = []
     for _, dated, f in festivals(on):
         to = f.get("link") or f.get("facebook")
-        if f.get("image"):
+        fallback = "var p=this.parentNode;p.className=\'fest-img dmdtile\';p.removeAttribute(\'style\');p.textContent=this.alt"
+        if f.get("image") and f.get("image_size"):
+            # Part of a larger picture, such as the wordmark on a poster: shown through a 16:10 window.
+            # The hidden copy is only there to notice a broken link and fall back to the name tile.
+            style = f'background:{e(f.get("image_bg") or "#ffffff")}'
+            inner = (f'<span class="fest-crop" role="img" aria-label="{e(f["name"])}" style="background-image:url({e(f["image"])});'
+                     f'background-size:{e(f["image_size"])} auto;background-position:{e(f.get("image_pos") or "50% 50%")}"></span>'
+                     f'<img src="{e(f["image"])}" alt="{e(f["name"])}" style="display:none" onerror="{fallback}">')
+            cls = "fest-img crop"
+        elif f.get("image"):
             fit = "cover" if f.get("image_fit") == "cover" else "contain"
             style = f'background:{e(f.get("image_bg") or "#ffffff")}'
             pos = f';object-position:{e(f["image_pos"])}' if f.get("image_pos") else ""
             inner = (f'<img src="{e(f["image"])}" alt="{e(f["name"])}" loading="lazy" decoding="async" style="object-fit:{fit}{pos}" '
-                     'onerror="var p=this.parentNode;p.className+=\' dmdtile\';p.removeAttribute(\'style\');p.textContent=this.alt">')
+                     f'onerror="{fallback}">')
             cls = f"fest-img {fit}"
         else:
             style, inner, cls = "", e(f["name"]), "fest-img dmdtile"

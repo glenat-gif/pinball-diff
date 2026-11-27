@@ -134,6 +134,13 @@ class FestivalTests(Built):
             self.assertIn("Last held 1 to 2 August 2026.", html_)          # its dated edition has passed: now it waits too
             self.assertEqual([x["name"] for x in site.festivals_ld(dt.date(2026, 11, 27))], ["Dated Fest"])
 
+    def test_a_festival_can_show_part_of_a_poster(self):
+        cropped = [{**self.LIST[0], "image_size": "242%", "image_pos": "98% 99%"}]
+        with mock.patch.object(site, "load_festivals", lambda: cropped):
+            html_ = site.festivals_block(dt.date(2026, 11, 27))
+            self.assertIn('background-size:242% auto;background-position:98% 99%', html_)          # a window onto part of a poster
+            self.assertIn('style="display:none" onerror=', html_)                                  # and a way to notice it has gone
+
     def test_festivals_have_their_own_page(self):
         dist = site.build(on=dt.date(2026, 10, 3))
         fests = (dist / "festivals" / "index.html").read_text()
