@@ -1,0 +1,121 @@
+{
+ "items": [
+  {
+   "location_id": 31029,
+   "location_name": "Varsity Ringwood",
+   "city": "Ringwood",
+   "link": "https://pinballmap.com/map?by_location_id=31029",
+   "lat": -37.8164161,
+   "lon": 145.2248728,
+   "ids": {
+    "Godzilla (Pro) (Stern, 2021)": 3415,
+    "Pok\u00e9mon (Pro) (Stern, 2026)": 4615
+   },
+   "kind": "new_venue",
+   "rank": -0.05,
+   "date": "2026-11-22",
+   "machines": [
+    "Godzilla (Pro) (Stern, 2021)",
+    "Pok\u00e9mon (Pro) (Stern, 2026)"
+   ],
+   "by": [
+    "CircusFreak77"
+   ],
+   "flags": {
+    "Pok\u00e9mon (Pro) (Stern, 2026)": [
+     "New release"
+    ]
+   }
+  },
+  {
+   "location_id": 27454,
+   "location_name": "Doncaster Hotel",
+   "city": "Doncaster",
+   "link": "https://pinballmap.com/map?by_location_id=27454",
+   "lat": -37.7857727,
+   "lon": 145.1427335,
+   "ids": {
+    "Scared Stiff (Bally, 1996)": 648
+   },
+   "kind": "added",
+   "rank": 2.9,
+   "date": "2026-11-26",
+   "machines": [
+    "Scared Stiff (Bally, 1996)"
+   ],
+   "by": [
+    "dab"
+   ],
+   "flags": {}
+  },
+  {
+   "location_id": 28236,
+   "location_name": "Kingpin Melbourne",
+   "city": "Melbourne",
+   "link": "https://pinballmap.com/map?by_location_id=28236",
+   "lat": -37.8152725,
+   "lon": 144.9650986,
+   "ids": {
+    "Iron Maiden: Legacy of the Beast (Premium) (Stern, 2018)": 2924,
+    "Pok\u00e9mon (Pro) (Stern, 2026)": 4615,
+    "Iron Maiden: Legacy of the Beast (Pro) (Stern, 2018)": 2923
+   },
+   "kind": "added",
+   "rank": 2.9,
+   "date": "2026-11-26",
+   "machines": [
+    "Iron Maiden: Legacy of the Beast (Pro) (Stern, 2018)"
+   ],
+   "by": [
+    "j_coolstar"
+   ],
+   "flags": {}
+  },
+  {
+   "location_id": 23006,
+   "location_name": "Kingpin Crown",
+   "city": "Southbank",
+   "link": "https://pinballmap.com/map?by_location_id=23006",
+   "lat": -37.8234367,
+   "lon": 144.9580861,
+   "ids": {
+    "Black Knight: Sword of Rage (Pro) (Stern, 2019)": 3126
+   },
+   "kind": "removed",
+   "rank": 4,
+   "date": "2026-11-24",
+   "machines": [
+    "Black Knight: Sword of Rage (Pro) (Stern, 2019)"
+   ],
+   "by": [
+    "dolphin61"
+   ],
+   "flags": {}
+  },
+  {
+   "location_id": 28236,
+   "location_name": "Kingpin Melbourne",
+   "city": "Melbourne",
+   "link": "https://pinballmap.com/map?by_location_id=28236",
+   "lat": -37.8152725,
+   "lon": 144.9650986,
+   "ids": {
+    "Iron Maiden: Legacy of the Beast (Premium) (Stern, 2018)": 2924,
+    "Pok\u00e9mon (Pro) (Stern, 2026)": 4615,
+    "Iron Maiden: Legacy of the Beast (Pro) (Stern, 2018)": 2923
+   },
+   "kind": "condition",
+   "status": "note",
+   "rank": 6,
+   "date": "2026-11-25",
+   "machine": "Iron Maiden: Legacy of the Beast (Premium) (Stern, 2018)",
+   "comment": "Machine located upstairs.",
+   "user": "dylmcil",
+   "by": [
+    "dylmcil"
+   ],
+   "flags": {}
+  }
+ ],
+ "confirmations": 1
+}

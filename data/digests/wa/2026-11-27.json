@@ -1,0 +1,31 @@
+{
+ "items": [
+  {
+   "location_id": 15908,
+   "location_name": "Barcadia",
+   "city": "Northbridge",
+   "link": "https://pinballmap.com/map?by_location_id=15908",
+   "lat": -31.948399,
+   "lon": 115.8567085,
+   "ids": {
+    "Pok\u00e9mon (LE) (Stern, 2026)": 4617
+   },
+   "kind": "added",
+   "rank": 2.85,
+   "date": "2026-11-27",
+   "machines": [
+    "Pok\u00e9mon (LE) (Stern, 2026)"
+   ],
+   "by": [
+    "RealHumanTim"
+   ],
+   "flags": {
+    "Pok\u00e9mon (LE) (Stern, 2026)": [
+     "Limited Edition",
+     "New release"
+    ]
+   }
+  }
+ ],
+ "confirmations": 1
+}
